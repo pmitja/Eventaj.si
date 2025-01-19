@@ -1,5 +1,10 @@
 "use client";
 import { useState } from "react";
+import GlassesWithMustache from "../icons/GlassesWithMustache";
+import PaintWithLamp from "../icons/PaintWithLamp";
+import PersonWithHeart from "../icons/PersonWithHeart";
+import ShareIcon from "../icons/pricing/ShareIcon";
+import UnlimitedIcon from "../icons/pricing/UnlimitedIcon";
 import {
   Select,
   SelectContent,
@@ -7,11 +12,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import UnlimitedIcon from "../icons/pricing/UnlimitedIcon";
-import ShareIcon from "../icons/pricing/ShareIcon";
-import PersonWithHeart from "../icons/PersonWithHeart";
-import PaintWithLamp from "../icons/PaintWithLamp";
-import GlassesWithMustache from "../icons/GlassesWithMustache";
 
 const locations = [
   { text: "Maribor in okolica", kilometri: 0 },
@@ -27,15 +27,23 @@ const locations = [
   { text: "Nova Gorica in okolica", kilometri: 230 },
 ];
 
-const hours = [
+const threeSixtyHours = [
   { value: 2, price: 299 },
   { value: 3, price: 399 },
   { value: 4, price: 499 },
 ];
 
-const PricingCalculator = () => {
+const basicBoothHours = [
+  { value: 2, price: 249 },
+  { value: 3, price: 299 },
+  { value: 4, price: 349 },
+];
+
+const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
-  const [selectedHours, setSelectedHours] = useState(hours[0]);
+  const [selectedHours, setSelectedHours] = useState(
+    type === "360" ? threeSixtyHours[0] : basicBoothHours[0]
+  );
 
   const transportCost = selectedLocation.kilometri * 0.4;
   const totalPrice = selectedHours.price + transportCost;
@@ -128,7 +136,14 @@ const PricingCalculator = () => {
               <Select
                 value={selectedHours.value.toString()}
                 onValueChange={(value) => {
-                  const hour = hours.find((h) => h.value.toString() === value);
+                  const hour =
+                    type === "360"
+                      ? threeSixtyHours.find(
+                          (h) => h.value.toString() === value
+                        )
+                      : basicBoothHours.find(
+                          (h) => h.value.toString() === value
+                        );
                   if (hour) setSelectedHours(hour);
                 }}
               >
@@ -136,11 +151,23 @@ const PricingCalculator = () => {
                   <SelectValue placeholder="Izberite dolžino" />
                 </SelectTrigger>
                 <SelectContent>
-                  {hours.map((hour) => (
-                    <SelectItem key={hour.value} value={hour.value.toString()}>
-                      {hour.value} {hour.value === 1 ? "ura" : "ure"}
-                    </SelectItem>
-                  ))}
+                  {type === "360"
+                    ? threeSixtyHours.map((hour) => (
+                        <SelectItem
+                          key={hour.value}
+                          value={hour.value.toString()}
+                        >
+                          {hour.value} {hour.value === 1 ? "ura" : "ure"}
+                        </SelectItem>
+                      ))
+                    : basicBoothHours.map((hour) => (
+                        <SelectItem
+                          key={hour.value}
+                          value={hour.value.toString()}
+                        >
+                          {hour.value} {hour.value === 1 ? "ura" : "ure"}
+                        </SelectItem>
+                      ))}
                 </SelectContent>
               </Select>
             </div>

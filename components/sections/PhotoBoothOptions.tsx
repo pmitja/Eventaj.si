@@ -46,7 +46,7 @@ export function PhotoBoothOptions() {
         {options.map((option) => (
           <div
             key={option.title}
-            className="relative group overflow-hidden rounded-2xl border bg-card hover:shadow-lg transition-all"
+            className="relative group overflow-hidden rounded-2xl border bg-card hover:shadow-lg transition-all flex flex-col"
           >
             <div className="aspect-[4/3] relative">
               {option.image ? (
@@ -66,12 +66,21 @@ export function PhotoBoothOptions() {
                 />
               )}
             </div>
-            <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2">{option.title}</h3>
-              <p className="text-muted-foreground mb-4">{option.description}</p>
-              <Button variant="outline" asChild>
-                <a href={option.href}>Learn more</a>
-              </Button>
+            <div className="flex flex-col gap-2 p-6 grow">
+              <h2 className="text-xl md:text-3xl font-semibold">
+                {option.title}
+              </h2>
+              <p className="text-muted-foreground mb-2 grow">
+                {option.description}
+              </p>
+              <div className="flex flex-row flex-wrap gap-2">
+                <Button className="w-fit" variant="glow" asChild>
+                  <a href={option.href}>Rezerviraj</a>
+                </Button>
+                <Button className="w-fit" variant="outline" asChild>
+                  <a href={option.href}>Več o {option.title}</a>
+                </Button>
+              </div>
             </div>
           </div>
         ))}

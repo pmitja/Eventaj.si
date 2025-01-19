@@ -1,11 +1,12 @@
 "use client";
 
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { cn } from "@/lib/utils";
 
 export const NavLinks = () => {
   const pathname = usePathname();
+  console.log(pathname);
   const links = [
     { href: "/360-photo-booth", label: "360° Photo Booth" },
     { href: "/photo-booth", label: "Photo Booth" },
@@ -25,7 +26,8 @@ export const NavLinks = () => {
               "opacity-90 hover:opacity-100 transition-colors",
               "text-lg md:text-base font-medium",
               "py-3 md:py-0",
-              "hover:text-primary dark:hover:text-primary"
+              "hover:text-primary dark:hover:text-primary",
+              link.href === pathname && "border-b-2 border-primary"
             )}
             aria-current={link.href === pathname ? "page" : undefined}
           >

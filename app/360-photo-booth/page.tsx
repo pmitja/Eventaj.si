@@ -1,12 +1,12 @@
-import Hero from "@/components/hero";
 import { CTASection } from "@/components/sections/cta-section";
 import Features from "@/components/sections/features";
-import { defaultFeatures } from "@/components/sections/features-content";
+import { threeSixtyFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
 import { PricingPlans } from "@/components/sections/pricing-plans";
 import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import WhenToChoose from "@/components/sections/when-to-choose";
+import ThreeSixtyHero from "@/components/three-sixty-hero";
 
 const testimonials = [
   {
@@ -102,14 +102,14 @@ const pricingPlans = [
 export default function Home() {
   return (
     <main className="pt-[48px]">
-      <Hero
+      <ThreeSixtyHero
         title="360° photo booth"
         text="Preizkusite 360° photo booth, ki vas ujame iz povsem drugačne perspektive – prav iz vseh kotov! Naš 360° photo booth je pravi prvak pri ustvarjanju visokokakovostnih 360° videov."
       />
       <WhenToChoose />
       <PromoImage />
-      <Features {...defaultFeatures} />
-      <HowItWorks />
+      <Features {...threeSixtyFeatures} />
+      <HowItWorks type="360" />
       <PricingPlans plans={pricingPlans} />
       <CTASection
         title="Ne najdete ustreznega paketa?"

@@ -22,7 +22,7 @@ const steps = [
   },
 ];
 
-const HowItWorks = () => {
+const HowItWorks = ({ type }: { type: "360" | "basic" }) => {
   return (
     <Section
       heading={
@@ -50,7 +50,7 @@ const HowItWorks = () => {
           ))}
         </div>
       </div>
-      <PricingCalculator />
+      <PricingCalculator type={type} />
     </Section>
   );
 };

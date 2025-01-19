@@ -1,7 +1,7 @@
-import Hero from "@/components/hero";
+import BasicBoothHero from "@/components/basic-booth-hero";
 import { CTASection } from "@/components/sections/cta-section";
 import Features from "@/components/sections/features";
-import { defaultFeatures } from "@/components/sections/features-content";
+import { basicBoothFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
 import { PricingPlans } from "@/components/sections/pricing-plans";
 import PromoImage from "@/components/sections/promo-image";
@@ -51,13 +51,17 @@ const testimonials = [
 const pricingPlans = [
   {
     name: "Mini paket",
-    price: "299",
+    price: "249",
     period: "2 uri",
     features: [
       "najem do 2 uri",
+      "do 150 natisnjenih fotografij",
+      "neomejeno število posnetih fotografij",
       "vključeni različni rekviziti",
+      "priprava ozadja (4 predlogi)",
       "priprava digitalnega okvirja (4 predlogi)",
-      "delitev videoposnetkov preko QR kode in Airdrop-a",
+      "delitev fotografij preko QR kode, Airdrop-a, SMS-a, elektronskega naslova",
+      "Google drive album z vsemi fotografijami",
       "pomoč pri uporabi",
     ],
     description: "Idealno za manjše dogodke in zabave",
@@ -67,13 +71,20 @@ const pricingPlans = [
   },
   {
     name: "Osnovni paket",
-    price: "399",
+    price: "299",
     period: "3 ure",
     features: [
       "najem do 3 ure",
+      "do 250 natisnjenih fotografij",
+      "neomejeno število posnetih fotografij",
       "vključeni različni rekviziti",
+      "priprava ozadja (4 predlogi)",
       "priprava digitalnega okvirja (4 predlogi)",
-      "delitev videoposnetkov preko QR kode in Airdrop-a",
+      "delitev fotografij preko QR kode, Airdrop-a, SMS-a, elektronskega naslova",
+      "Google drive album z vsemi fotografijami",
+      "izbira različnih filtrov",
+      "možnost posnetka v načinu Boomerang ali GIF",
+      "album + pisalo (srebrne ali zlate barve)",
       "pomoč pri uporabi",
     ],
     description: "Najpogostejša izbira za poroke in večje dogodke",
@@ -83,13 +94,21 @@ const pricingPlans = [
   },
   {
     name: "Maxi paket",
-    price: "499",
+    price: "349",
     period: "4 ure",
     features: [
       "najem do 4 ure",
+      "neomejeno natisnjenih fotografij",
+      "neomejeno število posnetih fotografij",
       "vključeni različni rekviziti",
+      "priprava ozadja (4 predlogi)",
       "priprava digitalnega okvirja (4 predlogi)",
-      "delitev videoposnetkov preko QR kode in Airdrop-a",
+      "delitev fotografij preko QR kode, Airdrop-a, SMS-a, elektronskega naslova",
+      "Google drive album z vsemi fotografijami",
+      "izbira različnih filtrov",
+      "možnost posnetka v načinu Boomerang ali GIF",
+      "album + pisalo (srebrne ali zlate barve)",
+      "možnost uporabe AI orodij znotraj aplikacije",
       "pomoč pri uporabi",
     ],
     description: "Za tiste, ki želijo popolno izkušnjo",
@@ -102,14 +121,14 @@ const pricingPlans = [
 export default function Home() {
   return (
     <main className="pt-[48px]">
-      <Hero
-        title="360° photo booth"
+      <BasicBoothHero
+        title="Photo booth"
         text="Preizkusite 360° photo booth, ki vas ujame iz povsem drugačne perspektive – prav iz vseh kotov! Naš 360° photo booth je pravi prvak pri ustvarjanju visokokakovostnih 360° videov."
       />
       <WhenToChoose />
       <PromoImage />
-      <Features {...defaultFeatures} />
-      <HowItWorks />
+      <Features {...basicBoothFeatures} />
+      <HowItWorks type="basic" />
       <PricingPlans plans={pricingPlans} />
       <CTASection
         title="Ne najdete ustreznega paketa?"
