@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import { useNavigation } from "./navigation/navigation-context";
 import ScrollIndicator from "./scroll-indicator";
@@ -11,7 +12,7 @@ interface HeroProps {
   text: string;
 }
 
-const Hero = ({ title, text }: HeroProps) => {
+const HomeHero = ({ title, text }: HeroProps) => {
   const { scrolled } = useNavigation();
 
   return (
@@ -27,8 +28,8 @@ const Hero = ({ title, text }: HeroProps) => {
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat bg-[url('/application/eventaj-hero-image.webp')] 
-          gradient-overlay"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat bg-[url('/application/hero-image-2.webp')] 
+          darker-gradient-overlay"
       />
 
       {/* Content */}
@@ -39,15 +40,31 @@ const Hero = ({ title, text }: HeroProps) => {
             delay={0.2}
             className="flex items-center justify-center gap-1 mb-3 md:mb-6"
           >
-            <div className="flex -space-x-2">
-              {[1, 2, 3, 4].map((i) => (
-                <div
-                  key={i}
-                  className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-500"
+            <div className="flex -space-x-2 text-gray-700 font-medium">
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 flex items-center justify-center border border-gray-400">
+                <span>J</span>
+              </div>
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 flex items-center justify-center border border-gray-400">
+                <span>K</span>
+              </div>
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 flex items-center justify-center border border-gray-400">
+                <span>M</span>
+              </div>
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 flex items-center justify-center border border-gray-400">
+                <Image
+                  src="/application/autodelta.webp"
+                  alt="Star"
+                  width={24}
+                  height={24}
                 />
-              ))}
-              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-800 flex items-center justify-center">
-                <span>A</span>
+              </div>
+              <div className="w-6 h-6 md:w-8 md:h-8 rounded-full bg-gray-200 flex items-center justify-center border border-gray-400">
+                <Image
+                  src="/application/sksg.webp"
+                  alt="Star"
+                  width={24}
+                  height={24}
+                />
               </div>
             </div>
             <span className="ml-4 text-sm md:text-base">
@@ -110,4 +127,4 @@ const Hero = ({ title, text }: HeroProps) => {
   );
 };
 
-export default Hero;
+export default HomeHero;

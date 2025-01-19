@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 export const NavLinks = () => {
   const pathname = usePathname();
@@ -20,7 +21,12 @@ export const NavLinks = () => {
         <li key={link.href}>
           <Link
             href={link.href}
-            className="opacity-90 hover:opacity-100 text-base md:text-sm font-medium transition-colors py-2 md:py-0"
+            className={cn(
+              "opacity-90 hover:opacity-100 transition-colors",
+              "text-lg md:text-base font-medium",
+              "py-3 md:py-0",
+              "hover:text-primary dark:hover:text-primary"
+            )}
             aria-current={link.href === pathname ? "page" : undefined}
           >
             {link.label}

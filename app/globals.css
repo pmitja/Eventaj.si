@@ -90,6 +90,12 @@
     md:before:from-black/40 md:before:to-black/40;
   }
 
+  .darker-gradient-overlay {
+    @apply before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b 
+    before:from-black/80 before:to-black/80 
+    md:before:from-black/60 md:before:to-black/60;
+  }
+
   .nav-bg {
     @apply bg-gray-700/95 backdrop-blur-sm;
   }

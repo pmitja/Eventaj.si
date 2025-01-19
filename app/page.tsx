@@ -1,29 +1,12 @@
-import Hero from "@/components/hero";
-import Features from "@/components/sections/features";
-import WhenToChoose from "@/components/sections/when-to-choose";
-import HowItWorks from "@/components/sections/how-it-works";
-import PromoImage from "@/components/sections/promo-image";
-import { PricingPlans } from "@/components/sections/pricing-plans";
+import HomeHero from "@/components/home-hero";
 import { CTASection } from "@/components/sections/cta-section";
+import Features from "@/components/sections/features";
+import { videoFeatures } from "@/components/sections/features-content";
+import { PhotoBoothOptions } from "@/components/sections/PhotoBoothOptions";
+import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 
 const testimonials = [
-  {
-    author: {
-      name: "Maja Novak",
-      title: "Poročna fotografinja",
-      image: "/application/sksg.webp",
-    },
-    text: "360° photo booth je bil odlična izbira za našo poroko. Gostje so bili navdušeni!",
-  },
-  {
-    author: {
-      name: "Tomaž Kranjc",
-      title: "Dogodek podjetja",
-      image: "/application/autodelta.webp",
-    },
-    text: "Izjemna storitev in kakovostne fotografije! Odlično ste popestrili naš korporativni dogodek.",
-  },
   {
     author: {
       name: "Petra Horvat",
@@ -38,77 +21,34 @@ const testimonials = [
     },
     text: "Profesionalen pristop in odlična izvedba! Definitivno vas bomo še kdaj najeli.",
   },
-  {
-    author: {
-      name: "Ana Kovač",
-      title: "Nevesta",
-    },
-    text: "Hvala, ker ste poskrbeli za tako posebno izkušnjo. Vse je bilo brezhibno!",
-  },
-];
-
-const pricingPlans = [
-  {
-    name: "Mini paket",
-    price: "299",
-    period: "2 uri",
-    features: [
-      "najem do 2 uri",
-      "vključeni različni rekviziti",
-      "priprava digitalnega okvirja (4 predlogi)",
-      "delitev videoposnetkov preko QR kode in Airdrop-a",
-      "pomoč pri uporabi",
-    ],
-    description: "Idealno za manjše dogodke in zabave",
-    buttonText: "Rezerviraj termin",
-    href: "/kontakt",
-    isPopular: false,
-  },
-  {
-    name: "Osnovni paket",
-    price: "399",
-    period: "3 ure",
-    features: [
-      "najem do 3 ure",
-      "vključeni različni rekviziti",
-      "priprava digitalnega okvirja (4 predlogi)",
-      "delitev videoposnetkov preko QR kode in Airdrop-a",
-      "pomoč pri uporabi",
-    ],
-    description: "Najpogostejša izbira za poroke in večje dogodke",
-    buttonText: "Rezerviraj termin",
-    href: "/kontakt",
-    isPopular: true,
-  },
-  {
-    name: "Maxi paket",
-    price: "499",
-    period: "4 ure",
-    features: [
-      "najem do 4 ure",
-      "vključeni različni rekviziti",
-      "priprava digitalnega okvirja (4 predlogi)",
-      "delitev videoposnetkov preko QR kode in Airdrop-a",
-      "pomoč pri uporabi",
-    ],
-    description: "Za tiste, ki želijo popolno izkušnjo",
-    buttonText: "Rezerviraj termin",
-    href: "/kontakt",
-    isPopular: false,
-  },
+  // Add more testimonials...
 ];
 
 export default function Home() {
   return (
-    <main className="pt-[48px]">
-      <Hero />
-      <WhenToChoose />
-      <PromoImage />
-      <Features />
-      <HowItWorks />
-      <PricingPlans plans={pricingPlans} />
+    <main>
+      {/* Hero Section */}
+      <HomeHero
+        title="Najemi in ujemi spomine"
+        text="Naj vaš dogodek traja večno s fotografijami in videoposnetki. Zajete trenutke objavi ali natisni. Rezerviraj svoj termin še danes."
+      />
+
+      {/* Photo Booth Options */}
+      <PhotoBoothOptions />
+
+      {/* Features Section */}
+      <Features {...videoFeatures} />
+
+      {/* Testimonials */}
+      <TestimonialsSection
+        title="Kaj pravijo naši zadovoljni uporabniki"
+        description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
+        testimonials={testimonials}
+      />
+
+      {/* CTA Section */}
       <CTASection
-        title="Ne najdete ustreznega paketa?"
+        title="Vas zanima naš photo booth?"
         description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
         action={{
           text: "Kontaktirajte nas",
@@ -117,11 +57,7 @@ export default function Home() {
         }}
         withGlow={true}
       />
-      <TestimonialsSection
-        title="Kaj pravijo naši zadovoljni uporabniki"
-        description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
-        testimonials={testimonials}
-      />
+      <PromoImage />
     </main>
   );
 }
