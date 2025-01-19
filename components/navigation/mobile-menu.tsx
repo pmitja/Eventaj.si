@@ -1,3 +1,4 @@
+import { Button } from "../ui/button";
 import { NavLinks } from "./nav-links";
 
 interface MobileMenuProps {
@@ -16,21 +17,14 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
           : "opacity-0 invisible"
       }`}
     >
-      <nav
-        role="navigation"
-        aria-label="Mobile navigation"
-        className="container mx-auto px-4 py-6 h-screen"
-      >
-        <NavLinks />
-        <div className="mt-6 flex justify-center">
-          <button
-            className="bg-[#C89364] text-white px-6 py-2.5 rounded-lg hover:bg-[#b88357] transition-colors text-sm font-medium"
-            aria-label="Rezerviraj"
-          >
-            Rezerviraj
-          </button>
+      <div className="container mx-auto px-4 py-8">
+        <div className="flex flex-col gap-8">
+          <NavLinks />
+          <Button variant="glow" size="lg" asChild>
+            <a href="/kontakt">Rezerviraj termin</a>
+          </Button>
         </div>
-      </nav>
+      </div>
     </div>
   );
 };

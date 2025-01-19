@@ -42,7 +42,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center flex-shrink-0"
+            className="flex items-center flex-shrink-0 mr-auto"
             aria-label="Go to homepage"
           >
             <Logo />
@@ -70,12 +70,12 @@ const Navbar = ({ scrolled }: NavbarProps) => {
           </div>
 
           {/* Add Theme Switcher */}
-          <div className="hidden md:flex items-center ml-4">
+          <div className="flex items-center ml-auto md:ml-4">
             <ThemeSwitcher />
           </div>
 
           {/* Mobile Hamburger */}
-          <div className="md:hidden ml-auto">
+          <div className="md:hidden ml-4">
             <HamburgerMenu
               isOpen={isOpen}
               onClick={() => setIsOpen(!isOpen)}

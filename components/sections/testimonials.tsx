@@ -31,7 +31,7 @@ export function TestimonialsSection({
     >
       <div className="mx-auto flex max-w-container flex-col items-center gap-4 text-center sm:gap-16">
         <div className="relative flex w-full flex-col items-center justify-center overflow-hidden">
-          <Marquee pauseOnHover repeat={2}>
+          <Marquee pauseOnHover className="[--duration:20s]">
             {testimonials.map((testimonial, i) => (
               <TestimonialCard key={i} {...testimonial} />
             ))}

@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 interface TestimonialAuthor {
@@ -14,24 +15,36 @@ interface TestimonialCardProps {
 
 export function TestimonialCard({ author, text }: TestimonialCardProps) {
   return (
-    <div className="w-[320px] shrink-0 rounded-2xl border bg-card p-6 shadow">
-      <div className="flex flex-col gap-4 items-center">
+    <figure
+      className={cn(
+        "relative w-64 cursor-pointer overflow-hidden rounded-xl border p-4",
+        // light styles
+        "border-gray-950/[.1] bg-gray-950/[.01] hover:bg-gray-950/[.05]",
+        // dark styles
+        "dark:border-gray-50/[.1] dark:bg-gray-50/[.10] dark:hover:bg-gray-50/[.15]"
+      )}
+    >
+      <div className="flex flex-row items-center gap-2">
         {author.image && (
           <Image
+            className="rounded-full"
+            width="32"
+            height="32"
+            alt=""
             src={author.image}
-            alt={author.name}
-            className="max-h-10"
-            width={40}
-            height={40}
           />
         )}
-        <p className="text-sm text-muted-foreground">{text}</p>
-        <div className="flex flex-col items-center gap-1">
-          <p className="text-sm font-medium leading-none">{author.name}</p>
-          <p className="text-sm text-muted-foreground">{author.title}</p>
+        <div className="flex flex-col">
+          <figcaption className="text-sm font-medium dark:text-white text-start">
+            {author.name}
+          </figcaption>
+          <p className="text-xs font-medium dark:text-white/40 text-start">
+            {author.title}
+          </p>
         </div>
       </div>
-    </div>
+      <blockquote className="mt-2 text-sm text-start">{text}</blockquote>
+    </figure>
   );
 }
 
