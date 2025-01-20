@@ -7,6 +7,7 @@ import { PricingPlans } from "@/components/sections/pricing-plans";
 import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import WhenToChoose from "@/components/sections/when-to-choose";
+import { photoBoothWhenToChoose } from "@/content/when-to-choose";
 
 const testimonials = [
   {
@@ -15,7 +16,7 @@ const testimonials = [
       title: "Poročna fotografinja",
       image: "/application/sksg.webp",
     },
-    text: "360° photo booth je bil odlična izbira za našo poroko. Gostje so bili navdušeni!",
+    text: "Photo booth je bil odlična izbira za našo poroko. Gostje so bili navdušeni!",
   },
   {
     author: {
@@ -123,9 +124,9 @@ export default function Home() {
     <main className="pt-[48px]">
       <BasicBoothHero
         title="Photo booth"
-        text="Preizkusite 360° photo booth, ki vas ujame iz povsem drugačne perspektive – prav iz vseh kotov! Naš 360° photo booth je pravi prvak pri ustvarjanju visokokakovostnih 360° videov."
+        text="Naš Photo Booth je magnet za ljudi. Gostje se smejijo in zabavajo pred kamero. Je središčna točka zabave, ki omogoča gostom, da takoj natisnejo fotografije ali jih pošljejo na svoje mobilne naprave in delijo na družbenih omrežjih."
       />
-      <WhenToChoose />
+      <WhenToChoose content={photoBoothWhenToChoose} />
       <PromoImage />
       <Features {...basicBoothFeatures} />
       <HowItWorks type="basic" />

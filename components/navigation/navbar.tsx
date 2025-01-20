@@ -1,12 +1,13 @@
 "use client";
-import { useState, useEffect } from "react";
+import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
-import { NavLinks } from "./nav-links";
-import { HamburgerMenu } from "./hamburger-menu";
-import { MobileMenu } from "./mobile-menu";
+import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import Logo from "../logo";
 import { Button } from "../ui/button";
-import { ThemeSwitcher } from "@/components/theme-switcher";
+import { HamburgerMenu } from "./hamburger-menu";
+import { MobileMenu } from "./mobile-menu";
+import { NavLinks } from "./nav-links";
 
 interface NavbarProps {
   scrolled: boolean;
@@ -14,6 +15,7 @@ interface NavbarProps {
 
 const Navbar = ({ scrolled }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -27,6 +29,12 @@ const Navbar = ({ scrolled }: NavbarProps) => {
       document.body.style.overflow = "unset";
     };
   }, [isOpen]);
+
+  // Handle route change
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    setIsOpen(false);
+  }, [pathname]);
 
   return (
     <nav
@@ -88,7 +96,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 
       {/* Mobile Menu */}
       <div id="mobile-menu" aria-hidden={!isOpen}>
-        <MobileMenu isOpen={isOpen} />
+        <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
       </div>
     </nav>
   );

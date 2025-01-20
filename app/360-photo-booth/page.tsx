@@ -7,6 +7,7 @@ import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import WhenToChoose from "@/components/sections/when-to-choose";
 import ThreeSixtyHero from "@/components/three-sixty-hero";
+import { threeSixtyWhenToChoose } from "@/content/when-to-choose";
 
 const testimonials = [
   {
@@ -106,7 +107,7 @@ export default function Home() {
         title="360° photo booth"
         text="Preizkusite 360° photo booth, ki vas ujame iz povsem drugačne perspektive – prav iz vseh kotov! Naš 360° photo booth je pravi prvak pri ustvarjanju visokokakovostnih 360° videov."
       />
-      <WhenToChoose />
+      <WhenToChoose content={threeSixtyWhenToChoose} />
       <PromoImage />
       <Features {...threeSixtyFeatures} />
       <HowItWorks type="360" />

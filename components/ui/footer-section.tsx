@@ -1,9 +1,8 @@
 "use client";
 
-import * as React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Glow } from "@/components/ui/glow";
+import { Input } from "@/components/ui/input";
 import {
   Tooltip,
   TooltipContent,
@@ -42,16 +41,16 @@ const navigation = {
 
 function Footer() {
   return (
-    <footer className="relative border-t border-[#2F2F2F] bg-gradient-to-b from-[#1E1E1E] to-[#161616] text-gray-100 transition-colors duration-300 overflow-hidden">
-      <Glow variant="center" className="opacity-30" />
-      <div className="absolute inset-0 bg-grid-white/[0.03]" />
+    <footer className="relative border-t border-[bg-gray-100] dark:border-[#2F2F2F] bg-gray-50 dark:bg-gradient-to-b dark:from-[#1E1E1E] dark:to-[#161616] text-gray-900 dark:text-gray-100 transition-colors duration-300 overflow-hidden">
+      <Glow variant="center" className="opacity-10 dark:opacity-30" />
+      <div className="absolute inset-0 bg-grid-white/[0.03] dark:bg-grid-white/[0.03]" />
       <div className="relative container mx-auto px-4 py-12 md:px-6 lg:px-8">
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div className="relative">
             <h2 className="mb-4 text-3xl font-bold tracking-tight">
               Ostanite v stiku
             </h2>
-            <p className="mb-6 text-muted-foreground">
+            <p className="mb-6 text-gray-600 dark:text-muted-foreground">
               Pridružite se našemu newsletterju za najnovejše posodobitve in
               ekskluzivne ponudbe.
             </p>
@@ -59,7 +58,7 @@ function Footer() {
               <Input
                 type="email"
                 placeholder="Vpišite vaš email"
-                className="pr-12 backdrop-blur-sm bg-background/80 border-[#C99566]/20"
+                className="pr-12 backdrop-blur-sm bg-white dark:bg-background/80 border-[#C99566]/20"
               />
               <Button
                 type="submit"
@@ -106,7 +105,7 @@ function Footer() {
                       <Button
                         variant="outline"
                         size="icon"
-                        className="rounded-full backdrop-blur-sm bg-background/80 border-[#C99566]/20 transition-all hover:scale-105 hover:shadow-lg hover:shadow-[#C99566]/20 hover:border-[#C99566]/40"
+                        className="rounded-full backdrop-blur-sm bg-white dark:bg-background/80 border-[#C99566]/20 transition-all hover:scale-105 hover:shadow-lg hover:shadow-[#C99566]/20 hover:border-[#C99566]/40"
                         asChild
                       >
                         <a
@@ -128,8 +127,8 @@ function Footer() {
             </div>
           </div>
         </div>
-        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-[#2F2F2F] pt-8 text-center md:flex-row">
-          <p className="text-sm text-gray-400">
+        <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 dark:border-[#2F2F2F] pt-8 text-center md:flex-row">
+          <p className="text-sm text-gray-500 dark:text-gray-400">
             © 2025 MIPA Solutions. Vse pravice pridržane.
           </p>
           <nav className="flex gap-4 text-sm">

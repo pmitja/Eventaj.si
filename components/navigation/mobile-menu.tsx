@@ -3,9 +3,10 @@ import { NavLinks } from "./nav-links";
 
 interface MobileMenuProps {
   isOpen: boolean;
+  onClose: () => void;
 }
 
-export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
+export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
   return (
     <div
       role="dialog"
@@ -19,9 +20,11 @@ export const MobileMenu = ({ isOpen }: MobileMenuProps) => {
     >
       <div className="container mx-auto px-4 py-8">
         <div className="flex flex-col gap-8">
-          <NavLinks />
+          <NavLinks onLinkClick={onClose} />
           <Button variant="glow" size="lg" asChild>
-            <a href="/kontakt">Rezerviraj termin</a>
+            <a href="/kontakt" onClick={onClose}>
+              Rezerviraj termin
+            </a>
           </Button>
         </div>
       </div>

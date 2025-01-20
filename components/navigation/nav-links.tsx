@@ -4,7 +4,11 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-export const NavLinks = () => {
+interface NavLinksProps {
+  onLinkClick?: () => void;
+}
+
+export const NavLinks = ({ onLinkClick }: NavLinksProps) => {
   const pathname = usePathname();
   console.log(pathname);
   const links = [
@@ -22,6 +26,7 @@ export const NavLinks = () => {
         <li key={link.href}>
           <Link
             href={link.href}
+            onClick={onLinkClick}
             className={cn(
               "opacity-90 hover:opacity-100 transition-colors",
               "text-lg md:text-base font-medium",
