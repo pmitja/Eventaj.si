@@ -103,10 +103,7 @@ const pricingPlans = [
 export default function Home() {
   return (
     <main className="pt-[48px]">
-      <ThreeSixtyHero
-        title="360° photo booth"
-        text="Preizkusite 360° photo booth, ki vas ujame iz povsem drugačne perspektive – prav iz vseh kotov! Naš 360° photo booth je pravi prvak pri ustvarjanju visokokakovostnih 360° videov."
-      />
+      <ThreeSixtyHero />
       <WhenToChoose content={threeSixtyWhenToChoose} />
       <PromoImage />
       <Features {...threeSixtyFeatures} />
