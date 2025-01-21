@@ -117,42 +117,32 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
         <div className="space-y-4 md:space-y-6">
           {/* Features List */}
           <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 text-center">
-            <div className="flex flex-col items-center gap-1 md:gap-3">
-              <div className="relative w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center">
-                <UnlimitedIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
-              </div>
+            <div className="flex flex-col items-center gap-1 md:gap-2">
+              <UnlimitedIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
                 Neomejeno posnetkov
               </p>
             </div>
             <div className="flex flex-col items-center gap-1 md:gap-3">
-              <div className="relative w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center">
-                <ShareIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
-              </div>
+              <ShareIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
                 Takojšnja delitev
               </p>
             </div>
             <div className="flex flex-col items-center gap-1 md:gap-3">
-              <div className="relative w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center">
-                <PersonWithHeart className="w-8 h-8 md:w-14 md:h-14 text-[#C99566]" />
-              </div>
+              <PersonWithHeart className="w-8 h-8 md:w-14 md:h-14 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
-                Operater za pomoč
+                Ekipa za pomoč
               </p>
             </div>
             <div className="flex flex-col items-center gap-1 md:gap-3">
-              <div className="relative w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center">
-                <PaintWithLamp className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
-              </div>
+              <PaintWithLamp className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
                 Prilagoditev
               </p>
             </div>
             <div className="flex flex-col items-center gap-1 md:gap-3">
-              <div className="relative w-14 h-14 md:w-20 md:h-20 bg-white rounded-2xl shadow-sm flex items-center justify-center">
-                <GlassesWithMustache className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
-              </div>
+              <GlassesWithMustache className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">Rekviziti</p>
             </div>
           </div>
