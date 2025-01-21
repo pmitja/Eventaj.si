@@ -1,9 +1,8 @@
-const PaintWithLamp = () => {
+const PaintWithLamp = ({ className }: { className?: string }) => {
   return (
     <svg
-      width="54"
-      height="64"
-      viewBox="0 0 54 64"
+      className={className}
+      viewBox="0 0 76 76"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

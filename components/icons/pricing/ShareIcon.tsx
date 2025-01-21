@@ -1,9 +1,8 @@
-const ShareIcon = () => {
+const ShareIcon = ({ className }: { className?: string }) => {
   return (
     <svg
-      width="56"
-      height="48"
-      viewBox="0 0 56 48"
+      className={className}
+      viewBox="0 0 48 48"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
