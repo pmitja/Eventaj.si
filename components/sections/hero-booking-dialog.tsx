@@ -163,12 +163,14 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
   return (
     <Dialog>
       <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="sm:max-w-[600px]">
+      <DialogContent className="sm:max-w-[600px] bg-white dark:bg-gray-900">
         {step === 1 && (
           <>
             <DialogHeader>
-              <DialogTitle>Izberite vrsto Photo Booth-a</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-gray-900 dark:text-white">
+                Izberite vrsto Photo Booth-a
+              </DialogTitle>
+              <DialogDescription className="text-gray-500 dark:text-gray-400">
                 Izberite med 360° Photo Booth in klasičnim Photo Booth.
               </DialogDescription>
             </DialogHeader>
@@ -179,8 +181,8 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                   "relative flex flex-col items-center p-6 rounded-lg border-2 transition-all",
                   "hover:border-[#C99566] hover:shadow-lg",
                   form.getValues("type") === "360"
-                    ? "border-[#C99566] bg-[#C99566]/5"
-                    : "border-gray-200"
+                    ? "border-[#C99566] bg-[#C99566]/5 dark:bg-[#C99566]/10"
+                    : "border-gray-200 dark:border-gray-700 dark:hover:border-[#C99566]"
                 )}
               >
                 <div className="h-24 w-24 mb-4 rounded-full bg-[#C99566]/10 flex items-center justify-center">
@@ -188,8 +190,10 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                     360°
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">360° Photo Booth</h3>
-                <p className="text-sm text-gray-500 text-center">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                  360° Photo Booth
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                   Edinstveno 360° snemanje za posebne trenutke
                 </p>
                 {form.getValues("type") === "360" && (
@@ -204,15 +208,17 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                   "relative flex flex-col items-center p-6 rounded-lg border-2 transition-all",
                   "hover:border-[#C99566] hover:shadow-lg",
                   form.getValues("type") === "basic"
-                    ? "border-[#C99566] bg-[#C99566]/5"
-                    : "border-gray-200"
+                    ? "border-[#C99566] bg-[#C99566]/5 dark:bg-[#C99566]/10"
+                    : "border-gray-200 dark:border-gray-700 dark:hover:border-[#C99566]"
                 )}
               >
                 <div className="h-24 w-24 mb-4 rounded-full bg-[#C99566]/10 flex items-center justify-center">
                   <span className="text-2xl font-bold text-[#C99566]">PB</span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Photo Booth</h3>
-                <p className="text-sm text-gray-500 text-center">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
+                  Photo Booth
+                </h3>
+                <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                   Klasičen Photo Booth za zabavne fotografije
                 </p>
                 {form.getValues("type") === "basic" && (
@@ -228,8 +234,10 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
         {step === 2 && (
           <>
             <DialogHeader>
-              <DialogTitle>Izberite paket</DialogTitle>
-              <DialogDescription>
+              <DialogTitle className="text-gray-900 dark:text-white">
+                Izberite paket
+              </DialogTitle>
+              <DialogDescription className="text-gray-500 dark:text-gray-400">
                 Izberite število ur in izpolnite podatke za rezervacijo.
               </DialogDescription>
             </DialogHeader>
@@ -253,11 +261,11 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                           "relative p-4 rounded-lg border-2 transition-all text-left",
                           "hover:border-[#C99566] hover:shadow-lg",
                           form.getValues("hours") === hour.value.toString()
-                            ? "border-[#C99566] bg-[#C99566]/5"
-                            : "border-gray-200"
+                            ? "border-[#C99566] bg-[#C99566]/5 dark:bg-[#C99566]/10"
+                            : "border-gray-200 dark:border-gray-700 dark:hover:border-[#C99566]"
                         )}
                       >
-                        <div className="font-semibold text-lg mb-1">
+                        <div className="font-semibold text-lg mb-1 text-gray-900 dark:text-white">
                           {hour.value} {hour.value === 1 ? "ura" : "ure"}
                         </div>
                         <div className="text-2xl font-bold text-[#C99566]">
@@ -279,9 +287,14 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                       name="name"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Ime in priimek</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">
+                            Ime in priimek
+                          </FormLabel>
                           <FormControl>
-                            <Input {...field} className="h-9 md:h-10" />
+                            <Input
+                              {...field}
+                              className="h-9 md:h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                            />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -292,12 +305,14 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                       name="email"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Email</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">
+                            Email
+                          </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               type="email"
-                              className="h-9 md:h-10"
+                              className="h-9 md:h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                             />
                           </FormControl>
                           <FormMessage />
@@ -312,12 +327,14 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                       name="phone"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Telefon</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">
+                            Telefon
+                          </FormLabel>
                           <FormControl>
                             <Input
                               {...field}
                               type="tel"
-                              className="h-9 md:h-10"
+                              className="h-9 md:h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
                             />
                           </FormControl>
                           <FormMessage />
@@ -329,21 +346,24 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                       name="location"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Lokacija</FormLabel>
+                          <FormLabel className="text-gray-700 dark:text-gray-300">
+                            Lokacija
+                          </FormLabel>
                           <Select
                             onValueChange={handleLocationSelect}
                             defaultValue={field.value}
                           >
                             <FormControl>
-                              <SelectTrigger className="h-9 md:h-10">
+                              <SelectTrigger className="h-9 md:h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700">
                                 <SelectValue placeholder="Izberite lokacijo" />
                               </SelectTrigger>
                             </FormControl>
-                            <SelectContent>
+                            <SelectContent className="bg-white dark:bg-gray-800">
                               {locations.map((location) => (
                                 <SelectItem
                                   key={location.text}
                                   value={location.text}
+                                  className="text-gray-900 dark:text-white"
                                 >
                                   {location.text}
                                 </SelectItem>
@@ -361,9 +381,14 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                     name="message"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Sporočilo (opcijsko)</FormLabel>
+                        <FormLabel className="text-gray-700 dark:text-gray-300">
+                          Sporočilo (opcijsko)
+                        </FormLabel>
                         <FormControl>
-                          <Textarea {...field} className="min-h-[80px]" />
+                          <Textarea
+                            {...field}
+                            className="min-h-[80px] bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -371,28 +396,41 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                   />
 
                   {/* Price Summary */}
-                  <div className="bg-gray-50 p-4 rounded-lg">
+                  <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg">
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-gray-600">Osnovna cena:</span>
-                      <span className="font-semibold">
+                      <span className="text-gray-600 dark:text-gray-400">
+                        Osnovna cena:
+                      </span>
+                      <span className="font-semibold text-gray-900 dark:text-white">
                         {selectedHours.price}€
                       </span>
                     </div>
                     <div className="flex justify-between items-center mb-2">
-                      <span className="text-gray-600">Prevoz:</span>
-                      <span className="font-semibold">
-                        {transportCost.toFixed(0)}€
+                      <div>
+                        <span className="text-gray-600 dark:text-gray-400">
+                          Prevoz (informativno):
+                        </span>
+                        <div className="text-xs text-gray-500 dark:text-gray-400">
+                          *Končna cena prevoza bo določena po potrditvi lokacije
+                        </div>
+                      </div>
+                      <span className="font-semibold text-gray-900 dark:text-white">
+                        ~ {transportCost.toFixed(0)}€
                       </span>
                     </div>
-                    <div className="flex justify-between items-center pt-2 border-t">
-                      <span className="font-semibold">Skupaj:</span>
+                    <div className="flex justify-between items-center pt-2 border-t border-gray-200 dark:border-gray-700">
+                      <div>
+                        <span className="font-semibold text-gray-900 dark:text-white">
+                          Skupaj (informativno):
+                        </span>
+                      </div>
                       <span className="text-xl font-bold text-[#C99566]">
-                        {totalPrice.toFixed(0)}€
+                        ~ {totalPrice.toFixed(0)}€
                       </span>
                     </div>
                   </div>
 
-                  <div className="text-sm text-gray-500 bg-blue-50 p-4 rounded-lg">
+                  <div className="text-sm text-gray-500 dark:text-gray-400 bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
                     Opomba: Rezervacija bo potrjena šele po našem pregledu in
                     potrditvi razpoložljivosti izbranega termina. Kontaktirali
                     vas bomo v najkrajšem možnem času.
@@ -403,6 +441,7 @@ export function HeroBookingDialog({ children }: HeroBookingDialogProps) {
                       type="button"
                       variant="outline"
                       onClick={() => setStep(1)}
+                      className="border-gray-200 dark:border-gray-700 dark:hover:bg-gray-800"
                     >
                       Nazaj
                     </Button>

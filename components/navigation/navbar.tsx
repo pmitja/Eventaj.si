@@ -1,11 +1,12 @@
 "use client";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import Logo from "../logo";
+import { HeroBookingDialog } from "../sections/hero-booking-dialog";
 import { Button } from "../ui/button";
-import { HamburgerMenu } from "./hamburger-menu";
 import { MobileMenu } from "./mobile-menu";
 import { NavLinks } from "./nav-links";
 
@@ -39,10 +40,10 @@ const Navbar = ({ scrolled }: NavbarProps) => {
   return (
     <nav
       aria-label="Main navigation"
-      className={`transition-all duration-300 ${
+      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
         scrolled || isOpen
-          ? "bg-background/80 backdrop-blur-sm border-b border-border shadow-sm text-foreground"
-          : "bg-transparent text-white"
+          ? "top-0 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm text-foreground"
+          : "top-[40px] bg-transparent text-white"
       }`}
     >
       <div className="container mx-auto px-4">
@@ -50,7 +51,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
           {/* Logo */}
           <Link
             href="/"
-            className="flex items-center flex-shrink-0 mr-auto"
+            className="flex items-center flex-shrink-0"
             aria-label="Go to homepage"
           >
             <Logo />
@@ -58,46 +59,39 @@ const Navbar = ({ scrolled }: NavbarProps) => {
 
           {/* Desktop Navigation */}
           <div
-            className="hidden md:flex items-center justify-center flex-grow gap-8"
+            className="hidden lg:flex items-center justify-center flex-1"
             role="navigation"
           >
             <NavLinks />
           </div>
 
-          {/* Rezerviraj Button */}
-          <div className="hidden md:block flex-shrink-0">
-            <Button
-              variant="glow"
-              size="lg"
-              asChild
-              className="w-full sm:w-auto"
-              aria-label="Rezerviraj"
-            >
-              <Link href="/kontakt">Rezerviraj termin</Link>
-            </Button>
-          </div>
-
-          {/* Add Theme Switcher */}
-          <div className="flex items-center ml-auto md:ml-4">
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-4 ml-auto">
+            <div className="hidden lg:block">
+              <HeroBookingDialog>
+                <Button variant="glow" size="lg">
+                  Rezerviraj termin
+                </Button>
+              </HeroBookingDialog>
+            </div>
             <ThemeSwitcher />
-          </div>
-
-          {/* Mobile Hamburger */}
-          <div className="md:hidden ml-4">
-            <HamburgerMenu
-              isOpen={isOpen}
-              onClick={() => setIsOpen(!isOpen)}
-              aria-expanded={isOpen}
-              aria-controls="mobile-menu"
-            />
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <Button
+                variant="ghost"
+                className="rounded-full p-0"
+                onClick={() => setIsOpen(true)}
+                aria-label="Open main menu"
+              >
+                <Menu className="h-6 w-6" aria-hidden="true" />
+              </Button>
+            </div>
           </div>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      <div id="mobile-menu" aria-hidden={!isOpen}>
-        <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
-      </div>
+      <MobileMenu isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </nav>
   );
 };

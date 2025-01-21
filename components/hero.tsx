@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useNavigation } from "./navigation/navigation-context";
 import ScrollIndicator from "./scroll-indicator";
+import { HeroBookingDialog } from "./sections/hero-booking-dialog";
 import { FadeIn } from "./ui/fade-in";
 
 interface HeroProps {
@@ -28,8 +29,7 @@ const Hero = ({ title, text }: HeroProps) => {
         initial={{ scale: 1.1, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
         transition={{ duration: 1 }}
-        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat bg-[url('/application/eventaj-hero-image.webp')] 
-          gradient-overlay"
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat bg-[url('/application/eventaj-hero-image.webp')] darker-gradient-overlay"
       />
 
       {/* Content */}
@@ -101,14 +101,11 @@ const Hero = ({ title, text }: HeroProps) => {
             transition={{ duration: 0.5, delay: 1 }}
             className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
           >
-            <Button
-              variant="glow"
-              size="lg"
-              asChild
-              className="w-full sm:w-auto"
-            >
-              <Link href="/kontakt">Rezerviraj termin</Link>
-            </Button>
+            <HeroBookingDialog>
+              <Button variant="glow" size="lg" className="w-full sm:w-auto">
+                Rezerviraj termin
+              </Button>
+            </HeroBookingDialog>
             <Button
               variant="outline"
               size="lg"

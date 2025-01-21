@@ -1,44 +1,29 @@
 "use client";
 
-import { cn } from "@/lib/utils";
+import { navigation } from "@/content/navigation";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface NavLinksProps {
-  onLinkClick?: () => void;
-}
-
-export const NavLinks = ({ onLinkClick }: NavLinksProps) => {
+export function NavLinks() {
   const pathname = usePathname();
-  console.log(pathname);
-  const links = [
-    { href: "/360-photo-booth", label: "360° Photo Booth" },
-    { href: "/photo-booth", label: "Photo Booth" },
-    { href: "/ozadja", label: "Ozadja" },
-    { href: "/rekviziti", label: "Rekviziti" },
-    { href: "/blog", label: "Blog" },
-  ];
 
   return (
-    <ul className="flex md:flex-row flex-col items-center gap-6" role="list">
-      {links.map((link) => (
-        <li key={link.href}>
+    <div className="flex items-center w-full">
+      <div className="flex items-center justify-center gap-8 flex-1">
+        {navigation.map((item) => (
           <Link
-            href={link.href}
-            onClick={onLinkClick}
-            className={cn(
-              "opacity-90 hover:opacity-100 transition-colors",
-              "text-lg md:text-base font-medium",
-              "py-3 md:py-0",
-              "hover:text-primary dark:hover:text-primary",
-              link.href === pathname && "border-b-2 border-primary"
-            )}
-            aria-current={link.href === pathname ? "page" : undefined}
+            key={item.name}
+            href={item.href}
+            className={
+              pathname === item.href
+                ? "text-[#C99566] text-sm font-semibold leading-6"
+                : "text-gray-900 dark:text-white hover:text-[#C99566] dark:hover:text-[#C99566] text-sm font-semibold leading-6"
+            }
           >
-            {link.label}
+            {item.name}
           </Link>
-        </li>
-      ))}
-    </ul>
+        ))}
+      </div>
+    </div>
   );
-};
+}
