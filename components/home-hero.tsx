@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useNavigation } from "./navigation/navigation-context";
 import ScrollIndicator from "./scroll-indicator";
+import { HeroBookingDialog } from "./sections/hero-booking-dialog";
 import { FadeIn } from "./ui/fade-in";
 
 interface HeroProps {
@@ -101,14 +102,11 @@ const HomeHero = ({ title, text }: HeroProps) => {
             transition={{ duration: 0.5, delay: 1 }}
             className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4"
           >
-            <Button
-              variant="glow"
-              size="lg"
-              asChild
-              className="w-full sm:w-auto"
-            >
-              <Link href="/kontakt">Rezerviraj termin</Link>
-            </Button>
+            <HeroBookingDialog>
+              <Button variant="glow" size="lg" className="w-full sm:w-auto">
+                Rezerviraj termin
+              </Button>
+            </HeroBookingDialog>
             <Button
               variant="outline"
               size="lg"

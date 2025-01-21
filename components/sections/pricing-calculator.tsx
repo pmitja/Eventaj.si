@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import GlassesWithMustache from "../icons/GlassesWithMustache";
 import PaintWithLamp from "../icons/PaintWithLamp";
@@ -14,8 +15,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { Input } from "../ui/input";
-import { Label } from "../ui/label";
 import {
   Select,
   SelectContent,
@@ -23,7 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { Textarea } from "../ui/textarea";
+import { PricingForm } from "./pricing-form";
 
 const locations = [
   { text: "Maribor in okolica", kilometri: 0 },
@@ -56,56 +55,9 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
   const [selectedHours, setSelectedHours] = useState(
     type === "360" ? threeSixtyHours[0] : basicBoothHours[0]
   );
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    phone: "",
-    date: "",
-    message: "",
-  });
 
   const transportCost = selectedLocation.kilometri * 0.4;
   const totalPrice = selectedHours.price + transportCost;
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    const emailData = {
-      to: "eventaj.si@gmail.com",
-      subject: `Nova rezervacija - ${
-        type === "360" ? "360° Photo Booth" : "Photo Booth"
-      }`,
-      text: `
-        Ime: ${formData.name}
-        Email: ${formData.email}
-        Telefon: ${formData.phone}
-        Datum: ${formData.date}
-        Lokacija: ${selectedLocation.text}
-        Število ur: ${selectedHours.value}
-        Skupna cena: ${totalPrice.toFixed(0)}€
-        Sporočilo: ${formData.message}
-      `,
-    };
-
-    try {
-      const response = await fetch("/api/send-email", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(emailData),
-      });
-
-      if (!response.ok) {
-        throw new Error("Failed to send email");
-      }
-
-      alert("Povpraševanje uspešno poslano!");
-    } catch (error) {
-      console.error("Error sending email:", error);
-      alert("Prišlo je do napake. Prosimo, poskusite ponovno.");
-    }
-  };
 
   return (
     <div className="max-w-3xl mx-auto px-4 mt-4 md:mt-12">
@@ -243,75 +195,14 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
                   Izpolnite obrazec in poslali vam bomo ponudbo.
                 </DialogDescription>
               </DialogHeader>
-              <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
-                <div>
-                  <Label htmlFor="name">Ime in priimek</Label>
-                  <Input
-                    id="name"
-                    value={formData.name}
-                    onChange={(e) =>
-                      setFormData({ ...formData, name: e.target.value })
-                    }
-                    required
-                    className="h-9 md:h-10"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="email">Email</Label>
-                  <Input
-                    id="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) =>
-                      setFormData({ ...formData, email: e.target.value })
-                    }
-                    required
-                    className="h-9 md:h-10"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="phone">Telefon</Label>
-                  <Input
-                    id="phone"
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) =>
-                      setFormData({ ...formData, phone: e.target.value })
-                    }
-                    required
-                    className="h-9 md:h-10"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="date">Datum dogodka</Label>
-                  <Input
-                    id="date"
-                    type="date"
-                    value={formData.date}
-                    onChange={(e) =>
-                      setFormData({ ...formData, date: e.target.value })
-                    }
-                    required
-                    className="h-9 md:h-10"
-                  />
-                </div>
-                <div>
-                  <Label htmlFor="message">Sporočilo (opcijsko)</Label>
-                  <Textarea
-                    id="message"
-                    value={formData.message}
-                    onChange={(e) =>
-                      setFormData({ ...formData, message: e.target.value })
-                    }
-                    className="min-h-[80px]"
-                  />
-                </div>
-                <div className="pt-2 md:pt-4 text-right">
-                  <Button type="submit" variant="glow">
-                    Pošlji povpraševanje
-                  </Button>
-                </div>
-              </form>
+              <PricingForm
+                type={type}
+                locations={locations}
+                hours={type === "360" ? threeSixtyHours : basicBoothHours}
+                selectedLocation={selectedLocation}
+                selectedHours={selectedHours}
+                totalPrice={totalPrice}
+              />
             </DialogContent>
           </Dialog>
         </div>

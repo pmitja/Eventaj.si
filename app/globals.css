@@ -116,4 +116,60 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Calendar styles */
+.rdp {
+  --rdp-cell-size: 40px;
+  --rdp-accent-color: #C99566;
+  --rdp-background-color: #f3f4f6;
+  margin: 0;
+}
+
+.rdp-months {
+  @apply bg-white dark:bg-gray-800;
+}
+
+.rdp-caption {
+  @apply relative flex items-center justify-center pt-1 text-sm font-medium text-gray-900 dark:text-gray-100;
+}
+
+.rdp-nav {
+  @apply space-x-1 flex items-center;
+}
+
+.rdp-nav_button {
+  @apply h-7 w-7 bg-transparent p-0 opacity-50 hover:opacity-100 text-gray-600 dark:text-gray-300 !important;
+}
+
+.rdp-head_cell {
+  @apply text-muted-foreground font-normal text-[0.8rem];
+}
+
+.rdp-cell {
+  @apply text-center text-sm p-0;
+}
+
+.rdp-day {
+  @apply h-9 w-9 p-0 font-normal text-sm text-gray-900 dark:text-gray-100;
+}
+
+.rdp-day_selected {
+  @apply bg-[#C99566] text-white hover:bg-[#b88455] focus:bg-[#C99566] !important;
+}
+
+.rdp-day_today {
+  @apply bg-accent text-accent-foreground dark:bg-gray-700 dark:text-gray-100;
+}
+
+.rdp-day_outside {
+  @apply text-muted-foreground opacity-50;
+}
+
+.rdp-day_disabled {
+  @apply text-muted-foreground opacity-50;
+}
+
+.rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
+  @apply bg-accent dark:bg-gray-700;
 } 
