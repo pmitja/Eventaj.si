@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 @layer base {
+  * {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    -o-font-smoothing: antialiased;
+    -webkit-appearance: none;
+  }
+
   html {
     @apply font-baloo antialiased;
     -webkit-font-smoothing: antialiased;

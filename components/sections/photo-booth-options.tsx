@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "../ui/button";
 import Section from "../ui/section";
+import { HeroBookingDialog } from "./hero-booking-dialog";
 
 interface BoothOption {
   title: string;
@@ -42,7 +43,7 @@ export function PhotoBoothOptions() {
       className="bg-background"
       textClassName="text-muted-foreground"
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+      <div className="container-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
         {options.map((option) => (
           <div
             key={option.title}
@@ -74,9 +75,11 @@ export function PhotoBoothOptions() {
                 {option.description}
               </p>
               <div className="flex flex-row flex-wrap gap-2">
-                <Button className="w-fit" variant="glow" asChild>
-                  <a href={option.href}>Rezerviraj</a>
-                </Button>
+                <HeroBookingDialog>
+                  <Button className="w-fit" variant="glow">
+                    Rezerviraj
+                  </Button>
+                </HeroBookingDialog>
                 <Button className="w-fit" variant="outline" asChild>
                   <a href={option.href}>Več o {option.title}</a>
                 </Button>
