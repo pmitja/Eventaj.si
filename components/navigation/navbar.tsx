@@ -1,5 +1,6 @@
 "use client";
 import { ThemeSwitcher } from "@/components/theme-switcher";
+import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -40,11 +41,12 @@ const Navbar = ({ scrolled }: NavbarProps) => {
   return (
     <nav
       aria-label="Main navigation"
-      className={`fixed left-0 right-0 z-50 transition-all duration-300 ${
+      className={cn(
+        "fixed left-0 right-0 z-50 transition-all duration-300",
         scrolled || isOpen
           ? "top-0 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm text-foreground"
           : "top-[40px] bg-transparent text-white"
-      }`}
+      )}
     >
       <div className="container mx-auto px-4">
         <div className="flex items-center h-20">
@@ -62,7 +64,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
             className="hidden lg:flex items-center justify-center flex-1"
             role="navigation"
           >
-            <NavLinks />
+            <NavLinks isScrolled={scrolled} />
           </div>
 
           {/* Right Side Actions */}
