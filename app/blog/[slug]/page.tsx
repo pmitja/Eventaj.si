@@ -1,11 +1,11 @@
 import { getBlogPost, getBlogPosts } from "@/lib/blog";
+import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
-interface BlogPostParams {
-  params: {
-    slug: string;
-  };
-}
+type Props = {
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
 
 export async function generateStaticParams() {
   const posts = await getBlogPosts();
@@ -14,8 +14,9 @@ export async function generateStaticParams() {
   }));
 }
 
-export async function generateMetadata({ params }: BlogPostParams) {
-  const post = await getBlogPost(params.slug);
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const slug = (await params).slug;
+  const post = await getBlogPost(slug);
 
   if (!post) {
     return {};
@@ -33,8 +34,9 @@ export async function generateMetadata({ params }: BlogPostParams) {
   };
 }
 
-export default async function BlogPost({ params }: BlogPostParams) {
-  const post = await getBlogPost(params.slug);
+export default async function BlogPost({ params }: Props) {
+  const slug = (await params).slug;
+  const post = await getBlogPost(slug);
 
   if (!post) {
     notFound();

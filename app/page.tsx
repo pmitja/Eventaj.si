@@ -68,102 +68,71 @@ export const metadata: Metadata = {
   },
 };
 
-// JSON-LD structured data
-export const jsonLd = {
-  "@context": "https://schema.org",
-  "@type": "LocalBusiness",
-  name: "Eventaj.si",
-  alternateName: "Photo Booth in 360 Photo Booth | Eventaj.si",
-  description:
-    "Eventaj.si prinaša vrhunsko zabavo na vašo prireditev! Izberite klasičnim photo booth ali 360 photo booth in ujemite nepozabne trenutke.",
-  url: "https://eventaj.si",
-  logo: {
-    "@type": "ImageObject",
-    url: "https://eventaj.si/application/icon-256x256.png",
-  },
-  image: ["https://eventaj.si/application/hero-image-2.webp"],
-  address: {
-    "@type": "PostalAddress",
-    streetAddress: "Slomškova ulica 1",
-    addressLocality: "Lenart",
-    postalCode: "2230",
-    addressCountry: "SI",
-    addressRegion: "Lenart",
-  },
-  geo: {
-    "@type": "GeoCoordinates",
-    latitude: "46.576382",
-    longitude: "15.831834",
-  },
-  areaServed: {
-    "@type": "Country",
-    name: "Slovenija",
-  },
-  priceRange: "€€",
-  hasOfferCatalog: {
-    "@type": "OfferCatalog",
-    name: "Photo Booth Storitve",
-    itemListElement: [
-      {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Photo Booth",
-          url: "https://eventaj.si/photo-booth",
-          description:
-            "Najem photo booth-a z rekviziti in ozadji za nepozabne, kreativne fotografije",
-          offers: {
-            "@type": "AggregateOffer",
-            lowPrice: "299",
-            highPrice: "499",
-            priceCurrency: "EUR",
-            availability: "https://schema.org/InStock",
+export default function Home() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "LocalBusiness",
+    name: "Eventaj.si",
+    image: "https://eventaj.si/application/hero-image-2.webp",
+    "@id": "https://eventaj.si",
+    url: "https://eventaj.si",
+    telephone: "+38631358661",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: "Cesta v Mestni log 55",
+      addressLocality: "Ljubljana",
+      postalCode: "1000",
+      addressCountry: "SI",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 46.0372963,
+      longitude: 14.4904802,
+    },
+    openingHoursSpecification: {
+      "@type": "OpeningHoursSpecification",
+      dayOfWeek: [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday",
+      ],
+      opens: "00:00",
+      closes: "23:59",
+    },
+    sameAs: [
+      "https://www.facebook.com/eventaj.si",
+      "https://www.instagram.com/eventaj.si/",
+    ],
+    hasOfferCatalog: {
+      "@type": "OfferCatalog",
+      name: "Photo Booth Services",
+      itemListElement: [
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "Classic Photo Booth",
+            description:
+              "Traditional photo booth perfect for any event with instant printing",
           },
         },
-      },
-    ],
-  },
-  aggregateRating: {
-    "@type": "AggregateRating",
-    ratingValue: "4.8",
-    reviewCount: "50",
-  },
-  brand: {
-    "@type": "Brand",
-    name: "Eventaj.si",
-    logo: {
-      "@type": "ImageObject",
-      url: "https://eventaj.si/application/icon-256x256.png",
+        {
+          "@type": "Offer",
+          itemOffered: {
+            "@type": "Service",
+            name: "360° Photo Booth",
+            description:
+              "Modern 360-degree video booth for creating stunning slow-motion videos",
+          },
+        },
+      ],
     },
-  },
-  contactPoint: {
-    "@type": "ContactPoint",
-    contactType: "customer service",
-    email: "eventaj.si@gmail.com",
-    areaServed: "SI",
-    availableLanguage: ["sl"],
-  },
-  sameAs: [
-    "https://www.facebook.com/profile.php?id=61567672817538",
-    "https://www.instagram.com/eventaj.si/profilecard/?igsh=MWZtMWx4N2dsNDc0dA%3D%3D",
-  ],
-  openingHoursSpecification: {
-    "@type": "OpeningHoursSpecification",
-    dayOfWeek: [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday",
-    ],
-    opens: "00:00",
-    closes: "23:59",
-  },
-};
+  };
 
-export default function Home() {
   return (
     <main>
       <script
