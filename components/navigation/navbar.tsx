@@ -1,7 +1,7 @@
 "use client";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import { cn } from "@/lib/utils";
-import { Menu } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -42,10 +42,10 @@ const Navbar = ({ scrolled }: NavbarProps) => {
     <nav
       aria-label="Main navigation"
       className={cn(
-        "fixed left-0 right-0 z-50 transition-all duration-300",
+        "fixed left-0 right-0 z-40 transition-all duration-300",
         scrolled || isOpen
           ? "top-0 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm text-foreground"
-          : "top-[40px] bg-transparent text-white"
+          : "top-16 bg-background/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none text-foreground dark:text-white"
       )}
     >
       <div className="container mx-auto px-4">
@@ -82,10 +82,14 @@ const Navbar = ({ scrolled }: NavbarProps) => {
               <Button
                 variant="ghost"
                 className="rounded-full p-0"
-                onClick={() => setIsOpen(true)}
-                aria-label="Open main menu"
+                onClick={() => setIsOpen(!isOpen)}
+                aria-label={isOpen ? "Close main menu" : "Open main menu"}
               >
-                <Menu className="h-6 w-6" aria-hidden="true" />
+                {isOpen ? (
+                  <X className="h-6 w-6" aria-hidden="true" />
+                ) : (
+                  <Menu className="h-6 w-6" aria-hidden="true" />
+                )}
               </Button>
             </div>
           </div>

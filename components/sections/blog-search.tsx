@@ -2,9 +2,11 @@
 
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Article {
@@ -40,6 +42,81 @@ const articleAnimation = {
   exit: { opacity: 0, y: 20 },
   hover: { y: -4, transition: { duration: 0.2 } },
 };
+
+function BlogCard({
+  article,
+  isFeatured = false,
+}: {
+  article: Article;
+  isFeatured?: boolean;
+}) {
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    setIsLoading(true);
+    router.push(`/blog/${article.slug}`);
+  };
+
+  return (
+    <Link
+      href={`/blog/${article.slug}`}
+      onClick={handleClick}
+      className={cn("group h-full block", isLoading && "pointer-events-none")}
+    >
+      <motion.article
+        whileHover="hover"
+        variants={articleAnimation}
+        className={cn(
+          "flex flex-col h-full rounded-lg overflow-hidden shadow transition-all duration-300",
+          "bg-white dark:bg-gray-800",
+          isLoading && "opacity-60"
+        )}
+      >
+        <div
+          className={cn(
+            "relative flex-shrink-0",
+            isFeatured ? "h-48 md:h-64" : "h-48"
+          )}
+        >
+          <Image
+            src={article.image}
+            alt={article.title}
+            fill
+            className="object-cover"
+          />
+          {isLoading && (
+            <div className="absolute inset-0 bg-black/20 flex items-center justify-center">
+              <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            </div>
+          )}
+        </div>
+        <div className="flex flex-col flex-grow p-6">
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {article.date}
+          </span>
+          <h3
+            className={cn(
+              "font-semibold mt-2 mb-3 group-hover:text-brand",
+              isFeatured ? "text-xl" : "text-lg"
+            )}
+          >
+            {article.title}
+          </h3>
+          <p
+            className={cn(
+              "text-gray-600 dark:text-gray-300 flex-grow",
+              !isFeatured && "text-sm"
+            )}
+          >
+            {article.excerpt}
+          </p>
+        </div>
+      </motion.article>
+    </Link>
+  );
+}
 
 export function BlogSearch({
   featuredArticles,
@@ -157,36 +234,7 @@ export function BlogSearch({
               >
                 {filteredArticles.map((article) => (
                   <motion.div key={article.slug} variants={articleAnimation}>
-                    <Link
-                      href={`/blog/${article.slug}`}
-                      className="group h-full"
-                    >
-                      <motion.article
-                        whileHover="hover"
-                        variants={articleAnimation}
-                        className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow transition-transform duration-300"
-                      >
-                        <div className="relative h-48 flex-shrink-0">
-                          <Image
-                            src={article.image}
-                            alt={article.title}
-                            fill
-                            className="object-cover"
-                          />
-                        </div>
-                        <div className="flex flex-col flex-grow p-6">
-                          <span className="text-sm text-gray-500 dark:text-gray-400">
-                            {article.date}
-                          </span>
-                          <h3 className="text-lg font-semibold mt-2 mb-3 group-hover:text-brand">
-                            {article.title}
-                          </h3>
-                          <p className="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                            {article.excerpt}
-                          </p>
-                        </div>
-                      </motion.article>
-                    </Link>
+                    <BlogCard article={article} />
                   </motion.div>
                 ))}
               </motion.div>
@@ -231,36 +279,7 @@ export function BlogSearch({
                 >
                   {featuredArticles.map((article) => (
                     <motion.div key={article.slug} variants={articleAnimation}>
-                      <Link
-                        href={`/blog/${article.slug}`}
-                        className="group h-full"
-                      >
-                        <motion.article
-                          whileHover="hover"
-                          variants={articleAnimation}
-                          className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-lg"
-                        >
-                          <div className="relative h-48 md:h-64 flex-shrink-0">
-                            <Image
-                              src={article.image}
-                              alt={article.title}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="flex flex-col flex-grow p-6">
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                              {article.date}
-                            </span>
-                            <h3 className="text-xl font-semibold mt-2 mb-3 group-hover:text-brand">
-                              {article.title}
-                            </h3>
-                            <p className="text-gray-600 dark:text-gray-300 flex-grow">
-                              {article.excerpt}
-                            </p>
-                          </div>
-                        </motion.article>
-                      </Link>
+                      <BlogCard article={article} isFeatured />
                     </motion.div>
                   ))}
                 </motion.div>
@@ -282,36 +301,7 @@ export function BlogSearch({
                 >
                   {recentArticles.map((article) => (
                     <motion.div key={article.slug} variants={articleAnimation}>
-                      <Link
-                        href={`/blog/${article.slug}`}
-                        className="group h-full"
-                      >
-                        <motion.article
-                          whileHover="hover"
-                          variants={articleAnimation}
-                          className="flex flex-col h-full bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow"
-                        >
-                          <div className="relative h-48 flex-shrink-0">
-                            <Image
-                              src={article.image}
-                              alt={article.title}
-                              fill
-                              className="object-cover"
-                            />
-                          </div>
-                          <div className="flex flex-col flex-grow p-6">
-                            <span className="text-sm text-gray-500 dark:text-gray-400">
-                              {article.date}
-                            </span>
-                            <h3 className="text-lg font-semibold mt-2 mb-3 group-hover:text-brand">
-                              {article.title}
-                            </h3>
-                            <p className="text-gray-600 dark:text-gray-300 text-sm flex-grow">
-                              {article.excerpt}
-                            </p>
-                          </div>
-                        </motion.article>
-                      </Link>
+                      <BlogCard article={article} />
                     </motion.div>
                   ))}
                 </motion.div>

@@ -17,7 +17,9 @@ export function NavLinks({ isScrolled }: NavLinksProps) {
           href={item.href}
           className={cn(
             "text-sm font-medium transition-colors hover:text-brand",
-            isScrolled ? "text-gray-900 dark:text-gray-100" : "text-white"
+            isScrolled
+              ? "text-gray-900 dark:text-gray-100"
+              : "text-foreground dark:text-white"
           )}
         >
           {item.name}

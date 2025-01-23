@@ -104,7 +104,7 @@
   }
 
   .nav-bg {
-    @apply bg-gray-700/95 backdrop-blur-sm;
+    @apply bg-white/95 dark:bg-gray-700/95 backdrop-blur-sm border-b border-border;
   }
 
   .container-sm {
@@ -179,4 +179,4 @@
 
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
   @apply bg-accent dark:bg-gray-700;
-} 
+}

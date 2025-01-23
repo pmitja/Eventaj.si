@@ -1,4 +1,6 @@
 import { BlogSearch } from "@/components/sections/blog-search";
+import { fetchPages } from "@/lib/notion";
+import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -26,85 +28,63 @@ export const metadata: Metadata = {
   },
 };
 
-const featuredArticles = [
-  {
-    title: "Kako izbrati pravi photo booth za vaš dogodek",
-    excerpt:
-      "Vodič po različnih vrstah photo boothov in kako izbrati najprimernejšega za vašo priložnost.",
-    image: "/application/photo-booth.webp",
-    date: "22. marec 2024",
-    slug: "kako-izbrati-photo-booth",
-  },
-  {
-    title: "10 kreativnih idej za poročne fotografije",
-    excerpt:
-      "Odkrijte edinstvene načine za uporabo photo bootha na vaši poroki in ustvarite nepozabne spomine.",
-    image: "/application/photo-booth-device.webp",
-    date: "20. marec 2024",
-    slug: "kreativne-ideje-poroka",
-  },
-  {
-    title: "Trendi v photo booth tehnologiji za leto 2024",
-    excerpt:
-      "Spoznajte najnovejše trende in inovacije v svetu photo boothov ter kako lahko popestrijo vaš dogodek.",
-    image: "/application/promo-image.webp",
-    date: "18. marec 2024",
-    slug: "trendi-photo-booth-2024",
-  },
-];
+export default async function BlogPage() {
+  const allPosts = await fetchPages();
 
-const recentArticles = [
-  {
-    title: "Kako organizirati popoln dogodek s photo boothom",
-    excerpt:
-      "Praktični nasveti za integracijo photo bootha v vaš dogodek in maksimiziranje zabave.",
-    image: "/application/basic-booth-hero-image.webp",
-    date: "15. marec 2024",
-    slug: "organizacija-dogodka-photo-booth",
-  },
-  {
-    title: "5 razlogov za najem 360° photo bootha",
-    excerpt:
-      "Odkrijte, zakaj je 360° photo booth popolna izbira za moderne dogodke.",
-    image: "/application/360-hero-image.webp",
-    date: "12. marec 2024",
-    slug: "razlogi-360-photo-booth",
-  },
-  {
-    title: "Najboljši rekviziti za photo booth",
-    excerpt:
-      "Seznam najbolj priljubljenih rekvizitov in kako jih uporabiti za najboljše fotografije.",
-    image: "/application/photo-booth.webp",
-    date: "10. marec 2024",
-    slug: "rekviziti-photo-booth",
-  },
-  {
-    title: "Photo booth na korporativnih dogodkih",
-    excerpt:
-      "Kako lahko photo booth popestri vaš poslovni dogodek in poveča engagement.",
-    image: "/application/promo-image.webp",
-    date: "8. marec 2024",
-    slug: "korporativni-dogodki-photo-booth",
-  },
-  {
-    title: "Najnovejši trendi v photo booth ozadjih",
-    excerpt:
-      "Spoznajte moderne trende v dizajnu ozadij za photo booth fotografije.",
-    image: "/application/basic-booth-hero-image.webp",
-    date: "5. marec 2024",
-    slug: "trendi-ozadja-photo-booth",
-  },
-  {
-    title: "Kako izbrati lokacijo za photo booth",
-    excerpt:
-      "Vodič po izbiri najboljše lokacije za postavitev photo bootha na vašem dogodku.",
-    image: "/application/360-hero-image.webp",
-    date: "3. marec 2024",
-    slug: "lokacija-photo-booth",
-  },
-];
+  const featuredArticles = allPosts.slice(0, 3).map((post) => {
+    const properties = (post as PageObjectResponse).properties;
+    const nameProperty = properties.Name as {
+      type: "title";
+      title: Array<{ plain_text: string }>;
+    };
+    const slugProperty = properties.Slug as {
+      type: "rich_text";
+      rich_text: Array<{ plain_text: string }>;
+    };
 
-export default function BlogPage() {
+    const title = nameProperty.title[0]?.plain_text || "";
+    const slug = slugProperty.rich_text[0]?.plain_text || "";
+
+    return {
+      title,
+      excerpt: "", // We'll need to add this property to Notion if needed
+      image: "/application/photo-booth.webp", // Default image for now
+      date: new Date(post.created_time).toLocaleDateString("sl-SI", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+      slug,
+    };
+  });
+
+  const recentArticles = allPosts.slice(3).map((post) => {
+    const properties = (post as PageObjectResponse).properties;
+    const nameProperty = properties.Name as {
+      type: "title";
+      title: Array<{ plain_text: string }>;
+    };
+    const slugProperty = properties.Slug as {
+      type: "rich_text";
+      rich_text: Array<{ plain_text: string }>;
+    };
+
+    const title = nameProperty.title[0]?.plain_text || "";
+    const slug = slugProperty.rich_text[0]?.plain_text || "";
+
+    return {
+      title,
+      excerpt: "", // We'll need to add this property to Notion if needed
+      image: "/application/photo-booth.webp", // Default image for now
+      date: new Date(post.created_time).toLocaleDateString("sl-SI", {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }),
+      slug,
+    };
+  });
+
   return (
     <main className="pt-[48px]">
       <BlogSearch
