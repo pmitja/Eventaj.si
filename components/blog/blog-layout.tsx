@@ -9,6 +9,7 @@ export interface BlogLayoutProps {
     description: string;
     date: string;
     category: string;
+    featuredImage?: string;
   };
 }
 
@@ -25,7 +26,7 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
               <span>•</span>
               <Link
                 href={`/blog?category=${metadata.category.toLowerCase()}`}
-                className="text-brand hover:text-brand/80"
+                className="text-primary hover:text-primary/80"
               >
                 {metadata.category}
               </Link>
@@ -40,6 +41,19 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               {metadata.description}
             </p>
+
+            {/* Featured Image */}
+            {metadata.featuredImage && (
+              <div className="relative aspect-[16/9] mb-12 rounded-xl overflow-hidden">
+                <Image
+                  src={metadata.featuredImage}
+                  alt={metadata.title}
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+            )}
           </div>
         </div>
       </section>

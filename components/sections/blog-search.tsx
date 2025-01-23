@@ -140,6 +140,8 @@ export function BlogSearch({
     setIsSearching(!!searchQuery);
   };
 
+  console.log(featuredArticles);
+
   return (
     <>
       {/* Hero Section */}

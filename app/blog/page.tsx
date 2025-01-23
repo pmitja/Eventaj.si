@@ -3,6 +3,23 @@ import { fetchPages } from "@/lib/notion";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { Metadata } from "next";
 
+type NotionFileObject =
+  | {
+      file: { url: string; expiry_time: string };
+      name: string;
+      type?: "file";
+    }
+  | {
+      external: { url: string };
+      name: string;
+      type?: "external";
+    };
+
+interface NotionFileProperty {
+  type: "files";
+  files: NotionFileObject[];
+}
+
 export const metadata: Metadata = {
   title: "Blog | Eventaj.si",
   description:
@@ -33,6 +50,8 @@ export default async function BlogPage() {
 
   const featuredArticles = allPosts.slice(0, 3).map((post) => {
     const properties = (post as PageObjectResponse).properties;
+    console.log("Featured Image Property:", properties["Featured Image"]);
+
     const nameProperty = properties.Name as {
       type: "title";
       title: Array<{ plain_text: string }>;
@@ -44,11 +63,28 @@ export default async function BlogPage() {
 
     const title = nameProperty.title[0]?.plain_text || "";
     const slug = slugProperty.rich_text[0]?.plain_text || "";
+    const defaultImage = "/application/photo-booth.webp";
+
+    // Safely handle featured image property
+    let image = defaultImage;
+    const featuredImage = properties["Featured Image"] as NotionFileProperty;
+    if (
+      featuredImage &&
+      featuredImage.type === "files" &&
+      featuredImage.files?.length > 0
+    ) {
+      const file = featuredImage.files[0];
+      if ("file" in file) {
+        image = file.file.url;
+      } else if ("external" in file) {
+        image = file.external.url;
+      }
+    }
 
     return {
       title,
       excerpt: "", // We'll need to add this property to Notion if needed
-      image: "/application/photo-booth.webp", // Default image for now
+      image,
       date: new Date(post.created_time).toLocaleDateString("sl-SI", {
         day: "numeric",
         month: "long",
@@ -71,11 +107,28 @@ export default async function BlogPage() {
 
     const title = nameProperty.title[0]?.plain_text || "";
     const slug = slugProperty.rich_text[0]?.plain_text || "";
+    const defaultImage = "/application/photo-booth.webp";
+
+    // Safely handle featured image property
+    let image = defaultImage;
+    const featuredImage = properties["Featured Image"] as NotionFileProperty;
+    if (
+      featuredImage &&
+      featuredImage.type === "files" &&
+      featuredImage.files?.length > 0
+    ) {
+      const file = featuredImage.files[0];
+      if ("file" in file) {
+        image = file.file.url;
+      } else if ("external" in file) {
+        image = file.external.url;
+      }
+    }
 
     return {
       title,
       excerpt: "", // We'll need to add this property to Notion if needed
-      image: "/application/photo-booth.webp", // Default image for now
+      image,
       date: new Date(post.created_time).toLocaleDateString("sl-SI", {
         day: "numeric",
         month: "long",

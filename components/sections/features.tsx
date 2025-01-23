@@ -56,7 +56,7 @@ const Features = ({
             ))}
           </div>
         </div>
-        <div className="relative h-[300px] md:h-[400px] lg:h-full">
+        <div className="relative h-[500px] md:h-[400px] lg:h-full">
           {media.type === "image" ? (
             <Image
               src={media.src}
