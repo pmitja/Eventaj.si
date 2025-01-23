@@ -46,10 +46,10 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
 
       {/* Content Section */}
       <section className="py-8 md:py-12">
-        <div className="container mx-auto px-4">
-          <article className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-600 dark:prose-p:text-gray-300 prose-li:text-gray-600 dark:prose-li:text-gray-300 prose-img:rounded-xl prose-img:shadow-lg max-w-4xl mx-auto">
+        <div className="container mx-auto">
+          <div className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-600 dark:prose-p:text-white prose-li:text-gray-600 dark:prose-li:text-white prose-img:rounded-xl prose-img:shadow-lg max-w-4xl mx-auto">
             {children}
-          </article>
+          </div>
         </div>
       </section>
 

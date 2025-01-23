@@ -53,7 +53,7 @@ export function NotionContent({ recordMap }: NotionContentProps) {
         Modal,
       }}
       mapPageUrl={(pageId) => `/blog/${pageId}`}
-      className="prose prose-slate lg:prose-lg dark:prose-invert mx-auto max-w-4xl px-6 py-10"
+      className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-600 dark:prose-p:text-white prose-li:text-gray-600 dark:prose-li:text-white prose-img:rounded-xl prose-img:shadow-lg max-w-4xl mx-auto font-baloo"
     />
   );
 }

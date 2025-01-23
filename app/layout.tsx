@@ -1,7 +1,8 @@
-import { baloo2 } from "@/lib/fonts";
 import "@/app/globals.css";
+import "@/app/notion.css";
 import WithNavigation from "@/components/navigation/with-navigation";
 import { Footer } from "@/components/ui/footer-section";
+import { baloo2 } from "@/lib/fonts";
 import { ThemeProvider } from "@/providers/theme-provider";
 
 export const metadata = {

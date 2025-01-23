@@ -82,9 +82,7 @@ export default async function BlogPost({ params }: Props) {
         category: tags[0] || "Splošno", // Using first tag as category
       }}
     >
-      <article className="prose prose-slate lg:prose-lg dark:prose-invert mx-auto max-w-4xl px-6 py-10">
-        <NotionContent recordMap={recordMap} />
-      </article>
+      <NotionContent recordMap={recordMap} />
     </BlogLayout>
   );
 }

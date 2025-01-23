@@ -1,0 +1,228 @@
+
+/* Import prism theme for code highlighting */
+@import 'prismjs/themes/prism-tomorrow.css';
+
+/* Import katex styles for math equations */
+@import 'katex/dist/katex.min.css';
+
+/* Hide hash links */
+.notion-hash-link {
+  @apply hidden;
+}
+
+/* Custom styles for Notion content */
+.notion-content {
+  @apply max-w-none font-baloo;
+}
+
+.notion-page {
+  @apply pb-0 w-full;
+}
+
+/* Override prose styles for Notion elements */
+.prose .notion-title {
+  @apply !mt-0 !mb-6 !text-gray-900 dark:!text-white;
+}
+
+.prose .notion-h1,
+.prose .notion-h2,
+.prose .notion-h3 {
+  @apply !mt-8 !mb-4 !font-bold !text-gray-900 dark:!text-white;
+}
+
+.prose .notion-text {
+  @apply !my-4 !text-gray-600 dark:!text-white;
+}
+
+.prose .notion-list {
+  @apply !my-4 !text-gray-600 dark:!text-white;
+}
+
+.prose .notion-link {
+  @apply !text-primary hover:!text-primary/80 !no-underline hover:!underline;
+}
+
+.prose .notion-collection {
+  @apply !max-w-none;
+}
+
+.prose .notion-collection-row {
+  @apply hover:!bg-muted dark:hover:!bg-muted;
+}
+
+.prose .notion-bookmark {
+  @apply !border !border-border hover:!border-primary;
+}
+
+.prose .notion-code {
+  @apply !bg-muted !text-muted-foreground !p-4 !rounded-lg;
+}
+
+.prose .notion-inline-code {
+  @apply !bg-muted !text-muted-foreground !px-1.5 !py-0.5 !rounded !font-normal;
+}
+
+.prose .notion-equation {
+  @apply !my-4;
+}
+
+.prose .notion-collection-card {
+  @apply !bg-card !text-card-foreground !shadow-md hover:!shadow-lg !transition-shadow;
+}
+
+.prose .notion-collection-card-cover {
+  @apply !border-b !border-border;
+}
+
+.prose .notion-collection-card-property {
+  @apply !text-muted-foreground;
+}
+
+.prose .notion-table {
+  @apply !w-full !border-collapse !my-4;
+}
+
+.prose .notion-table-cell {
+  @apply !border !border-border !p-2 !text-gray-600 dark:!text-white;
+}
+
+.prose .notion-asset-wrapper {
+  @apply !max-w-none !my-4;
+}
+
+.prose .notion-asset-wrapper img {
+  @apply !rounded-lg !shadow-lg;
+}
+
+.prose .notion-page-cover {
+  @apply !max-w-none;
+}
+
+.prose .notion-quote {
+  @apply !border-l-4 !border-border !pl-4 !italic !text-gray-600 dark:!text-white !my-4 !font-normal;
+}
+
+.prose .notion-hr {
+  @apply !border-t !border-border !my-8;
+}
+
+.prose .notion-file {
+  @apply !flex !items-center !p-3 !rounded-lg !border !border-border hover:!border-primary;
+}
+
+.prose .notion-toggle {
+  @apply !mb-4;
+}
+
+.prose .notion-toggle summary {
+  @apply !cursor-pointer !text-gray-600 dark:!text-white;
+}
+
+.prose .notion-property-select {
+  @apply !inline-flex !items-center !px-2.5 !py-0.5 !rounded-full !text-xs !font-medium !bg-muted !text-muted-foreground;
+}
+
+.prose .notion-property-multi_select {
+  @apply !flex !flex-wrap !gap-1;
+}
+
+.prose .notion-property-multi_select-item {
+  @apply !inline-flex !items-center !px-2.5 !py-0.5 !rounded-full !text-xs !font-medium !bg-muted !text-muted-foreground;
+}
+
+/* Fix list styles */
+.prose ul[data-type="bulleted_list"] {
+  @apply !list-disc !pl-4;
+}
+
+.prose ol[data-type="numbered_list"] {
+  @apply !list-decimal !pl-4;
+}
+
+/* Fix image margins */
+.prose .notion-image-inset {
+  @apply !my-4;
+}
+
+/* Fix callout blocks */
+.prose .notion-callout {
+  @apply !my-4 !p-4 !rounded-lg !bg-muted !text-gray-600 dark:!text-white !border !border-border;
+}
+
+/* Fix column lists */
+.prose .notion-column-list {
+  @apply !gap-4 !my-4;
+}
+
+.notion-collection-column-title {
+  @apply text-gray-600 dark:text-white;
+}
+
+.notion-collection-row-property {
+  @apply text-gray-600 dark:text-white;
+}
+
+.notion-collection-row-value {
+  @apply text-gray-900 dark:text-white;
+}
+
+.notion-property-date {
+  @apply text-gray-600 dark:text-white;
+}
+
+.notion-property-person {
+  @apply flex items-center gap-1;
+}
+
+.notion-property-person-avatar {
+  @apply w-6 h-6 rounded-full;
+}
+
+.notion-property-checkbox {
+  @apply w-4 h-4 rounded border-border text-primary focus:ring-primary;
+}
+
+.notion-property-url {
+  @apply text-primary hover:text-primary/80;
+}
+
+.notion-property-email {
+  @apply text-primary hover:text-primary/80;
+}
+
+.notion-property-phone_number {
+  @apply text-primary hover:text-primary/80;
+}
+
+.notion-property-file {
+  @apply flex items-center gap-2;
+}
+
+.notion-property-file-icon {
+  @apply w-4 h-4 text-gray-600 dark:text-white;
+}
+
+.notion-property-formula {
+  @apply font-mono text-sm text-gray-600 dark:text-white;
+}
+
+.notion-property-relation {
+  @apply flex flex-wrap gap-1;
+}
+
+.notion-property-relation-item {
+  @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-muted text-gray-600 dark:text-white;
+}
+
+.notion-property-created_time,
+.notion-property-last_edited_time {
+  @apply text-gray-600 dark:text-white;
+}
+
+.notion-collection-view-type {
+  @apply text-gray-600 dark:text-white;
+}
+
+.notion-collection-view-type-active {
+  @apply text-primary;
+} 
