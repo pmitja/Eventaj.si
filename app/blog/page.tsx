@@ -50,7 +50,6 @@ export default async function BlogPage() {
 
   const featuredArticles = allPosts.slice(0, 3).map((post) => {
     const properties = (post as PageObjectResponse).properties;
-    console.log("Featured Image Property:", properties["Featured Image"]);
 
     const nameProperty = properties.Name as {
       type: "title";

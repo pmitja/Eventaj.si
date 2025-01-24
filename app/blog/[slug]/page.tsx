@@ -7,8 +7,8 @@ import { notFound } from "next/navigation";
 import { BlogPosting, WithContext } from "schema-dts";
 
 type Props = {
-  params: { slug: string };
-  searchParams: { [key: string]: string | string[] | undefined };
+  params: Promise<{ slug: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
 export async function generateStaticParams() {
@@ -25,7 +25,9 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const post = await fetchBySlug(params.slug);
+  // Await the params object to get the slug
+  const { slug } = await params;
+  const post = await fetchBySlug(slug);
 
   if (!post) {
     return {};
@@ -49,7 +51,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   // Construct the canonical URL
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://eventaj.si";
-  const postUrl = `${baseUrl}/blog/${params.slug}`;
+  const postUrl = `${baseUrl}/blog/${slug}`;
 
   return {
     title: seoTitle || title,
@@ -103,7 +105,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function BlogPost({ params }: Props) {
-  const post = await fetchBySlug(params.slug);
+  // Await the params object to get the slug
+  const { slug } = await params;
+  const post = await fetchBySlug(slug);
 
   if (!post) {
     notFound();
@@ -113,7 +117,7 @@ export default async function BlogPost({ params }: Props) {
 
   // Construct the canonical URL
   const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "https://eventaj.si";
-  const postUrl = `${baseUrl}/blog/${params.slug}`;
+  const postUrl = `${baseUrl}/blog/${slug}`;
 
   // Create the JSON-LD structured data
   const jsonLd: WithContext<BlogPosting> = {
