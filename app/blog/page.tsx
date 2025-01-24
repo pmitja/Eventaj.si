@@ -74,8 +74,9 @@ export default async function BlogPage({ searchParams }: Props) {
   const endIndex = startIndex + postsPerPage;
   const currentPosts = allPosts.slice(startIndex, endIndex);
 
-  const featuredArticles = currentPosts.slice(0, 3).map((post) => {
-    const properties = (post as PageObjectResponse).properties;
+  // Helper function to transform post data
+  const transformPost = (post: PageObjectResponse) => {
+    const properties = post.properties;
 
     const nameProperty = properties.Name as {
       type: "title";
@@ -85,9 +86,14 @@ export default async function BlogPage({ searchParams }: Props) {
       type: "rich_text";
       rich_text: Array<{ plain_text: string }>;
     };
+    const featuredProperty = properties.Featured as {
+      type: "checkbox";
+      checkbox: boolean;
+    };
 
     const title = nameProperty.title[0]?.plain_text || "";
     const slug = slugProperty.rich_text[0]?.plain_text || "";
+    const isFeatured = featuredProperty?.checkbox || false;
     const defaultImage = "/application/photo-booth.webp";
 
     // Safely handle featured image property
@@ -130,67 +136,36 @@ export default async function BlogPage({ searchParams }: Props) {
         year: "numeric",
       }),
       slug,
+      isFeatured,
     };
-  });
+  };
 
-  const recentArticles = currentPosts.slice(3).map((post) => {
-    const properties = (post as PageObjectResponse).properties;
+  // Get featured articles first
+  const featuredArticles = currentPosts
+    .map(transformPost)
+    .filter((post) => post.isFeatured)
+    .slice(0, 3);
 
-    const nameProperty = properties.Name as {
-      type: "title";
-      title: Array<{ plain_text: string }>;
-    };
-    const slugProperty = properties.Slug as {
-      type: "rich_text";
-      rich_text: Array<{ plain_text: string }>;
-    };
+  // Get remaining articles for the recent section
+  // If we don't have enough featured articles, fill with non-featured ones
+  const remainingArticles = currentPosts
+    .map(transformPost)
+    .filter(
+      (post) =>
+        !post.isFeatured || !featuredArticles.some((f) => f.slug === post.slug)
+    );
 
-    const title = nameProperty.title[0]?.plain_text || "";
-    const slug = slugProperty.rich_text[0]?.plain_text || "";
-    const defaultImage = "/application/photo-booth.webp";
+  // If we don't have enough featured articles, add some from the remaining ones
+  if (featuredArticles.length < 3) {
+    featuredArticles.push(
+      ...remainingArticles.slice(0, 3 - featuredArticles.length)
+    );
+  }
 
-    // Safely handle featured image property
-    let image = defaultImage;
-    const featuredImage = properties["Featured Image"] as NotionFileProperty;
-    if (
-      featuredImage &&
-      featuredImage.type === "files" &&
-      featuredImage.files.length > 0
-    ) {
-      const file = featuredImage.files[0];
-      if ("file" in file) {
-        image = file.file.url;
-      } else if ("external" in file) {
-        image = file.external.url;
-      }
-    }
-
-    // Get excerpt from description
-    const descriptionProperty = properties.Description as {
-      type: "rich_text";
-      rich_text: Array<{ plain_text: string }>;
-    };
-    const excerpt = descriptionProperty.rich_text[0]?.plain_text || "";
-
-    // Get date
-    const dateProperty = properties["Publishing Date"] as {
-      type: "date";
-      date: { start: string };
-    };
-    const date = dateProperty.date?.start || "";
-
-    return {
-      title,
-      excerpt,
-      image,
-      date: new Date(date).toLocaleDateString("sl-SI", {
-        day: "numeric",
-        month: "long",
-        year: "numeric",
-      }),
-      slug,
-    };
-  });
+  const recentArticles = remainingArticles.slice(
+    0,
+    postsPerPage - featuredArticles.length
+  );
 
   return (
     <>

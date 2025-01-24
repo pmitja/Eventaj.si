@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -15,6 +15,7 @@ interface Article {
   image: string;
   date: string;
   slug: string;
+  isFeatured?: boolean;
 }
 
 interface PaginationProps {
@@ -87,6 +88,13 @@ function BlogCard({
             isFeatured ? "h-48 md:h-64" : "h-48"
           )}
         >
+          {isFeatured && article.isFeatured && (
+            <div className="absolute top-4 right-4 z-10">
+              <span className="inline-flex items-center rounded-full bg-brand/10 px-3 py-1 text-sm font-medium text-brand ring-1 ring-inset ring-brand/20">
+                Izpostavljeno
+              </span>
+            </div>
+          )}
           <Image
             src={article.image}
             alt={article.title}
@@ -215,175 +223,153 @@ export function BlogSearch({
         </motion.div>
       </motion.section>
 
-      <AnimatePresence mode="wait">
-        {isSearching ? (
-          <motion.section
-            key="search-results"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={fadeIn}
-            className="py-16 md:py-24"
-          >
-            <div className="container mx-auto px-4">
-              <motion.h2
-                variants={fadeIn}
-                className="text-3xl md:text-4xl font-bold mb-4 text-center"
-              >
-                Rezultati iskanja
-              </motion.h2>
-              <motion.p
-                variants={fadeIn}
-                className="text-center text-gray-600 dark:text-gray-300 mb-12"
-              >
-                {filteredArticles.length === 0
-                  ? "Ni najdenih člankov"
-                  : `Najdenih ${filteredArticles.length} člankov`}
-              </motion.p>
-              <motion.div
-                variants={staggerContainer}
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-              >
-                {filteredArticles.map((article) => (
-                  <motion.div key={article.slug} variants={articleAnimation}>
-                    <BlogCard article={article} />
-                  </motion.div>
-                ))}
-              </motion.div>
-              {filteredArticles.length > 0 && (
-                <motion.div variants={fadeIn} className="mt-8 text-center">
-                  <Button
-                    variant="outline"
-                    onClick={() => {
-                      setSearchQuery("");
-                      setIsSearching(false);
-                    }}
-                  >
-                    Prikaži vse članke
-                  </Button>
+      {isSearching ? (
+        <motion.section
+          key="search-results"
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={fadeIn}
+          className="py-16 md:py-24"
+        >
+          <div className="container mx-auto px-4">
+            <motion.h2
+              variants={fadeIn}
+              className="text-3xl md:text-4xl font-bold mb-12 text-center"
+            >
+              {filteredArticles.length > 0
+                ? "Rezultati iskanja"
+                : "Ni najdenih člankov"}
+            </motion.h2>
+            <motion.div
+              variants={staggerContainer}
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            >
+              {filteredArticles.map((article) => (
+                <motion.div key={article.slug} variants={articleAnimation}>
+                  <BlogCard article={article} isFeatured={article.isFeatured} />
                 </motion.div>
-              )}
-            </div>
-          </motion.section>
-        ) : (
-          <motion.div
-            key="main-content"
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            variants={fadeIn}
-          >
-            {/* Featured Articles */}
-            {allArticles.length > 0 && (
-              <motion.section
-                variants={fadeIn}
-                className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900"
-              >
-                <div className="container mx-auto px-4">
-                  <motion.h2
-                    variants={fadeIn}
-                    className="text-3xl md:text-4xl font-bold mb-12 text-center"
-                  >
-                    Izpostavljeni članki
-                  </motion.h2>
-                  <motion.div
-                    variants={staggerContainer}
-                    className="grid grid-cols-1 md:grid-cols-3 gap-8"
-                  >
-                    {allArticles.slice(0, 3).map((article) => (
+              ))}
+            </motion.div>
+          </div>
+        </motion.section>
+      ) : (
+        <motion.div
+          key="main-content"
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          variants={fadeIn}
+        >
+          {/* Featured Articles */}
+          {featuredArticles.length > 0 && (
+            <motion.section
+              variants={fadeIn}
+              className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900"
+            >
+              <div className="container mx-auto px-4">
+                <motion.h2
+                  variants={fadeIn}
+                  className="text-3xl md:text-4xl font-bold mb-12 text-center"
+                >
+                  Izpostavljeni članki
+                </motion.h2>
+                <motion.div
+                  variants={staggerContainer}
+                  className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                >
+                  {featuredArticles
+                    .filter((article) => article.isFeatured)
+                    .map((article) => (
                       <motion.div
                         key={article.slug}
                         variants={articleAnimation}
                       >
-                        <BlogCard article={article} isFeatured />
+                        <BlogCard article={article} isFeatured={true} />
                       </motion.div>
                     ))}
-                  </motion.div>
-                </div>
-              </motion.section>
-            )}
+                </motion.div>
+              </div>
+            </motion.section>
+          )}
 
-            {/* Recent Articles */}
-            {allArticles.length > 3 && (
-              <motion.section variants={fadeIn} className="py-16 md:py-24">
-                <div className="container mx-auto px-4">
-                  <motion.h2
-                    variants={fadeIn}
-                    className="text-3xl md:text-4xl font-bold mb-12 text-center"
-                  >
-                    Vsi članki
-                  </motion.h2>
-                  <motion.div
-                    variants={staggerContainer}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                  >
-                    {allArticles.slice(3).map((article) => (
-                      <motion.div
-                        key={article.slug}
-                        variants={articleAnimation}
-                      >
-                        <BlogCard article={article} />
-                      </motion.div>
-                    ))}
-                  </motion.div>
-                </div>
-              </motion.section>
-            )}
-
-            {/* Pagination */}
-            {pagination.totalPages > 1 && (
-              <motion.div
-                variants={fadeIn}
-                className="mt-12 flex justify-center gap-2"
-              >
-                {pagination.currentPage > 1 && (
-                  <Link
-                    href={`/blog?page=${pagination.currentPage - 1}`}
-                    className={cn(
-                      "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
-                      "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600",
-                      "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
-                    )}
-                  >
-                    Prejšnja
-                  </Link>
-                )}
-                <div className="flex gap-2">
-                  {Array.from(
-                    { length: pagination.totalPages },
-                    (_, i) => i + 1
-                  ).map((page) => (
-                    <Link
-                      key={page}
-                      href={`/blog?page=${page}`}
-                      className={cn(
-                        "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
-                        page === pagination.currentPage
-                          ? "bg-brand text-white"
-                          : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
-                      )}
-                    >
-                      {page}
-                    </Link>
+          {/* Recent Articles */}
+          {recentArticles.length > 0 && (
+            <motion.section variants={fadeIn} className="py-16 md:py-24">
+              <div className="container mx-auto px-4">
+                <motion.h2
+                  variants={fadeIn}
+                  className="text-3xl md:text-4xl font-bold mb-12 text-center"
+                >
+                  Vsi članki
+                </motion.h2>
+                <motion.div
+                  variants={staggerContainer}
+                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                >
+                  {recentArticles.map((article) => (
+                    <motion.div key={article.slug} variants={articleAnimation}>
+                      <BlogCard article={article} />
+                    </motion.div>
                   ))}
-                </div>
-                {pagination.currentPage < pagination.totalPages && (
+                </motion.div>
+              </div>
+            </motion.section>
+          )}
+
+          {/* Pagination */}
+          {pagination.totalPages > 1 && (
+            <motion.div
+              variants={fadeIn}
+              className="mt-12 flex justify-center gap-2"
+            >
+              {pagination.currentPage > 1 && (
+                <Link
+                  href={`/blog?page=${pagination.currentPage - 1}`}
+                  className={cn(
+                    "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
+                    "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600",
+                    "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  )}
+                >
+                  Prejšnja
+                </Link>
+              )}
+              <div className="flex gap-2">
+                {Array.from(
+                  { length: pagination.totalPages },
+                  (_, i) => i + 1
+                ).map((page) => (
                   <Link
-                    href={`/blog?page=${pagination.currentPage + 1}`}
+                    key={page}
+                    href={`/blog?page=${page}`}
                     className={cn(
                       "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
-                      "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600",
-                      "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      page === pagination.currentPage
+                        ? "bg-brand text-white"
+                        : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
                     )}
                   >
-                    Naslednja
+                    {page}
                   </Link>
-                )}
-              </motion.div>
-            )}
-          </motion.div>
-        )}
-      </AnimatePresence>
+                ))}
+              </div>
+              {pagination.currentPage < pagination.totalPages && (
+                <Link
+                  href={`/blog?page=${pagination.currentPage + 1}`}
+                  className={cn(
+                    "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
+                    "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600",
+                    "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                  )}
+                >
+                  Naslednja
+                </Link>
+              )}
+            </motion.div>
+          )}
+        </motion.div>
+      )}
     </>
   );
 }
