@@ -2,6 +2,42 @@ import { BlogSearch } from "@/components/sections/blog-search";
 import { fetchPages } from "@/lib/notion";
 import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import { Metadata } from "next";
+import { JsonLd } from "react-schemaorg";
+import { Blog, WebSite } from "schema-dts";
+
+export const metadata: Metadata = {
+  title: "Blog | Nasveti za Dogodke in Zabave | Eventaj.si",
+  description:
+    "Odkrijte nasvete za organizacijo dogodkov, ideje za poroke in zabave, ter trende v svetu photo booth fotografiranja. Strokovni nasveti in praktične rešitve.",
+  keywords: [
+    "blog o dogodkih",
+    "nasveti za poroko",
+    "organizacija zabave",
+    "photo booth ideje",
+    "trendi v fotografiji",
+    "nasveti za dogodke",
+    "ideje za zabavo",
+    "photo booth nasveti",
+    "organizacija dogodkov",
+  ],
+  openGraph: {
+    title: "Blog | Nasveti za Dogodke in Zabave | Eventaj.si",
+    description:
+      "Odkrijte nasvete za organizacijo dogodkov, ideje za poroke in zabave, ter trende v svetu photo booth fotografiranja. Strokovni nasveti in praktične rešitve.",
+    url: "https://eventaj.si/blog",
+    siteName: "Eventaj.si",
+    images: [
+      {
+        url: "/og/blog.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Eventaj.si Blog - Nasveti za Dogodke",
+      },
+    ],
+    locale: "sl_SI",
+    type: "website",
+  },
+};
 
 type NotionFileObject =
   | {
@@ -20,42 +56,16 @@ interface NotionFileProperty {
   files: NotionFileObject[];
 }
 
-export const metadata: Metadata = {
-  title: "Blog | Eventaj.si",
-  description:
-    "Odkrijte nasvete in trende za organizacijo dogodkov na Eventaj.si blogu.",
-  keywords:
-    "blog, photo booth blog, 360 photo booth blog, photo booth nasveti, organizacija dogodkov",
-  openGraph: {
-    title: "Blog | Eventaj.si",
-    description:
-      "Odkrijte nasvete in trende za organizacijo dogodkov na Eventaj.si blogu.",
-    url: "https://eventaj.si/blog",
-    siteName: "Eventaj.si Blog",
-    images: [
-      {
-        url: "https://eventaj.si/application/blog-hero.webp",
-        width: 1200,
-        height: 630,
-        alt: "Eventaj.si Blog",
-      },
-    ],
-    type: "website",
-  },
-  alternates: {
-    canonical: "https://eventaj.si/blog",
-  },
-};
-
 export default async function BlogPage({
   searchParams,
 }: {
-  searchParams: { page?: string };
+  searchParams: { [key: string]: string | string[] | undefined };
 }) {
   const allPosts = await fetchPages();
   const currentPage = Number(searchParams.page) || 1;
   const postsPerPage = 6;
-  const totalPages = Math.ceil(allPosts.length / postsPerPage);
+  const totalPosts = allPosts.length;
+  const totalPages = Math.ceil(totalPosts / postsPerPage);
 
   // Calculate start and end indices for current page
   const startIndex = (currentPage - 1) * postsPerPage;
@@ -181,15 +191,50 @@ export default async function BlogPage({
   });
 
   return (
-    <BlogSearch
-      featuredArticles={featuredArticles}
-      recentArticles={recentArticles}
-      pagination={{
-        currentPage,
-        totalPages,
-        postsPerPage,
-        totalPosts: allPosts.length,
-      }}
-    />
+    <>
+      <JsonLd<Blog>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "Blog",
+          name: "Eventaj.si Blog",
+          description:
+            "Blog o organizaciji dogodkov, photo booth fotografiranju in zabavah",
+          publisher: {
+            "@type": "Organization",
+            name: "Eventaj.si",
+            logo: {
+              "@type": "ImageObject",
+              url: "https://eventaj.si/logo.png",
+            },
+          },
+          url: "https://eventaj.si/blog",
+        }}
+      />
+      <JsonLd<WebSite>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Eventaj.si Blog",
+          url: "https://eventaj.si/blog",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://eventaj.si/blog?search={search_term_string}",
+          },
+        }}
+      />
+
+      <main className="pt-[48px]">
+        <BlogSearch
+          featuredArticles={featuredArticles}
+          recentArticles={recentArticles}
+          pagination={{
+            currentPage,
+            totalPages,
+            postsPerPage,
+            totalPosts,
+          }}
+        />
+      </main>
+    </>
   );
 }

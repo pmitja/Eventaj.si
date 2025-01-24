@@ -96,7 +96,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       },
     },
     verification: {
-      google: "your-google-verification-code", // Add your verification code
+      google: "your-google-verification-code",
     },
     other: {
       "og:locale": "sl_SI",
