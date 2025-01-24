@@ -23,8 +23,7 @@ const navigation = {
   ],
   legal: [
     { name: "Zasebnost", href: "/zasebnost" },
-    { name: "Pogoji uporabe", href: "/pogoji" },
-    { name: "Piškotki", href: "/piskotki" },
+    { name: "Pogoji uporabe", href: "/pogoji-uporabe" },
   ],
   social: [
     { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
@@ -33,7 +32,11 @@ const navigation = {
     { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
   ],
   contact: {
-    address: ["Slomškova ulica 1", "2230 Lenart v Slovenskih goricah"],
+    address: [
+      "MIPA, Mitja Pak s.p.",
+      "Slomškova ulica 1",
+      "2230 Lenart v Slovenskih goricah",
+    ],
     phone: "+386 31 285 143 / +386 31 544 751",
     email: "info@360booth.si",
   },
