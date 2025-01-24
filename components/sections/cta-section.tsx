@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { HeroBookingDialog } from "./hero-booking-dialog";
 
 interface CTAProps {
   badge?: {
@@ -11,7 +12,6 @@ interface CTAProps {
   description?: string;
   action: {
     text: string;
-    href: string;
     variant?: "default" | "outline" | "glow";
   };
   withGlow?: boolean;
@@ -37,15 +37,15 @@ export function CTASection({
             {description}
           </p>
         )}
-
-        <Button
-          variant="glow"
-          size="lg"
-          className="opacity-0 animate-fade-in-up delay-500"
-          asChild
-        >
-          <a href={action.href}>{action.text}</a>
-        </Button>
+        <HeroBookingDialog>
+          <Button
+            variant="glow"
+            size="lg"
+            className="opacity-0 animate-fade-in-up delay-500"
+          >
+            {action.text}
+          </Button>
+        </HeroBookingDialog>
 
         {withGlow && (
           <div className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 animate-scale-in delay-700">

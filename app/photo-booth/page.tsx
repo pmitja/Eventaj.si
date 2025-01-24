@@ -3,7 +3,10 @@ import { CTASection } from "@/components/sections/cta-section";
 import Features from "@/components/sections/features";
 import { basicBoothFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
-import { PricingPlans } from "@/components/sections/pricing-plans";
+import {
+  PricingPlans,
+  type PricingPlan,
+} from "@/components/sections/pricing-plans";
 import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import WhenToChoose from "@/components/sections/when-to-choose";
@@ -49,73 +52,72 @@ const testimonials = [
   },
 ];
 
-const pricingPlans = [
+const pricingPlans: PricingPlan[] = [
   {
-    name: "Mini paket",
-    price: "249",
-    period: "2 uri",
-    features: [
-      "najem do 2 uri",
-      "do 150 natisnjenih fotografij",
-      "neomejeno število posnetih fotografij",
-      "vključeni različni rekviziti",
-      "priprava ozadja (4 predlogi)",
-      "priprava digitalnega okvirja (4 predlogi)",
-      "delitev fotografij preko QR kode, Airdrop-a, SMS-a, elektronskega naslova",
-      "Google drive album z vsemi fotografijami",
-      "pomoč pri uporabi",
-    ],
-    description: "Idealno za manjše dogodke in zabave",
-    buttonText: "Rezerviraj termin",
-    href: "/kontakt",
-    isPopular: false,
-  },
-  {
-    name: "Osnovni paket",
+    name: "Basic",
     price: "299",
-    period: "3 ure",
+    period: "dogodek",
     features: [
-      "najem do 3 ure",
-      "do 250 natisnjenih fotografij",
-      "neomejeno število posnetih fotografij",
-      "vključeni različni rekviziti",
-      "priprava ozadja (4 predlogi)",
-      "priprava digitalnega okvirja (4 predlogi)",
-      "delitev fotografij preko QR kode, Airdrop-a, SMS-a, elektronskega naslova",
-      "Google drive album z vsemi fotografijami",
-      "izbira različnih filtrov",
-      "možnost posnetka v načinu Boomerang ali GIF",
-      "album + pisalo (srebrne ali zlate barve)",
-      "pomoč pri uporabi",
+      "2 uri najema",
+      "Neomejeno število fotografij",
+      "Dostava in postavitev",
+      "Operater za celoten čas najema",
+      "Rekviziti za fotografiranje",
+      "Takojšnje tiskanje fotografij",
+      "Digitalne fotografije",
     ],
-    description: "Najpogostejša izbira za poroke in večje dogodke",
+    description: "Popoln paket za manjše dogodke in zabave.",
     buttonText: "Rezerviraj termin",
-    href: "/kontakt",
-    isPopular: true,
+    href: "#",
+    isPopular: false,
+    action: {
+      text: "Rezerviraj termin",
+    },
   },
   {
-    name: "Maxi paket",
-    price: "349",
-    period: "4 ure",
+    name: "Standard",
+    price: "399",
+    period: "dogodek",
     features: [
-      "najem do 4 ure",
-      "neomejeno natisnjenih fotografij",
-      "neomejeno število posnetih fotografij",
-      "vključeni različni rekviziti",
-      "priprava ozadja (4 predlogi)",
-      "priprava digitalnega okvirja (4 predlogi)",
-      "delitev fotografij preko QR kode, Airdrop-a, SMS-a, elektronskega naslova",
-      "Google drive album z vsemi fotografijami",
-      "izbira različnih filtrov",
-      "možnost posnetka v načinu Boomerang ali GIF",
-      "album + pisalo (srebrne ali zlate barve)",
-      "možnost uporabe AI orodij znotraj aplikacije",
-      "pomoč pri uporabi",
+      "3 ure najema",
+      "Neomejeno število fotografij",
+      "Dostava in postavitev",
+      "Operater za celoten čas najema",
+      "Rekviziti za fotografiranje",
+      "Takojšnje tiskanje fotografij",
+      "Digitalne fotografije",
+      "Personalizacija fotografij",
     ],
-    description: "Za tiste, ki želijo popolno izkušnjo",
+    description: "Najbolj priljubljen paket za večje dogodke.",
     buttonText: "Rezerviraj termin",
-    href: "/kontakt",
+    href: "#",
+    isPopular: true,
+    action: {
+      text: "Rezerviraj termin",
+    },
+  },
+  {
+    name: "Premium",
+    price: "499",
+    period: "dogodek",
+    features: [
+      "4 ure najema",
+      "Neomejeno število fotografij",
+      "Dostava in postavitev",
+      "Operater za celoten čas najema",
+      "Premium rekviziti",
+      "Takojšnje tiskanje fotografij",
+      "Digitalne fotografije",
+      "Personalizacija fotografij",
+      "Online galerija",
+    ],
+    description: "Premium paket za posebne priložnosti.",
+    buttonText: "Rezerviraj termin",
+    href: "#",
     isPopular: false,
+    action: {
+      text: "Rezerviraj termin",
+    },
   },
 ];
 
@@ -133,10 +135,9 @@ export default function Home() {
       <PricingPlans plans={pricingPlans} />
       <CTASection
         title="Ne najdete ustreznega paketa?"
-        description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
+        description="Rezervirajte termin še danes."
         action={{
-          text: "Kontaktirajte nas",
-          href: "/kontakt",
+          text: "Rezervirajte termin",
           variant: "glow",
         }}
         withGlow={true}

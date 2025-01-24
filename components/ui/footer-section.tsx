@@ -9,8 +9,9 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
-import { Facebook, Instagram, Linkedin, Send, Twitter } from "lucide-react";
+import { Facebook, Instagram, Send } from "lucide-react";
 import Link from "next/link";
+import TikTok from "../icons/TikTok";
 
 const navigation = {
   main: [
@@ -26,10 +27,21 @@ const navigation = {
     { name: "Pogoji uporabe", href: "/pogoji-uporabe" },
   ],
   social: [
-    { name: "Facebook", icon: Facebook, href: "https://facebook.com" },
-    { name: "Instagram", icon: Instagram, href: "https://instagram.com" },
-    { name: "Twitter", icon: Twitter, href: "https://twitter.com" },
-    { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com" },
+    {
+      name: "Facebook",
+      icon: Facebook,
+      href: "https://www.facebook.com/profile.php?id=61567672817538",
+    },
+    {
+      name: "Instagram",
+      icon: Instagram,
+      href: "https://www.instagram.com/eventaj.si/profilecard/?igsh=MWZtMWx4N2dsNDc0dA==",
+    },
+    {
+      name: "TikTok",
+      icon: TikTok,
+      href: "https://www.tiktok.com/@eventaj.si?_t=ZN-8tKYVf1BUcI&_r=1",
+    },
   ],
   contact: {
     address: [

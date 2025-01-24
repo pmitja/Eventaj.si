@@ -161,10 +161,9 @@ export default function Home() {
       {/* CTA Section */}
       <CTASection
         title="Vas zanima naš photo booth?"
-        description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
+        description="Rezervirajte termin še danes."
         action={{
-          text: "Kontaktirajte nas",
-          href: "/kontakt",
+          text: "Rezervirajte termin",
           variant: "glow",
         }}
         withGlow={true}

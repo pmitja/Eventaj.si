@@ -1,11 +1,12 @@
 "use client";
 
-import { buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
+import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
 import { motion } from "framer-motion";
 import { Check, Star } from "lucide-react";
-import Link from "next/link";
-import { useMediaQuery } from "@/hooks/use-media-query";
+import { usePathname } from "next/navigation";
+import { HeroBookingDialog } from "../sections/hero-booking-dialog";
 
 interface PricingPlan {
   name: string;
@@ -16,7 +17,13 @@ interface PricingPlan {
   buttonText: string;
   href: string;
   isPopular: boolean;
+  action: {
+    text: string;
+    variant?: "default" | "outline" | "glow";
+  };
 }
+
+export type { PricingPlan };
 
 interface PricingProps {
   plans: PricingPlan[];
@@ -30,6 +37,14 @@ export function PricingPlans({
   description = "Vsi paketi vključujejo dostavo, postavitev in operaterja za celoten čas najema.",
 }: PricingProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
+  const pathname = usePathname();
+
+  // Determine the default booth type based on the current page
+  const getDefaultBoothType = () => {
+    if (pathname === "/photo-booth") return "photo-booth";
+    if (pathname === "/360-booth") return "360-booth";
+    return undefined;
+  };
 
   return (
     <div className="container py-20">
@@ -109,18 +124,17 @@ export function PricingPlans({
               </ul>
 
               <div className="mt-auto pt-8">
-                <Link
-                  href={plan.href}
-                  className={cn(
-                    buttonVariants({
-                      variant: plan.isPopular ? "glow" : "outline",
-                    }),
-                    "group relative w-full gap-2 overflow-hidden text-lg font-semibold tracking-tighter",
-                    "opacity-0 animate-fade-in-up delay-500"
-                  )}
+                <HeroBookingDialog
+                  defaultBoothType={getDefaultBoothType()}
+                  defaultPackage={index}
                 >
-                  {plan.buttonText}
-                </Link>
+                  <Button
+                    variant={"glow"}
+                    className="group relative w-full gap-2 overflow-hidden text-lg font-semibold tracking-tighter"
+                  >
+                    {plan.action.text}
+                  </Button>
+                </HeroBookingDialog>
                 <p className="mt-6 text-xs leading-5 text-muted-foreground">
                   {plan.description}
                 </p>
