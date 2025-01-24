@@ -45,11 +45,11 @@ const Navbar = ({ scrolled }: NavbarProps) => {
         "fixed left-0 right-0 z-40 transition-all duration-300",
         scrolled || isOpen
           ? "top-0 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm text-foreground"
-          : "top-14 sm:top-12 bg-background/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none text-foreground dark:text-white"
+          : "top-14 sm:top-12 bg-background/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none text-white"
       )}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center h-20">
+        <div className="flex items-center h-20 ">
           {/* Logo */}
           <Link
             href="/"
