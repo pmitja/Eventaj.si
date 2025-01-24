@@ -1,4 +1,4 @@
-import { CTASection } from "@/components/sections/cta-section";
+import { CTAContactSection } from "@/components/sections/cta-contact-section";
 import Features from "@/components/sections/features";
 import { threeSixtyFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
@@ -109,14 +109,14 @@ export default function Home() {
       <Features {...threeSixtyFeatures} />
       <HowItWorks type="360" />
       <PricingPlans plans={pricingPlans} />
-      <CTASection
+      <CTAContactSection
         title="Ne najdete ustreznega paketa?"
         description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
         action={{
-          text: "Kontaktirajte nas",
+          text: "Pošlji povpraševanje",
           variant: "glow",
         }}
-        withGlow={true}
+        isGlow={true}
       />
       <TestimonialsSection
         title="Kaj pravijo naši zadovoljni uporabniki"

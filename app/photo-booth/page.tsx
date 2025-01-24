@@ -1,5 +1,5 @@
 import BasicBoothHero from "@/components/basic-booth-hero";
-import { CTASection } from "@/components/sections/cta-section";
+import { CTAContactSection } from "@/components/sections/cta-contact-section";
 import Features from "@/components/sections/features";
 import { basicBoothFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
@@ -121,14 +121,14 @@ export default function Home() {
       <Features {...basicBoothFeatures} />
       <HowItWorks type="basic" />
       <PricingPlans plans={pricingPlans} />
-      <CTASection
+      <CTAContactSection
         title="Ne najdete ustreznega paketa?"
-        description="Rezervirajte termin še danes."
+        description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
         action={{
-          text: "Rezervirajte termin",
+          text: "Pošlji povpraševanje",
           variant: "glow",
         }}
-        withGlow={true}
+        isGlow={true}
       />
       <TestimonialsSection
         title="Kaj pravijo naši zadovoljni uporabniki"
