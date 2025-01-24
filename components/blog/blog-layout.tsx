@@ -15,10 +15,10 @@ export interface BlogLayoutProps {
 
 export function BlogLayout({ children, metadata }: BlogLayoutProps) {
   return (
-    <main className="pt-[48px]">
+    <main className="container-lg mx-auto mt-24 md:mt-28">
       {/* Hero Section */}
       <section className="relative">
-        <div className="container mx-auto px-4 py-12 md:py-16">
+        <div className="pt-12 md:pt-16">
           <div className="max-w-4xl mx-auto">
             {/* Metadata */}
             <div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 mb-6">
@@ -44,7 +44,7 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
 
             {/* Featured Image */}
             {metadata.featuredImage && (
-              <div className="relative aspect-[16/9] mb-12 rounded-xl overflow-hidden">
+              <div className="relative aspect-[16/9] mb-8 rounded-xl overflow-hidden">
                 <Image
                   src={metadata.featuredImage}
                   alt={metadata.title}
@@ -59,16 +59,14 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
       </section>
 
       {/* Content Section */}
-      <section className="py-8 md:py-12">
-        <div className="container mx-auto">
-          <div className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-600 dark:prose-p:text-white prose-li:text-gray-600 dark:prose-li:text-white prose-img:rounded-xl prose-img:shadow-lg max-w-4xl mx-auto">
-            {children}
-          </div>
+      <section className="pb-4 md:pb-8">
+        <div className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-600 dark:prose-p:text-white prose-li:text-gray-600 dark:prose-li:text-white prose-img:rounded-xl prose-img:shadow-lg max-w-4xl mx-auto">
+          {children}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-16 md:py-24">
+      <section className="full-width relative py-16 md:py-24">
         <div className="absolute inset-0 z-0">
           <Image
             src="/application/blog-hero.webp"

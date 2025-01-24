@@ -180,3 +180,12 @@
 .rdp-button:hover:not([disabled]):not(.rdp-day_selected) {
   @apply bg-accent dark:bg-gray-700;
 }
+
+.full-width {
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+}
