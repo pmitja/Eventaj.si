@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
+import { HeroBookingDialog } from "../sections/hero-booking-dialog";
 
 export interface BlogLayoutProps {
   children: React.ReactNode;
@@ -78,22 +79,16 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Želite izvedeti več?
+            Želite popestriti vaše dogodke?
           </h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Kontaktirajte nas za več informacij o naših photo booth storitvah.
+            Izberite si paket, ki vam najbolj ustreza. Pošljite povpraševanje in
+            rezervirajte termin.
           </p>
           <div className="flex items-center justify-center gap-4">
-            <Button variant="glow" asChild>
-              <Link href="/kontakt">Kontaktirajte nas</Link>
-            </Button>
-            <Button
-              variant="outline"
-              className="text-white border-white"
-              asChild
-            >
-              <Link href="/cenik">Oglejte si cenik</Link>
-            </Button>
+            <HeroBookingDialog>
+              <Button variant="glow">Rezerviraj termin</Button>
+            </HeroBookingDialog>
           </div>
         </div>
       </section>

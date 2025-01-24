@@ -4,9 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 interface Article {
@@ -17,9 +17,17 @@ interface Article {
   slug: string;
 }
 
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  postsPerPage: number;
+  totalPosts: number;
+}
+
 interface BlogSearchProps {
   featuredArticles: Article[];
   recentArticles: Article[];
+  pagination: PaginationProps;
 }
 
 const fadeIn = {
@@ -50,13 +58,12 @@ function BlogCard({
   article: Article;
   isFeatured?: boolean;
 }) {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
 
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    router.push(`/blog/${article.slug}`);
+    window.location.href = `/blog/${article.slug}`;
   };
 
   return (
@@ -121,6 +128,7 @@ function BlogCard({
 export function BlogSearch({
   featuredArticles,
   recentArticles,
+  pagination,
 }: BlogSearchProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [isSearching, setIsSearching] = useState(false);
@@ -159,6 +167,7 @@ export function BlogSearch({
           />
           <div className="absolute inset-0 bg-black/60" />
         </div>
+
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -188,13 +197,16 @@ export function BlogSearch({
             className="max-w-md mx-auto"
           >
             <form onSubmit={handleSearch} className="flex gap-2">
-              <Input
-                type="search"
-                placeholder="Išči članke..."
-                className="bg-white/10 border-white/20 text-white placeholder:text-white/60"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
+              <div className="relative flex-1">
+                <Input
+                  type="search"
+                  placeholder="Išči članke..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full pl-12 bg-white/10 border-white/20 text-white placeholder:text-white/60"
+                />
+                <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
+              </div>
               <Button type="submit" variant="glow">
                 Išči
               </Button>
@@ -262,85 +274,113 @@ export function BlogSearch({
             variants={fadeIn}
           >
             {/* Featured Articles */}
-            <motion.section
-              variants={fadeIn}
-              className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900"
-            >
-              <div className="container mx-auto px-4">
-                <motion.h2
-                  variants={fadeIn}
-                  className="text-3xl md:text-4xl font-bold mb-12 text-center"
-                >
-                  Izpostavljeni članki
-                </motion.h2>
-                <motion.div
-                  variants={staggerContainer}
-                  className="grid grid-cols-1 md:grid-cols-3 gap-8"
-                >
-                  {featuredArticles.map((article) => (
-                    <motion.div key={article.slug} variants={articleAnimation}>
-                      <BlogCard article={article} isFeatured />
-                    </motion.div>
-                  ))}
-                </motion.div>
-              </div>
-            </motion.section>
+            {allArticles.length > 0 && (
+              <motion.section
+                variants={fadeIn}
+                className="py-16 md:py-24 bg-gray-50 dark:bg-gray-900"
+              >
+                <div className="container mx-auto px-4">
+                  <motion.h2
+                    variants={fadeIn}
+                    className="text-3xl md:text-4xl font-bold mb-12 text-center"
+                  >
+                    Izpostavljeni članki
+                  </motion.h2>
+                  <motion.div
+                    variants={staggerContainer}
+                    className="grid grid-cols-1 md:grid-cols-3 gap-8"
+                  >
+                    {allArticles.slice(0, 3).map((article) => (
+                      <motion.div
+                        key={article.slug}
+                        variants={articleAnimation}
+                      >
+                        <BlogCard article={article} isFeatured />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.section>
+            )}
 
             {/* Recent Articles */}
-            <motion.section variants={fadeIn} className="py-16 md:py-24">
-              <div className="container mx-auto px-4">
-                <motion.h2
-                  variants={fadeIn}
-                  className="text-3xl md:text-4xl font-bold mb-12 text-center"
-                >
-                  Najnovejši članki
-                </motion.h2>
-                <motion.div
-                  variants={staggerContainer}
-                  className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
-                >
-                  {recentArticles.map((article) => (
-                    <motion.div key={article.slug} variants={articleAnimation}>
-                      <BlogCard article={article} />
-                    </motion.div>
-                  ))}
-                </motion.div>
+            {allArticles.length > 3 && (
+              <motion.section variants={fadeIn} className="py-16 md:py-24">
+                <div className="container mx-auto px-4">
+                  <motion.h2
+                    variants={fadeIn}
+                    className="text-3xl md:text-4xl font-bold mb-12 text-center"
+                  >
+                    Vsi članki
+                  </motion.h2>
+                  <motion.div
+                    variants={staggerContainer}
+                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                  >
+                    {allArticles.slice(3).map((article) => (
+                      <motion.div
+                        key={article.slug}
+                        variants={articleAnimation}
+                      >
+                        <BlogCard article={article} />
+                      </motion.div>
+                    ))}
+                  </motion.div>
+                </div>
+              </motion.section>
+            )}
 
-                {/* Pagination */}
-                <motion.div
-                  variants={fadeIn}
-                  className="mt-12 flex justify-center gap-2"
-                >
-                  <Button variant="outline" disabled>
+            {/* Pagination */}
+            {pagination.totalPages > 1 && (
+              <motion.div
+                variants={fadeIn}
+                className="mt-12 flex justify-center gap-2"
+              >
+                {pagination.currentPage > 1 && (
+                  <Link
+                    href={`/blog?page=${pagination.currentPage - 1}`}
+                    className={cn(
+                      "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
+                      "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600",
+                      "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    )}
+                  >
                     Prejšnja
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="bg-brand hover:bg-brand hover:text-gray-300 text-gray-900 dark:text-white"
-                  >
-                    1
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="hover:bg-brand hover:text-gray-300 text-gray-900 dark:text-white"
-                  >
-                    2
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="hover:bg-brand hover:text-gray-300 text-gray-900 dark:text-white"
-                  >
-                    3
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="hover:bg-brand hover:text-gray-300 text-gray-900 dark:text-white"
+                  </Link>
+                )}
+                <div className="flex gap-2">
+                  {Array.from(
+                    { length: pagination.totalPages },
+                    (_, i) => i + 1
+                  ).map((page) => (
+                    <Link
+                      key={page}
+                      href={`/blog?page=${page}`}
+                      className={cn(
+                        "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
+                        page === pagination.currentPage
+                          ? "bg-brand text-white"
+                          : "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                      )}
+                    >
+                      {page}
+                    </Link>
+                  ))}
+                </div>
+                {pagination.currentPage < pagination.totalPages && (
+                  <Link
+                    href={`/blog?page=${pagination.currentPage + 1}`}
+                    className={cn(
+                      "relative inline-flex items-center px-4 py-2 text-sm font-medium rounded-md",
+                      "bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600",
+                      "text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700"
+                    )}
                   >
                     Naslednja
-                  </Button>
-                </motion.div>
-              </div>
-            </motion.section>
+                  </Link>
+                )}
+              </motion.div>
+            )}
           </motion.div>
         )}
       </AnimatePresence>

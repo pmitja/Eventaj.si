@@ -23,13 +23,15 @@ interface NotionFileProperty {
 export const metadata: Metadata = {
   title: "Blog | Eventaj.si",
   description:
-    "Preberite naše najnovejše članke o photo booth-ih, dogodkih in zabavah. Najdite navdih in ideje za vaš naslednji dogodek.",
+    "Odkrijte nasvete in trende za organizacijo dogodkov na Eventaj.si blogu.",
   keywords:
     "blog, photo booth blog, 360 photo booth blog, photo booth nasveti, organizacija dogodkov",
   openGraph: {
     title: "Blog | Eventaj.si",
     description:
-      "Preberite naše najnovejše članke o photo booth-ih, dogodkih in zabavah. Najdite navdih in ideje za vaš naslednji dogodek.",
+      "Odkrijte nasvete in trende za organizacijo dogodkov na Eventaj.si blogu.",
+    url: "https://eventaj.si/blog",
+    siteName: "Eventaj.si Blog",
     images: [
       {
         url: "https://eventaj.si/application/blog-hero.webp",
@@ -45,10 +47,22 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function BlogPage() {
+export default async function BlogPage({
+  searchParams,
+}: {
+  searchParams: { page?: string };
+}) {
   const allPosts = await fetchPages();
+  const currentPage = Number(searchParams.page) || 1;
+  const postsPerPage = 6;
+  const totalPages = Math.ceil(allPosts.length / postsPerPage);
 
-  const featuredArticles = allPosts.slice(0, 3).map((post) => {
+  // Calculate start and end indices for current page
+  const startIndex = (currentPage - 1) * postsPerPage;
+  const endIndex = startIndex + postsPerPage;
+  const currentPosts = allPosts.slice(startIndex, endIndex);
+
+  const featuredArticles = currentPosts.slice(0, 3).map((post) => {
     const properties = (post as PageObjectResponse).properties;
 
     const nameProperty = properties.Name as {
@@ -70,7 +84,7 @@ export default async function BlogPage() {
     if (
       featuredImage &&
       featuredImage.type === "files" &&
-      featuredImage.files?.length > 0
+      featuredImage.files.length > 0
     ) {
       const file = featuredImage.files[0];
       if ("file" in file) {
@@ -80,11 +94,25 @@ export default async function BlogPage() {
       }
     }
 
+    // Get excerpt from description
+    const descriptionProperty = properties.Description as {
+      type: "rich_text";
+      rich_text: Array<{ plain_text: string }>;
+    };
+    const excerpt = descriptionProperty.rich_text[0]?.plain_text || "";
+
+    // Get date
+    const dateProperty = properties["Publishing Date"] as {
+      type: "date";
+      date: { start: string };
+    };
+    const date = dateProperty.date?.start || "";
+
     return {
       title,
-      excerpt: "", // We'll need to add this property to Notion if needed
+      excerpt,
       image,
-      date: new Date(post.created_time).toLocaleDateString("sl-SI", {
+      date: new Date(date).toLocaleDateString("sl-SI", {
         day: "numeric",
         month: "long",
         year: "numeric",
@@ -93,8 +121,9 @@ export default async function BlogPage() {
     };
   });
 
-  const recentArticles = allPosts.slice(3).map((post) => {
+  const recentArticles = currentPosts.slice(3).map((post) => {
     const properties = (post as PageObjectResponse).properties;
+
     const nameProperty = properties.Name as {
       type: "title";
       title: Array<{ plain_text: string }>;
@@ -114,7 +143,7 @@ export default async function BlogPage() {
     if (
       featuredImage &&
       featuredImage.type === "files" &&
-      featuredImage.files?.length > 0
+      featuredImage.files.length > 0
     ) {
       const file = featuredImage.files[0];
       if ("file" in file) {
@@ -124,11 +153,25 @@ export default async function BlogPage() {
       }
     }
 
+    // Get excerpt from description
+    const descriptionProperty = properties.Description as {
+      type: "rich_text";
+      rich_text: Array<{ plain_text: string }>;
+    };
+    const excerpt = descriptionProperty.rich_text[0]?.plain_text || "";
+
+    // Get date
+    const dateProperty = properties["Publishing Date"] as {
+      type: "date";
+      date: { start: string };
+    };
+    const date = dateProperty.date?.start || "";
+
     return {
       title,
-      excerpt: "", // We'll need to add this property to Notion if needed
+      excerpt,
       image,
-      date: new Date(post.created_time).toLocaleDateString("sl-SI", {
+      date: new Date(date).toLocaleDateString("sl-SI", {
         day: "numeric",
         month: "long",
         year: "numeric",
@@ -138,11 +181,15 @@ export default async function BlogPage() {
   });
 
   return (
-    <main className="pt-[48px]">
-      <BlogSearch
-        featuredArticles={featuredArticles}
-        recentArticles={recentArticles}
-      />
-    </main>
+    <BlogSearch
+      featuredArticles={featuredArticles}
+      recentArticles={recentArticles}
+      pagination={{
+        currentPage,
+        totalPages,
+        postsPerPage,
+        totalPosts: allPosts.length,
+      }}
+    />
   );
 }
