@@ -68,11 +68,7 @@ const pricingPlans: PricingPlan[] = [
     ],
     description: "Popoln paket za manjše dogodke in zabave.",
     buttonText: "Rezerviraj termin",
-    href: "#",
     isPopular: false,
-    action: {
-      text: "Rezerviraj termin",
-    },
   },
   {
     name: "Standard",
@@ -90,11 +86,7 @@ const pricingPlans: PricingPlan[] = [
     ],
     description: "Najbolj priljubljen paket za večje dogodke.",
     buttonText: "Rezerviraj termin",
-    href: "#",
     isPopular: true,
-    action: {
-      text: "Rezerviraj termin",
-    },
   },
   {
     name: "Premium",
@@ -113,11 +105,7 @@ const pricingPlans: PricingPlan[] = [
     ],
     description: "Premium paket za posebne priložnosti.",
     buttonText: "Rezerviraj termin",
-    href: "#",
     isPopular: false,
-    action: {
-      text: "Rezerviraj termin",
-    },
   },
 ];
 

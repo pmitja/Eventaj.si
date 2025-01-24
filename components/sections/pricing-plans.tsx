@@ -15,12 +15,7 @@ interface PricingPlan {
   features: string[];
   description: string;
   buttonText: string;
-  href: string;
   isPopular: boolean;
-  action: {
-    text: string;
-    variant?: "default" | "outline" | "glow";
-  };
 }
 
 export type { PricingPlan };
@@ -42,7 +37,7 @@ export function PricingPlans({
   // Determine the default booth type based on the current page
   const getDefaultBoothType = () => {
     if (pathname === "/photo-booth") return "photo-booth";
-    if (pathname === "/360-booth") return "360-booth";
+    if (pathname === "/360-photo-booth") return "360-photo-booth";
     return undefined;
   };
 
@@ -132,7 +127,7 @@ export function PricingPlans({
                     variant={"glow"}
                     className="group relative w-full gap-2 overflow-hidden text-lg font-semibold tracking-tighter"
                   >
-                    {plan.action.text}
+                    Rezerviraj termin
                   </Button>
                 </HeroBookingDialog>
                 <p className="mt-6 text-xs leading-5 text-muted-foreground">

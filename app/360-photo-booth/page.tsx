@@ -114,7 +114,6 @@ export default function Home() {
         description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
         action={{
           text: "Kontaktirajte nas",
-          href: "/kontakt",
           variant: "glow",
         }}
         withGlow={true}

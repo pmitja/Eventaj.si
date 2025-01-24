@@ -24,16 +24,17 @@ import {
 import { Textarea } from "../ui/textarea";
 
 const locations = [
-  { text: "Ljubljana", kilometri: 0 },
-  { text: "Maribor", kilometri: 130 },
-  { text: "Celje", kilometri: 80 },
-  { text: "Kranj", kilometri: 30 },
-  { text: "Koper", kilometri: 110 },
-  { text: "Novo mesto", kilometri: 70 },
-  { text: "Nova Gorica", kilometri: 100 },
-  { text: "Murska Sobota", kilometri: 190 },
-  { text: "Ptuj", kilometri: 140 },
-  { text: "Velenje", kilometri: 85 },
+  { text: "Maribor in okolica", kilometri: 0 },
+  { text: "Celje in okolica", kilometri: 30 },
+  { text: "Ljubljana in okolica", kilometri: 110 },
+  { text: "Kranj in okolica", kilometri: 135 },
+  { text: "Novo mesto in okolica", kilometri: 170 },
+  { text: "Koper in okolica", kilometri: 210 },
+  { text: "Murska Sobota in okolica", kilometri: 40 },
+  { text: "Ptuj in okolica", kilometri: 10 },
+  { text: "Bled in okolica", kilometri: 110 },
+  { text: "Postojna in okolica", kilometri: 30 },
+  { text: "Nova Gorica in okolica", kilometri: 230 },
 ];
 
 const threeSixtyHours = [
@@ -62,7 +63,7 @@ type FormValues = z.infer<typeof formSchema>;
 
 interface BookingFormProps {
   onSuccess: () => void;
-  defaultBoothType?: "photo-booth" | "360-booth";
+  defaultBoothType?: "photo-booth" | "360-photo-booth";
   defaultPackage?: number;
 }
 
@@ -73,7 +74,7 @@ export function BookingForm({
 }: BookingFormProps) {
   const [step, setStep] = useState(defaultBoothType ? 2 : 1);
   const [selectedHours, setSelectedHours] = useState(
-    defaultBoothType === "360-booth"
+    defaultBoothType === "360-photo-booth"
       ? threeSixtyHours[defaultPackage || 0]
       : basicBoothHours[defaultPackage || 0]
   );
@@ -82,7 +83,7 @@ export function BookingForm({
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      type: defaultBoothType === "360-booth" ? "360" : "basic",
+      type: defaultBoothType === "360-photo-booth" ? "360" : "basic",
       hours: selectedHours.value.toString(),
       name: "",
       email: "",

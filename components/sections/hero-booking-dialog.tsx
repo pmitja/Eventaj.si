@@ -13,7 +13,7 @@ import { useState } from "react";
 
 export interface HeroBookingDialogProps {
   children: React.ReactNode;
-  defaultBoothType?: "photo-booth" | "360-booth";
+  defaultBoothType?: "photo-booth" | "360-photo-booth";
   defaultPackage?: number;
 }
 

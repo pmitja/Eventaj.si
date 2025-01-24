@@ -21,7 +21,7 @@ export function PricingPlan({
 }: PricingPlanProps) {
   const pathname = usePathname();
   const defaultBoothType = pathname.includes("360")
-    ? "360-booth"
+    ? "360-photo-booth"
     : "photo-booth";
 
   return (
