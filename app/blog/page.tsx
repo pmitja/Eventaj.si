@@ -56,13 +56,15 @@ interface NotionFileProperty {
   files: NotionFileObject[];
 }
 
-export default async function BlogPage({
-  searchParams,
-}: {
-  searchParams: { [key: string]: string | string[] | undefined };
-}) {
+type Props = {
+  params: Promise<{ [key: string]: string }>;
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
+};
+
+export default async function BlogPage({ searchParams }: Props) {
+  const resolvedSearchParams = await searchParams;
   const allPosts = await fetchPages();
-  const currentPage = Number(searchParams.page) || 1;
+  const currentPage = Number(resolvedSearchParams.page) || 1;
   const postsPerPage = 6;
   const totalPosts = allPosts.length;
   const totalPages = Math.ceil(totalPosts / postsPerPage);
