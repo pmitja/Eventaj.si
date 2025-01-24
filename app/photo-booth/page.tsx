@@ -1,6 +1,5 @@
 import BasicBoothHero from "@/components/basic-booth-hero";
 import { CTAContactSection } from "@/components/sections/cta-contact-section";
-import { FAQSection } from "@/components/sections/faq-section";
 import Features from "@/components/sections/features";
 import { basicBoothFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
@@ -14,7 +13,7 @@ import WhenToChoose from "@/components/sections/when-to-choose";
 import { photoBoothWhenToChoose } from "@/content/when-to-choose";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { FAQPage, Service } from "schema-dts";
+import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
   title: "Photo Booth Najem | Zabava za Vsak Dogodek | Eventaj.si",
@@ -49,34 +48,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-const faqItems = [
-  {
-    question: "Koliko stane najem photo bootha?",
-    answer:
-      "Cene najema se začnejo pri 299€ za osnovni paket. Vključujejo dostavo, postavitev, operaterja, rekvizite in neomejeno število fotografij. Za natančno ponudbo nas kontaktirajte.",
-  },
-  {
-    question: "Ali dobimo fotografije v digitalni obliki?",
-    answer:
-      "Da, poleg tiskanih fotografij prejmete tudi vse fotografije v digitalni obliki v visoki ločljivosti. Fotografije so primerne za tisk in deljenje na družbenih omrežjih.",
-  },
-  {
-    question: "Kako hitro so fotografije natisnjene?",
-    answer:
-      "Fotografije so natisnjene takoj! V nekaj sekundah po fotografiranju gostje prejmejo visokokakovostne tiskane fotografije, ki jih lahko odnesejo domov kot spomin.",
-  },
-  {
-    question: "Ali je photo booth primeren za poroke?",
-    answer:
-      "Absolutno! Photo booth je odlična izbira za poroke. Poskrbi za zabavo gostov, ustvarja nepozabne spomine in lahko služi tudi kot zabavno poročno darilo za goste.",
-  },
-  {
-    question: "Kakšen prostor potrebujemo za photo booth?",
-    answer:
-      "Photo booth potrebuje približno 2x2 metra prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
-  },
-];
 
 const testimonials = [
   {
@@ -207,20 +178,6 @@ export default function PhotoBooth() {
           },
         }}
       />
-      <JsonLd<FAQPage>
-        item={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqItems.map((item) => ({
-            "@type": "Question",
-            name: item.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: item.answer,
-            },
-          })),
-        }}
-      />
 
       <main className="pt-[48px]">
         <BasicBoothHero
@@ -232,11 +189,6 @@ export default function PhotoBooth() {
         <Features {...basicBoothFeatures} />
         <HowItWorks type="basic" />
         <PricingPlans plans={pricingPlans} />
-        <FAQSection
-          title="Pogosta vprašanja"
-          description="Odgovori na najpogostejša vprašanja o najemu photo bootha"
-          items={faqItems}
-        />
         <CTAContactSection
           title="Ne najdete ustreznega paketa?"
           description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."

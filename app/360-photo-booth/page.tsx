@@ -1,5 +1,4 @@
 import { CTAContactSection } from "@/components/sections/cta-contact-section";
-import { FAQSection } from "@/components/sections/faq-section";
 import Features from "@/components/sections/features";
 import { threeSixtyFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
@@ -11,7 +10,7 @@ import ThreeSixtyHero from "@/components/three-sixty-hero";
 import { threeSixtyWhenToChoose } from "@/content/when-to-choose";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { FAQPage, Service } from "schema-dts";
+import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
   title: "360 Photo Booth Najem | Zabava za Vsak Dogodek | Eventaj.si",
@@ -46,34 +45,6 @@ export const metadata: Metadata = {
     type: "website",
   },
 };
-
-const faqItems = [
-  {
-    question: "Koliko stane najem 360 photo bootha?",
-    answer:
-      "Cene najema se začnejo pri 299€ za 2-urni paket. Vključujejo dostavo, postavitev, operaterja in vse potrebne rekvizite. Za natančno ponudbo nas kontaktirajte.",
-  },
-  {
-    question: "Ali je 360 photo booth primeren za poroke?",
-    answer:
-      "Da, 360 photo booth je odlična izbira za poroke! Ustvarja edinstvene posnetke, ki jih lahko gostje takoj delijo. Poskrbimo za elegantno postavitev, ki se ujema z vašo dekoracijo.",
-  },
-  {
-    question: "Kako velik prostor potrebujemo za 360 photo booth?",
-    answer:
-      "Priporočamo vsaj 3x3 metre prostora za optimalno izkušnjo. Poskrbimo za varno postavitev in nemoteno gibanje gostov.",
-  },
-  {
-    question: "Ali lahko prilagodite ozadje in efekte?",
-    answer:
-      "Da, ponujamo popolno prilagoditev! Od izbire ozadja do posebnih efektov in personaliziranih okvirjev - vse prilagodimo vašim željam.",
-  },
-  {
-    question: "Kako hitro dobimo posnetke?",
-    answer:
-      "Posnetki so na voljo takoj! Gostje jih lahko delijo preko QR kode ali Airdrop-a. Po dogodku prejmete tudi vse posnetke v visoki ločljivosti.",
-  },
-];
 
 const testimonials = [
   {
@@ -198,20 +169,6 @@ export default function ThreeSixtyPhotoBooth() {
           },
         }}
       />
-      <JsonLd<FAQPage>
-        item={{
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: faqItems.map((item) => ({
-            "@type": "Question",
-            name: item.question,
-            acceptedAnswer: {
-              "@type": "Answer",
-              text: item.answer,
-            },
-          })),
-        }}
-      />
 
       <main className="pt-[48px]">
         <ThreeSixtyHero />
@@ -220,11 +177,6 @@ export default function ThreeSixtyPhotoBooth() {
         <Features {...threeSixtyFeatures} />
         <HowItWorks type="360" />
         <PricingPlans plans={pricingPlans} />
-        <FAQSection
-          title="Pogosta vprašanja"
-          description="Odgovori na najpogostejša vprašanja o najemu 360 photo bootha"
-          items={faqItems}
-        />
         <CTAContactSection
           title="Ne najdete ustreznega paketa?"
           description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
