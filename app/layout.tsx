@@ -2,7 +2,9 @@ import "@/app/globals.css";
 import "@/app/notion.css";
 import WithNavigation from "@/components/navigation/with-navigation";
 import { Footer } from "@/components/ui/footer-section";
+import { Toaster } from "@/components/ui/toaster";
 import { baloo2 } from "@/lib/fonts";
+import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
 
 export const metadata = {
@@ -16,7 +18,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="sl" className={baloo2.variable} suppressHydrationWarning>
+    <html
+      lang="sl"
+      className={cn("min-h-screen bg-background antialiased", baloo2.variable)}
+      suppressHydrationWarning
+    >
       <body>
         <ThemeProvider
           attribute="class"
@@ -24,10 +30,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen bg-background text-foreground">
+          <div className="flex min-h-screen flex-col">
             <WithNavigation showBanner={true} />
             {children}
             <Footer />
+            <Toaster />
           </div>
         </ThemeProvider>
       </body>

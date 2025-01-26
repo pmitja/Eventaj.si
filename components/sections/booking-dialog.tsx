@@ -1,8 +1,9 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -66,6 +67,7 @@ const formSchema = z.object({
   email: z.string().email("Vnesite veljaven email naslov"),
   phone: z.string().min(8, "Vnesite veljavno telefonsko številko"),
   location: z.string().min(1, "Izberite lokacijo"),
+  date: z.date({ required_error: "Izberite datum dogodka" }),
   message: z.string().optional(),
 });
 
@@ -79,57 +81,58 @@ export function BookingDialog({ children }: BookingDialogProps) {
   const [step, setStep] = useState(1);
   const [selectedHours, setSelectedHours] = useState(threeSixtyHours[0]);
   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       type: "360",
-      hours: "2",
+      hours: "",
       name: "",
       email: "",
       phone: "",
-      location: locations[0].text,
+      location: "",
+      date: new Date(),
       message: "",
     },
   });
 
   const onSubmit = async (values: FormValues) => {
-    const transportCost = selectedLocation.kilometri * 0.4;
-    const totalPrice = selectedHours.price + transportCost;
-
-    const emailData = {
-      to: "eventaj.si@gmail.com",
-      subject: `Nova rezervacija - ${
-        values.type === "360" ? "360° Photo Booth" : "Photo Booth"
-      }`,
-      text: `
-        Ime: ${values.name}
-        Email: ${values.email}
-        Telefon: ${values.phone}
-        Lokacija: ${values.location}
-        Število ur: ${values.hours}
-        Skupna cena: ${totalPrice.toFixed(0)}€
-        Sporočilo: ${values.message || ""}
-      `,
-    };
-
     try {
-      const response = await fetch("/api/send-email", {
+      setIsLoading(true);
+      const transportCost = selectedLocation.kilometri * 0.4;
+      const totalPrice = selectedHours.price + transportCost;
+
+      const response = await fetch("/api/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(emailData),
+        body: JSON.stringify({
+          formData: values,
+          totalPrice,
+        }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to send email");
       }
 
-      alert("Povpraševanje uspešno poslano!");
+      toast({
+        title: "Povpraševanje poslano",
+        description: "Kontaktirali vas bomo v najkrajšem možnem času.",
+        variant: "default",
+      });
     } catch (error) {
       console.error("Error sending email:", error);
-      alert("Prišlo je do napake. Prosimo, poskusite ponovno.");
+      toast({
+        title: "Napaka pri pošiljanju",
+        description: "Prišlo je do napake. Prosimo, poskusite ponovno.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -358,6 +361,32 @@ export function BookingDialog({ children }: BookingDialogProps) {
 
                   <FormField
                     control={form.control}
+                    name="date"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Datum dogodka</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            type="date"
+                            value={
+                              field.value
+                                ? field.value.toISOString().split("T")[0]
+                                : ""
+                            }
+                            className="h-9 md:h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                            onChange={(e) =>
+                              field.onChange(new Date(e.target.value))
+                            }
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
                     name="message"
                     render={({ field }) => (
                       <FormItem>
@@ -406,8 +435,15 @@ export function BookingDialog({ children }: BookingDialogProps) {
                     >
                       Nazaj
                     </Button>
-                    <Button type="submit" variant="glow">
-                      Pošlji povpraševanje
+                    <Button type="submit" variant="glow" disabled={isLoading}>
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Pošiljanje...
+                        </>
+                      ) : (
+                        "Pošlji povpraševanje"
+                      )}
                     </Button>
                   </div>
                 </div>

@@ -1,6 +1,7 @@
+import { useToast } from "@/components/ui/use-toast";
 import { cn } from "@/lib/utils";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Check } from "lucide-react";
+import { Check, Loader2 } from "lucide-react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -56,6 +57,7 @@ const formSchema = z.object({
   email: z.string().email("Vnesite veljaven email naslov"),
   phone: z.string().min(1, "Telefon je obvezen"),
   location: z.string().min(1, "Lokacija je obvezna"),
+  date: z.date({ required_error: "Datum je obvezen" }),
   message: z.string().optional(),
 });
 
@@ -79,6 +81,8 @@ export function BookingForm({
       : basicBoothHours[defaultPackage || 0]
   );
   const [selectedLocation, setSelectedLocation] = useState(locations[0]);
+  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -89,48 +93,48 @@ export function BookingForm({
       email: "",
       phone: "",
       location: locations[0].text,
+      date: new Date(),
       message: "",
     },
   });
 
   const onSubmit = async (values: FormValues) => {
-    const transportCost = selectedLocation.kilometri * 0.4;
-    const totalPrice = selectedHours.price + transportCost;
-
-    const emailData = {
-      to: "info@360booth.si",
-      subject: `Nova rezervacija - ${
-        values.type === "360" ? "360° Photo Booth" : "Photo Booth"
-      }`,
-      text: `
-        Ime: ${values.name}
-        Email: ${values.email}
-        Telefon: ${values.phone}
-        Lokacija: ${values.location}
-        Število ur: ${values.hours}
-        Skupna cena: ${totalPrice.toFixed(0)}€
-        Sporočilo: ${values.message || ""}
-      `,
-    };
-
     try {
-      const response = await fetch("/api/send-email", {
+      setIsLoading(true);
+
+      const transportCost = selectedLocation.kilometri * 0.4;
+      const totalPrice = selectedHours.price + transportCost;
+
+      const response = await fetch("/api/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(emailData),
+        body: JSON.stringify({
+          formData: values,
+          totalPrice,
+        }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to send email");
       }
 
-      alert("Povpraševanje uspešno poslano!");
+      toast({
+        title: "Povpraševanje poslano",
+        description: "Kontaktirali vas bomo v najkrajšem možnem času.",
+        variant: "default",
+      });
       onSuccess();
     } catch (error) {
       console.error("Error sending email:", error);
-      alert("Prišlo je do napake. Prosimo, poskusite ponovno.");
+      toast({
+        title: "Napaka pri pošiljanju",
+        description: "Prišlo je do napake. Prosimo, poskusite ponovno.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -359,6 +363,34 @@ export function BookingForm({
 
                 <FormField
                   control={form.control}
+                  name="date"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700 dark:text-gray-300">
+                        Datum
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          {...field}
+                          type="date"
+                          value={
+                            field.value
+                              ? field.value.toISOString().split("T")[0]
+                              : ""
+                          }
+                          onChange={(e) =>
+                            field.onChange(new Date(e.target.value))
+                          }
+                          className="h-9 md:h-10 bg-white dark:bg-gray-800 border-gray-200 dark:border-gray-700"
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
                   name="message"
                   render={({ field }) => (
                     <FormItem>
@@ -428,8 +460,15 @@ export function BookingForm({
                       Nazaj
                     </Button>
                   )}
-                  <Button type="submit" variant="glow">
-                    Pošlji povpraševanje
+                  <Button type="submit" variant="glow" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        Pošiljanje...
+                      </>
+                    ) : (
+                      "Pošlji povpraševanje"
+                    )}
                   </Button>
                 </div>
               </div>
@@ -440,3 +479,14 @@ export function BookingForm({
     </>
   );
 }
+
+export type FormField = {
+  name: string;
+  email: string;
+  phone: string;
+  date: Date;
+  location: string;
+  hours: string;
+  message?: string;
+  type: "360" | "basic";
+};
