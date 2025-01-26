@@ -49,46 +49,6 @@ export const metadata: Metadata = {
   },
 };
 
-const testimonials = [
-  {
-    author: {
-      name: "Maja Novak",
-      title: "Poročna fotografinja",
-      image: "/application/sksg.webp",
-    },
-    text: "Photo booth je bil odlična izbira za našo poroko. Gostje so bili navdušeni!",
-  },
-  {
-    author: {
-      name: "Tomaž Kranjc",
-      title: "Dogodek podjetja",
-      image: "/application/autodelta.webp",
-    },
-    text: "Izjemna storitev in kakovostne fotografije! Odlično ste popestrili naš korporativni dogodek.",
-  },
-  {
-    author: {
-      name: "Petra Horvat",
-      title: "Rojstnodnevna slavljenka",
-    },
-    text: "Vsi moji prijatelji so se noro zabavali z vašim photo boothom. Nepozabni spomini!",
-  },
-  {
-    author: {
-      name: "Matej Zupančič",
-      title: "Organizator dogodkov",
-    },
-    text: "Profesionalen pristop in odlična izvedba! Definitivno vas bomo še kdaj najeli.",
-  },
-  {
-    author: {
-      name: "Ana Kovač",
-      title: "Nevesta",
-    },
-    text: "Hvala, ker ste poskrbeli za tako posebno izkušnjo. Vse je bilo brezhibno!",
-  },
-];
-
 const pricingPlans: PricingPlan[] = [
   {
     name: "Basic",
@@ -201,7 +161,6 @@ export default function PhotoBooth() {
         <TestimonialsSection
           title="Kaj pravijo naši zadovoljni uporabniki"
           description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš photo booth"
-          testimonials={testimonials}
         />
       </main>
     </>

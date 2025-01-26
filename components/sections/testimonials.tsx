@@ -1,15 +1,15 @@
-import { cn } from "@/lib/utils";
-import Section from "../ui/section";
-import { Marquee } from "../ui/marquee";
 import {
-  TestimonialCard,
   TestimonialAuthor,
+  TestimonialCard,
 } from "@/components/ui/testimonial-card";
+import { cn } from "@/lib/utils";
+import { Marquee } from "../ui/marquee";
+import Section from "../ui/section";
 
 interface TestimonialsSectionProps {
   title: string;
   description: string;
-  testimonials: Array<{
+  testimonials?: Array<{
     author: TestimonialAuthor;
     text: string;
     href?: string;
@@ -17,10 +17,49 @@ interface TestimonialsSectionProps {
   className?: string;
 }
 
+const testimonials = [
+  {
+    author: {
+      name: "Mojca Šauperl - ŠKSG",
+      title: "Dogodek podjetja",
+      image: "/application/sksg.webp",
+    },
+    text: "Najem Photo Bootha in 360 Photo Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta!",
+  },
+  {
+    author: {
+      name: "Jure Tadina - AutoDelta",
+      title: "Dogodek podjetja",
+      image: "/application/autodelta.webp",
+    },
+    text: "Najlepša hvala za sodelovanje! 360 Photo Booth sta dodala posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej. Želim vam uspešen december!",
+  },
+  {
+    author: {
+      name: "Eva in Ana",
+      title: "Rojstnodnevna zabava",
+    },
+    text: "360 Photo Booth je bil absolutni hit na najinem 30. rojstnem dnevu! Gostje so govorili, da česa tako zabavnega še niso doživeli, in vsi posnetki so nepozabni. Hvala za čudovite spomine! Priporočilo gre zagotovo naprej.",
+  },
+  {
+    author: {
+      name: "Katja",
+      title: "Rojstnodnevna zabava",
+    },
+    text: "360 Photo Booth je poskrbel za res zabavne trenutke in spomine. Hvala za odlično storitev, priporočamo naprej! Ekipa Eventaj.si je super!",
+  },
+  {
+    author: {
+      name: "Manuela",
+      title: "Rojstnodnevna zabava",
+    },
+    text: "Photo Booth je bil odlična popestritev! Gostje so se res zabavali, slike pa so čudovit spomin za ta dan. Hvala vam, priporočamo naprej!",
+  },
+];
+
 export function TestimonialsSection({
   title,
   description,
-  testimonials,
   className,
 }: TestimonialsSectionProps) {
   return (
