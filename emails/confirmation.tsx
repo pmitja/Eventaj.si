@@ -51,28 +51,42 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
             <Heading as="h2" style={subheading}>
               Podatki o povpraševanju:
             </Heading>
-            <Text style={detailItem}>
-              <strong>Ime in priimek:</strong> {name}
-            </Text>
-            <Text style={detailItem}>
-              <strong>Email:</strong> {email}
-            </Text>
-            <Text style={detailItem}>
-              <strong>Telefon:</strong> {phone}
-            </Text>
-            <Text style={detailItem}>
-              <strong>Datum dogodka:</strong> {formatDate(date)}
-            </Text>
-            <Text style={detailItem}>
-              <strong>Lokacija:</strong> {location}
-            </Text>
-            <Text style={detailItem}>
-              <strong>Število ur:</strong> {hours}
-            </Text>
-            <Text style={detailItem}>
-              <strong>Tip storitve:</strong>{" "}
-              {type === "360" ? "360° Photo Booth" : "Photo Booth"}
-            </Text>
+            {name && (
+              <Text style={detailItem}>
+                <strong>Ime in priimek:</strong> {name}
+              </Text>
+            )}
+            {email && (
+              <Text style={detailItem}>
+                <strong>Email:</strong> {email}
+              </Text>
+            )}
+            {phone && (
+              <Text style={detailItem}>
+                <strong>Telefon:</strong> {phone}
+              </Text>
+            )}
+            {date && (
+              <Text style={detailItem}>
+                <strong>Datum dogodka:</strong> {formatDate(date)}
+              </Text>
+            )}
+            {location && (
+              <Text style={detailItem}>
+                <strong>Lokacija:</strong> {location}
+              </Text>
+            )}
+            {hours && (
+              <Text style={detailItem}>
+                <strong>Število ur:</strong> {hours}
+              </Text>
+            )}
+            {type && (
+              <Text style={detailItem}>
+                <strong>Tip storitve:</strong>{" "}
+                {type === "360" ? "360° Photo Booth" : "Photo Booth"}
+              </Text>
+            )}
             {message && (
               <Text style={detailItem}>
                 <strong>Sporočilo:</strong> {message}

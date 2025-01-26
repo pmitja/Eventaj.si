@@ -84,7 +84,7 @@ export function CTABookingDialog({ children }: CTABookingDialogProps) {
       toast({
         title: "Povpraševanje poslano",
         description: "Kontaktirali vas bomo v najkrajšem možnem času.",
-        variant: "default",
+        variant: "success",
       });
       setOpen(false);
     } catch (error) {

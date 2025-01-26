@@ -1,7 +1,7 @@
 "use client";
 
+import { useToast } from "@/components/ui/use-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { Button } from "../ui/button";
@@ -60,6 +60,7 @@ export function PricingForm({
   selectedHours,
   totalPrice,
 }: PricingFormProps) {
+  const { toast } = useToast();
   const form = useForm<FormField>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -74,40 +75,37 @@ export function PricingForm({
   });
 
   const onSubmit = async (values: FormField) => {
-    const emailData = {
-      to: "eventaj.si@gmail.com",
-      subject: `Nova rezervacija - ${
-        type === "360" ? "360° Photo Booth" : "Photo Booth"
-      }`,
-      text: `
-        Ime: ${values.name}
-        Email: ${values.email}
-        Telefon: ${values.phone}
-        Datum: ${format(values.date, "dd.MM.yyyy")}
-        Lokacija: ${values.location}
-        Število ur: ${values.hours}
-        Skupna cena: ${totalPrice.toFixed(0)}€
-        Sporočilo: ${values.message || ""}
-      `,
-    };
-
     try {
-      const response = await fetch("/api/send-email", {
+      const response = await fetch("/api/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(emailData),
+        body: JSON.stringify({
+          formData: {
+            ...values,
+            type: type,
+          },
+          totalPrice,
+        }),
       });
 
       if (!response.ok) {
         throw new Error("Failed to send email");
       }
 
-      alert("Povpraševanje uspešno poslano!");
+      toast({
+        title: "Povpraševanje poslano",
+        description: "Kontaktirali vas bomo v najkrajšem možnem času.",
+        variant: "success",
+      });
     } catch (error) {
       console.error("Error sending email:", error);
-      alert("Prišlo je do napake. Prosimo, poskusite ponovno.");
+      toast({
+        title: "Napaka pri pošiljanju",
+        description: "Prišlo je do napake. Prosimo, poskusite ponovno.",
+        variant: "destructive",
+      });
     }
   };
 

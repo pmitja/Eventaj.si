@@ -39,15 +39,15 @@ const locations = [
 ];
 
 const threeSixtyHours = [
-  { value: 2, price: 499 },
-  { value: 3, price: 599 },
-  { value: 4, price: 699 },
-];
-
-const basicBoothHours = [
   { value: 2, price: 299 },
   { value: 3, price: 399 },
   { value: 4, price: 499 },
+];
+
+const basicBoothHours = [
+  { value: 2, price: 249 },
+  { value: 3, price: 299 },
+  { value: 4, price: 349 },
 ];
 
 const formSchema = z.object({
@@ -123,7 +123,7 @@ export function BookingForm({
       toast({
         title: "Povpraševanje poslano",
         description: "Kontaktirali vas bomo v najkrajšem možnem času.",
-        variant: "default",
+        variant: "success",
       });
       onSuccess();
     } catch (error) {

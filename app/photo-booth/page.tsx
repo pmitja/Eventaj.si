@@ -92,7 +92,7 @@ const testimonials = [
 const pricingPlans: PricingPlan[] = [
   {
     name: "Basic",
-    price: "299",
+    price: "249",
     period: "dogodek",
     features: [
       "2 uri najema",
@@ -109,7 +109,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Standard",
-    price: "399",
+    price: "299",
     period: "dogodek",
     features: [
       "3 ure najema",
@@ -127,7 +127,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Premium",
-    price: "499",
+    price: "349",
     period: "dogodek",
     features: [
       "4 ure najema",

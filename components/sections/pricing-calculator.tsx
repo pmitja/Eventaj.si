@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { PricingForm } from "../forms/pricing-form";
 import GlassesWithMustache from "../icons/GlassesWithMustache";
 import PaintWithLamp from "../icons/PaintWithLamp";
 import PersonWithHeart from "../icons/PersonWithHeart";
@@ -22,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
-import { PricingForm } from "./pricing-form";
 
 const locations = [
   { text: "Maribor in okolica", kilometri: 0 },
