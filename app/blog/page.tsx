@@ -37,6 +37,24 @@ export const metadata: Metadata = {
     locale: "sl_SI",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Blog | Nasveti za Dogodke in Zabave | Eventaj.si",
+    description:
+      "Odkrijte nasvete za organizacijo dogodkov, ideje za poroke in zabave, ter trende v svetu photo booth fotografiranja. Strokovni nasveti in praktične rešitve.",
+    images: ["/og/blog.jpg"],
+  },
+  alternates: {
+    canonical: "https://eventaj.si/blog",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "https://eventaj.si/application/icon-32x32.png",
+    apple: "https://eventaj.si/application/icon-256x256.png",
+  },
 };
 
 type NotionFileObject =

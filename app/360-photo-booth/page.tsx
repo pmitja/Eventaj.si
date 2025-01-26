@@ -13,24 +13,25 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "360 Photo Booth Najem | Zabava za Vsak Dogodek | Eventaj.si",
+  title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
   description:
-    "Najemi 360 photo booth za nepozabno doživetje na vaši poroki, zabavi ali dogodku. Profesionalna oprema, izkušena ekipa in takojšnje deljenje posnetkov. Rezervirajte zdaj!",
+    "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
   keywords: [
     "360 photo booth najem",
-    "360 photo booth za poroko",
-    "foto stojnica za dogodke",
-    "najem 360 photo booth Ljubljana",
+    "photobooth 360",
+    "360 photobooth",
+    "360 photo booth",
+    "foto booth 360",
     "360 fotografiranje",
-    "foto booth zabava",
-    "photo booth za dogodke",
     "360 video booth",
-    "photo booth najem cena",
+    "360 photo booth za poroko",
+    "najem 360 photo booth Ljubljana",
+    "360 photo booth cena",
   ],
   openGraph: {
-    title: "360 Photo Booth Najem | Zabava za Vsak Dogodek | Eventaj.si",
+    title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
     description:
-      "Najemi 360 photo booth za nepozabno doživetje na vaši poroki, zabavi ali dogodku. Profesionalna oprema, izkušena ekipa in takojšnje deljenje posnetkov.",
+      "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
     url: "https://eventaj.si/360-photo-booth",
     siteName: "Eventaj.si",
     images: [
@@ -43,6 +44,24 @@ export const metadata: Metadata = {
     ],
     locale: "sl_SI",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
+    description:
+      "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
+    images: ["/og/360-photo-booth.jpg"],
+  },
+  alternates: {
+    canonical: "https://eventaj.si/360-photo-booth",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "https://eventaj.si/application/icon-32x32.png",
+    apple: "https://eventaj.si/application/icon-256x256.png",
   },
 };
 
@@ -120,12 +139,40 @@ export default function ThreeSixtyPhotoBooth() {
           },
           areaServed: "Slovenija",
           description:
-            "Profesionalni najem 360 photo booth naprave za dogodke, poroke in zabave. Vključuje operaterja, rekvizite in takojšnje deljenje posnetkov.",
+            "Profesionalni najem 360 photo booth naprave za dogodke, poroke in zabave. Vključuje operaterja, rekvizite in takojšnje deljenje posnetkov. Specifikacije: platforma premera 100cm, 360-stopinjsko snemanje v slow motion, deljenje preko QR kode, Airdrop-a, e-pošte in družbenih omrežij.",
           offers: {
             "@type": "AggregateOffer",
             lowPrice: "299",
             highPrice: "499",
             priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            validFrom: "2024-01-01",
+            priceValidUntil: "2024-12-31",
+          },
+          serviceType: "360 Photo Booth Rental",
+          category: ["360 Photo Booth", "Event Services", "Video Services"],
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "360 Photo Booth Packages",
+            itemListElement: pricingPlans.map((plan) => ({
+              "@type": "Offer",
+              name: plan.name,
+              price: plan.price,
+              priceCurrency: "EUR",
+              description: plan.description,
+              itemOffered: {
+                "@type": "Service",
+                name: `${plan.name} 360 Photo Booth Package`,
+                description: plan.features.join(", "),
+              },
+            })),
+          },
+          termsOfService: "https://eventaj.si/pogoji-poslovanja",
+          serviceOutput: {
+            "@type": "Thing",
+            name: "360 Photo Booth Experience",
+            description:
+              "Platform Size: 100cm diameter, Video Type: 360-degree slow motion, Sharing Options: QR code, Airdrop, Email, Social Media",
           },
         }}
       />

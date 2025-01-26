@@ -6,6 +6,8 @@ import { PhotoBoothOptions } from "@/components/sections/photo-booth-options";
 import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { Metadata } from "next";
+import { JsonLd } from "react-schemaorg";
+import { LocalBusiness, Organization, WebSite } from "schema-dts";
 
 const testimonials = [
   {
@@ -26,15 +28,27 @@ const testimonials = [
 ];
 
 export const metadata: Metadata = {
-  title: "Photo Booth in 360 Photo Booth | Eventaj.si",
+  title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
   description:
-    "Eventaj.si prinaša vrhunsko zabavo na vašo prireditev! Izberite klasičnim photo booth ali 360 photo booth in ujemite nepozabne trenutke.",
-  keywords:
-    "foto stojnica,photo booth, 360 photo booth najem, photo booth najem, najem photo booth, najem 360 photo booth, zabava, foto booth 360, poroka, foto stojnica za poroko",
+    "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
+  keywords: [
+    "foto zabava",
+    "photobooth 360",
+    "photobooth",
+    "photobooth najem",
+    "360 photobooth",
+    "foto stojnica",
+    "photo booth najem",
+    "najem photo booth",
+    "360 photo booth najem",
+    "foto stojnica za poroko",
+    "foto box za poroko",
+    "foto booth zabava",
+  ],
   openGraph: {
-    title: "Photo Booth in 360 Photo Booth | Eventaj.si",
+    title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
     description:
-      "Eventaj.si prinaša vrhunsko zabavo na vašo prireditev! Izberite klasičnim photo booth ali 360 photo booth in ujemite nepozabne trenutke.",
+      "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
     images: [
       {
         url: "https://eventaj.si/application/hero-image-2.webp",
@@ -47,9 +61,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Booth in 360 Photo Booth | Eventaj.si",
+    title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
     description:
-      "Eventaj.si prinaša vrhunsko zabavo na vašo prireditev! Izberite klasičnim photo booth ali 360 photo booth in ujemite nepozabne trenutke.",
+      "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
     images: ["https://eventaj.si/application/hero-image-2.webp"],
   },
   alternates: {
@@ -69,106 +83,127 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const jsonLd = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: "Eventaj.si",
-    image: "https://eventaj.si/application/hero-image-2.webp",
-    "@id": "https://eventaj.si",
-    url: "https://eventaj.si",
-    telephone: "+38631358661",
-    address: {
-      "@type": "PostalAddress",
-      streetAddress: "Cesta v Mestni log 55",
-      addressLocality: "Ljubljana",
-      postalCode: "1000",
-      addressCountry: "SI",
-    },
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: 46.0372963,
-      longitude: 14.4904802,
-    },
-    openingHoursSpecification: {
-      "@type": "OpeningHoursSpecification",
-      dayOfWeek: [
-        "Monday",
-        "Tuesday",
-        "Wednesday",
-        "Thursday",
-        "Friday",
-        "Saturday",
-        "Sunday",
-      ],
-      opens: "00:00",
-      closes: "23:59",
-    },
-    sameAs: [
-      "https://www.facebook.com/eventaj.si",
-      "https://www.instagram.com/eventaj.si/",
-    ],
-    hasOfferCatalog: {
-      "@type": "OfferCatalog",
-      name: "Photo Booth Services",
-      itemListElement: [
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "Classic Photo Booth",
-            description:
-              "Traditional photo booth perfect for any event with instant printing",
-          },
-        },
-        {
-          "@type": "Offer",
-          itemOffered: {
-            "@type": "Service",
-            name: "360° Photo Booth",
-            description:
-              "Modern 360-degree video booth for creating stunning slow-motion videos",
-          },
-        },
-      ],
-    },
-  };
-
   return (
-    <main>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
-      {/* Hero Section */}
-      <HomeHero
-        title="Najemi in ujemi spomine"
-        text="Naj vaš dogodek traja večno s fotografijami in videoposnetki. Zajete trenutke objavi ali natisni. Rezerviraj svoj termin še danes."
-      />
-
-      {/* Photo Booth Options */}
-      <PhotoBoothOptions />
-
-      {/* Features Section */}
-      <Features {...videoFeatures} />
-
-      {/* Testimonials */}
-      <TestimonialsSection
-        title="Kaj pravijo naši zadovoljni uporabniki"
-        description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
-        testimonials={testimonials}
-      />
-
-      {/* CTA Section */}
-      <CTASection
-        title="Vas zanima naš photo booth?"
-        description="Rezervirajte termin še danes."
-        action={{
-          text: "Rezervirajte termin",
-          variant: "glow",
+    <>
+      <JsonLd<WebSite>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "Eventaj.si",
+          url: "https://eventaj.si",
+          description:
+            "Profesionalni najem photo booth in 360 photo booth naprav za dogodke, poroke in zabave v Sloveniji.",
+          potentialAction: {
+            "@type": "SearchAction",
+            target: "https://eventaj.si/search?q={search_term_string}",
+            query: "required name=search_term_string",
+          },
         }}
-        withGlow={true}
       />
-      <PromoImage />
-    </main>
+
+      <JsonLd<Organization>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "Eventaj.si",
+          url: "https://eventaj.si",
+          logo: "https://eventaj.si/logo.png",
+          description:
+            "Vodilni ponudnik photo booth in 360 photo booth storitev v Sloveniji. Specializirani za poroke, dogodke in zabave.",
+          sameAs: [
+            "https://www.facebook.com/eventaj.si",
+            "https://www.instagram.com/eventaj.si/",
+          ],
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: "+386 31 285 143",
+            contactType: "customer service",
+            areaServed: "SI",
+            availableLanguage: ["Slovenian", "English"],
+          },
+        }}
+      />
+
+      <JsonLd<LocalBusiness>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Eventaj.si",
+          image: "https://eventaj.si/logo.png",
+          "@id": "https://eventaj.si",
+          url: "https://eventaj.si",
+          telephone: "+386 31 285 143",
+          address: {
+            "@type": "PostalAddress",
+            streetAddress: "Slomškova ulica 1",
+            addressLocality: "Lenart v Slovenskih goricah",
+            postalCode: "2230",
+            addressCountry: "SI",
+          },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 46.576,
+            longitude: 15.8308,
+          },
+          openingHoursSpecification: {
+            "@type": "OpeningHoursSpecification",
+            dayOfWeek: [
+              "Monday",
+              "Tuesday",
+              "Wednesday",
+              "Thursday",
+              "Friday",
+              "Saturday",
+              "Sunday",
+            ],
+            opens: "00:00",
+            closes: "23:59",
+          },
+          priceRange: "€€",
+          areaServed: {
+            "@type": "GeoCircle",
+            geoMidpoint: {
+              "@type": "GeoCoordinates",
+              latitude: 46.0569,
+              longitude: 14.5058,
+            },
+            geoRadius: "200km",
+          },
+        }}
+      />
+
+      <main>
+        {/* Hero Section */}
+        <HomeHero
+          title="Najemi in ujemi spomine"
+          text="Naj vaš dogodek traja večno s fotografijami in videoposnetki. Zajete trenutke objavi ali natisni. Rezerviraj svoj termin še danes."
+        />
+
+        {/* Photo Booth Options */}
+        <PhotoBoothOptions />
+
+        {/* Features Section */}
+        <Features {...videoFeatures} />
+
+        {/* Testimonials */}
+        <TestimonialsSection
+          title="Kaj pravijo naši zadovoljni uporabniki"
+          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
+          testimonials={testimonials}
+        />
+
+        {/* CTA Section */}
+        <CTASection
+          title="Vas zanima naš photo booth?"
+          description="Rezervirajte termin še danes."
+          action={{
+            text: "Rezervirajte termin",
+            variant: "glow",
+          }}
+          withGlow={true}
+        />
+        <PromoImage />
+      </main>
+    </>
   );
 }

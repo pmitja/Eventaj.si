@@ -16,24 +16,25 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Photo Booth Najem | Zabava za Vsak Dogodek | Eventaj.si",
+  title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
   description:
-    "Najemi photo booth za nepozabno doživetje na vaši poroki, zabavi ali dogodku. Profesionalna oprema, takojšnje tiskanje fotografij in digitalne kopije. Rezervirajte zdaj!",
+    "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
   keywords: [
     "photo booth najem",
-    "photo booth za poroko",
-    "foto kabina najem",
-    "najem photo booth Ljubljana",
+    "foto zabava",
+    "foto stojnica",
+    "photobooth",
+    "foto box za poroko",
     "foto stojnica za dogodke",
     "photo booth za zabavo",
-    "photo booth za rojstni dan",
-    "photo booth tiskanje",
+    "photo booth za poroko",
+    "najem photo booth Ljubljana",
     "photo booth cena",
   ],
   openGraph: {
-    title: "Photo Booth Najem | Zabava za Vsak Dogodek | Eventaj.si",
+    title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
     description:
-      "Najemi photo booth za nepozabno doživetje na vaši poroki, zabavi ali dogodku. Profesionalna oprema, takojšnje tiskanje fotografij in digitalne kopije.",
+      "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
     url: "https://eventaj.si/photo-booth",
     siteName: "Eventaj.si",
     images: [
@@ -46,6 +47,24 @@ export const metadata: Metadata = {
     ],
     locale: "sl_SI",
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+    description:
+      "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
+    images: ["/og/photo-booth.jpg"],
+  },
+  alternates: {
+    canonical: "https://eventaj.si/photo-booth",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  icons: {
+    icon: "https://eventaj.si/application/icon-32x32.png",
+    apple: "https://eventaj.si/application/icon-256x256.png",
   },
 };
 
@@ -132,10 +151,51 @@ export default function PhotoBooth() {
             "Profesionalni najem photo booth naprave za dogodke, poroke in zabave. Vključuje operaterja, rekvizite in takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "299",
-            highPrice: "499",
+            lowPrice: "249",
+            highPrice: "349",
             priceCurrency: "EUR",
+            availability: "https://schema.org/InStock",
+            validFrom: "2024-01-01",
+            priceValidUntil: "2024-12-31",
           },
+          serviceType: "Photo Booth Rental",
+          category: ["Photo Booth", "Event Services", "Photography Services"],
+          hasOfferCatalog: {
+            "@type": "OfferCatalog",
+            name: "Photo Booth Packages",
+            itemListElement: pricingPlans.map((plan) => ({
+              "@type": "Offer",
+              name: plan.name,
+              price: plan.price,
+              priceCurrency: "EUR",
+              description: plan.description,
+              itemOffered: {
+                "@type": "Service",
+                name: `${plan.name} Photo Booth Package`,
+                description: plan.features.join(", "),
+              },
+            })),
+          },
+          termsOfService: "https://eventaj.si/pogoji-poslovanja",
+          isRelatedTo: [
+            {
+              "@type": "Service",
+              name: "Wedding Services",
+            },
+            {
+              "@type": "Service",
+              name: "Event Planning",
+            },
+            {
+              "@type": "Service",
+              name: "Party Services",
+            },
+          ],
+          additionalType: [
+            "https://schema.org/PhotographyStore",
+            "https://schema.org/EventService",
+            "https://schema.org/EntertainmentBusiness",
+          ],
         }}
       />
 
