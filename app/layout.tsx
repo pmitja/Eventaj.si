@@ -15,6 +15,10 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "/",
   },
+  other: {
+    "google-site-verification":
+      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +32,16 @@ export default function RootLayout({
       className={cn("min-h-screen bg-background antialiased", baloo2.variable)}
       suppressHydrationWarning
     >
+      <head>
+        <link
+          rel="preconnect"
+          href="https://prod-files-secure.s3.us-west-2.amazonaws.com"
+        />
+        <link
+          rel="dns-prefetch"
+          href="https://prod-files-secure.s3.us-west-2.amazonaws.com"
+        />
+      </head>
       <body>
         <ThemeProvider
           attribute="class"
