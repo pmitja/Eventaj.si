@@ -51,7 +51,7 @@ export const metadata: Metadata = {
       "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
     images: [
       {
-        url: "https://eventaj.si/application/hero-image-2.webp",
+        url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
         alt: "Photo Booth in 360 Photo Booth Eventaj.si",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
     title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
     description:
       "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
-    images: ["https://eventaj.si/application/hero-image-2.webp"],
+    images: ["/og/photo-booth.webp"],
   },
   alternates: {
     canonical: "https://eventaj.si/",

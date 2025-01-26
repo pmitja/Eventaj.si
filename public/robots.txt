@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://eventaj.si
+
+# Sitemaps
+Sitemap: https://eventaj.si/sitemap.xml 

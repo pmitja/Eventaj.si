@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     locale: "sl_SI",
     type: "website",
   },
+  alternates: {
+    canonical: "/pogosta-vprasanja",
+  },
 };
 
 const faqItems = [

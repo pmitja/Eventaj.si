@@ -6,10 +6,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { baloo2 } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
+import type { Metadata } from "next";
 
-export const metadata = {
+export const metadata: Metadata = {
   title: "360° Photo Booth",
   description: "360° Photo Booth za nepozabne spomine",
+  metadataBase: new URL("https://eventaj.si"),
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({

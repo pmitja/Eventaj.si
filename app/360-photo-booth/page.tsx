@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     images: [
       {
-        url: "/og/360-photo-booth.jpg",
+        url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
         alt: "360 Photo Booth Najem - Eventaj.si",
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
     description:
       "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
-    images: ["/og/360-photo-booth.jpg"],
+    images: ["/og/photo-booth.webp"],
   },
   alternates: {
     canonical: "https://eventaj.si/360-photo-booth",

@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     images: [
       {
-        url: "/og/photo-booth.jpg",
+        url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
         alt: "Photo Booth Najem - Eventaj.si",
@@ -53,10 +53,10 @@ export const metadata: Metadata = {
     title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
     description:
       "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
-    images: ["/og/photo-booth.jpg"],
+    images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "https://eventaj.si/photo-booth",
+    canonical: "/photo-booth",
   },
   robots: {
     index: true,
