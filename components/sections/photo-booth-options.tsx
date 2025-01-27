@@ -68,9 +68,7 @@ export function PhotoBoothOptions() {
               )}
             </div>
             <div className="flex flex-col gap-2 p-6 grow">
-              <h2 className="text-xl md:text-3xl font-semibold">
-                {option.title}
-              </h2>
+              <h2 className="text-3xl font-semibold">{option.title}</h2>
               <p className="text-muted-foreground mb-2 grow">
                 {option.description}
               </p>
