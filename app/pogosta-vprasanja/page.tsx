@@ -230,7 +230,7 @@ export default function FAQPage() {
         }}
       />
 
-      <main>
+      <main className="pt-[48px]">
         <FAQSection
           title="Pogosta vprašanja"
           description="Odgovori na najpogostejša vprašanja o najemu photo bootha in 360° photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."

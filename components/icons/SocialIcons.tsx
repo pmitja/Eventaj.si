@@ -1,13 +1,15 @@
-const SocialIcons = ({ className }: { className?: string }) => {
+import { SVGProps } from "react";
+
+const SocialIcons = ({ className, ...props }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      className={className}
-      style={{ maxWidth: "56px", maxHeight: "56px" }}
-      width="67"
-      height="68"
-      viewBox="0 0 67 68"
+      width="64"
+      height="65"
+      viewBox="0 0 64 65"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...props}
     >
       <g clipPath="url(#clip0_197860_1495)">
         <path

@@ -5,19 +5,32 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'prod-files-secure.s3.us-west-2.amazonaws.com',
-        port: '',
-        pathname: '/**',
+        hostname: 'images.unsplash.com',
       },
     ],
   },
   webpack: (config, { isServer }) => {
+    // Add video file handling
+    config.module.rules.push({
+      test: /\.(mp4|webm)$/,
+      use: {
+        loader: 'file-loader',
+        options: {
+          publicPath: '/_next/static/videos/',
+          outputPath: 'static/videos/',
+          name: '[name].[hash].[ext]',
+        },
+      },
+    });
+
+    // Add punycode fallback for non-server builds
     if (!isServer) {
       config.resolve.fallback = {
         ...config.resolve.fallback,
-        'punycode': false,
+        punycode: false,
       };
     }
+
     return config;
   },
 }

@@ -1,18 +1,14 @@
 import { SVGProps } from "react";
 
-const PersonWithHeart = ({
-  className,
-  ...props
-}: {
-  className?: string;
-  props?: SVGProps<SVGSVGElement>;
-}) => {
+const PersonWithHeart = ({ className, ...props }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      className={className}
-      viewBox="0 0 64 64"
+      width="64"
+      height="65"
+      viewBox="0 0 64 65"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
       {...props}
     >
       <path

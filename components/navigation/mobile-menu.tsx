@@ -9,6 +9,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet";
 import { navigation } from "@/content/navigation";
+import { cn } from "@/lib/utils";
 import { ChevronRight, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -52,19 +53,20 @@ export const MobileMenu = ({ isOpen, onClose }: MobileMenuProps) => {
             <div className="space-y-2 py-6">
               {navigation.map((item) => (
                 <SheetClose asChild key={item.name}>
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-row items-center justify-between">
                     <Link
                       href={item.href}
-                      className={
+                      className={cn(
+                        "w-full flex flex-row items-center justify-between",
                         pathname === item.href
-                          ? "text-[#C99566] -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
-                          : "text-gray-900 dark:text-white hover:text-[#C99566] dark:hover:text-[#C99566] -mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7"
-                      }
+                          ? "text-[#C99566] -mx-3 rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                          : "text-gray-900 dark:text-white hover:text-[#C99566] dark:hover:text-[#C99566] -mx-3 rounded-lg px-3 py-2 text-base font-semibold leading-7"
+                      )}
                       onClick={onClose}
                     >
-                      {item.name}
+                      <span>{item.name}</span>
+                      <ChevronRight className="h-4 w-4" />
                     </Link>
-                    <ChevronRight className="h-4 w-4" />
                   </div>
                 </SheetClose>
               ))}

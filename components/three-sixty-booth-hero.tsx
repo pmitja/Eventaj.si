@@ -53,13 +53,21 @@ export default function ThreeSixtyBoothHero() {
             className="relative mx-auto w-full rounded-lg"
           >
             <video
+              className="absolute inset-0 h-full w-full object-cover"
               autoPlay
               loop
               muted
               playsInline
-              className="w-full rounded-lg object-cover"
+              preload="auto"
+              poster="/360-booth-preview-poster.webp"
+              controlsList="nodownload"
             >
-              <source src="/360-booth-preview.mp4" type="video/mp4" />
+              <source
+                src="/360-booth-preview.mp4"
+                type="video/mp4; codecs=hevc,mp4a.40.2"
+              />
+              <source src="/360-booth-preview.webm" type="video/webm" />
+              Your browser does not support the video tag.
             </video>
           </motion.div>
         </div>

@@ -66,13 +66,22 @@ const Features = ({
             />
           ) : (
             <video
-              src={media.src}
               autoPlay
               loop
               muted
               playsInline
+              preload="auto"
+              poster={media.src.replace(".mp4", "-poster.webp")}
               className="object-contain p-4 w-full h-full"
-            />
+              controlsList="nodownload"
+            >
+              <source src={media.src} type="video/mp4; codecs=hevc,mp4a.40.2" />
+              <source
+                src={media.src.replace(".mp4", ".webm")}
+                type="video/webm"
+              />
+              Your browser does not support the video tag.
+            </video>
           )}
         </div>
         <div className="flex flex-col justify-center">

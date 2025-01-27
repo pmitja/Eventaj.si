@@ -1,4 +1,6 @@
-const HqVideo = () => {
+import { SVGProps } from "react";
+
+const HqVideo = ({ className, ...props }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
       width="64"
@@ -6,6 +8,8 @@ const HqVideo = () => {
       viewBox="0 0 64 65"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...props}
     >
       <path
         d="M36 6H12C7.58172 6 4 9.58172 4 14V34C4 38.4182 7.58172 42 12 42H36C40.4182 42 44 38.4182 44 34V14C44 9.58172 40.4182 6 36 6Z"

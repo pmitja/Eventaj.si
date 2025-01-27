@@ -1,11 +1,15 @@
-const CarWithRoad = () => {
+import { SVGProps } from "react";
+
+const CarWithRoad = ({ className, ...props }: SVGProps<SVGSVGElement>) => {
   return (
     <svg
-      width="65"
-      height="67"
-      viewBox="0 0 65 67"
+      width="64"
+      height="65"
+      viewBox="0 0 64 65"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      className={className}
+      {...props}
     >
       <g clipPath="url(#clip0_197860_1494)">
         <path
