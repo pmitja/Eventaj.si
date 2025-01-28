@@ -71,13 +71,16 @@ const Features = ({
               muted
               playsInline
               preload="auto"
-              poster={media.src.replace(".mp4", "-poster.webp")}
+              poster={`${process.env.NEXT_PUBLIC_BASE_URL}${media.src.replace(".mp4", "-poster.webp")}`}
               className="object-contain p-4 w-full h-full"
               controlsList="nodownload"
             >
-              <source src={media.src} type="video/mp4; codecs=hevc,mp4a.40.2" />
               <source
-                src={media.src.replace(".mp4", ".webm")}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${media.src}`}
+                type="video/mp4; codecs=hevc,mp4a.40.2"
+              />
+              <source
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${media.src.replace(".mp4", ".webm")}`}
                 type="video/webm"
               />
               Your browser does not support the video tag.
