@@ -21,14 +21,13 @@
     @apply bg-background text-foreground min-h-screen overflow-x-hidden;
   }
 
+  html, body {
+    overflow-x: clip !important;
+  }
+
   /* Better default focus styles */
   :focus-visible {
     @apply outline-2 outline-offset-2 outline-primary;
-  }
-
-  /* Smooth scrolling */
-  html {
-    scroll-behavior: smooth;
   }
 
   /* Hide scrollbar for Chrome, Safari and Opera */

@@ -16,9 +16,9 @@ export interface BlogLayoutProps {
 
 export function BlogLayout({ children, metadata }: BlogLayoutProps) {
   return (
-    <main className="container-lg mx-auto mt-24 md:mt-28">
+    <main className="mt-24 md:mt-28">
       {/* Hero Section */}
-      <section className="relative">
+      <section className="container-lg mx-auto relative">
         <div className="pt-12 md:pt-16">
           <div className="max-w-4xl mx-auto">
             {/* Metadata */}
@@ -60,14 +60,14 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
       </section>
 
       {/* Content Section */}
-      <section className="pb-4 md:pb-8">
+      <section className="container-lg mx-auto pb-4 md:pb-8">
         <div className="prose prose-lg dark:prose-invert prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:text-gray-600 dark:prose-p:text-white prose-li:text-gray-600 dark:prose-li:text-white prose-img:rounded-xl prose-img:shadow-lg max-w-4xl mx-auto">
           {children}
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="full-width relative py-16 md:py-24">
+      <section className="relative py-16 md:py-24">
         <div className="absolute inset-0 z-0">
           <Image
             src="/application/blog-hero.webp"

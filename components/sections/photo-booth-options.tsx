@@ -26,13 +26,13 @@ const options: BoothOption[] = [
     image: "/application/360-action-images.webp",
     href: "/360-photo-booth",
   },
-  {
-    title: "Duet photo booth",
-    description:
-      "Duet Photo Booth je popolna izbira za poroke, rojstne dneve, poslovne dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega.",
-    image: "/application/combo-image.webp",
-    href: "/duet-photo-booth",
-  },
+  // {
+  //   title: "Duet photo booth",
+  //   description:
+  //     "Duet Photo Booth je popolna izbira za poroke, rojstne dneve, poslovne dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega.",
+  //   image: "/application/combo-image.webp",
+  //   href: "/duet-photo-booth",
+  // },
 ];
 
 export function PhotoBoothOptions() {
@@ -43,7 +43,7 @@ export function PhotoBoothOptions() {
       className="bg-background"
       textClassName="text-muted-foreground"
     >
-      <div className="container-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mx-auto">
+      <div className="container-lg grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 mx-auto">
         {options.map((option) => (
           <div
             key={option.title}
