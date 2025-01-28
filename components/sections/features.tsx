@@ -75,8 +75,20 @@ const Features = ({
               controlsList="nodownload"
             >
               <source
-                src={`${media.src}`}
+                src={
+                  process.env.NODE_ENV === "production"
+                    ? `${media.src}`
+                    : media.src
+                }
                 type="video/mp4; codecs=hevc,mp4a.40.2"
+              />
+              <source
+                src={
+                  process.env.NODE_ENV === "production"
+                    ? `${media.src.replace(".mp4", ".webm")}`
+                    : media.src.replace(".mp4", ".webm")
+                }
+                type="video/webm"
               />
               Your browser does not support the video tag.
             </video>

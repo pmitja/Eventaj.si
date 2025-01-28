@@ -6,19 +6,19 @@ const steps = [
     number: "1",
     title: "Stopite na platformo",
     description:
-      "Opremljeni z rekviziti stopite na okroglo platformo, kjer ustvarite posnetek s 360° kamero, ki vas večkrat zaokroži!",
+      "Z izbranimi rekviziti stopite na okroglo platformo, kjer ustvarite posnetek s 360° kamero, ki vas večkrat obkroži.",
   },
   {
     number: "2",
-    title: "Oglejte si video",
+    title: "Oglejte si videoposnetek",
     description:
-      "Ko končate, si lahko svoj čudovit video takoj ogledate na zaslonu na dotik.",
+      "Ko se kamera ustavi, si lahko svoj videoposnetek takoj ogledate na dodatnem zaslonu.",
   },
   {
     number: "3",
     title: "Delite spomine",
     description:
-      "Vse svoje videe lahko delite z AirDropom, si jih pošljete na e-pošto, shranite preko QR kode ali pa dostopate do njih kasneje v spletni galeriji.",
+      "Vse svoje videoposnetke lahko prejmete preko AirDrop-a, e-pošte, QR kode ali pa dostopate do njih kasneje v spletni galeriji.",
   },
 ];
 

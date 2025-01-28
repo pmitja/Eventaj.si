@@ -251,7 +251,12 @@ export function BookingForm({
                       )}
                     >
                       <div className="font-semibold text-lg mb-1 text-gray-900 dark:text-white">
-                        {hour.value} {hour.value === 1 ? "ura" : "ure"}
+                        {hour.value}{" "}
+                        {hour.value === 1
+                          ? "ura"
+                          : hour.value === 2
+                            ? "uri"
+                            : "ure"}
                       </div>
                       <div className="text-2xl font-bold text-[#C99566]">
                         {hour.price}€

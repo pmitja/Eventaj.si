@@ -18,7 +18,7 @@ export interface WhenToChooseContent {
 
 export const threeSixtyWhenToChoose: WhenToChooseContent = {
   heading: "KDAJ IZBRATI 360° PHOTO BOOTH?",
-  text: "360° photo booth je primeren za skoraj vsak dogodek. Najpogosteje ga pripeljemo na poslovne dogodke, plese, praznovanja in poroke.",
+  text: "360° photo booth je idealen za vsak dogodek, kjer imate na voljo 3x3 m prostora za ustvarjanje nepozabnih videoposnetkov.",
   occasions: [
     {
       title: "Poroke",

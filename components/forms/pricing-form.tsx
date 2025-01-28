@@ -214,7 +214,12 @@ export function PricingForm({
                 <SelectContent>
                   {hours.map((hour) => (
                     <SelectItem key={hour.value} value={hour.value.toString()}>
-                      {hour.value} {hour.value === 1 ? "ura" : "ure"}
+                      {hour.value}{" "}
+                      {hour.value === 1
+                        ? "ura"
+                        : hour.value === 2
+                          ? "uri"
+                          : "ure"}
                     </SelectItem>
                   ))}
                 </SelectContent>

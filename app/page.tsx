@@ -9,24 +9,6 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
 
-const testimonials = [
-  {
-    author: {
-      name: "Petra Horvat",
-      title: "Rojstnodnevna slavljenka",
-    },
-    text: "Vsi moji prijatelji so se noro zabavali z vašim photo boothom. Nepozabni spomini!",
-  },
-  {
-    author: {
-      name: "Matej Zupančič",
-      title: "Organizator dogodkov",
-    },
-    text: "Profesionalen pristop in odlična izvedba! Definitivno vas bomo še kdaj najeli.",
-  },
-  // Add more testimonials...
-];
-
 export const metadata: Metadata = {
   title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
   description:
@@ -189,15 +171,14 @@ export default function Home() {
         <TestimonialsSection
           title="Kaj pravijo naši zadovoljni uporabniki"
           description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
-          testimonials={testimonials}
         />
 
         {/* CTA Section */}
         <CTASection
-          title="Vas zanima naš photo booth?"
-          description="Rezervirajte termin še danes."
+          title="Bi popestril zabavo z našim 360° photo booth-om?"
+          description="Rezerviraj termin še danes."
           action={{
-            text: "Rezervirajte termin",
+            text: "Rezerviraj termin",
             variant: "glow",
           }}
           withGlow={true}

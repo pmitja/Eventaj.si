@@ -15,21 +15,21 @@ const options: BoothOption[] = [
   {
     title: "Photo booth",
     description:
-      "Fotograf. Povod k pogovoru. Ustvarjalec spominov. Vse to je Photo Booth. Je popoln dodatek vsaki zabavi ali dogodku. Naš Photo Booth je magnet za ljudi.",
+      "Photo booth je idealna izbira za vsako zabavo ali dogodek! Ustvarite nepozabne trenutke z zabavnimi fotografijami, ki jih lahko še dodatno obogatite z različnimi dodatki.",
     image: "/application/photo-booth.webp",
     href: "/photo-booth",
   },
   {
     title: "360° photo booth",
     description:
-      "360° Photo Booth je popolna izbira za poroke, rojstne dneve, poslovne dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega.",
+      "360° Photo booth vam omogoča, da svoje spomine ujamete v dinamične videoposnetke, ki jih lahko enostavno delite s prijatelji in družino ter ohranite te posebne trenutke za vedno!",
     image: "/application/360-action-images.webp",
     href: "/360-photo-booth",
   },
   // {
   //   title: "Duet photo booth",
   //   description:
-  //     "Duet Photo Booth je popolna izbira za poroke, rojstne dneve, poslovne dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega.",
+  //     "Photo booth in 360° Photo booth sta popolna kombinacija, ki ne sme manjkati na nobeni zabavi, saj omogoča da spomine ohranite tako v fotografijah kot tudi v videoposnetkih.",
   //   image: "/application/combo-image.webp",
   //   href: "/duet-photo-booth",
   // },

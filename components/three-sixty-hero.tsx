@@ -48,8 +48,8 @@ const ThreeSixtyHero = () => {
             className="max-w-2xl sm:max-w-3xl lg:max-w-4xl mx-auto mb-8 md:mb-12"
           >
             <p className="text-base sm:text-lg md:text-xl">
-              Edinstveno 360° snemanje za posebne trenutke. Popolna izbira za
-              vse vrste dogodkov.
+              Zajame vaše trenutke v edinstvenih 360° videoposnetkih. Popolna
+              izbira za vse vrste dogodkov.
             </p>
           </FadeIn>
 

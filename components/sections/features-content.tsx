@@ -9,7 +9,7 @@ export const threeSixtyFeatures = {
   heading: "ODLIČNA IZBIRA ZA VAŠ DOGODEK",
   text: (
     <>
-      {"Naš 360° Photo Booth je prava atrakcija vsakega dogodka! Ustvarite " +
+      {"Naš 360° photo booth je prava atrakcija vsakega dogodka! Ustvarite " +
         "edinstvene posnetke, ki ujamejo vsak kot, vsak nasmeh in vsako potezo " +
         "– kot pravi filmski trenutek. Gostje lahko stopijo na 100 cm veliko " +
         "platformo, kamera pa jih v krogu snema iz nizkega kota v visoki " +
@@ -17,7 +17,7 @@ export const threeSixtyFeatures = {
         "deljenje na družbenih omrežjih."}
       <br />
       <br />
-      {"360° Photo Booth je popolna izbira za poroke, rojstne dneve, poslovne " +
+      {"360° photo booth je popolna izbira za poroke, rojstne dneve, poslovne " +
         "dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega. " +
         "Dodajte rekvizite, učinke ali napise in zagotovite, da bo vaš dogodek " +
         "ostal v spominu za vedno!"}
@@ -27,40 +27,39 @@ export const threeSixtyFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi, da 360° photo booth na vašem dogodku deluje brezhibno.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
-      title: "Prevoz kamorkoli",
+      title: "Prevoz",
       description:
-        "Naša ekipa dostavi photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth za popolno kombinacijo.",
+        "Naša ekipa dostavi 360° photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth.",
       icon: CarWithRoad,
     },
     {
       title: "Deljenje na spletu",
       description:
-        "Delite svoje videe takoj s prijatelji. Pokončni videi so idealni za objavo na družbenih omrežjih, kot sta Instagram in TikTok.",
+        "Pokončni videoposnetki so popolni za Instagram in TikTok – enostavno jih posnamete in takoj objavite! Pokažite svoje najboljše trenutke in jih delite s svojimi prijatelji!",
       icon: SocialIcons,
     },
     {
       title: "Prilagojeno po vaših željah",
       description:
-        "Končni videz vaših videov je povsem v vaših rokah. Izberite glasbo in dovršeno grafiko po vaših željah.",
+        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposneteke edinstvene.",
       icon: PaintWithLamp,
     },
     {
-      title: "Kakovostni videi",
+      title: "Kakovostni videoposnetki",
       description:
-        "Zaradi profesionalne zasnove 360° photo bootha boste prejeli kratke videe vrhunske kakovosti.",
+        "Zaradi profesionalne zasnove 360° photo booth-a boste prejeli kratke videoposnetke vrhunske kakovosti.",
       icon: HqVideo,
     },
     {
-      title: "Različni rekviziti",
+      title: "Zabavni rekviziti",
       description:
-        "Skupaj z 360° photo boothom prinesemo bogat paket rekvizitov, ki bodo poskrbeli za vašo zabavo. Veselite se lasulj, očal, napisnih tabel in celo naprave za pihanje mehurčkov!",
+        "Ob poplesavanju na 360° photo booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
       icon: GlassesWithMustache,
     },
-    // ... rest of the features
   ],
   media: {
     type: "video" as const,
@@ -74,7 +73,7 @@ export const videoFeatures = {
   heading: "ODLIČNA IZBIRA ZA VAŠ DOGODEK",
   text: (
     <>
-      {"Naš 360° Photo Booth je prava atrakcija vsakega dogodka! Ustvarite " +
+      {"Naš 360° photo booth je prava atrakcija vsakega dogodka! Ustvarite " +
         "edinstvene posnetke, ki ujamejo vsak kot, vsak nasmeh in vsako potezo " +
         "– kot pravi filmski trenutek. Gostje lahko stopijo na 100 cm veliko " +
         "platformo, kamera pa jih v krogu snema iz nizkega kota v visoki " +
@@ -82,7 +81,7 @@ export const videoFeatures = {
         "deljenje na družbenih omrežjih."}
       <br />
       <br />
-      {"360° Photo Booth je popolna izbira za poroke, rojstne dneve, poslovne " +
+      {"360° photo booth je popolna izbira za poroke, rojstne dneve, poslovne " +
         "dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega. " +
         "Dodajte rekvizite, učinke ali napise in zagotovite, da bo vaš dogodek " +
         "ostal v spominu za vedno!"}
@@ -92,40 +91,39 @@ export const videoFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi, da 360° photo booth na vašem dogodku deluje brezhibno.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
-      title: "Prevoz kamorkoli",
+      title: "Prevoz",
       description:
-        "Naša ekipa dostavi photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth za popolno kombinacijo.",
+        "Naša ekipa dostavi 360° photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth.",
       icon: CarWithRoad,
     },
     {
       title: "Deljenje na spletu",
       description:
-        "Delite svoje videe takoj s prijatelji. Pokončni videi so idealni za objavo na družbenih omrežjih, kot sta Instagram in TikTok.",
+        "Pokončni videoposnetki so popolni za Instagram in TikTok – enostavno jih posnamete in takoj objavite! Pokažite svoje najboljše trenutke in jih delite s svojimi prijatelji!",
       icon: SocialIcons,
     },
     {
       title: "Prilagojeno po vaših željah",
       description:
-        "Končni videz vaših videov je povsem v vaših rokah. Izberite glasbo in dovršeno grafiko po vaših željah.",
+        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposneteke edinstvene.",
       icon: PaintWithLamp,
     },
     {
-      title: "Kakovostni videi",
+      title: "Kakovostni videoposnetki",
       description:
-        "Zaradi profesionalne zasnove 360° photo bootha boste prejeli kratke videe vrhunske kakovosti.",
+        "Zaradi profesionalne zasnove 360° photo booth-a boste prejeli kratke videoposnetke vrhunske kakovosti.",
       icon: HqVideo,
     },
     {
-      title: "Različni rekviziti",
+      title: "Zabavni rekviziti",
       description:
-        "Skupaj z 360° photo boothom prinesemo bogat paket rekvizitov, ki bodo poskrbeli za vašo zabavo. Veselite se lasulj, očal, napisnih tabel in celo naprave za pihanje mehurčkov!",
+        "Ob poplesavanju na 360° photo booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
       icon: GlassesWithMustache,
     },
-    // ... rest of the features
   ],
   media: {
     type: "video" as const,
@@ -148,40 +146,39 @@ export const basicBoothFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi, da 360° photo booth na vašem dogodku deluje brezhibno.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
-      title: "Prevoz kamorkoli",
+      title: "Prevoz",
       description:
-        "Naša ekipa dostavi photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth za popolno kombinacijo.",
+        "Naša ekipa dostavi 360° photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth.",
       icon: CarWithRoad,
     },
     {
       title: "Deljenje na spletu",
       description:
-        "Delite svoje videe takoj s prijatelji. Pokončni videi so idealni za objavo na družbenih omrežjih, kot sta Instagram in TikTok.",
+        "Pokončni videoposnetki so popolni za Instagram in TikTok – enostavno jih posnamete in takoj objavite! Pokažite svoje najboljše trenutke in jih delite s svojimi prijatelji!",
       icon: SocialIcons,
     },
     {
       title: "Prilagojeno po vaših željah",
       description:
-        "Končni videz vaših videov je povsem v vaših rokah. Izberite glasbo in dovršeno grafiko po vaših željah.",
+        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposneteke edinstvene.",
       icon: PaintWithLamp,
     },
     {
       title: "Kakovostni videi",
       description:
-        "Zaradi profesionalne zasnove 360° photo bootha boste prejeli kratke videe vrhunske kakovosti.",
+        "Zaradi profesionalne zasnove 360° photo booth-a boste prejeli kratke videoposnetke vrhunske kakovosti.",
       icon: HqVideo,
     },
     {
-      title: "Različni rekviziti",
+      title: "Zabavni rekviziti",
       description:
-        "Skupaj z 360° photo boothom prinesemo bogat paket rekvizitov, ki bodo poskrbeli za vašo zabavo. Veselite se lasulj, očal, napisnih tabel in celo naprave za pihanje mehurčkov!",
+        "Ob poplesavanju na 360° photo booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
       icon: GlassesWithMustache,
     },
-    // ... rest of the features
   ],
   media: {
     type: "image" as const,

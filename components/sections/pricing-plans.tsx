@@ -29,7 +29,7 @@ interface PricingProps {
 export function PricingPlans({
   plans,
   title = "Izberite paket po vaši meri",
-  description = "Vsi paketi vključujejo dostavo, postavitev in operaterja za celoten čas najema.",
+  description = "Vsi paketi vključujejo postavitev in upravljanje za celoten čas najema.",
 }: PricingProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const pathname = usePathname();

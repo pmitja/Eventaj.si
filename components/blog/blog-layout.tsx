@@ -79,11 +79,10 @@ export function BlogLayout({ children, metadata }: BlogLayoutProps) {
         </div>
         <div className="relative z-10 container mx-auto px-4 text-center text-white">
           <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            Želite popestriti vaše dogodke?
+            Bi popestril zabavo z našim 360° photo booth-om?
           </h2>
           <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto">
-            Izberite si paket, ki vam najbolj ustreza. Pošljite povpraševanje in
-            rezervirajte termin.
+            Rezerviraj termin še danes.
           </p>
           <div className="flex items-center justify-center gap-4">
             <HeroBookingDialog>

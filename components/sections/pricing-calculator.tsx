@@ -157,7 +157,12 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
                           key={hour.value}
                           value={hour.value.toString()}
                         >
-                          {hour.value} {hour.value === 1 ? "ura" : "ure"}
+                          {hour.value}{" "}
+                          {hour.value === 1
+                            ? "ura"
+                            : hour.value === 2
+                              ? "uri"
+                              : "ure"}
                         </SelectItem>
                       ))
                     : basicBoothHours.map((hour) => (
@@ -165,7 +170,12 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
                           key={hour.value}
                           value={hour.value.toString()}
                         >
-                          {hour.value} {hour.value === 1 ? "ura" : "ure"}
+                          {hour.value}{" "}
+                          {hour.value === 1
+                            ? "ura"
+                            : hour.value === 2
+                              ? "uri"
+                              : "ure"}
                         </SelectItem>
                       ))}
                 </SelectContent>
@@ -178,7 +188,8 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
               {totalPrice.toFixed(0)} €
             </div>
             <p className="mt-2 md:mt-4 text-gray-500 text-xs md:text-base">
-              Pošljite povpraševanje in prejeli boste ponudbo s točno ceno.
+              Pošlji povpraševanje in prejel boš ponudbo, ki bo prilagojena
+              tvojim željam.
             </p>
           </div>
 
