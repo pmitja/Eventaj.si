@@ -28,7 +28,7 @@ interface PricingProps {
 
 export function PricingPlans({
   plans,
-  title = "Izberite paket po vaši meri",
+  title = "Izberi paket po tvoji meri",
   description = "Vsi paketi vključujejo postavitev in upravljanje za celoten čas najema.",
 }: PricingProps) {
   const isDesktop = useMediaQuery("(min-width: 768px)");

@@ -64,7 +64,7 @@ export const threeSixtyFeatures = {
   ],
   media: {
     type: "video" as const,
-    src: "/application/video/360-photo-video.MP4",
+    src: "/application/video/360-photo-video.mp4",
     alt: "360 Photo Booth",
   },
   headingClassName: "text-[#94A3B8]",

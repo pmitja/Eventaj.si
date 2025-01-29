@@ -193,8 +193,8 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
               {totalPrice.toFixed(0)} €
             </div>
             <p className="mt-2 md:mt-4 text-gray-500 text-xs md:text-base">
-              Pošlji povpraševanje in prejel boš ponudbo, ki bo prilagojena
-              tvojim željam.
+              Pošlji povpraševanje in prejmi ponudbo, ki bo prilagojena tvojim
+              željam.
             </p>
           </div>
 
