@@ -11,6 +11,12 @@ interface FeatureMediaProps {
 }
 
 export function FeatureMedia({ media }: FeatureMediaProps) {
+  const getVideoUrl = (src: string) => {
+    return process.env.NODE_ENV === "production"
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}${src}`
+      : src;
+  };
+
   return (
     <div className="relative h-[500px] md:h-[400px] lg:h-full">
       {media.type === "image" ? (
@@ -26,25 +32,19 @@ export function FeatureMedia({ media }: FeatureMediaProps) {
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
           className="object-contain p-4 w-full h-full"
           controlsList="nodownload"
         >
+          <source src={getVideoUrl(media.src)} type="video/mp4" />
           <source
-            src={
-              process.env.NODE_ENV === "production" ? `${media.src}` : media.src
-            }
-            type="video/mp4; codecs=hevc,mp4a.40.2"
-          />
-          <source
-            src={
-              process.env.NODE_ENV === "production"
-                ? `${media.src.replace(".mp4", ".webm")}`
-                : media.src.replace(".mp4", ".webm")
-            }
+            src={getVideoUrl(media.src.replace(".mp4", ".webm"))}
             type="video/webm"
           />
-          Your browser does not support the video tag.
+          <p>
+            Your browser doesn&apos;t support HTML video. Here is a
+            <a href={getVideoUrl(media.src)}>link to the video</a> instead.
+          </p>
         </video>
       )}
     </div>

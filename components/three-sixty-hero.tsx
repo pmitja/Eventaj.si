@@ -10,6 +10,12 @@ import { FadeIn } from "./ui/fade-in";
 const ThreeSixtyHero = () => {
   const { scrolled } = useNavigation();
 
+  const getVideoUrl = (src: string) => {
+    return process.env.NODE_ENV === "production"
+      ? `${process.env.NEXT_PUBLIC_BASE_URL}${src}`
+      : src;
+  };
+
   return (
     <section
       className={`min-h-[60vh] 2xl:min-h-[854px] text-white relative ${
@@ -75,6 +81,36 @@ const ThreeSixtyHero = () => {
               <Link href="#kako-deluje">Kako deluje?</Link>
             </Button>
           </motion.div>
+        </div>
+
+        {/* Video Preview */}
+        <div className="absolute inset-0 -z-10">
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            className="object-cover w-full h-full"
+            controlsList="nodownload"
+            poster={`${process.env.NEXT_PUBLIC_BASE_URL}/application/360-booth-preview-poster.webp`}
+          >
+            <source
+              src={getVideoUrl("/360-booth-preview.mp4")}
+              type="video/mp4"
+            />
+            <source
+              src={getVideoUrl("/360-booth-preview.webm")}
+              type="video/webm"
+            />
+            <p>
+              Your browser doesn&apos;t support HTML video. Here is a
+              <a href={getVideoUrl("/360-booth-preview.mp4")}>
+                link to the video
+              </a>{" "}
+              instead.
+            </p>
+          </video>
         </div>
 
         {/* Scroll indicator */}
