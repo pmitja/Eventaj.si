@@ -1,20 +1,20 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Politika zasebnosti | 360booth.si",
+  title: "Politika zasebnosti | Eventaj.si",
   description:
-    "Politika zasebnosti in varstvo osebnih podatkov za uporabnike storitev 360booth.si.",
+    "Politika zasebnosti in varstvo osebnih podatkov za uporabnike storitev Eventaj.si.",
   keywords: "zasebnost, varstvo podatkov, GDPR, photo booth, 360 photo booth",
   openGraph: {
-    title: "Politika zasebnosti | 360booth.si",
+    title: "Politika zasebnosti | Eventaj.si",
     description:
-      "Politika zasebnosti in varstvo osebnih podatkov za uporabnike storitev 360booth.si.",
-    url: "https://360booth.si/zasebnost",
-    siteName: "360booth.si",
+      "Politika zasebnosti in varstvo osebnih podatkov za uporabnike storitev Eventaj.si.",
+    url: "https://eventaj.si/zasebnost",
+    siteName: "Eventaj.si",
     type: "website",
   },
   alternates: {
-    canonical: "https://360booth.si/zasebnost",
+    canonical: "https://eventaj.si/zasebnost",
   },
 };
 
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
 
         <section className="mb-12">
           <p className="lead text-xl text-muted-foreground">
-            Pri 360booth.si se zavezujemo k varovanju vaše zasebnosti in osebnih
+            Pri eventaj.si se zavezujemo k varovanju vaše zasebnosti in osebnih
             podatkov. Ta politika zasebnosti pojasnjuje, kako zbiramo,
             uporabljamo in varujemo vaše osebne podatke v skladu s Splošno
             uredbo o varstvu podatkov (GDPR) in veljavno zakonodajo.
@@ -229,8 +229,8 @@ export default function PrivacyPage() {
           </div>
           <p className="mt-6">
             Za uveljavljanje katerekoli od teh pravic nas kontaktirajte na
-            info@360booth.si. Na vašo zahtevo bomo odgovorili v najkrajšem
-            možnem času, najkasneje pa v enem mesecu.
+            info@eventaj.si. Na vašo zahtevo bomo odgovorili v najkrajšem možnem
+            času, najkasneje pa v enem mesecu.
           </p>
         </section>
 

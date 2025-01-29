@@ -1,16 +1,16 @@
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Pogoji uporabe | Eventaj.si",
+  title: "Pogoji uporabe | eventaj.si",
   description:
-    "Pogoji uporabe in zasebnost za najem photo booth in 360 photo booth storitev.",
-  keywords: "pogoji uporabe, zasebnost, photo booth, 360 photo booth, najem",
+    "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem photo booth in 360 photo booth opreme.",
+  keywords: "pogoji uporabe, photo booth, 360 photo booth, najem opreme",
   openGraph: {
-    title: "Pogoji uporabe | Eventaj.si",
+    title: "Pogoji uporabe | eventaj.si",
     description:
-      "Pogoji uporabe in zasebnost za najem photo booth in 360 photo booth storitev.",
+      "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem photo booth in 360 photo booth opreme.",
     url: "https://eventaj.si/pogoji-uporabe",
-    siteName: "Eventaj.si",
+    siteName: "eventaj.si",
     type: "website",
   },
   alternates: {
@@ -22,24 +22,27 @@ export default function TermsPage() {
   return (
     <main className="container mx-auto px-4 pt-32 md:pt-40 pb-24">
       <div className="prose prose-lg dark:prose-invert mx-auto max-w-4xl">
-        <h1 className="text-4xl md:text-5xl font-bold mb-12">Pogoji uporabe</h1>
+        <h1 className="text-4xl md:text-5xl font-bold mb-12">
+          Splošni pogoji uporabe
+        </h1>
+
+        <section className="mb-12">
+          <p className="lead text-xl text-muted-foreground">
+            Ti splošni pogoji uporabe (v nadaljevanju: pogoji) določajo pravice
+            in obveznosti uporabnikov storitev eventaj.si ter pravice in
+            obveznosti ponudnika storitev.
+          </p>
+        </section>
 
         <section className="mb-12">
           <h2>1. Splošne določbe</h2>
           <p>
-            Ti splošni pogoji poslovanja določajo pravice in obveznosti med
-            podjetjem MIPA, Mitja Pak s.p. (v nadaljevanju: ponudnik) in
-            naročnikom storitev (v nadaljevanju: naročnik) ter veljajo za vse
-            storitve, ki jih ponuja ponudnik.
+            Ponudnik storitev je podjetje MIPA, Mitja Pak s.p., Slomškova ulica
+            1, 2230 Lenart v Slovenskih goricah (v nadaljevanju: ponudnik).
           </p>
           <p>
-            Ponudnik:
-            <br />
-            MIPA, Mitja Pak s.p.
-            <br />
-            Slomškova ulica 1
-            <br />
-            2230 Lenart v Slovenskih goricah
+            Uporabnik je vsaka fizična ali pravna oseba, ki uporablja storitve
+            eventaj.si (v nadaljevanju: uporabnik).
           </p>
           <p>
             Ponudnik ponuja storitve najema photo booth in 360 photo booth
