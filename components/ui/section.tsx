@@ -8,6 +8,7 @@ interface SectionProps {
   className?: string;
   headingClassName?: string;
   textClassName?: string;
+  id?: string;
 }
 
 const Section = ({
@@ -17,9 +18,10 @@ const Section = ({
   className,
   headingClassName,
   textClassName,
+  id,
 }: SectionProps) => {
   return (
-    <section className={cn("py-12 md:py-24", className)}>
+    <section className={cn("py-12 md:py-24", className)} id={id}>
       <div className="container-sm mx-auto px-4">
         <h2
           className={cn(

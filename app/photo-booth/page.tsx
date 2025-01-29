@@ -72,15 +72,16 @@ const pricingPlans: PricingPlan[] = [
   {
     name: "Basic",
     price: "249",
-    period: "dogodek",
+    period: "2 uri",
     features: [
-      "2 uri najema",
+      "najem do 2 uri",
       "Neomejeno število fotografij",
-      "Dostava in postavitev",
-      "Operater za celoten čas najema",
+      "Pomoč pri uporabi",
       "Rekviziti za fotografiranje",
       "Takojšnje tiskanje fotografij",
       "Digitalne fotografije",
+      "Personalizacija fotografij",
+      "Online galerija",
     ],
     description: "Popoln paket za manjše dogodke in zabave.",
     buttonText: "Rezerviraj termin",
@@ -89,16 +90,16 @@ const pricingPlans: PricingPlan[] = [
   {
     name: "Standard",
     price: "299",
-    period: "dogodek",
+    period: "3 ure",
     features: [
-      "3 ure najema",
+      "najem do 3 ur",
       "Neomejeno število fotografij",
-      "Dostava in postavitev",
-      "Operater za celoten čas najema",
+      "Pomoč pri uporabi",
       "Rekviziti za fotografiranje",
       "Takojšnje tiskanje fotografij",
       "Digitalne fotografije",
       "Personalizacija fotografij",
+      "Online galerija",
     ],
     description: "Najbolj priljubljen paket za večje dogodke.",
     buttonText: "Rezerviraj termin",
@@ -107,13 +108,12 @@ const pricingPlans: PricingPlan[] = [
   {
     name: "Premium",
     price: "349",
-    period: "dogodek",
+    period: "4 ure",
     features: [
-      "4 ure najema",
+      "najem do 4 ur",
       "Neomejeno število fotografij",
-      "Dostava in postavitev",
-      "Operater za celoten čas najema",
-      "Premium rekviziti",
+      "Pomoč pri uporabi",
+      "Rekviziti za fotografiranje",
       "Takojšnje tiskanje fotografij",
       "Digitalne fotografije",
       "Personalizacija fotografij",
@@ -202,7 +202,7 @@ export default function PhotoBooth() {
       <main className="pt-[48px]">
         <BasicBoothHero
           title="Photo booth"
-          text="Naš Photo Booth je magnet za ljudi. Gostje se smejijo in zabavajo pred kamero. Je središčna točka zabave, ki omogoča gostom, da takoj natisnejo fotografije ali jih pošljejo na svoje mobilne naprave in delijo na družbenih omrežjih."
+          text="Naš photo booth je središče vsake zabave. Gostje se zabavajo, smejijo in ustvarjajo spomine pred kamero. Fotografije lahko natisnejo ali jih pošljejo na svoje telefone ter delijo na družbenih omrežjih."
         />
         <WhenToChoose content={photoBoothWhenToChoose} />
         <PromoImage />
@@ -210,8 +210,8 @@ export default function PhotoBooth() {
         <HowItWorks type="basic" />
         <PricingPlans plans={pricingPlans} />
         <CTAContactSection
-          title="Ne najdete ustreznega paketa?"
-          description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
+          title="Ni ustreznega paketa?"
+          description="Kontaktiraj nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
           action={{
             text: "Pošlji povpraševanje",
             variant: "glow",

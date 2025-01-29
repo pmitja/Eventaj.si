@@ -185,8 +185,8 @@ export default function ThreeSixtyPhotoBooth() {
         <HowItWorks type="360" />
         <PricingPlans plans={pricingPlans} />
         <CTAContactSection
-          title="Ne najdete ustreznega paketa?"
-          description="Kontaktirajte nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
+          title="Ni ustreznega paketa?"
+          description="Kontaktiraj nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
           action={{
             text: "Pošlji povpraševanje",
             variant: "glow",
@@ -195,7 +195,7 @@ export default function ThreeSixtyPhotoBooth() {
         />
         <TestimonialsSection
           title="Kaj pravijo naši zadovoljni uporabniki"
-          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
+          description="Preveri, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
         />
       </main>
     </>

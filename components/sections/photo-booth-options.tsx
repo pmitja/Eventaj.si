@@ -22,7 +22,7 @@ const options: BoothOption[] = [
   {
     title: "360° photo booth",
     description:
-      "360° Photo booth vam omogoča, da svoje spomine ujamete v dinamične videoposnetke, ki jih lahko enostavno delite s prijatelji in družino ter ohranite te posebne trenutke za vedno!",
+      "360° photo booth vam omogoča, da svoje spomine ujamete v dinamične videoposnetke, ki jih lahko enostavno delite s prijatelji in družino ter ohranite te posebne trenutke za vedno!",
     image: "/application/360-action-images.webp",
     href: "/360-photo-booth",
   },
@@ -79,7 +79,7 @@ export function PhotoBoothOptions() {
                   </Button>
                 </HeroBookingDialog>
                 <Button className="w-fit" variant="outline" asChild>
-                  <a href={option.href}>Več o {option.title}</a>
+                  <a href={option.href}>Več o {option.title.toLowerCase()}</a>
                 </Button>
               </div>
             </div>

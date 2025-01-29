@@ -49,7 +49,7 @@ export const threeSixtyWhenToChoose: WhenToChooseContent = {
 
 export const photoBoothWhenToChoose: WhenToChooseContent = {
   heading: "KDAJ IZBRATI PHOTO BOOTH?",
-  text: "Photo booth je primeren za vsak dogodek. Najpogosteje ga pripeljemo na poroke, rojstne dneve, zaključke in poslovna srečanja.",
+  text: "Photo booth je primeren za vse dogodke, kjer si želite dodati nekaj zabave popestritev.",
   occasions: [
     {
       title: "Poroke",

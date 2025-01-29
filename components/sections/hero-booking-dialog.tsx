@@ -29,9 +29,9 @@ export function HeroBookingDialog({
       <DialogTrigger asChild>{children}</DialogTrigger>
       <DialogContent className="sm:max-w-[600px] max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Rezervirajte termin</DialogTitle>
+          <DialogTitle>Rezerviraj termin</DialogTitle>
           <DialogDescription>
-            Izpolnite obrazec in rezervirajte termin za vaš dogodek.
+            Izpolni obrazec in rezerviraj termin za nepozaben dogodek.
           </DialogDescription>
         </DialogHeader>
         <BookingForm

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PricingForm } from "../forms/pricing-form";
+import CameraInfinity from "../icons/CameraInfinity";
 import GlassesWithMustache from "../icons/GlassesWithMustache";
 import PaintWithLamp from "../icons/PaintWithLamp";
 import PersonWithHeart from "../icons/PersonWithHeart";
@@ -69,31 +70,35 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
         <div className="space-y-4 md:space-y-6">
           {/* Features List */}
           <div className="grid grid-cols-3 md:grid-cols-3 gap-2 md:gap-6 text-center">
-            <div className="flex flex-col items-center gap-1 md:gap-2">
-              <UnlimitedIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
+            <div className="flex flex-col items-center gap-1 md:gap-2 h-full justify-between">
+              {type === "360" ? (
+                <UnlimitedIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
+              ) : (
+                <CameraInfinity className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
+              )}
               <p className="font-medium text-[11px] md:text-base">
-                Neomejeno posnetkov
+                Neomejeno število posnetkov
               </p>
             </div>
-            <div className="flex flex-col items-center gap-1 md:gap-3">
+            <div className="flex flex-col items-center gap-1 md:gap-3 h-full justify-between">
               <ShareIcon className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
                 Takojšnja delitev
               </p>
             </div>
-            <div className="flex flex-col items-center gap-1 md:gap-3">
+            <div className="flex flex-col items-center gap-1 md:gap-3 h-full justify-between">
               <PersonWithHeart className="w-8 h-8 md:w-14 md:h-14 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
                 Ekipa za pomoč
               </p>
             </div>
-            <div className="flex flex-col items-center gap-1 md:gap-3">
+            <div className="flex flex-col items-center gap-1 md:gap-3 h-full justify-between">
               <PaintWithLamp className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">
                 Prilagoditev
               </p>
             </div>
-            <div className="flex flex-col items-center gap-1 md:gap-3">
+            <div className="flex flex-col items-center gap-1 md:gap-3 h-full justify-between">
               <GlassesWithMustache className="w-8 h-8 md:w-12 md:h-12 text-[#C99566]" />
               <p className="font-medium text-[11px] md:text-base">Rekviziti</p>
             </div>
@@ -101,7 +106,7 @@ const PricingCalculator = ({ type }: { type: "360" | "basic" }) => {
 
           <div className="border-t border-gray-200 pt-4 md:pt-6">
             <h3 className="text-center font-semibold text-lg md:text-2xl mb-4 md:mb-6">
-              Izvedite informativno ceno
+              Izvedi informativni izračun
             </h3>
           </div>
 

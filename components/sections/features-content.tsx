@@ -1,3 +1,4 @@
+import CameraHd from "../icons/CameraHd";
 import CarWithRoad from "../icons/CarWithRoad";
 import GlassesWithMustache from "../icons/GlassesWithMustache";
 import HqVideo from "../icons/HqVideo";
@@ -13,7 +14,7 @@ export const threeSixtyFeatures = {
         "edinstvene posnetke, ki ujamejo vsak kot, vsak nasmeh in vsako potezo " +
         "– kot pravi filmski trenutek. Gostje lahko stopijo na 100 cm veliko " +
         "platformo, kamera pa jih v krogu snema iz nizkega kota v visoki " +
-        "ločljivosti, kar ustvari neverjetne slow-motion videe, pripravljene za " +
+        "ločljivosti, kar ustvari neverjetne slow-motion videoposnetke, pripravljene za " +
         "deljenje na družbenih omrežjih."}
       <br />
       <br />
@@ -45,7 +46,7 @@ export const threeSixtyFeatures = {
     {
       title: "Prilagojeno po vaših željah",
       description:
-        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposneteke edinstvene.",
+        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposnetke edinstvene.",
       icon: PaintWithLamp,
     },
     {
@@ -109,7 +110,7 @@ export const videoFeatures = {
     {
       title: "Prilagojeno po vaših željah",
       description:
-        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposneteke edinstvene.",
+        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposnetke edinstvene.",
       icon: PaintWithLamp,
     },
     {
@@ -138,7 +139,7 @@ export const basicBoothFeatures = {
   text: (
     <>
       {
-        "Fotograf. Povod k pogovoru. Ustvarjalec spominov. Vse to je Photo Booth. Je popoln dodatek vsaki zabavi ali dogodku. Naš Photo Booth je magnet za ljudi. Gostje se smejijo in zabavajo pred kamero. Je središčna točka zabave, ki omogoča gostom, da takoj natisnejo fotografije ali jih pošljejo na svoje mobilne naprave in delijo na družbenih omrežjih. Dodajte še rekvizite, ustvarite GIF ali Boomerang za dodatno zabavo."
+        "Fotograf. Povod k pogovoru. Ustvarjalec spominov. Vse to je photo booth – popoln dodatek vsaki zabavi ali dogodku. Gostje se pred photo booth-om sprostijo in preizkušajo svojo kreativnost pred kamero, ustvarjajo zabavne trenutke, ki jih lahko takoj ovekovečijo v fotografijah ali GIF posnetkih."
       }
     </>
   ),
@@ -146,37 +147,37 @@ export const basicBoothFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
       title: "Prevoz",
       description:
-        "Naša ekipa dostavi 360° photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth.",
+        "Naša ekipa dostavi photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še 360° photo booth",
       icon: CarWithRoad,
     },
     {
       title: "Deljenje na spletu",
       description:
-        "Pokončni videoposnetki so popolni za Instagram in TikTok – enostavno jih posnamete in takoj objavite! Pokažite svoje najboljše trenutke in jih delite s svojimi prijatelji!",
+        "Ustvarjene fotografije lahko objavite na družbenih omrežjih in tako ohranite spomine, ki jih lahko delite s prijatelji in družino.",
       icon: SocialIcons,
     },
     {
       title: "Prilagojeno po vaših željah",
       description:
-        "Končni videz videoposnetkov je povsem v vaših rokah! Izberete lahko glasbo, ki se predvaja v ozadju ter personalizirano grafiko, ki naredi videoposneteke edinstvene.",
+        "Končni videz vaših fotografij je povsem v vaših rokah! Uredimo personalizirano grafiko, ki bo vašim fotografijam dodala edinstven pečat in jih naredila še bolj posebne.",
       icon: PaintWithLamp,
     },
     {
-      title: "Kakovostni videi",
+      title: "Kakovostne fotografije in tisk",
       description:
-        "Zaradi profesionalne zasnove 360° photo booth-a boste prejeli kratke videoposnetke vrhunske kakovosti.",
-      icon: HqVideo,
+        "Zaradi profesionalnega fotoaparata bodo vaše fotografije vrhunske kakovosti. Po želji si lahko fotografije natisnete kar na samem dogodku.",
+      icon: CameraHd,
     },
     {
       title: "Zabavni rekviziti",
       description:
-        "Ob poplesavanju na 360° photo booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
+        "Ob poziranju pred photo booth-om lahko uporabite tudi nekaj naših zabavnih rekvizitov kot so tematska očala, tablice z napisi, tematska pokrivala.",
       icon: GlassesWithMustache,
     },
   ],

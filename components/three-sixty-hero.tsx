@@ -1,6 +1,7 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useNavigation } from "./navigation/navigation-context";
 import ScrollIndicator from "./scroll-indicator";
 import { HeroBookingDialog } from "./sections/hero-booking-dialog";
@@ -39,7 +40,7 @@ const ThreeSixtyHero = () => {
               ease: [0.19, 1, 0.22, 1],
             }}
           >
-            360° Photo Booth
+            360° Photo booth
           </motion.h1>
 
           {/* Subtext */}
@@ -71,7 +72,7 @@ const ThreeSixtyHero = () => {
               asChild
               className="w-full sm:w-auto bg-transparent"
             >
-              <a href="#kako-deluje">Kako deluje?</a>
+              <Link href="#kako-deluje">Kako deluje?</Link>
             </Button>
           </motion.div>
         </div>

@@ -1,7 +1,5 @@
 import HomeHero from "@/components/home-hero";
 import { CTASection } from "@/components/sections/cta-section";
-import Features from "@/components/sections/features";
-import { videoFeatures } from "@/components/sections/features-content";
 import { PhotoBoothOptions } from "@/components/sections/photo-booth-options";
 import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
@@ -163,9 +161,6 @@ export default function Home() {
 
         {/* Photo Booth Options */}
         <PhotoBoothOptions />
-
-        {/* Features Section */}
-        <Features {...videoFeatures} />
 
         {/* Testimonials */}
         <TestimonialsSection

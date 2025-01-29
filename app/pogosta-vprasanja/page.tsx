@@ -37,178 +37,140 @@ export const metadata: Metadata = {
 
 const faqItems = [
   {
-    question: "Ali dobimo fotografije v digitalni obliki?",
+    question: "Ali prejmemo fotografije tudi v digitalni obliki?",
     answer:
-      "Da, poleg tiskanih fotografij prejmete tudi vse fotografije v digitalni obliki v visoki ločljivosti. Fotografije so primerne za tisk in deljenje na družbenih omrežjih.",
+      "Da, vse fotografije si lahko prenesete preko QR kode, ki vam je na voljo skozi celoten dogodek.",
   },
   {
     question: "Kako hitro so fotografije natisnjene?",
     answer:
-      "Fotografije so natisnjene takoj! V nekaj sekundah po fotografiranju gostje prejmejo visokokakovostne tiskane fotografije, ki jih lahko odnesejo domov kot spomin.",
+      "Izberete fotografijo ter število kopij, ki jih želite natisniti in jih prejmete takoj.",
   },
   {
-    question: "Kakšen prostor potrebujemo za photo booth?",
+    question: "Kakšen prostor potrebujemo za najem photo booth-a?",
+    answer: "Prostor za photo booth naj bo velik vsaj 2x2 m.",
+  },
+  {
+    question: "Kako rezerviram najem photo bootha?",
     answer:
-      "Photo booth potrebuje približno 2x2 metra prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
+      "Sledite korakom rezervacije na spletni strani ali nam pišete na email eventaj.si@gmail.com ali nas pokličete na tel. št. 031 285 143 ali 031 544 751.",
   },
   {
-    question: "Kako se rezerviram?",
+    question: "Kaj je potrebno za najem photo booth-a?",
     answer:
-      "Rezervacija se izvede preko telefona na +386 31 285 143 / +386 41 688 143. V kolikor želite rezervirati photo booth, vas prosimo kontaktirajte.",
+      "Najprej je potrebna urejena rezervacija termina. Na samem dogodku pa je potrebno zagotoviti ravno površino velikosti 2x2 m ter dostop do električne napeljave.",
   },
   {
-    question: "Kaj je potrebno za najem photo bootha?",
+    question: "Kaj vključuje najem photo bootha?",
     answer:
-      "Potrebno je imeti dostop do elektrike. V kolikor želite rezervirati photo booth, vas prosimo kontaktirajte.",
+      "Uporaba photo booth-a, prisotnost tehnika, uporaba različnih zabavnih rekvizitov, tisk fotografij in delitev fotografij.",
   },
   {
-    question: "Kaj vključuje najem Photo Booth-a?",
+    question: "Ali lahko prilagodim izgled fotografij?",
     answer:
-      "Najem vključuje foto kabino, profesionalno opremo, rekvizite, personalizirane predloge za fotografije, tiskanje na licu mesta in pomoč asistenta.",
+      "Seveda. Ob potrditvi rezervacije termina se lahko dogovorimo za personaliziran digitalni okvir fotografije. V predogled vam pošljemo 4 predloge, vi pa nato izberete vam najljubšega.",
   },
   {
-    question: "Ali lahko prilagodimo izgled fotografij?",
+    question:
+      "Kako dolgo traja postavitev photo booth-a ali 360° photo booth-a?",
     answer:
-      "Da, omogočamo prilagoditev fotografskih predlog, vključno z logotipom, barvami, imeni, datumi ali tematskimi grafikami.",
-  },
-  {
-    question: "Koliko prostora potrebujemo za Photo Booth?",
-    answer:
-      "Photo Booth potrebuje približno 2x2 metra prostora in dostop do električne vtičnice.",
-  },
-  {
-    question: "Kako dolgo traja postavitev Photo Booth-a?",
-    answer: "Postavitev in priprava običajno trajata med 30 in 60 minut.",
-  },
-  {
-    question: "Ali lahko fotografije tiskate takoj?",
-    answer:
-      "Da, vse fotografije se natisnejo takoj po zajemu, običajno v manj kot 10 sekundah.",
-  },
-  {
-    question: "Ali je prisoten asistent med dogodkom?",
-    answer:
-      "Da, asistent je ves čas dogodka prisoten, da zagotovi nemoteno delovanje in pomaga gostom.",
-  },
-  {
-    question: "Kakšne rekvizite priskrbite?",
-    answer:
-      "Priskrbimo različne zabavne rekvizite, kot so klobuki, očala, maske in napisi, ki ustrezajo tematiki dogodka.",
-  },
-  {
-    question: "Ali dobimo tudi digitalne kopije fotografij?",
-    answer:
-      "Da, po dogodku prejmete vse digitalne fotografije v visoki ločljivosti preko povezave.",
-  },
-  {
-    question: "Ali lahko uporabljamo Photo Booth na prostem?",
-    answer:
-      "Da, če je zagotovljena streha ali pokrit prostor za zaščito pred vremenskimi vplivi ter dostop do elektrike.",
-  },
-  {
-    question: "Koliko časa lahko najamemo Photo Booth?",
-    answer:
-      "Ponujamo različne pakete najema, od nekaj ur do celodnevnega dogodka, odvisno od vaših potreb.",
-  },
-  {
-    question: "Kakšne vrste dogodkov so primerne za Photo Booth?",
-    answer:
-      "Photo Booth je idealen za poroke, rojstne dneve, korporativne dogodke, promocije, sejme in zabave.",
-  },
-  {
-    question: "Kdaj je treba rezervirati Photo Booth?",
-    answer:
-      "Priporočamo, da rezervacijo opravite čim prej, saj so termini pogosto zasedeni, zlasti ob vikendih.",
-  },
-  {
-    question: "Ali je možno prilagoditi ozadje?",
-    answer:
-      "Da, nudimo različna ozadja ali izdelamo unikatno ozadje, ki ustreza vaši tematiki.",
+      "Sama postavitev photo booth-a traja približno od 30 min do 1 ure, odvisno od same lokacije.",
   },
   {
     question: "Kako je s plačilom?",
     answer:
-      "Za rezervacijo je potrebno plačati avans, preostali znesek pa poravnate pred dogodkom.",
+      "Plačilo je potrebno izvesti 24h pred dogodkom. Plačilo je možno izvesti preko bančnega nakazila.",
   },
   {
-    question: "Ali ponujate tematske Photo Booth-e?",
+    question: "Kako velik prostor potrebujemo za 360° photo booth?",
     answer:
-      "Da, pripravimo tematski Photo Booth, ki se ujema z vašim dogodkom (npr. retro, glam, boho).",
+      "Za postavitev 360° photo booth-a je potrebno zagotoviti ravno površino v velikosti 3x3 m.",
   },
   {
-    question: "Kako hitro po dogodku dobimo digitalne fotografije?",
+    question: "Ali lahko prilagodite ozadje?",
     answer:
-      "Digitalne fotografije so na voljo takoj po dogodku in med dogodkom.",
+      "Ozadja si lahko izberete po želji. Če nam zaupate tematiko vašega dogodka, se bomo potrudili, da ustvarimo ozadje, ki bo najbolj ustrezalo vašim željam.",
   },
   {
-    question: "Kako se rezerviram?",
+    question: "Kako hitro dobimo videoposnetke posnete s 360° photo booth-om?",
     answer:
-      "Rezervacija se izvede preko telefona na +386 31 285 143 / +386 41 688 143. V kolikor želite rezervirati photo booth, vas prosimo kontaktirajte.",
+      "Videoposnetki so na voljo takoj, preko QR kode si jih prenesete na svoj telefon.",
   },
   {
-    question: "Kako velik prostor potrebujemo za 360 photo booth?",
+    question: "Kako deluje 360° photo booth?",
     answer:
-      "Priporočamo vsaj 3x3 metre prostora za optimalno izkušnjo. Poskrbimo za varno postavitev in nemoteno gibanje gostov.",
+      "Z izbranimi rekviziti stopite na okroglo platformo, kjer ustvarite posnetek s 360° kamero, ki vas večkrat obkroži. Ko se snemanje zaključi, si lahko posnetek ogledate na dodatnem zaslonu in ga prenesete preko QR kode.",
   },
   {
-    question: "Ali lahko prilagodite ozadje in efekte?",
+    question: "Ali prejmemo fotografije tudi v digitalni obliki?",
     answer:
-      "Da, ponujamo popolno prilagoditev! Od izbire ozadja do posebnih efektov in personaliziranih okvirjev - vse prilagodimo vašim željam.",
+      "Da, vse fotografije si lahko prenesete preko QR kode, ki vam je na voljo skozi celoten dogodek.",
   },
   {
-    question: "Kako hitro dobimo posnetke?",
+    question: "Kako hitro so fotografije natisnjene?",
     answer:
-      "Posnetki so na voljo takoj! Gostje jih lahko delijo preko QR kode ali Airdrop-a. Po dogodku prejmete tudi vse posnetke v visoki ločljivosti.",
+      "Izberete fotografijo ter število kopij, ki jih želite natisniti in jih prejmete takoj.",
   },
   {
-    question: "Kako deluje 360 Photo Booth?",
+    question: "Ali je med dogodkom ves čas prisoten tehnik?",
     answer:
-      "360 Photo Booth deluje tako, da gosta postavimo na platformo, kamera pa kroži okoli in posname 360-stopinjski video. Videoposnetki so nato na voljo za takojšnje deljenje ali prilagoditev.",
+      "Tako je, tehnik je na voljo celoten čas najema photo booth-a ali 360° photo booth-a.",
   },
   {
-    question: "Ali potrebujem posebno mesto za 360 Photo Booth?",
+    question: "Kakšne rekvizite priskrbite?",
     answer:
-      "Da, priporočamo odprt prostor vsaj 3x3 metre, da zagotovimo varno uporabo in dovolj prostora za goste.",
+      "Tematska očala, tematska pokrivala, tablice z napisi, različne okrasne ustnice, brke, klobuke, simbole, naprave za milne mehurčke ter meglo, napihljiva kitara, mikrofon…",
   },
   {
-    question: "Koliko časa potrebujete za postavitev?",
+    question:
+      "Ali lahko uporabljamo photo booth ali 360° photo booth na prostem?",
     answer:
-      "Za postavitev 360 Photo Booth potrebujemo približno 60 minut, odvisno od lokacije in zahtev.",
+      "Da, vendar mora biti zaščitena pred direktnim soncem in padavinami, zagotovljena mora biti ravna površina 2x2 m oz. 3x3 m ter dostop do električne napeljave.",
   },
   {
-    question: "Ali lahko prilagodim videoposnetke z logotipom ali grafiko?",
+    question: "Koliko časa lahko najamemo photo booth ali 360° photo booth?",
     answer:
-      "Seveda! Nudimo popolno prilagoditev videoposnetkov, vključno z logotipi, grafikami in celo glasbeno podlago.",
+      "Paketi so pripravljeni za 2-urni, 3-urni ali 4-urni najem, vi pa ga lahko po želji podaljšate z doplačilom.",
   },
   {
-    question: "Kako se dostopajo gostje do svojih videoposnetkov?",
+    question: "Kdaj je potrebno rezervirati photo booth?",
     answer:
-      "Videoposnetki so na voljo takoj prek QR kode, e-pošte ali deljenja na družabnih omrežjih.",
+      "Za zagotovitev razpoložljivosti priporočamo rezervacijo vsaj 30 dni pred dogodkom, posebej v poletni sezoni, praznični sezoni in ob koncih tedna.",
   },
   {
-    question: "Ali je potrebna električna energija?",
+    question: "Ali lahko prilagodite videoposnetke z logotipom ali grafiko?",
     answer:
-      "Da, za delovanje 360 Photo Booth potrebujemo električni priključek (220V) v bližini postavitve.",
+      "Seveda. Pošljete nam vaš logotip, mi pa vam ustvarimo 4 predloge personalizirane grafike. Pred dogodkom izberete tisto, ki vam je najbolj všeč.",
   },
   {
-    question: "Ali lahko 360 Photo Booth uporabljamo na prostem?",
+    question: "Ali je potrebna električna napeljava?",
     answer:
-      "Da, vendar je potrebna zaščita pred vremenskimi vplivi (npr. streha ali šotor), da zagotovimo varno in nemoteno delovanje.",
+      "Da. Na vsakem dogodku je potrebno zagotoviti dostop do električne napeljave.",
   },
   {
-    question: "Ali lahko vključite dodatke, kot so rekviziti?",
-    answer:
-      "Seveda! Nudimo različne rekvizite, ki popestrijo izkušnjo in dodajo zabavo videoposnetkom.",
-  },
-  {
-    question: "Kakšna je največja teža, ki jo platforma podpira?",
-    answer:
-      "Naša 360 Photo Booth platforma podpira do 200 kg, kar omogoča uporabo za več gostov hkrati.",
+    question: "Koliko oseb je lahko največ na platformi?",
+    answer: "Maksimalno število oseb na platformi je 5.",
   },
   {
     question: "Kako dolgo traja snemanje in obdelava videoposnetkov?",
     answer:
-      "Snemanje posameznega videoposnetka traja približno 15-30 sekund, obdelava in dostava pa sta samodejni in hitri.",
+      "Ko se postavite na platformo, snemanje traja približno 30 s. Obdelan videoposnetek je na voljo takoj, ko zaključite snemanje.",
+  },
+  {
+    question:
+      "Kam se shranjujejo posnete fotografije iz Photo Booth-a in videoposnetki iz 360° Photo Booth-a?",
+    answer:
+      "Posnete fotografije in videoposnetki se shranijo v oblak, ki bo na voljo 3 mesece. Po teh 3 mesecih jih več ne bo možno obnoviti.",
+  },
+  {
+    question: "Kaj se zgodi v primeru, da poškodujete izposojeno opremo?",
+    answer:
+      "Pričakujemo odgovorno obnašanje v okolici izposojene opreme. V primeru, da pride do poškodbe opreme, pa je potrebno poravnati strošek nove opreme.",
+  },
+  {
+    question: "Kakšni so stroški prevoza?",
+    answer:
+      "Prevoz do 20 kilometrov izven Lenarta je brezplačen. Vsak dodaten kilometer se obračuna 0,40 €/km.",
   },
 ];
 
@@ -238,10 +200,10 @@ export default function FAQPage() {
         />
 
         <CTAContactSection
-          title="Imate dodatna vprašanja?"
-          description="Kontaktirajte nas in z veseljem vam bomo pomagali pri organizaciji vašega dogodka."
+          title="Imaš dodatna vprašanja?"
+          description="Z veseljem pomagamo in svetujemo pri izbiri naših storitev."
           action={{
-            text: "Kontaktirajte nas",
+            text: "Kontaktiraj nas",
             variant: "glow",
           }}
         />

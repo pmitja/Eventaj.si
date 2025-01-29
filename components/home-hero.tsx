@@ -2,7 +2,6 @@
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
 import { useNavigation } from "./navigation/navigation-context";
 import ScrollIndicator from "./scroll-indicator";
 import { HeroBookingDialog } from "./sections/hero-booking-dialog";
@@ -107,14 +106,6 @@ const HomeHero = ({ title, text }: HeroProps) => {
                 Rezerviraj termin
               </Button>
             </HeroBookingDialog>
-            <Button
-              variant="outline"
-              size="lg"
-              asChild
-              className="w-full sm:w-auto bg-transparent"
-            >
-              <Link href="#kako-deluje">Kako deluje?</Link>
-            </Button>
           </motion.div>
         </div>
 

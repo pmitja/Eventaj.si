@@ -1,16 +1,16 @@
 "use client";
 
-import * as React from "react";
-import { Moon, Sun, Monitor } from "lucide-react";
+import { Monitor, Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
+import * as React from "react";
 
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { Button } from "@/components/ui/button";
 
 export function ThemeSwitcher() {
   const { setTheme, resolvedTheme } = useTheme();
@@ -44,15 +44,15 @@ export function ThemeSwitcher() {
       <DropdownMenuContent align="end">
         <DropdownMenuItem onClick={() => setTheme("light")}>
           <Sun className="mr-2 h-4 w-4" />
-          <span>Light</span>
+          <span>Svetla tema</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("dark")}>
           <Moon className="mr-2 h-4 w-4" />
-          <span>Dark</span>
+          <span>Temna tema</span>
         </DropdownMenuItem>
         <DropdownMenuItem onClick={() => setTheme("system")}>
           <Monitor className="mr-2 h-4 w-4" />
-          <span>System</span>
+          <span>Sistemska tema</span>
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
