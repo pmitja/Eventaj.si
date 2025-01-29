@@ -12,7 +12,7 @@ export default function NotFound() {
             Stran ni najdena
           </h2>
           <p className="text-muted-foreground mb-8 max-w-md mx-auto">
-            Oprostite, strani ki jo iščete ni mogoče najti. Morda je bila
+            Oprosti, strani ki jo iščeš ni mogoče najti. Morda je bila
             premaknjena ali izbrisana.
           </p>
         </div>
