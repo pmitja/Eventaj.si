@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { baloo2 } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/providers/theme-provider";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -53,6 +54,7 @@ export default function RootLayout({
             <WithNavigation showBanner={true} />
             {children}
             <Footer />
+            <Analytics />
             <Toaster />
           </div>
         </ThemeProvider>
