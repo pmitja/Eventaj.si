@@ -115,8 +115,8 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
             </Text>
             <Text style={detailItem}>
               Email:{" "}
-              <Link href="mailto:eventaj.si@gmail.com" style={link}>
-                eventaj.si@gmail.com
+              <Link href="mailto:info@eventaj.si" style={link}>
+                info@eventaj.si
               </Link>
             </Text>
           </Section>

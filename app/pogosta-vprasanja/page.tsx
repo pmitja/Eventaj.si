@@ -53,7 +53,7 @@ const faqItems = [
   {
     question: "Kako rezerviram najem photo bootha?",
     answer:
-      "Sledite korakom rezervacije na spletni strani ali nam pišete na email eventaj.si@gmail.com ali nas pokličete na tel. št. 031 285 143 ali 031 544 751.",
+      "Sledite korakom rezervacije na spletni strani ali nam pišete na email info@eventaj.si ali nas pokličete na tel. št. 031 285 143 ali 031 544 751.",
   },
   {
     question: "Kaj je potrebno za najem photo booth-a?",

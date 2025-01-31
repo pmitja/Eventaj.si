@@ -50,7 +50,7 @@ const navigation = {
       "2230 Lenart v Slovenskih goricah",
     ],
     phone: "+386 31 285 143 / +386 31 544 751",
-    email: "eventaj.si@gmail.com",
+    email: "info@eventaj.si",
   },
 };
 

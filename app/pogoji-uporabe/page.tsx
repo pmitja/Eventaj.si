@@ -57,7 +57,7 @@ export default function TermsPage() {
           <p>Naročilo storitev je mogoče opraviti:</p>
           <ul>
             <li>Preko spletnega obrazca na strani eventaj.si</li>
-            <li>Po elektronski pošti: eventaj.si@gmail.com</li>
+            <li>Po elektronski pošti: info@eventaj.si</li>
             <li>Po telefonu: +386 31 285 143 / +386 31 544 751</li>
           </ul>
           <p>

@@ -49,7 +49,7 @@ export default function PrivacyPage() {
             <p className="mt-4">
               <strong>Kontaktni podatki za vprašanja o zasebnosti:</strong>
               <br />
-              E-pošta: eventaj.si@gmail.com
+              E-pošta: info@eventaj.si
               <br />
               Telefon: +386 31 285 143 / +386 31 544 751
             </p>
@@ -348,7 +348,7 @@ export default function PrivacyPage() {
           </p>
           <div className="not-prose bg-muted p-6 rounded-lg">
             <p className="font-medium">
-              E-pošta: eventaj.si@gmail.com
+              E-pošta: info@eventaj.si
               <br />
               Telefon: +386 31 285 143 / +386 31 544 751
               <br />
