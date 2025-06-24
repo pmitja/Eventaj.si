@@ -18,7 +18,7 @@ export async function POST(request: Request) {
 
     // Send notification email to admin
     await resend.emails.send({
-      from: "Eventaj.si <info@eventaj.si>",
+      from: "Eventaj.si <pmitja1@gmail.com>",
       to: "info@eventaj.si",
       subject: "Novo povpraševanje - Eventaj.si",
       react: NotificationEmail({ formData, totalPrice }) as React.ReactElement,
