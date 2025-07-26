@@ -4,7 +4,7 @@ import { threeSixtyFeatures } from "@/components/sections/features-content";
 import HowItWorks from "@/components/sections/how-it-works";
 import { PricingPlans } from "@/components/sections/pricing-plans";
 import PromoImage from "@/components/sections/promo-image";
-import { TestimonialsSection } from "@/components/sections/testimonials";
+import { ReferencesSection } from "@/components/sections/references-section";
 import WhenToChoose from "@/components/sections/when-to-choose";
 import ThreeSixtyHero from "@/components/three-sixty-hero";
 import { threeSixtyWhenToChoose } from "@/content/when-to-choose";
@@ -184,6 +184,10 @@ export default function ThreeSixtyPhotoBooth() {
         <Features {...threeSixtyFeatures} />
         <HowItWorks type="360" />
         <PricingPlans plans={pricingPlans} />
+        <ReferencesSection
+          title="Kaj pravijo naši zadovoljni uporabniki"
+          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
+        />
         <CTAContactSection
           title="Ni ustreznega paketa?"
           description="Kontaktiraj nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
@@ -192,10 +196,6 @@ export default function ThreeSixtyPhotoBooth() {
             variant: "glow",
           }}
           isGlow={true}
-        />
-        <TestimonialsSection
-          title="Kaj pravijo naši zadovoljni uporabniki"
-          description="Preveri, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
         />
       </main>
     </>

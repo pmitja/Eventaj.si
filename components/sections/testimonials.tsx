@@ -55,6 +55,22 @@ const testimonials = [
     },
     text: "Photo Booth je bil odlična popestritev! Gostje so se res zabavali, slike pa so čudovit spomin za ta dan. Hvala vam, priporočamo naprej!",
   },
+  {
+    author: {
+      name: "Maša | Mlada Slovenija",
+      title: "Dogodek",
+      image: "/application/LOGO_MSI_POZ.webp",
+    },
+    text: "Na dogodku je bil photo booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
+  },
+  {
+    author: {
+      name: "Daniel | Forvis Marzars",
+      title: "Poslovni dogodek",
+      image: "/application/forvis-marzars.webp",
+    },
+    text: "Zelo korektna in profesionalna izkušnja – od začetne komunikacije do izvedbe na dogodku. Mitja je bil izjemno prijazen in zanesljiv, kar je sodelovanje naredilo res enostavno. Priporočamo vsem, ki razmišljajo o najemu photobootha – z ekipo Eventaj poteka vse gladko in brez zapletov.",
+  },
 ];
 
 export function TestimonialsSection({

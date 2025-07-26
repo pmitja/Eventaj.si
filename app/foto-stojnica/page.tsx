@@ -16,33 +16,32 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+  title:
+    "Foto Stojnica Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
   description:
-    "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
+    "Profesionalna foto stojnica za vaš dogodek! Najemi foto stojnico s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
   keywords: [
-    "photo booth najem",
+    "foto stojnica najem",
     "foto zabava",
     "foto stojnica",
-    "photobooth",
-    "foto box za poroko",
+    "foto stojnica za poroke",
+    "foto stojnica za rojstne dneve",
+    "foto stojnica za zabave",
     "foto stojnica za dogodke",
-    "photo booth za zabavo",
-    "photo booth za poroko",
-    "najem photo booth Ljubljana",
-    "photo booth cena",
   ],
   openGraph: {
-    title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+    title:
+      "Foto Stojnica Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
     description:
-      "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
-    url: "https://eventaj.si/photo-booth",
+      "Profesionalna foto stojnica za vaš dogodek! Najemi foto stojnico s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
+    url: "https://eventaj.si/foto-stojnica",
     siteName: "Eventaj.si",
     images: [
       {
         url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
-        alt: "Photo Booth Najem - Eventaj.si",
+        alt: "Foto Stojnica Najem - Eventaj.si",
       },
     ],
     locale: "sl_SI",
@@ -50,9 +49,10 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+    title:
+      "Foto Stojnica Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
     description:
-      "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
+      "Profesionalna foto stojnica za vaš dogodek! Najemi foto stojnico s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
@@ -132,7 +132,7 @@ export default function PhotoBooth() {
         item={{
           "@context": "https://schema.org",
           "@type": "Service",
-          name: "Photo Booth Najem",
+          name: "Foto Stojnica Najem",
           provider: {
             "@type": "LocalBusiness",
             name: "Eventaj.si",
@@ -148,7 +148,7 @@ export default function PhotoBooth() {
           },
           areaServed: "Slovenija",
           description:
-            "Profesionalni najem photo booth naprave za dogodke, poroke in zabave. Vključuje operaterja, rekvizite in takojšnje tiskanje fotografij.",
+            "Profesionalni najem foto stojnice za dogodke, poroke, rojstne dneve in zabave. Vključuje operaterja, rekvizite in takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
             lowPrice: "249",
@@ -158,11 +158,11 @@ export default function PhotoBooth() {
             validFrom: "2024-01-01",
             priceValidUntil: "2024-12-31",
           },
-          serviceType: "Photo Booth Rental",
-          category: ["Photo Booth", "Event Services", "Photography Services"],
+          serviceType: "Foto Stojnica Rental",
+          category: ["Foto Stojnica", "Event Services", "Photography Services"],
           hasOfferCatalog: {
             "@type": "OfferCatalog",
-            name: "Photo Booth Packages",
+            name: "Foto Stojnica Packages",
             itemListElement: pricingPlans.map((plan) => ({
               "@type": "Offer",
               name: plan.name,
@@ -171,7 +171,7 @@ export default function PhotoBooth() {
               description: plan.description,
               itemOffered: {
                 "@type": "Service",
-                name: `${plan.name} Photo Booth Package`,
+                name: `${plan.name} Foto Stojnica Package`,
                 description: plan.features.join(", "),
               },
             })),
@@ -201,8 +201,8 @@ export default function PhotoBooth() {
 
       <main className="pt-[48px]">
         <BasicBoothHero
-          title="Photo booth"
-          text="Naš photo booth je središče vsake zabave. Gostje se zabavajo, smejijo in ustvarjajo spomine pred kamero. Fotografije lahko natisnejo ali jih pošljejo na svoje telefone ter delijo na družbenih omrežjih."
+          title="Foto Stojnica"
+          text="Naša foto stojnica je središče vsake zabave. Gostje se zabavajo, smejijo in ustvarjajo spomine pred kamero. Fotografije lahko natisnejo ali jih pošljejo na svoje telefone ter delijo na družbenih omrežjih."
         />
         <WhenToChoose content={photoBoothWhenToChoose} />
         <PromoImage />
@@ -211,7 +211,7 @@ export default function PhotoBooth() {
         <PricingPlans plans={pricingPlans} />
         <ReferencesSection
           title="Kaj pravijo naši zadovoljni uporabniki"
-          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš photo booth"
+          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale našo foto stojnico"
         />
         <CTAContactSection
           title="Ni ustreznega paketa?"
