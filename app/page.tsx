@@ -8,9 +8,9 @@ import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
+  title: "Photo Booth Najem po Sloveniji - že od 249€ | Eventaj.si",
   description:
-    "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
+    "🎉 Photo Booth & 360° najem po Sloveniji! Že od 249€ za 2 uri. ✅ Takojšnje tiskanje ✅ Rekviziti vključeni ✅ Brezplačen prevoz. Rezerviraj danes!",
   keywords: [
     "foto zabava",
     "photobooth 360",
@@ -26,9 +26,9 @@ export const metadata: Metadata = {
     "foto booth zabava",
   ],
   openGraph: {
-    title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
+    title: "Photo Booth Najem po Sloveniji - že od 249€ | Eventaj.si",
     description:
-      "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
+      "🎉 Photo Booth & 360° najem po Sloveniji! Že od 249€ za 2 uri. ✅ Takojšnje tiskanje ✅ Rekviziti vključeni ✅ Brezplačen prevoz. Rezerviraj danes!",
     images: [
       {
         url: "/og/photo-booth.webp",
@@ -41,9 +41,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Booth & 360 Photo Booth Najem | Foto Zabava | Eventaj.si",
+    title: "Photo Booth Najem po Sloveniji - že od 249€ | Eventaj.si",
     description:
-      "Najemi photo booth ali 360 photo booth za nepozabno foto zabavo na vašem dogodku! Profesionalna foto stojnica za poroke, zabave in dogodke. Takojšnje tiskanje fotografij in deljenje posnetkov.",
+      "🎉 Photo Booth & 360° najem po Sloveniji! Že od 249€ za 2 uri. ✅ Takojšnje tiskanje ✅ Rekviziti vključeni ✅ Brezplačen prevoz. Rezerviraj danes!",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {

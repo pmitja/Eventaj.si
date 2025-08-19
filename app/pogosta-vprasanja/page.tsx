@@ -5,7 +5,8 @@ import { JsonLd } from "react-schemaorg";
 import type { FAQPage } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Pogosta vprašanja | Photo Booth & 360° Photo Booth | Eventaj.si",
+  title:
+    "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Photo Booth | Eventaj.si",
   description:
     "Odgovori na pogosta vprašanja o najemu photo bootha in 360° photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
   keywords: [
@@ -15,7 +16,7 @@ export const metadata: Metadata = {
     "photo booth za poroko",
     "360 photo booth delovanje",
     "photo booth rezervacija",
-    "photo booth najem Slovenija",
+    "photo booth najem po Sloveniji",
     "360 photo booth navodila",
     "photo booth za dogodke",
     "360 video booth",

@@ -16,10 +16,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title:
-    "Foto kotiček Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
+  title: "Foto Kotiček & Photo Booth 249€ | Eventaj.si",
   description:
-    "Profesionaln Foto kotiček za vaš dogodek! Najemi foto kotiček s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
+    "🎂 Foto kotiček za rojstne dneve & poroke! Od 249€/2h po Sloveniji. ✅ Neomejeno tiskanje ✅ Smešni rekviziti ✅ Digitalne kopije. Rezerviraj!",
   keywords: [
     "Foto kotiček najem",
     "foto zabava",
@@ -49,14 +48,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Foto kotiček Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
+    title: "Foto Kotiček & Photo Booth 249€ | Eventaj.si",
     description:
-      "Profesionalna Foto kotiček za vaš dogodek! Najemi foto kotiček s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
+      "🎂 Foto kotiček za rojstne dneve & poroke! Od 249€/2h po Sloveniji. ✅ Neomejeno tiskanje ✅ Smešni rekviziti ✅ Digitalne kopije. Rezerviraj!",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "/photo-booth",
+    canonical: "https://eventaj.si/foto-koticek",
   },
   robots: {
     index: true,
@@ -156,7 +154,7 @@ export default function PhotoBooth() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2024-12-31",
+            priceValidUntil: "2025-12-31",
           },
           serviceType: "Foto kotiček Rental",
           category: ["Foto kotiček", "Event Services", "Photography Services"],

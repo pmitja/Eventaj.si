@@ -15,7 +15,7 @@ export const metadata: Metadata = {
     "360 photo booth za poroko",
     "360 photo booth delovanje",
     "360 photo booth rezervacija",
-    "360 photo booth najem Slovenija",
+    "360 photo booth najem po Sloveniji",
     "360 photo booth navodila",
     "360 photo booth za dogodke",
     "360 foto stojnica",

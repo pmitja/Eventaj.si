@@ -13,9 +13,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
+  title: "360° Photo Booth 299€ - Viralni TikTok Posnetki! | Eventaj.si",
   description:
-    "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
+    "🎆 360° Photo Booth - HIT za TikTok & Instagram! Od 299€/2h. ✨ Slow motion posnetki ✅ QR deljenje ✅ Vsi rekviziti. Postani viralen!",
   keywords: [
     "360 photo booth najem",
     "photobooth 360",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     "360 photo booth cena",
   ],
   openGraph: {
-    title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
+    title: "360° Photo Booth 299€ - Viralni TikTok Posnetki! | Eventaj.si",
     description:
-      "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
+      "🎆 360° Photo Booth - HIT za TikTok & Instagram! Od 299€/2h. ✨ Slow motion posnetki ✅ QR deljenje ✅ Vsi rekviziti. Postani viralen!",
     url: "https://eventaj.si/360-photo-booth",
     siteName: "Eventaj.si",
     images: [
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "360 Photo Booth Najem | 360 Foto Zabava | Eventaj.si",
+    title: "360° Photo Booth 299€ - Viralni TikTok Posnetki! | Eventaj.si",
     description:
-      "Najnovejši trend v foto zabavi - 360 photo booth! Profesionalna oprema za snemanje atraktivnih 360° videov na vaši poroki ali dogodku. Takojšnje deljenje posnetkov.",
+      "🎆 360° Photo Booth - HIT za TikTok & Instagram! Od 299€/2h. ✨ Slow motion posnetki ✅ QR deljenje ✅ Vsi rekviziti. Postani viralen!",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
@@ -147,7 +147,7 @@ export default function ThreeSixtyPhotoBooth() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2024-12-31",
+            priceValidUntil: "2025-12-31",
           },
           serviceType: "360 Photo Booth Rental",
           category: ["360 Photo Booth", "Event Services", "Video Services"],

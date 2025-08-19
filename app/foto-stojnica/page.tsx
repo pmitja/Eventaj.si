@@ -16,10 +16,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title:
-    "Foto Stojnica Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
+  title: "Foto Stojnica & Kotiček 249€ | Eventaj.si",
   description:
-    "Profesionalna foto stojnica za vaš dogodek! Najemi foto stojnico s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
+    "📸 Foto stojnica za dogodke & zabave! Od 249€/2h po Sloveniji. ✅ Instant fotografije ✅ Zabavni rekviziti ✅ Online galerija. Pokličite zdaj!",
   keywords: [
     "foto stojnica najem",
     "foto zabava",
@@ -30,10 +29,9 @@ export const metadata: Metadata = {
     "foto stojnica za dogodke",
   ],
   openGraph: {
-    title:
-      "Foto Stojnica Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
+    title: "Foto Stojnica & Kotiček 249€ | Eventaj.si",
     description:
-      "Profesionalna foto stojnica za vaš dogodek! Najemi foto stojnico s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
+      "📸 Foto stojnica za dogodke & zabave! Od 249€/2h po Sloveniji. ✅ Instant fotografije ✅ Zabavni rekviziti ✅ Online galerija. Pokličite zdaj!",
     url: "https://eventaj.si/foto-stojnica",
     siteName: "Eventaj.si",
     images: [
@@ -49,14 +47,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title:
-      "Foto Stojnica Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
+    title: "Foto Stojnica & Kotiček 249€ | Eventaj.si",
     description:
-      "Profesionalna foto stojnica za vaš dogodek! Najemi foto stojnico s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
+      "📸 Foto stojnica za dogodke & zabave! Od 249€/2h po Sloveniji. ✅ Instant fotografije ✅ Zabavni rekviziti ✅ Online galerija. Pokličite zdaj!",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "/photo-booth",
+    canonical: "https://eventaj.si/foto-stojnica",
   },
   robots: {
     index: true,
@@ -156,7 +153,7 @@ export default function PhotoBooth() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2024-12-31",
+            priceValidUntil: "2025-12-31",
           },
           serviceType: "Foto Stojnica Rental",
           category: ["Foto Stojnica", "Event Services", "Photography Services"],

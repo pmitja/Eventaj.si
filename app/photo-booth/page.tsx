@@ -16,9 +16,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+  title: "Photo Booth & Foto Stojnica 249€ | Eventaj.si",
   description:
-    "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
+    "📸 Photo Booth za poroke in zabave! Od 249€/2h. ✅ Neomejene fotografije ✅ Takojšen tisk ✅ Rekviziti GRATIS. Klicite: 031 285 143!",
   keywords: [
     "photo booth najem",
     "foto zabava",
@@ -32,9 +32,9 @@ export const metadata: Metadata = {
     "photo booth cena",
   ],
   openGraph: {
-    title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+    title: "Photo Booth & Foto Stojnica 249€ | Eventaj.si",
     description:
-      "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
+      "📸 Photo Booth za poroke in zabave! Od 249€/2h. ✅ Neomejene fotografije ✅ Takojšen tisk ✅ Rekviziti GRATIS. Klicite: 031 285 143!",
     url: "https://eventaj.si/photo-booth",
     siteName: "Eventaj.si",
     images: [
@@ -50,13 +50,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Booth Najem | Foto Zabava za Poroke in Dogodke | Eventaj.si",
+    title: "Photo Booth & Foto Stojnica 249€ | Eventaj.si",
     description:
-      "Profesionalna foto stojnica za vaš dogodek! Najemi photo booth s takojšnjim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, zabave in dogodke.",
+      "📸 Photo Booth za poroke in zabave! Od 249€/2h. ✅ Neomejene fotografije ✅ Takojšen tisk ✅ Rekviziti GRATIS. Klicite: 031 285 143!",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "/photo-booth",
+    canonical: "https://eventaj.si/photo-booth",
   },
   robots: {
     index: true,
@@ -156,7 +156,7 @@ export default function PhotoBooth() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2024-12-31",
+            priceValidUntil: "2025-12-31",
           },
           serviceType: "Photo Booth Rental",
           category: ["Photo Booth", "Event Services", "Photography Services"],
