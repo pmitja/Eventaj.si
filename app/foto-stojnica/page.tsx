@@ -16,9 +16,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Foto Stojnica & Kotiček 249€ | Eventaj.si",
+  title: "Foto stojnica najem od 249 € | Eventaj.si",
   description:
-    "📸 Foto stojnica za dogodke & zabave! Od 249€/2h po Sloveniji. ✅ Instant fotografije ✅ Zabavni rekviziti ✅ Online galerija. Pokličite zdaj!",
+    "Najem foto stojnice za poroke, rojstne dneve in dogodke po Sloveniji. Od 249 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in spletna galerija.",
   keywords: [
     "foto stojnica najem",
     "foto zabava",
@@ -29,10 +29,10 @@ export const metadata: Metadata = {
     "foto stojnica za dogodke",
   ],
   openGraph: {
-    title: "Foto Stojnica & Kotiček 249€ | Eventaj.si",
+    title: "Foto stojnica najem od 249 € | Eventaj.si",
     description:
-      "📸 Foto stojnica za dogodke & zabave! Od 249€/2h po Sloveniji. ✅ Instant fotografije ✅ Zabavni rekviziti ✅ Online galerija. Pokličite zdaj!",
-    url: "https://eventaj.si/foto-stojnica",
+      "Najem foto stojnice za poroke in dogodke. Od 249 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
+    url: "https://www.eventaj.si/foto-stojnica",
     siteName: "Eventaj.si",
     images: [
       {
@@ -47,13 +47,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foto Stojnica & Kotiček 249€ | Eventaj.si",
+    title: "Foto stojnica najem od 249 € | Eventaj.si",
     description:
-      "📸 Foto stojnica za dogodke & zabave! Od 249€/2h po Sloveniji. ✅ Instant fotografije ✅ Zabavni rekviziti ✅ Online galerija. Pokličite zdaj!",
+      "Najem foto stojnice za poroke in dogodke. Od 249 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "https://eventaj.si/foto-stojnica",
+    canonical: "https://www.eventaj.si/foto-stojnica",
   },
   robots: {
     index: true,
@@ -133,7 +133,7 @@ export default function PhotoBooth() {
           provider: {
             "@type": "LocalBusiness",
             name: "Eventaj.si",
-            image: "https://eventaj.si/logo.png",
+            image: "https://eventaj.si/application/logo.svg",
             address: {
               "@type": "PostalAddress",
               addressLocality: "Lenart v Slovenskih goricah",
@@ -173,7 +173,7 @@ export default function PhotoBooth() {
               },
             })),
           },
-          termsOfService: "https://eventaj.si/pogoji-poslovanja",
+          termsOfService: "https://eventaj.si/pogoji-uporabe",
           isRelatedTo: [
             {
               "@type": "Service",

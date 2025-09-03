@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://eventaj.si
+Host: https://www.eventaj.si
 
 # Sitemaps
-Sitemap: https://eventaj.si/sitemap.xml 
+Sitemap: https://www.eventaj.si/sitemap.xml

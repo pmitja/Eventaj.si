@@ -16,9 +16,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Foto Kotiček & Photo Booth 249€ | Eventaj.si",
+  title: "Foto kotiček najem od 249 € | Eventaj.si",
   description:
-    "🎂 Foto kotiček za rojstne dneve & poroke! Od 249€/2h po Sloveniji. ✅ Neomejeno tiskanje ✅ Smešni rekviziti ✅ Digitalne kopije. Rezerviraj!",
+    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 249 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in spletna galerija.",
   keywords: [
     "Foto kotiček najem",
     "foto zabava",
@@ -29,11 +29,10 @@ export const metadata: Metadata = {
     "Foto kotiček za dogodke",
   ],
   openGraph: {
-    title:
-      "Foto kotiček Najem | Foto Zabava za Poroke, Rojstne dneve in druge dogodke | Eventaj.si",
+    title: "Foto kotiček najem od 249 € | Eventaj.si",
     description:
-      "Profesionalna Foto kotiček za vaš dogodek! Najemi foto kotiček s takojšnjim neomejenim tiskanjem fotografij, rekviziti in digitalnimi kopijami. Idealno za poroke, rojstne dneve, zabave in druge dogodke.",
-    url: "https://eventaj.si/foto-koticek",
+      "Najem foto kotička za poroke in dogodke. Od 249 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
+    url: "https://www.eventaj.si/foto-koticek",
     siteName: "Eventaj.si",
     images: [
       {
@@ -48,13 +47,13 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foto Kotiček & Photo Booth 249€ | Eventaj.si",
+    title: "Foto kotiček najem od 249 € | Eventaj.si",
     description:
-      "🎂 Foto kotiček za rojstne dneve & poroke! Od 249€/2h po Sloveniji. ✅ Neomejeno tiskanje ✅ Smešni rekviziti ✅ Digitalne kopije. Rezerviraj!",
+      "Najem foto kotička za poroke in dogodke. Od 249 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "https://eventaj.si/foto-koticek",
+    canonical: "https://www.eventaj.si/foto-koticek",
   },
   robots: {
     index: true,
@@ -134,7 +133,7 @@ export default function PhotoBooth() {
           provider: {
             "@type": "LocalBusiness",
             name: "Eventaj.si",
-            image: "https://eventaj.si/logo.png",
+            image: "https://www.eventaj.si/application/logo.svg",
             address: {
               "@type": "PostalAddress",
               addressLocality: "Lenart v Slovenskih goricah",
@@ -174,7 +173,7 @@ export default function PhotoBooth() {
               },
             })),
           },
-          termsOfService: "https://eventaj.si/pogoji-poslovanja",
+          termsOfService: "https://www.eventaj.si/pogoji-uporabe",
           isRelatedTo: [
             {
               "@type": "Service",

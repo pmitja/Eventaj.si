@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "360° Photo Booth",
   description: "360° Photo Booth za nepozabne spomine",
-  metadataBase: new URL("https://eventaj.si"),
+  metadataBase: new URL("https://www.eventaj.si"),
   alternates: {
     canonical: "/",
   },
