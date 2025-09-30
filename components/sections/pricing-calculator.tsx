@@ -41,8 +41,8 @@ const locations = [
 
 const threeSixtyHours = [
   { value: 2, price: 299 },
-  { value: 3, price: 399 },
-  { value: 4, price: 499 },
+  { value: 3, price: 349 },
+  { value: 4, price: 399 },
 ];
 
 const basicBoothHours = [
