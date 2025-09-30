@@ -84,7 +84,7 @@ const pricingPlans = [
   },
   {
     name: "Osnovni paket",
-    price: "399",
+    price: "349",
     period: "3 ure",
     features: [
       "najem do 3 ure",
@@ -100,7 +100,7 @@ const pricingPlans = [
   },
   {
     name: "Maxi paket",
-    price: "499",
+    price: "399",
     period: "4 ure",
     features: [
       "najem do 4 ure",
