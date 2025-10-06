@@ -1,8 +1,10 @@
 import BasicBoothHero from "@/components/basic-booth-hero";
+import BackgroundsSection from "@/components/sections/backgrounds-section";
 import { CTAContactSection } from "@/components/sections/cta-contact-section";
+import CustomBrandingSection from "@/components/sections/custom-branding-section";
 import Features from "@/components/sections/features";
 import { basicBoothFeatures } from "@/components/sections/features-content";
-import HowItWorks from "@/components/sections/how-it-works";
+import PhotoBoothHowItWorks from "@/components/sections/photo-booth-how-it-works";
 import {
   PricingPlans,
   type PricingPlan,
@@ -207,7 +209,9 @@ export default function PhotoBooth() {
         <WhenToChoose content={photoBoothWhenToChoose} />
         <PromoImage />
         <Features {...basicBoothFeatures} />
-        <HowItWorks type="basic" />
+        <PhotoBoothHowItWorks />
+        <BackgroundsSection />
+        <CustomBrandingSection />
         <PricingPlans plans={pricingPlans} />
         <ReferencesSection
           title="Kaj pravijo naši zadovoljni uporabniki"

@@ -113,6 +113,15 @@
   .container-lg {
     @apply container 2xl:max-w-[1400px] mx-auto px-4;
   }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @layer base {
