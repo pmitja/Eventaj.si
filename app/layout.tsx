@@ -10,11 +10,33 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "360° Photo Booth",
-  description: "360° Photo Booth za nepozabne spomine",
+  title: "Eventaj.si | Photo booth & 360° photo booth po Sloveniji",
+  description:
+    "Eventaj.si ponuja profesionalni photo booth in 360° photo booth najem z asistenco, rekviziti in instant tiskom po celotni Sloveniji.",
+  keywords: [
+    "photo booth Slovenija",
+    "360 photo booth najem",
+    "eventaj",
+    "foto stojnica",
+  ],
   metadataBase: new URL("https://www.eventaj.si"),
   alternates: {
     canonical: "/",
+  },
+  openGraph: {
+    title: "Eventaj.si | Photo booth & 360° photo booth po Sloveniji",
+    description:
+      "Najem photo booth in 360° photo booth storitev z brezplačnim prevozom po celotni Sloveniji.",
+    siteName: "Eventaj.si",
+    url: "https://www.eventaj.si",
+    locale: "sl_SI",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Eventaj.si | Photo booth & 360° photo booth po Sloveniji",
+    description:
+      "Photo booth in 360° photo booth najem z asistenco in rekviziti po Sloveniji.",
   },
   other: {
     "google-site-verification":

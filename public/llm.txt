@@ -26,13 +26,16 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 ## Service Area
 
 - **Primary Coverage**: Slovenia (po Sloveniji)
-- **Major Cities**: Ljubljana, Maribor, Celje, Kranj, and surrounding areas
-- **Service Radius**: 200km from Lenart v Slovenskih goricah
-- **Free Transportation**: Included in all packages
+- **Major Cities**: Ljubljana, Maribor, Celje, Kranj, Koper, Novo mesto, Ptuj
+- **Regional Focus**: Štajerska, Gorenjska, Dolenjska, Primorska, Prekmurje
+- **Service Radius**: 20km brezplačno iz Lenarta v Slovenskih goricah (plačljiv prevoz za ostalo Slovenijo)
+- **Free Transportation**: Included up to 20km; beyond that we quote transparent travel fees
+- **Headquarters**: Slomškova ulica 1, 2230 Lenart v Slovenskih goricah
 
 ## Business Information
 
 - **Company Name**: Eventaj.si
+- **Legal Entity**: MIPA, Mitja Pak s.p.
 - **Phone**: +386 31 285 143
 - **Address**: Slomškova ulica 1, 2230 Lenart v Slovenskih goricah, Slovenia
 - **Website**: https://eventaj.si

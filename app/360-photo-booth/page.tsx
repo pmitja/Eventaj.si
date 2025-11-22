@@ -7,8 +7,10 @@ import PromoImage from "@/components/sections/promo-image";
 import { ReferencesSection } from "@/components/sections/references-section";
 import WhenToChoose from "@/components/sections/when-to-choose";
 import ThreeSixtyHero from "@/components/three-sixty-hero";
+import { Button } from "@/components/ui/button";
 import { threeSixtyWhenToChoose } from "@/content/when-to-choose";
 import { Metadata } from "next";
+import Link from "next/link";
 import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
@@ -116,6 +118,21 @@ const pricingPlans = [
   },
 ];
 
+const serviceAreas = [
+  "Ljubljana, Domžale in Kamnik",
+  "Maribor, Ptuj in celotna Štajerska",
+  "Celje, Velenje in Savinjska",
+  "Koper, Obala in Primorska",
+  "Novo mesto, Dolenjska in Bela krajina",
+] as const;
+
+const serviceGuarantees = [
+  "Brezplačen prevoz do 20 km iz Lenarta v Slovenskih goricah",
+  "Profesionalen operater, ki vodi goste in skrbi za opremo",
+  "Personalizirane predloge in rekviziti, prilagojeni dogodku",
+  "Neomejeno snemanje in takojšnje deljenje posnetkov",
+] as const;
+
 export default function ThreeSixtyPhotoBooth() {
   return (
     <>
@@ -179,11 +196,89 @@ export default function ThreeSixtyPhotoBooth() {
 
       <main className="pt-[48px]">
         <ThreeSixtyHero />
+        <section
+          aria-labelledby="360-photo-booth-slovenia-heading"
+          className="container mx-auto px-4 py-12 md:py-16"
+        >
+          <div className="grid gap-10 lg:grid-cols-2">
+            <div>
+              <p className="text-sm font-semibold uppercase tracking-wide text-[#C99566]">
+                Eventaj.si
+              </p>
+              <h2
+                id="360-photo-booth-slovenia-heading"
+                className="mt-3 text-3xl font-semibold leading-snug md:text-4xl"
+              >
+                360 Photo Booth najem po celi Sloveniji
+              </h2>
+              <p className="mt-4 text-lg text-muted-foreground">
+                Z našo 360° kamero pridemo kamor koli – od Ljubljane in Maribora
+                do Kopra in Novega mesta. Ustvarite nepozabne videoposnetke, ki
+                bodo preplavili družbena omrežja. Prevoz, postavitev in
+                asistenca so vključeni.
+              </p>
+              <p className="mt-3 text-muted-foreground">
+                Vsak najem vključuje personalizirane predloge, rekvizite,
+                takojšnje deljenje ter podporo v slovenskem in angleškem jeziku.
+                Pišite na{" "}
+                <a
+                  href="mailto:info@eventaj.si"
+                  className="text-[#C99566] underline-offset-2 hover:underline"
+                >
+                  info@eventaj.si
+                </a>{" "}
+                ali nas pokličite za hitro ponudbo.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <Button variant="glow" asChild>
+                  <Link href="#360-pricing">Rezerviraj 360 Photo Booth</Link>
+                </Button>
+                <Button variant="outline" asChild>
+                  <a href="tel:+38631285143">Pokliči 031 285 143</a>
+                </Button>
+              </div>
+            </div>
+            <div className="space-y-6">
+              <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/80">
+                <p className="text-sm uppercase tracking-wide text-[#C99566]">
+                  Pokrivamo celotno Slovenijo
+                </p>
+                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                  {serviceAreas.map((area) => (
+                    <li key={area} className="flex items-start gap-2">
+                      <span className="mt-1 h-2 w-2 rounded-full bg-[#C99566]" />
+                      <span>{area}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/80">
+                <p className="text-sm uppercase tracking-wide text-[#94A3B8]">
+                  Kaj je vedno vključeno
+                </p>
+                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                  {serviceGuarantees.map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span className="mt-1 h-2 w-2 rounded-full bg-[#94A3B8]" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
         <WhenToChoose content={threeSixtyWhenToChoose} />
         <PromoImage />
         <Features {...threeSixtyFeatures} />
         <HowItWorks type="360" />
-        <PricingPlans plans={pricingPlans} />
+        <section
+          id="360-pricing"
+          aria-label="Cenik najema 360 photo booth"
+          className="scroll-mt-24"
+        >
+          <PricingPlans plans={pricingPlans} />
+        </section>
         <ReferencesSection
           title="Kaj pravijo naši zadovoljni uporabniki"
           description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"

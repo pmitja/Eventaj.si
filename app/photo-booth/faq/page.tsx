@@ -7,7 +7,7 @@ import type { FAQPage } from "schema-dts";
 export const metadata: Metadata = {
   title: "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
   description:
-    "Odgovori na pogosta vprašanja o najemu photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji photo booth stojnice za vaš dogodek.",
+    "Odgovori na pogosta vprašanja o najemu photo bootha po celi Sloveniji. Spoznajte cene, logistiko postavitve, dostavo v Ljubljano, Maribor, Celje in ostale regije ter rezervacijo photo booth stojnice za vaš dogodek.",
   keywords: [
     "photo booth vprašanja",
     "photo booth informacije",
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
     description:
-      "Odgovori na pogosta vprašanja o najemu photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji photo booth stojnice za vaš dogodek.",
+      "Odgovori na pogosta vprašanja o najemu photo bootha po Sloveniji – cene, postavitev, logistika in rezervacije.",
     url: "https://eventaj.si/photo-booth/faq",
     siteName: "Eventaj.si",
     locale: "sl_SI",
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
     description:
-      "Odgovori na pogosta vprašanja o najemu photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji photo booth stojnice za vaš dogodek.",
+      "Vsa ključna vprašanja o photo booth najemu po Sloveniji – cene, postavitev, logistika in rezervacije.",
     images: ["https://eventaj.si/application/hero-image-2.webp"],
   },
   alternates: {
@@ -74,9 +74,24 @@ const faqItems = [
       "Photo booth potrebuje približno 2x2 metra prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
   },
   {
-    question: "Kako se rezerviram?",
+    question: "Kako poteka rezervacija najema?",
     answer:
-      "Rezervacija se izvede preko telefona na +386 31 285 143 / +386 41 688 143. V kolikor želite rezervirati photo booth, vas prosimo kontaktirajte.",
+      "Rezervacija najema photo booth poteka preko telefona +386 31 285 143 ali e-pošte info@eventaj.si. Posredujte nam datum, lokacijo in okvirni urnik, mi pa pripravimo ponudbo in pogodbo za potrditev termina.",
+  },
+  {
+    question: "Ali pokrivate Ljubljano, Maribor, Celje in Primorsko?",
+    answer:
+      "Da, Eventaj.si pokriva celotno Slovenijo. Brezplačen prevoz z vključeno postavitvijo nudimo do 20 km iz Lenarta v Slovenskih goricah, za ostale regije pripravimo jasno ponudbo z doplačilom za potne stroške.",
+  },
+  {
+    question: "Ali je v ceno vključena postavitev in asistenca?",
+    answer:
+      "V ceno najema je vključena profesionalna postavitev photo booth naprave, testiranje opreme in prisotnost asistenta, ki vodi goste ter poskrbi za rekvizite in personalizirane predloge.",
+  },
+  {
+    question: "Kako je z dodatnimi kilometri ali daljšim najemom?",
+    answer:
+      "Vsak paket vključuje brezplačen prevoz do 20 km in dogovorjeno trajanje (2–4 ure). Za daljše razdalje ali dodatne ure pripravimo jasno ponudbo, zato nam ob povpraševanju sporočite lokacijo in želene čase.",
   },
   {
     question: "Kaj je potrebno za najem photo bootha?",

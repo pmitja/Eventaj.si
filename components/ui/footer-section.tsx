@@ -45,11 +45,11 @@ const navigation = {
   ],
   contact: {
     address: [
-      "MIPA, Mitja Pak s.p.",
+      "Eventaj.si | MIPA, Mitja Pak s.p.",
       "Slomškova ulica 1",
-      "2230 Lenart v Slovenskih goricah",
+      "2230 Lenart v Slovenskih goricah, Slovenija",
     ],
-    phone: "+386 31 285 143 / +386 31 544 751",
+    phone: "+386 31 285 143",
     email: "info@eventaj.si",
   },
 };

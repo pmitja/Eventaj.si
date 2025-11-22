@@ -198,7 +198,7 @@ export default function PhotoBooth() {
 
       <main className="pt-[48px]">
         <BasicBoothHero
-          title="Foto kotiček"
+          title="Foto Kotiček Najem"
           text="Naša foto kotiček je središče vsake zabave. Gostje se zabavajo, smejijo in ustvarjajo spomine pred kamero. Fotografije lahko natisnejo ali jih pošljejo na svoje telefone ter delijo na družbenih omrežjih."
         />
         <WhenToChoose content={photoBoothWhenToChoose} />

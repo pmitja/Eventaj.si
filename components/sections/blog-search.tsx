@@ -188,7 +188,7 @@ export function BlogSearch({
             transition={{ delay: 0.4, duration: 0.6 }}
             className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6"
           >
-            Eventaj Blog
+            Blog in Nasveti za Dogodke
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}

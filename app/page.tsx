@@ -4,6 +4,7 @@ import { PhotoBoothOptions } from "@/components/sections/photo-booth-options";
 import PromoImage from "@/components/sections/promo-image";
 import { TestimonialsSection } from "@/components/sections/testimonials";
 import { Metadata } from "next";
+import Link from "next/link";
 import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
 
@@ -109,14 +110,22 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Eventaj.si",
-          image: "https://eventaj.si/logo.png",
+          image: "https://eventaj.si/application/logo.svg",
           "@id": "https://eventaj.si",
           url: "https://eventaj.si",
           telephone: "+386 31 285 143",
+          email: "info@eventaj.si",
+          sameAs: [
+            "https://www.facebook.com/profile.php?id=61567672817538",
+            "https://www.instagram.com/eventaj.si/profilecard/?igsh=MWZtMWx4N2dsNDc0dA==",
+            "https://www.tiktok.com/@eventaj.si?_t=ZN-8tKYVf1BUcI&_r=1",
+          ],
+          slogan: "Photo booth in 360° photo booth najem po celi Sloveniji",
           address: {
             "@type": "PostalAddress",
             streetAddress: "Slomškova ulica 1",
             addressLocality: "Lenart v Slovenskih goricah",
+            addressRegion: "Štajerska",
             postalCode: "2230",
             addressCountry: "SI",
           },
@@ -147,7 +156,7 @@ export default function Home() {
               latitude: 46.0569,
               longitude: 14.5058,
             },
-            geoRadius: "200km",
+            geoRadius: "20km",
           },
         }}
       />
@@ -155,12 +164,44 @@ export default function Home() {
       <main>
         {/* Hero Section */}
         <HomeHero
-          title="Najemi in ujemi spomine"
-          text="Naj vaš dogodek traja večno s fotografijami in videoposnetki. Zajete trenutke objavi ali natisni. Rezerviraj svoj termin še danes."
+          title="Photo Booth & 360° Booth Najem"
+          text="Najemi in ujemi spomine. Naj vaš dogodek traja večno s fotografijami in videoposnetki. Zajete trenutke objavi ali natisni. Rezerviraj svoj termin še danes."
         />
 
         {/* Photo Booth Options */}
         <PhotoBoothOptions />
+
+        <section className="container mx-auto px-4 py-12 md:py-16">
+          <div className="rounded-3xl border border-black/5 bg-white/80 p-8 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/70">
+            <h2 className="text-2xl font-semibold md:text-3xl">
+              Potrebujete hitro ponudbo?
+            </h2>
+            <p className="mt-3 text-muted-foreground">
+              Preverite{" "}
+              <Link
+                href="/photo-booth"
+                className="text-[#C99566] underline-offset-2 hover:underline"
+              >
+                najem photo booth po Sloveniji
+              </Link>{" "}
+              ali{" "}
+              <Link
+                href="/360-photo-booth"
+                className="text-[#C99566] underline-offset-2 hover:underline"
+              >
+                360 photo booth najem
+              </Link>{" "}
+              in preberite{" "}
+              <Link
+                href="/photo-booth/faq"
+                className="text-[#C99566] underline-offset-2 hover:underline"
+              >
+                photo booth najem cena FAQ
+              </Link>{" "}
+              za logistiko, prevoz in dodatna vprašanja.
+            </p>
+          </div>
+        </section>
 
         {/* Testimonials */}
         <TestimonialsSection

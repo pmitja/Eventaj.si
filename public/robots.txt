@@ -7,3 +7,10 @@ Host: https://www.eventaj.si
 
 # Sitemaps
 Sitemap: https://www.eventaj.si/sitemap.xml
+
+# Business Info
+# Company: Eventaj.si (Mitja Pak s.p. - MIPA)
+# Address: Slomškova ulica 1, 2230 Lenart v Slovenskih goricah, Slovenia
+# Phone: +386 31 285 143
+# Email: info@eventaj.si
+# Service Area: Slovenia (Ljubljana, Maribor, Celje, Primorska, Gorenjska)
