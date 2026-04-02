@@ -18,6 +18,8 @@ interface NavbarProps {
 const Navbar = ({ scrolled }: NavbarProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+  const prefersSolidNavbar = pathname === "/photo-booth";
+  const useSolidNavbar = scrolled || isOpen || prefersSolidNavbar;
 
   // Prevent body scroll when mobile menu is open
   useEffect(() => {
@@ -43,9 +45,10 @@ const Navbar = ({ scrolled }: NavbarProps) => {
       aria-label="Main navigation"
       className={cn(
         "fixed left-0 right-0 z-40 transition-all duration-300",
-        scrolled || isOpen
-          ? "top-0 bg-background/80 backdrop-blur-sm border-b border-border shadow-sm text-foreground"
-          : "top-14 sm:top-12 bg-background/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none text-white"
+        scrolled || isOpen ? "top-0" : "top-14 sm:top-12",
+        useSolidNavbar
+          ? "bg-background/90 backdrop-blur-md border-b border-black/5 dark:border-border shadow-sm text-foreground"
+          : "bg-background/80 md:bg-transparent backdrop-blur-sm md:backdrop-blur-none text-white"
       )}
     >
       <div className="container mx-auto px-4">
@@ -64,7 +67,7 @@ const Navbar = ({ scrolled }: NavbarProps) => {
             className="hidden lg:flex items-center justify-center flex-1"
             role="navigation"
           >
-            <NavLinks isScrolled={scrolled} />
+            <NavLinks isScrolled={useSolidNavbar} />
           </div>
 
           {/* Right Side Actions */}

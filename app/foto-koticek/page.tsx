@@ -16,9 +16,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Foto kotiček najem od 249 € | Eventaj.si",
+  title: "Foto kotiček najem od 279 € | Eventaj.si",
   description:
-    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 249 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in spletna galerija.",
+    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 279 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in spletna galerija.",
   keywords: [
     "Foto kotiček najem",
     "foto zabava",
@@ -29,9 +29,9 @@ export const metadata: Metadata = {
     "Foto kotiček za dogodke",
   ],
   openGraph: {
-    title: "Foto kotiček najem od 249 € | Eventaj.si",
+    title: "Foto kotiček najem od 279 € | Eventaj.si",
     description:
-      "Najem foto kotička za poroke in dogodke. Od 249 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
+      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
     url: "https://www.eventaj.si/foto-koticek",
     siteName: "Eventaj.si",
     images: [
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foto kotiček najem od 249 € | Eventaj.si",
+    title: "Foto kotiček najem od 279 € | Eventaj.si",
     description:
-      "Najem foto kotička za poroke in dogodke. Od 249 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
+      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
@@ -68,7 +68,7 @@ export const metadata: Metadata = {
 const pricingPlans: PricingPlan[] = [
   {
     name: "Basic",
-    price: "249",
+    price: "279",
     period: "2 uri",
     features: [
       "najem do 2 uri",
@@ -86,7 +86,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Standard",
-    price: "299",
+    price: "329",
     period: "3 ure",
     features: [
       "najem do 3 ure",
@@ -104,7 +104,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Premium",
-    price: "349",
+    price: "379",
     period: "4 ure",
     features: [
       "najem do 4 ure",
@@ -148,8 +148,8 @@ export default function PhotoBooth() {
             "Profesionalni najem foto kotička za dogodke, poroke, rojstne dneve in zabave. Vključuje operaterja, rekvizite in takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "249",
-            highPrice: "349",
+            lowPrice: "279",
+            highPrice: "379",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",

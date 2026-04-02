@@ -45,9 +45,9 @@ const threeSixtyHours = [
 ];
 
 const basicBoothHours = [
-  { value: 2, price: 249 },
-  { value: 3, price: 299 },
-  { value: 4, price: 349 },
+  { value: 2, price: 279 },
+  { value: 3, price: 329 },
+  { value: 4, price: 379 },
 ];
 
 const formSchema = z.object({

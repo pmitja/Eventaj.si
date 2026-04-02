@@ -20,9 +20,9 @@ import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Foto stojnica najem po Sloveniji od 249 € | Eventaj.si",
+  title: "Foto stojnica najem po Sloveniji od 279 € | Eventaj.si",
   description:
-    "Foto stojnica najem za poroke, zabave in poslovne dogodke po celotni Sloveniji. Od 249 €/2h z neomejenimi fotografijami, rekviziti, takojšnjim tiskom, spletno galerijo in brezplačnim prevozom do 20 km. Pokličite 031 285 143.",
+    "Foto stojnica najem za poroke, zabave in poslovne dogodke po celotni Sloveniji. Od 279 €/2h z neomejenimi fotografijami, rekviziti, takojšnjim tiskom, spletno galerijo in brezplačnim prevozom do 20 km. Pokličite 031 285 143.",
   keywords: [
     "foto stojnica najem",
     "foto stojnica Slovenija",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
     "fotobox najem",
   ],
   openGraph: {
-    title: "Foto stojnica najem po Sloveniji od 249 € | Eventaj.si",
+    title: "Foto stojnica najem po Sloveniji od 279 € | Eventaj.si",
     description:
       "Najem foto stojnice z neomejenimi fotografijami in rekviziti po vsej Sloveniji. Pokrivamo Ljubljano, Maribor, Celje, Primorsko in ostale regije.",
     url: "https://www.eventaj.si/foto-stojnica",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foto stojnica najem po Sloveniji od 249 € | Eventaj.si",
+    title: "Foto stojnica najem po Sloveniji od 279 € | Eventaj.si",
     description:
       "Najem foto stojnice z asistenco in rekviziti po celotni Sloveniji. Rezerviraj termin že danes.",
     images: ["/og/photo-booth.webp"],
@@ -74,7 +74,7 @@ export const metadata: Metadata = {
 const pricingPlans: PricingPlan[] = [
   {
     name: "Basic",
-    price: "249",
+    price: "279",
     period: "2 uri",
     features: [
       "najem do 2 uri",
@@ -92,7 +92,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Standard",
-    price: "299",
+    price: "329",
     period: "3 ure",
     features: [
       "najem do 3 ure",
@@ -110,7 +110,7 @@ const pricingPlans: PricingPlan[] = [
   },
   {
     name: "Premium",
-    price: "349",
+    price: "379",
     period: "4 ure",
     features: [
       "najem do 4 ure",
@@ -189,8 +189,8 @@ export default function PhotoBooth() {
             "Profesionalni najem foto stojnice za dogodke, poroke, rojstne dneve in zabave po celotni Sloveniji. Vključuje operaterja, rekvizite, personalizirane predloge ter takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "249",
-            highPrice: "349",
+            lowPrice: "279",
+            highPrice: "379",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",

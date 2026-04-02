@@ -1,5 +1,4 @@
 import Section from "../ui/section";
-import PricingCalculator from "./pricing-calculator";
 
 interface Step {
   number: string;
@@ -79,7 +78,6 @@ const PhotoBoothHowItWorks = () => {
           ))}
         </div>
       </div>
-      <PricingCalculator type="basic" />
     </Section>
   );
 };

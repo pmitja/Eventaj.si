@@ -8,6 +8,7 @@ import { ReferencesSection } from "@/components/sections/references-section";
 import WhenToChoose from "@/components/sections/when-to-choose";
 import ThreeSixtyHero from "@/components/three-sixty-hero";
 import { Button } from "@/components/ui/button";
+import { AnimateIn } from "@/components/ui/animate-in";
 import { threeSixtyWhenToChoose } from "@/content/when-to-choose";
 import { Metadata } from "next";
 import Link from "next/link";
@@ -201,75 +202,83 @@ export default function ThreeSixtyPhotoBooth() {
           className="container mx-auto px-4 py-12 md:py-16"
         >
           <div className="grid gap-10 lg:grid-cols-2">
-            <div>
-              <p className="text-sm font-semibold uppercase tracking-wide text-[#C99566]">
-                Eventaj.si
-              </p>
-              <h2
-                id="360-photo-booth-slovenia-heading"
-                className="mt-3 text-3xl font-semibold leading-snug md:text-4xl"
-              >
-                360 Photo Booth najem po celi Sloveniji
-              </h2>
-              <p className="mt-4 text-lg text-muted-foreground">
-                Z našo 360° kamero pridemo kamor koli – od Ljubljane in Maribora
-                do Kopra in Novega mesta. Ustvarite nepozabne videoposnetke, ki
-                bodo preplavili družbena omrežja. Prevoz, postavitev in
-                asistenca so vključeni.
-              </p>
-              <p className="mt-3 text-muted-foreground">
-                Vsak najem vključuje personalizirane predloge, rekvizite,
-                takojšnje deljenje ter podporo v slovenskem in angleškem jeziku.
-                Pišite na{" "}
-                <a
-                  href="mailto:info@eventaj.si"
-                  className="text-[#C99566] underline-offset-2 hover:underline"
+            <AnimateIn direction="left">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-wide text-[#C99566]">
+                  Eventaj.si
+                </p>
+                <h2
+                  id="360-photo-booth-slovenia-heading"
+                  className="mt-3 text-3xl font-semibold leading-snug md:text-4xl"
                 >
-                  info@eventaj.si
-                </a>{" "}
-                ali nas pokličite za hitro ponudbo.
-              </p>
-              <div className="mt-8 flex flex-wrap gap-4">
-                <Button variant="glow" asChild>
-                  <Link href="#360-pricing">Rezerviraj 360 Photo Booth</Link>
-                </Button>
-                <Button variant="outline" asChild>
-                  <a href="tel:+38631285143">Pokliči 031 285 143</a>
-                </Button>
+                  360 Photo Booth najem po celi Sloveniji
+                </h2>
+                <p className="mt-4 text-lg text-muted-foreground">
+                  Z našo 360° kamero pridemo kamor koli – od Ljubljane in Maribora
+                  do Kopra in Novega mesta. Ustvarite nepozabne videoposnetke, ki
+                  bodo preplavili družbena omrežja. Prevoz, postavitev in
+                  asistenca so vključeni.
+                </p>
+                <p className="mt-3 text-muted-foreground">
+                  Vsak najem vključuje personalizirane predloge, rekvizite,
+                  takojšnje deljenje ter podporo v slovenskem in angleškem jeziku.
+                  Pišite na{" "}
+                  <a
+                    href="mailto:info@eventaj.si"
+                    className="text-[#C99566] underline-offset-2 hover:underline transition-colors"
+                  >
+                    info@eventaj.si
+                  </a>{" "}
+                  ali nas pokličite za hitro ponudbo.
+                </p>
+                <div className="mt-8 flex flex-wrap gap-4">
+                  <Button variant="glow" asChild className="hover:scale-105 transition-transform">
+                    <Link href="#360-pricing">Rezerviraj 360 Photo Booth</Link>
+                  </Button>
+                  <Button variant="outline" asChild className="hover:scale-105 transition-transform">
+                    <a href="tel:+38631285143">Pokliči 031 285 143</a>
+                  </Button>
+                </div>
               </div>
-            </div>
+            </AnimateIn>
             <div className="space-y-6">
-              <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/80">
-                <p className="text-sm uppercase tracking-wide text-[#C99566]">
-                  Pokrivamo celotno Slovenijo
-                </p>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  {serviceAreas.map((area) => (
-                    <li key={area} className="flex items-start gap-2">
-                      <span className="mt-1 h-2 w-2 rounded-full bg-[#C99566]" />
-                      <span>{area}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <div className="rounded-3xl border border-black/5 bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/80">
-                <p className="text-sm uppercase tracking-wide text-[#94A3B8]">
-                  Kaj je vedno vključeno
-                </p>
-                <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
-                  {serviceGuarantees.map((item) => (
-                    <li key={item} className="flex items-start gap-2">
-                      <span className="mt-1 h-2 w-2 rounded-full bg-[#94A3B8]" />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              <AnimateIn direction="right" delay={0.2}>
+                <div className="group rounded-3xl border border-black/5 bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/80 transition-all hover:shadow-2xl hover:-translate-y-1">
+                  <p className="text-sm uppercase tracking-wide text-[#C99566]">
+                    Pokrivamo celotno Slovenijo
+                  </p>
+                  <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                    {serviceAreas.map((area) => (
+                      <li key={area} className="flex items-start gap-2 transition-transform hover:translate-x-1">
+                        <span className="mt-1 h-2 w-2 rounded-full bg-[#C99566] shadow-[0_0_8px_rgba(201,149,102,0.6)]" />
+                        <span>{area}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateIn>
+              <AnimateIn direction="right" delay={0.4}>
+                <div className="group rounded-3xl border border-black/5 bg-white/80 p-6 shadow-xl shadow-black/5 backdrop-blur dark:border-white/10 dark:bg-background/80 transition-all hover:shadow-2xl hover:-translate-y-1">
+                  <p className="text-sm uppercase tracking-wide text-[#94A3B8]">
+                    Kaj je vedno vključeno
+                  </p>
+                  <ul className="mt-4 space-y-2 text-sm text-muted-foreground">
+                    {serviceGuarantees.map((item) => (
+                      <li key={item} className="flex items-start gap-2 transition-transform hover:translate-x-1">
+                        <span className="mt-1 h-2 w-2 rounded-full bg-[#94A3B8] shadow-[0_0_8px_rgba(148,163,184,0.6)]" />
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </AnimateIn>
             </div>
           </div>
         </section>
         <WhenToChoose content={threeSixtyWhenToChoose} />
-        <PromoImage />
+        <AnimateIn direction="none" delay={0.2}>
+          <PromoImage />
+        </AnimateIn>
         <Features {...threeSixtyFeatures} />
         <HowItWorks type="360" />
         <section
@@ -279,19 +288,23 @@ export default function ThreeSixtyPhotoBooth() {
         >
           <PricingPlans plans={pricingPlans} />
         </section>
-        <ReferencesSection
-          title="Kaj pravijo naši zadovoljni uporabniki"
-          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
-        />
-        <CTAContactSection
-          title="Ni ustreznega paketa?"
-          description="Kontaktiraj nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
-          action={{
-            text: "Pošlji povpraševanje",
-            variant: "glow",
-          }}
-          isGlow={true}
-        />
+        <AnimateIn direction="up">
+          <ReferencesSection
+            title="Kaj pravijo naši zadovoljni uporabniki"
+            description="Preverite, kaj o nas menijo stranke, ki so že uporabljale naš 360° photo booth"
+          />
+        </AnimateIn>
+        <AnimateIn direction="up" delay={0.2}>
+          <CTAContactSection
+            title="Ni ustreznega paketa?"
+            description="Kontaktiraj nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
+            action={{
+              text: "Pošlji povpraševanje",
+              variant: "glow",
+            }}
+            isGlow={true}
+          />
+        </AnimateIn>
       </main>
     </>
   );

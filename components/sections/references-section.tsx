@@ -10,6 +10,7 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Section from "@/components/ui/section";
+import { AnimateIn } from "@/components/ui/animate-in";
 import { cn } from "@/lib/utils";
 import {
   Calendar,
@@ -257,28 +258,31 @@ export function ReferencesSection({
       <div className="container-lg mx-auto relative z-10">
         {/* Event Examples Gallery */}
         <div className="mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full shadow-lg mb-6 transform hover:scale-105 transition-transform duration-300">
-              <Camera className="w-5 h-5" />
-              <span className="font-semibold">Primeri iz dogodkov</span>
-              <PartyPopper className="w-5 h-5" />
+          <AnimateIn direction="up">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-6 py-3 bg-primary text-primary-foreground rounded-full shadow-lg mb-6 transform hover:scale-105 transition-transform duration-300">
+                <Camera className="w-5 h-5" />
+                <span className="font-semibold">Primeri iz dogodkov</span>
+                <PartyPopper className="w-5 h-5" />
+              </div>
+              <h3 className="text-4xl font-bold text-foreground mb-4">
+                Poglejte si naše najboljše trenutke
+              </h3>
+              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                Od porok do poslovnih dogodkov - naš photo booth je bil del
+                nepozabnih spominov
+              </p>
             </div>
-            <h3 className="text-4xl font-bold text-foreground mb-4">
-              Poglejte si naše najboljše trenutke
-            </h3>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Od porok do poslovnih dogodkov - naš photo booth je bil del
-              nepozabnih spominov
-            </p>
-          </div>
+          </AnimateIn>
 
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full max-w-6xl mx-auto"
-          >
+          <AnimateIn direction="up" delay={0.2}>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-6xl mx-auto"
+            >
             <CarouselContent className="-ml-2">
               {eventExamples.map((example, index) => (
                 <CarouselItem
@@ -360,34 +364,38 @@ export function ReferencesSection({
             <CarouselPrevious className="hidden md:flex" />
             <CarouselNext className="hidden md:flex" />
           </Carousel>
+          </AnimateIn>
         </div>
 
         {/* Client References */}
         <div className="mb-20">
-          <div className="text-center mb-12">
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full border border-primary/20 mb-6">
-              <Star className="w-4 h-4 text-primary fill-primary" />
-              <span className="text-sm font-semibold text-primary">
-                Mnenja strank
-              </span>
-              <Star className="w-4 h-4 text-primary fill-primary" />
+          <AnimateIn direction="up">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full border border-primary/20 mb-6">
+                <Star className="w-4 h-4 text-primary fill-primary" />
+                <span className="text-sm font-semibold text-primary">
+                  Mnenja strank
+                </span>
+                <Star className="w-4 h-4 text-primary fill-primary" />
+              </div>
+              <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
+                Kaj pravijo naši zadovoljni uporabniki
+              </h3>
+              <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
+                Zaupanje zadovoljnih strank po vsej Sloveniji
+              </p>
             </div>
-            <h3 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
-              Kaj pravijo naši zadovoljni uporabniki
-            </h3>
-            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
-              Zaupanje zadovoljnih strank po vsej Sloveniji
-            </p>
-          </div>
+          </AnimateIn>
 
           {/* Detailed References Carousel */}
-          <Carousel
-            opts={{
-              align: "start",
-              loop: true,
-            }}
-            className="w-full max-w-6xl mx-auto"
-          >
+          <AnimateIn direction="up" delay={0.2}>
+            <Carousel
+              opts={{
+                align: "start",
+                loop: true,
+              }}
+              className="w-full max-w-6xl mx-auto"
+            >
             <CarouselContent className="-ml-6">
               {references.map((reference) => (
                 <CarouselItem
@@ -461,69 +469,74 @@ export function ReferencesSection({
             <CarouselPrevious className="hidden md:flex -left-12 bg-card border-2 border-primary/20 hover:bg-primary hover:border-primary" />
             <CarouselNext className="hidden md:flex -right-12 bg-card border-2 border-primary/20 hover:bg-primary hover:border-primary" />
           </Carousel>
+          </AnimateIn>
 
           {/* Social proof stats */}
-          <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-center">
-            <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
-                25+
+          <AnimateIn direction="up" delay={0.4}>
+            <div className="mt-12 flex flex-wrap items-center justify-center gap-8 text-center">
+              <div className="flex flex-col items-center">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                  25+
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  Zadovoljnih strank
+                </div>
               </div>
-              <div className="text-sm text-muted-foreground">
-                Zadovoljnih strank
+              <div className="w-px h-12 bg-border" />
+              <div className="flex flex-col items-center">
+                <div className="flex items-center gap-1 mb-1">
+                  {Array.from({ length: 5 }).map((_, i) => (
+                    <Star
+                      key={i}
+                      className={`w-5 h-5 ${i < 4 ? "fill-yellow-400 text-yellow-400" : "fill-yellow-400/60 text-yellow-400/60"}`}
+                    />
+                  ))}
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  4.8 povprečna ocena
+                </div>
+              </div>
+              <div className="w-px h-12 bg-border" />
+              <div className="flex flex-col items-center">
+                <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
+                  35+
+                </div>
+                <div className="text-sm text-muted-foreground">
+                  Uspešnih dogodkov
+                </div>
               </div>
             </div>
-            <div className="w-px h-12 bg-border" />
-            <div className="flex flex-col items-center">
-              <div className="flex items-center gap-1 mb-1">
-                {Array.from({ length: 5 }).map((_, i) => (
-                  <Star
-                    key={i}
-                    className={`w-5 h-5 ${i < 4 ? "fill-yellow-400 text-yellow-400" : "fill-yellow-400/60 text-yellow-400/60"}`}
-                  />
-                ))}
-              </div>
-              <div className="text-sm text-muted-foreground">
-                4.8 povprečna ocena
-              </div>
-            </div>
-            <div className="w-px h-12 bg-border" />
-            <div className="flex flex-col items-center">
-              <div className="text-3xl md:text-4xl font-bold text-primary mb-1">
-                35+
-              </div>
-              <div className="text-sm text-muted-foreground">
-                Uspešnih dogodkov
-              </div>
-            </div>
-          </div>
+          </AnimateIn>
         </div>
 
         {/* CTA */}
-        <div className="text-center">
-          <div className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full shadow-lg mb-8 transform hover:scale-105 transition-transform duration-300">
-            <Sparkles className="w-6 h-6" />
-            <span className="text-lg font-bold">
-              Pridružite se našim zadovoljnim strankam
-            </span>
-            <PartyPopper className="w-6 h-6" />
-          </div>
-          <p className="text-xl text-muted-foreground mb-10">
-            Ustvarite nepozabne spomine z našim photo booth-om
-          </p>
-          <HeroBookingDialog>
-            <Button
-              variant="glow"
-              size="lg"
-              className="relative overflow-hidden group px-8 py-4 text-lg font-bold shadow-2xl transform hover:scale-105 transition-all duration-300"
-            >
-              <span className="relative z-10 flex items-center gap-3">
-                <Camera className="w-6 h-6" />
-                Rezerviraj termin
-                <Sparkles className="w-6 h-6" />
+        <AnimateIn direction="up" delay={0.2}>
+          <div className="text-center">
+            <div className="inline-flex items-center gap-3 px-8 py-4 bg-primary text-primary-foreground rounded-full shadow-lg mb-8 transform hover:scale-105 transition-transform duration-300">
+              <Sparkles className="w-6 h-6" />
+              <span className="text-lg font-bold">
+                Pridružite se našim zadovoljnim strankam
               </span>
-            </Button>
-          </HeroBookingDialog>
-        </div>
+              <PartyPopper className="w-6 h-6" />
+            </div>
+            <p className="text-xl text-muted-foreground mb-10">
+              Ustvarite nepozabne spomine z našim photo booth-om
+            </p>
+            <HeroBookingDialog>
+              <Button
+                variant="glow"
+                size="lg"
+                className="relative overflow-hidden group px-8 py-4 text-lg font-bold shadow-2xl transform hover:scale-105 transition-all duration-300"
+              >
+                <span className="relative z-10 flex items-center gap-3">
+                  <Camera className="w-6 h-6" />
+                  Rezerviraj termin
+                  <Sparkles className="w-6 h-6" />
+                </span>
+              </Button>
+            </HeroBookingDialog>
+          </div>
+        </AnimateIn>
       </div>
     </Section>
   );
