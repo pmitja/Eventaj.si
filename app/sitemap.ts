@@ -52,15 +52,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'monthly',
 			priority: 0.7,
 		},
-
-		// Blog
-		{
-			url: `${baseUrl}/blog`,
-			lastModified: currentDate,
-			changeFrequency: 'weekly',
-			priority: 0.8,
-		},
-
 		// FAQ
 		{
 			url: `${baseUrl}/pogosta-vprasanja`,

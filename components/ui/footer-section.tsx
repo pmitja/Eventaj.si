@@ -20,7 +20,6 @@ const navigation = {
     { href: "/ozadja", name: "Ozadja" },
     { href: "/rekviziti", name: "Rekviziti" },
     { href: "/reference", name: "Reference" },
-    { href: "/blog", name: "Blog" },
   ],
   legal: [
     { name: "Zasebnost", href: "/zasebnost" },
