@@ -1,6 +1,8 @@
-import localFont from 'next/font/local'
+import { Baloo_2 } from 'next/font/google'
 
-export const baloo2 = localFont({
-  src: '../public/fonts/Baloo2-VariableFont_wght.woff2',
+export const baloo2 = Baloo_2({
+  display: 'swap',
+  subsets: ['latin', 'latin-ext'],
+  weight: 'variable',
   variable: '--font-baloo2',
-}) 
+})
