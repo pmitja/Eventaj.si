@@ -19,12 +19,14 @@ interface FAQItem {
 
 interface FAQSectionClientProps {
   title: string;
+  seoTitle?: string;
   description: string;
   items: FAQItem[];
 }
 
 export function FAQSectionClient({
   title,
+  seoTitle,
   description,
   items,
 }: FAQSectionClientProps) {
@@ -67,14 +69,29 @@ export function FAQSectionClient({
           transition={{ delay: 0.3, duration: 0.6 }}
           className="relative z-10 container mx-auto px-4 py-20 text-center"
         >
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4, duration: 0.6 }}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
-          >
-            {title}
-          </motion.h1>
+          {seoTitle ? (
+            <>
+              <h1 className="sr-only">{seoTitle}</h1>
+              <motion.div
+                aria-hidden="true"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4, duration: 0.6 }}
+                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+              >
+                {title}
+              </motion.div>
+            </>
+          ) : (
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.4, duration: 0.6 }}
+              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+            >
+              {title}
+            </motion.h1>
+          )}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

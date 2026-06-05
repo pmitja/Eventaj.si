@@ -89,6 +89,154 @@
   }
 }
 
+.eventaj-redesign {
+  --eventaj-ink: #14110F;
+  --eventaj-ink-2: #2A2520;
+  --eventaj-cream: #F4EFE6;
+  --eventaj-paper: #FBF8F2;
+  --eventaj-paper-2: #EFE9DD;
+  --eventaj-rule: #1d1916;
+  --eventaj-muted: #6B6157;
+  --eventaj-accent: #B8553A;
+  --eventaj-gold: #A6864A;
+  --eventaj-serif: "Fraunces", "Instrument Serif", Georgia, serif;
+  --eventaj-serif-italic: "Instrument Serif", "Fraunces", Georgia, serif;
+  --eventaj-sans: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  color: var(--eventaj-ink);
+  background: var(--eventaj-paper);
+  font-family: var(--eventaj-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+.eventaj-redesign *,
+.eventaj-redesign *::before,
+.eventaj-redesign *::after {
+  box-sizing: border-box;
+}
+
+.eventaj-redesign a {
+  color: inherit;
+}
+
+.eventaj-redesign button,
+.eventaj-redesign input,
+.eventaj-redesign textarea,
+.eventaj-redesign select {
+  font-family: inherit;
+}
+
+.eventaj-redesign .eventaj-range {
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 999px;
+  cursor: pointer;
+  outline: none;
+}
+
+.eventaj-redesign .eventaj-range::-webkit-slider-thumb {
+  width: 18px;
+  height: 18px;
+  -webkit-appearance: none;
+  appearance: none;
+  border: 2px solid var(--eventaj-paper);
+  border-radius: 999px;
+  background-color: var(--eventaj-ink);
+  box-shadow: 0 0 0 1px var(--eventaj-ink);
+}
+
+.eventaj-redesign .eventaj-range::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--eventaj-paper);
+  border-radius: 999px;
+  background-color: var(--eventaj-ink);
+  box-shadow: 0 0 0 1px var(--eventaj-ink);
+}
+
+.eventaj-redesign .eventaj-range:focus-visible::-webkit-slider-thumb {
+  box-shadow: 0 0 0 4px var(--eventaj-paper), 0 0 0 6px var(--eventaj-ink);
+}
+
+.eventaj-redesign .eventaj-range:focus-visible::-moz-range-thumb {
+  box-shadow: 0 0 0 4px var(--eventaj-paper), 0 0 0 6px var(--eventaj-ink);
+}
+
+.eventaj-redesign .eventaj-range:disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+}
+
+.eventaj-redesign button {
+  cursor: pointer;
+}
+
+.eventaj-redesign ::selection {
+  background: var(--eventaj-ink);
+  color: var(--eventaj-paper);
+}
+
+.font-serif-display {
+  font-family: var(--eventaj-serif);
+}
+
+.font-serif-italic {
+  font-family: var(--eventaj-serif-italic);
+}
+
+.eventaj-input {
+  width: 100%;
+  border: 1px solid rgba(20,17,15,0.15);
+  border-radius: 0;
+  background: var(--eventaj-paper);
+  color: var(--eventaj-ink);
+  padding: 16px 18px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 0.2s ease;
+}
+
+.eventaj-input:focus {
+  border-color: var(--eventaj-ink);
+}
+
+@keyframes eventaj-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-33.333%); }
+}
+
+@keyframes eventaj-service-rail {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+@keyframes eventaj-fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes eventaj-strip-float-0 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+
+@keyframes eventaj-strip-float-1 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes eventaj-strip-float-2 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes eventaj-strip-float-3 {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
 @layer utilities {
   .gradient-overlay {
     @apply before:content-[''] before:absolute before:inset-0 before:bg-gradient-to-b 

@@ -1,4 +1,5 @@
 import { FormField } from "@/components/forms/booking-form";
+import { formatSlovenianDate } from "@/lib/slovenian-date";
 import {
   Body,
   Container,
@@ -22,16 +23,7 @@ export const NotificationEmail = ({
   formData,
   totalPrice,
 }: EmailTemplateProps) => {
-  const { name, email, phone, date, location, hours, message, type } = formData;
-
-  const formatDate = (date: Date | undefined | null) => {
-    if (!date) return "Ni določen";
-    try {
-      return new Date(date).toLocaleDateString("sl");
-    } catch {
-      return "Ni določen";
-    }
-  };
+  const { name, email, phone, date, location, hours, message, type, eventType, guests } = formData;
 
   return (
     <Html>
@@ -71,7 +63,7 @@ export const NotificationEmail = ({
             )}
             {date && (
               <Text style={detailItem}>
-                <strong>Datum dogodka:</strong> {formatDate(date)}
+                <strong>Datum dogodka:</strong> {formatSlovenianDate(date)}
               </Text>
             )}
             {location && (
@@ -87,7 +79,21 @@ export const NotificationEmail = ({
             {type && (
               <Text style={detailItem}>
                 <strong>Tip storitve:</strong>{" "}
-                {type === "360" ? "360° Photo Booth" : "Photo Booth"}
+                {type === "360"
+                  ? "360° Photo Booth"
+                  : type === "both"
+                    ? "Photo Booth + 360° Photo Booth"
+                    : "Photo Booth"}
+              </Text>
+            )}
+            {eventType && (
+              <Text style={detailItem}>
+                <strong>Tip dogodka:</strong> {eventType}
+              </Text>
+            )}
+            {guests && (
+              <Text style={detailItem}>
+                <strong>Število gostov:</strong> {guests}
               </Text>
             )}
             {totalPrice > 0 && (

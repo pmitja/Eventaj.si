@@ -4,9 +4,11 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { FAQPage } from "schema-dts";
 
+const pageTitle =
+  "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Photo Booth | Eventaj.si";
+
 export const metadata: Metadata = {
-  title:
-    "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Photo Booth | Eventaj.si",
+  title: pageTitle,
   description:
     "Odgovori na pogosta vprašanja o najemu photo bootha in 360° photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
   keywords: [
@@ -196,6 +198,7 @@ export default function FAQPage() {
       <main className="pt-[48px]">
         <FAQSection
           title="Pogosta vprašanja"
+          seoTitle={pageTitle}
           description="Odgovori na najpogostejša vprašanja o najemu photo bootha in 360° photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />

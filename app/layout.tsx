@@ -1,7 +1,7 @@
+/* eslint-disable @next/next/no-page-custom-font */
 import "@/app/globals.css";
 import "@/app/notion.css";
-import WithNavigation from "@/components/navigation/with-navigation";
-import { Footer } from "@/components/ui/footer-section";
+import SiteShell from "@/components/claude/site-shell";
 import { Toaster } from "@/components/ui/toaster";
 import { baloo2 } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -56,6 +56,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
+        <link
+          rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,30..100&family=Instrument+Serif:ital@0;1&family=Instrument+Sans:wght@400;500;600&display=swap"
+        />
         <link
           rel="preconnect"
           href="https://prod-files-secure.s3.us-west-2.amazonaws.com"
@@ -72,13 +78,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="flex min-h-screen flex-col">
-            <WithNavigation showBanner={true} />
+          <SiteShell>
             {children}
-            <Footer />
             <Analytics />
             <Toaster />
-          </div>
+          </SiteShell>
         </ThemeProvider>
       </body>
     </html>

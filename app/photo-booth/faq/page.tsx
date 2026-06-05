@@ -4,8 +4,10 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { FAQPage } from "schema-dts";
 
+const pageTitle = "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si";
+
 export const metadata: Metadata = {
-  title: "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
+  title: pageTitle,
   description:
     "Odgovori na pogosta vprašanja o najemu photo bootha po celi Sloveniji. Spoznajte cene, logistiko postavitve, dostavo v Ljubljano, Maribor, Celje in ostale regije ter rezervacijo photo booth stojnice za vaš dogodek.",
   keywords: [
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
     "najem foto stojnice",
   ],
   openGraph: {
-    title: "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
+    title: pageTitle,
     description:
       "Odgovori na pogosta vprašanja o najemu photo bootha po Sloveniji – cene, postavitev, logistika in rezervacije.",
     url: "https://eventaj.si/photo-booth/faq",
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
+    title: pageTitle,
     description:
       "Vsa ključna vprašanja o photo booth najemu po Sloveniji – cene, postavitev, logistika in rezervacije.",
     images: ["https://eventaj.si/application/hero-image-2.webp"],
@@ -166,6 +168,7 @@ export default function PhotoBoothFAQPage() {
       <main>
         <FAQSection
           title="Photo Booth - Pogosta vprašanja"
+          seoTitle={pageTitle}
           description="Odgovori na najpogostejša vprašanja o najemu photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />

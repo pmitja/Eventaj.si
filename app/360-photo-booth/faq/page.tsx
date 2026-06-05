@@ -4,8 +4,10 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { FAQPage } from "schema-dts";
 
+const pageTitle = "360 Photo Booth FAQ - Pogosta vprašanja | Eventaj.si";
+
 export const metadata: Metadata = {
-  title: "360 Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
+  title: pageTitle,
   description:
     "Odgovori na pogosta vprašanja o najemu 360 photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360 photo booth stojnice za vaš dogodek.",
   keywords: [
@@ -21,7 +23,7 @@ export const metadata: Metadata = {
     "360 foto stojnica",
   ],
   openGraph: {
-    title: "360 Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
+    title: pageTitle,
     description:
       "Odgovori na pogosta vprašanja o najemu 360 photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360 photo booth stojnice za vaš dogodek.",
     url: "https://eventaj.si/360-photo-booth/faq",
@@ -39,7 +41,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "360 Photo Booth FAQ - Pogosta vprašanja | Eventaj.si",
+    title: pageTitle,
     description:
       "Odgovori na pogosta vprašanja o najemu 360 photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360 photo booth stojnice za vaš dogodek.",
     images: ["https://eventaj.si/application/hero-image-2.webp"],
@@ -151,6 +153,7 @@ export default function ThreeSixtyBoothFAQPage() {
       <main>
         <FAQSection
           title="360 Photo Booth - Pogosta vprašanja"
+          seoTitle={pageTitle}
           description="Odgovori na najpogostejša vprašanja o najemu 360 photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />

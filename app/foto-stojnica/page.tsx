@@ -78,12 +78,11 @@ const pricingPlans: PricingPlan[] = [
     period: "2 uri",
     features: [
       "najem do 2 uri",
-      "neomejeno število fotografij",
+      "neomejeno narejenih in natisnjenih fotografij",
       "pomoč pri uporabi",
-      "rekviziti za fotografiranje",
-      "takojšnje tiskanje fotografij",
+      "Izbrani rekviziti",
       "digitalne fotografije",
-      "personalizacija fotografij",
+      "Personaliziran okvir z logotipom",
       "online galerija",
     ],
     description: "Popoln paket za manjše dogodke in zabave.",
@@ -96,15 +95,14 @@ const pricingPlans: PricingPlan[] = [
     period: "3 ure",
     features: [
       "najem do 3 ure",
-      "neomejeno število fotografij",
+      "neomejeno narejenih in natisnjenih fotografij",
       "pomoč pri uporabi",
-      "rekviziti za fotografiranje",
-      "takojšnje tiskanje fotografij",
+      "Izbrani rekviziti",
       "digitalne fotografije",
-      "personalizacija fotografij",
+      "Personaliziran okvir z logotipom",
       "online galerija",
     ],
-    description: "Najbolj priljubljen paket za večje dogodke.",
+    description: "Najpogostejša izbira za večje dogodke.",
     buttonText: "Rezerviraj termin",
     isPopular: true,
   },
@@ -114,12 +112,11 @@ const pricingPlans: PricingPlan[] = [
     period: "4 ure",
     features: [
       "najem do 4 ure",
-      "neomejeno število fotografij",
+      "neomejeno narejenih in natisnjenih fotografij",
       "pomoč pri uporabi",
-      "rekviziti za fotografiranje",
-      "takojšnje tiskanje fotografij",
+      "Izbrani rekviziti",
       "digitalne fotografije",
-      "personalizacija fotografij",
+      "Personaliziran okvir z logotipom",
       "online galerija",
     ],
     description: "Premium paket za posebne priložnosti.",
@@ -240,6 +237,7 @@ export default function PhotoBooth() {
       <main className="pt-[48px]">
         <BasicBoothHero
           title="Foto Stojnica Najem"
+          seoTitle="Foto stojnica najem po Sloveniji od 279 € | Eventaj.si"
           text="Naša foto stojnica pride iz Lenarta na vašo lokacijo v Ljubljani, Mariboru, Celju, na Primorskem ali kjer koli drugje po Sloveniji. Gostje se zabavajo, ustvarjajo neomejene fotografije, jih natisnejo ali delijo digitalno, mi pa poskrbimo za rekvizite in asistenco."
         />
         <section

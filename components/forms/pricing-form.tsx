@@ -37,7 +37,7 @@ const formSchema = z.object({
   name: z.string().min(2, "Ime in priimek sta obvezna"),
   email: z.string().email("Vnesite veljaven email naslov"),
   phone: z.string().min(8, "Vnesite veljavno telefonsko številko"),
-  date: z.date({ required_error: "Izberite datum dogodka" }),
+  date: z.date({ error: "Izberite datum dogodka" }),
   location: z.string().min(1, "Izberite lokacijo"),
   hours: z.string().min(1, "Izberite število ur"),
   message: z.string().optional(),

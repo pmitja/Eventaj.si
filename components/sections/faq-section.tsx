@@ -7,12 +7,23 @@ interface FAQItem {
 
 interface FAQSectionProps {
   title: string;
+  seoTitle?: string;
   description: string;
   items: FAQItem[];
 }
 
-export function FAQSection({ title, description, items }: FAQSectionProps) {
+export function FAQSection({
+  title,
+  seoTitle,
+  description,
+  items,
+}: FAQSectionProps) {
   return (
-    <FAQSectionClient title={title} description={description} items={items} />
+    <FAQSectionClient
+      title={title}
+      seoTitle={seoTitle}
+      description={description}
+      items={items}
+    />
   );
 }

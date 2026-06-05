@@ -52,7 +52,14 @@ export function PricingPlans({
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 sm:2 gap-4">
+      <div
+        className={cn(
+          "grid grid-cols-1 gap-4",
+          plans.length === 2
+            ? "mx-auto max-w-4xl md:grid-cols-2"
+            : "md:grid-cols-3",
+        )}
+      >
         {plans.map((plan, index) => (
           <motion.div
             key={index}
@@ -62,8 +69,18 @@ export function PricingPlans({
                 ? {
                     y: plan.isPopular ? -20 : 0,
                     opacity: 1,
-                    x: index === 2 ? -30 : index === 0 ? 30 : 0,
-                    scale: index === 0 || index === 2 ? 0.94 : 1.0,
+                    x:
+                      plans.length === 3
+                        ? index === 2
+                          ? -30
+                          : index === 0
+                            ? 30
+                            : 0
+                        : 0,
+                    scale:
+                      plans.length === 3 && (index === 0 || index === 2)
+                        ? 0.94
+                        : 1.0,
                   }
                 : {}
             }
@@ -81,18 +98,18 @@ export function PricingPlans({
               plan.isPopular ? "border-[#C99566] border-2" : "border-border",
               "flex flex-col",
               !plan.isPopular && "mt-5",
-              index === 0 || index === 2
+              plans.length === 3 && (index === 0 || index === 2)
                 ? "z-0 transform translate-x-0 translate-y-0 -translate-z-[50px] rotate-y-[10deg]"
                 : "z-10",
-              index === 0 && "origin-right",
-              index === 2 && "origin-left"
+              plans.length === 3 && index === 0 && "origin-right",
+              plans.length === 3 && index === 2 && "origin-left"
             )}
           >
             {plan.isPopular && (
               <div className="absolute top-0 right-0 bg-[#C99566] py-0.5 px-2 rounded-bl-xl rounded-tr-xl flex items-center">
                 <Star className="text-white h-4 w-4 fill-current" />
                 <span className="text-white ml-1 font-sans font-semibold">
-                  Najbolj priljubljen
+                  Najpogostejša izbira
                 </span>
               </div>
             )}

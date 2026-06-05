@@ -30,7 +30,7 @@ const formSchema = z.object({
   name: z.string().min(1, "Ime je obvezno"),
   email: z.string().email("Vnesite veljaven email naslov"),
   phone: z.string().min(1, "Telefon je obvezen"),
-  date: z.date({ required_error: "Datum je obvezen" }),
+  date: z.date({ error: "Datum je obvezen" }),
   message: z.string().min(1, "Sporočilo je obvezno"),
 });
 
