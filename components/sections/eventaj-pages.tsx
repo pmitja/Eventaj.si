@@ -1197,6 +1197,7 @@ function ServiceVisualStory({
                 <StoryReferenceMedia
                   media={image}
                   sizes="(max-width: 768px) 100vw, 420px"
+                  autoPlay
                 />
                 <figcaption className="absolute inset-x-4 bottom-4 text-[10px] uppercase tracking-[0.16em] text-[var(--eventaj-paper)] drop-shadow">
                   {image.label}
