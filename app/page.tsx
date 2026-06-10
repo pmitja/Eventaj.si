@@ -43,18 +43,15 @@ export const metadata: Metadata = {
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "https://eventaj.si/",
+    canonical: "https://www.eventaj.si/",
   },
   robots: {
     index: true,
     follow: true,
   },
   icons: {
-    icon: "https://eventaj.si/application/icon-32x32.png",
-    apple: "https://eventaj.si/application/icon-256x256.png",
-  },
-  other: {
-    "google-site-verification": "v9KCsI_ie0FgHL5ow8zD3M_gjvPEXc",
+    icon: "https://www.eventaj.si/application/icon-32x32.png",
+    apple: "https://www.eventaj.si/application/icon-256x256.png",
   },
 };
 
@@ -66,7 +63,7 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "WebSite",
           name: "Eventaj.si",
-          url: "https://eventaj.si",
+          url: "https://www.eventaj.si",
           description:
             "Profesionalni najem Photo Booth in 360° Booth naprav za dogodke, poroke in zabave v Sloveniji.",
         }}
@@ -76,8 +73,8 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "Organization",
           name: "Eventaj.si",
-          url: "https://eventaj.si",
-          logo: "https://eventaj.si/application/logo.svg",
+          url: "https://www.eventaj.si",
+          logo: "https://www.eventaj.si/application/logo.svg",
           description:
             "Vodilni ponudnik Photo Booth in 360° Booth storitev v Sloveniji. Specializirani za poroke, dogodke in zabave.",
           sameAs: [
@@ -98,9 +95,9 @@ export default function Home() {
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Eventaj.si",
-          image: "https://eventaj.si/application/logo.svg",
-          "@id": "https://eventaj.si",
-          url: "https://eventaj.si",
+          image: "https://www.eventaj.si/application/photo-booth.webp",
+          "@id": "https://www.eventaj.si",
+          url: "https://www.eventaj.si",
           telephone: "+386 31 285 143",
           email: "info@eventaj.si",
           slogan: "Photo Booth in 360° Booth najem po celi Sloveniji",
@@ -112,6 +109,32 @@ export default function Home() {
             postalCode: "2230",
             addressCountry: "SI",
           },
+          geo: {
+            "@type": "GeoCoordinates",
+            latitude: 46.5784,
+            longitude: 15.8322,
+          },
+          openingHoursSpecification: [
+            {
+              "@type": "OpeningHoursSpecification",
+              dayOfWeek: [
+                "https://schema.org/Monday",
+                "https://schema.org/Tuesday",
+                "https://schema.org/Wednesday",
+                "https://schema.org/Thursday",
+                "https://schema.org/Friday",
+                "https://schema.org/Saturday",
+                "https://schema.org/Sunday",
+              ],
+              opens: "00:00",
+              closes: "23:59",
+            },
+          ],
+          sameAs: [
+            "https://www.facebook.com/profile.php?id=61567672817538",
+            "https://www.instagram.com/eventaj.si/",
+            "https://www.tiktok.com/@eventaj.si",
+          ],
           priceRange: "€€",
         }}
       />

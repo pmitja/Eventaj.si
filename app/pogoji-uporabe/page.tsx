@@ -9,12 +9,12 @@ export const metadata: Metadata = {
     title: "Pogoji uporabe | Eventaj.si",
     description:
       "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem Photo Booth in 360° Booth opreme.",
-    url: "https://eventaj.si/pogoji-uporabe",
+    url: "https://www.eventaj.si/pogoji-uporabe",
     siteName: "Eventaj.si",
     type: "website",
   },
   alternates: {
-    canonical: "https://eventaj.si/pogoji-uporabe",
+    canonical: "https://www.eventaj.si/pogoji-uporabe",
   },
 };
 

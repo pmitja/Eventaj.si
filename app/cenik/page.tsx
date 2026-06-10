@@ -1,5 +1,7 @@
 import { CenikPageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
+import { JsonLd } from "react-schemaorg";
+import type { BreadcrumbList } from "schema-dts";
 
 const pageTitle = "Cenik Photo Booth in 360° Booth najema | Eventaj.si";
 
@@ -8,13 +10,13 @@ export const metadata: Metadata = {
   description:
     "Pregleden cenik za Photo Booth in 360° Booth najem. Photo Booth od 279 €, 360° Booth od 299 €, dodatki in ponudba po meri.",
   alternates: {
-    canonical: "https://eventaj.si/cenik",
+    canonical: "https://www.eventaj.si/cenik",
   },
   openGraph: {
     title: pageTitle,
     description:
       "Pregledni paketi, dodatki in konfigurator ponudbe za Photo Booth in 360° Booth najem.",
-    url: "https://eventaj.si/cenik",
+    url: "https://www.eventaj.si/cenik",
     siteName: "Eventaj.si",
     images: [
       {
@@ -41,6 +43,20 @@ export const metadata: Metadata = {
 };
 
 export default function CenikPage() {
-  return <CenikPageContent seoTitle={pageTitle} />;
+  return (
+    <>
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Domov", item: "https://www.eventaj.si" },
+            { "@type": "ListItem", position: 2, name: "Cenik", item: "https://www.eventaj.si/cenik" },
+          ],
+        }}
+      />
+      <CenikPageContent seoTitle={pageTitle} />
+    </>
+  );
 }
 export const dynamic = "force-static"

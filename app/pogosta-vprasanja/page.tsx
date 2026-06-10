@@ -2,7 +2,7 @@ import { CTAContactSection } from "@/components/sections/cta-contact-section";
 import { FAQSection } from "@/components/sections/faq-section";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import type { FAQPage } from "schema-dts";
+import type { BreadcrumbList, FAQPage } from "schema-dts";
 
 const pageTitle =
   "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Booth | Eventaj.si";
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     title: "Pogosta vprašanja | Photo Booth & 360° Booth | Eventaj.si",
     description:
       "Odgovori na pogosta vprašanja o najemu Photo Bootha in 360° Bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
-    url: "https://eventaj.si/pogosta-vprasanja",
+    url: "https://www.eventaj.si/pogosta-vprasanja",
     siteName: "Eventaj.si",
     locale: "sl_SI",
     type: "website",
@@ -192,6 +192,16 @@ export default function FAQPage() {
               text: item.answer,
             },
           })),
+        }}
+      />
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Domov", item: "https://www.eventaj.si" },
+            { "@type": "ListItem", position: 2, name: "Pogosta vprašanja", item: "https://www.eventaj.si/pogosta-vprasanja" },
+          ],
         }}
       />
 

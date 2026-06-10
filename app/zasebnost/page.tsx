@@ -9,12 +9,12 @@ export const metadata: Metadata = {
     title: "Politika zasebnosti | Eventaj.si",
     description:
       "Politika zasebnosti in varstvo osebnih podatkov za uporabnike storitev Eventaj.si.",
-    url: "https://eventaj.si/zasebnost",
+    url: "https://www.eventaj.si/zasebnost",
     siteName: "Eventaj.si",
     type: "website",
   },
   alternates: {
-    canonical: "https://eventaj.si/zasebnost",
+    canonical: "https://www.eventaj.si/zasebnost",
   },
 };
 

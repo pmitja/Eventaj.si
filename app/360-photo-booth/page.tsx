@@ -1,7 +1,7 @@
 import { ServicePageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { Service } from "schema-dts";
+import { BreadcrumbList, Service } from "schema-dts";
 
 const pricingPlans = [
   { name: "Mini paket", price: "299", description: "2 uri 360° Booth najema" },
@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "360° Booth za slow-motion posnetke, QR deljenje in nepozabno dogajanje na porokah, zabavah in poslovnih dogodkih.",
-    url: "https://eventaj.si/360-photo-booth",
+    url: "https://www.eventaj.si/360-photo-booth",
     siteName: "Eventaj.si",
     images: [
       {
@@ -52,7 +52,7 @@ export const metadata: Metadata = {
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
-    canonical: "https://eventaj.si/360-photo-booth",
+    canonical: "https://www.eventaj.si/360-photo-booth",
   },
   robots: {
     index: true,
@@ -71,7 +71,7 @@ export default function ThreeSixtyPhotoBooth() {
           provider: {
             "@type": "LocalBusiness",
             name: "Eventaj.si",
-            image: "https://eventaj.si/application/logo.svg",
+            image: "https://www.eventaj.si/application/logo.svg",
             address: {
               "@type": "PostalAddress",
               addressLocality: "Lenart v Slovenskih goricah",
@@ -105,6 +105,16 @@ export default function ThreeSixtyPhotoBooth() {
               description: plan.description,
             })),
           },
+        }}
+      />
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Domov", item: "https://www.eventaj.si" },
+            { "@type": "ListItem", position: 2, name: "360° Booth", item: "https://www.eventaj.si/360-photo-booth" },
+          ],
         }}
       />
       <ServicePageContent type="360" seoTitle={pageTitle} />

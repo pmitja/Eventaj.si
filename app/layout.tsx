@@ -38,9 +38,8 @@ export const metadata: Metadata = {
     description:
       "Photo Booth in 360° Booth najem z asistenco in rekviziti po Sloveniji.",
   },
-  other: {
-    "google-site-verification":
-      process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION || "",
+  verification: {
+    google: "v9KCsI_ie0FgHL5ow8zD3M_gjvPEXc",
   },
 };
 

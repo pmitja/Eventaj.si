@@ -1,7 +1,7 @@
 import { ServicePageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { Service } from "schema-dts";
+import { BreadcrumbList, Service } from "schema-dts";
 
 const photoBoothPageTitle = "Photo Booth najem po Sloveniji od 279 € | Eventaj.si";
 
@@ -68,12 +68,12 @@ export default function PhotoBooth() {
           "@context": "https://schema.org",
           "@type": "Service",
           name: "Photo Booth Najem",
-          url: "https://eventaj.si/photo-booth",
+          url: "https://www.eventaj.si/photo-booth",
           provider: {
             "@type": "LocalBusiness",
             name: "Eventaj.si",
-            url: "https://eventaj.si",
-            image: "https://eventaj.si/application/logo.svg",
+            url: "https://www.eventaj.si",
+            image: "https://www.eventaj.si/application/logo.svg",
             email: "info@eventaj.si",
             telephone: "+386 31 285 143",
             address: {
@@ -109,6 +109,16 @@ export default function PhotoBooth() {
               description: plan.description,
             })),
           },
+        }}
+      />
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Domov", item: "https://www.eventaj.si" },
+            { "@type": "ListItem", position: 2, name: "Photo Booth", item: "https://www.eventaj.si/photo-booth" },
+          ],
         }}
       />
       <ServicePageContent type="photo" seoTitle={photoBoothPageTitle} />

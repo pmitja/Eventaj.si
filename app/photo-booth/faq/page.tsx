@@ -1,7 +1,7 @@
 import { FAQSection } from "@/components/sections/faq-section";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import type { FAQPage } from "schema-dts";
+import type { BreadcrumbList, FAQPage } from "schema-dts";
 
 const pageTitle = "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si";
 
@@ -25,13 +25,13 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "Odgovori na pogosta vprašanja o najemu Photo Bootha po Sloveniji – cene, postavitev, logistika in rezervacije.",
-    url: "https://eventaj.si/photo-booth/faq",
+    url: "https://www.eventaj.si/photo-booth/faq",
     siteName: "Eventaj.si",
     locale: "sl_SI",
     type: "website",
     images: [
       {
-        url: "https://eventaj.si/application/hero-image-2.webp",
+        url: "https://www.eventaj.si/application/hero-image-2.webp",
         width: 1200,
         height: 630,
         alt: "Photo Booth FAQ Eventaj.si",
@@ -43,18 +43,18 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "Vsa ključna vprašanja o Photo Booth najemu po Sloveniji – cene, postavitev, logistika in rezervacije.",
-    images: ["https://eventaj.si/application/hero-image-2.webp"],
+    images: ["https://www.eventaj.si/application/hero-image-2.webp"],
   },
   alternates: {
-    canonical: "https://eventaj.si/photo-booth/faq",
+    canonical: "https://www.eventaj.si/photo-booth/faq",
   },
   robots: {
     index: true,
     follow: true,
   },
   icons: {
-    icon: "https://eventaj.si/application/icon-32x32.png",
-    apple: "https://eventaj.si/application/icon-256x256.png",
+    icon: "https://www.eventaj.si/application/icon-32x32.png",
+    apple: "https://www.eventaj.si/application/icon-256x256.png",
   },
 };
 
@@ -161,6 +161,17 @@ export default function PhotoBoothFAQPage() {
               text: item.answer,
             },
           })),
+        }}
+      />
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Domov", item: "https://www.eventaj.si" },
+            { "@type": "ListItem", position: 2, name: "Photo Booth", item: "https://www.eventaj.si/photo-booth" },
+            { "@type": "ListItem", position: 3, name: "Pogosta vprašanja", item: "https://www.eventaj.si/photo-booth/faq" },
+          ],
         }}
       />
 

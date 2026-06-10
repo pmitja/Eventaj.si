@@ -1,7 +1,7 @@
 import { ServicePageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { Service } from "schema-dts";
+import { BreadcrumbList, Service } from "schema-dts";
 
 const pageTitle = "Foto kotiček najem od 279 € | Eventaj.si";
 
@@ -56,8 +56,8 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "https://eventaj.si/application/icon-32x32.png",
-    apple: "https://eventaj.si/application/icon-256x256.png",
+    icon: "https://www.eventaj.si/application/icon-32x32.png",
+    apple: "https://www.eventaj.si/application/icon-256x256.png",
   },
 };
 
@@ -108,6 +108,16 @@ export default function FotoKoticek() {
             })),
           },
           termsOfService: "https://www.eventaj.si/pogoji-uporabe",
+        }}
+      />
+      <JsonLd<BreadcrumbList>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Domov", item: "https://www.eventaj.si" },
+            { "@type": "ListItem", position: 2, name: "Foto kotiček", item: "https://www.eventaj.si/foto-koticek" },
+          ],
         }}
       />
       <ServicePageContent type="photo" seoTitle={pageTitle} />
