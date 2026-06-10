@@ -1,4 +1,3 @@
-import { CTAContactSection } from "@/components/sections/cta-contact-section";
 import { FAQSection } from "@/components/sections/faq-section";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
@@ -173,15 +172,8 @@ export default function PhotoBoothFAQPage() {
           items={faqItems}
         />
 
-        <CTAContactSection
-          title="Imate dodatna vprašanja?"
-          description="Kontaktirajte nas in z veseljem vam bomo pomagali pri organizaciji vašega dogodka."
-          action={{
-            text: "Kontaktirajte nas",
-            variant: "glow",
-          }}
-        />
       </main>
     </>
   );
 }
+export const dynamic = "force-static"

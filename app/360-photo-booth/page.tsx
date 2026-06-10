@@ -111,3 +111,4 @@ export default function ThreeSixtyPhotoBooth() {
     </>
   );
 }
+export const dynamic = "force-static"

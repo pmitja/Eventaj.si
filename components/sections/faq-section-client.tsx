@@ -1,15 +1,6 @@
 "use client";
 
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/ui/accordion";
-import { Input } from "@/components/ui/input";
-import { motion } from "framer-motion";
-import { Search } from "lucide-react";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
 import { useState } from "react";
 
 interface FAQItem {
@@ -30,146 +21,83 @@ export function FAQSectionClient({
   description,
   items,
 }: FAQSectionClientProps) {
-  const [searchQuery, setSearchQuery] = useState("");
-
-  const filteredItems = items.filter(
-    (item) =>
-      item.question.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  // Split items into two columns
-  const midPoint = Math.ceil(filteredItems.length / 2);
-  const leftColumnItems = filteredItems.slice(0, midPoint);
-  const rightColumnItems = filteredItems.slice(midPoint);
+  const [open, setOpen] = useState<number>(-1);
 
   return (
-    <>
-      {/* Hero Section */}
-      <motion.section
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.6 }}
-        className="relative min-h-[60vh] flex items-center justify-center"
-      >
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/application/blog-hero.webp"
-            alt="FAQ Hero"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-black/60" />
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.3, duration: 0.6 }}
-          className="relative z-10 container mx-auto px-4 py-20 text-center"
-        >
+    <section className="bg-[var(--eventaj-paper)] px-5 py-24 md:px-10 md:py-32">
+      <div className="mx-auto grid max-w-[1100px] gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
+        {/* Sticky left column */}
+        <div className="lg:sticky lg:top-28 lg:self-start">
+          <div className="mb-5 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]">
+            Pogosta vprašanja
+          </div>
           {seoTitle ? (
             <>
               <h1 className="sr-only">{seoTitle}</h1>
-              <motion.div
+              <p
                 aria-hidden="true"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.4, duration: 0.6 }}
-                className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+                className="font-serif-display text-[clamp(36px,4.5vw,60px)] font-[350] leading-none text-balance text-[var(--eventaj-ink)]"
               >
                 {title}
-              </motion.div>
+              </p>
             </>
           ) : (
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
-            >
+            <h1 className="font-serif-display text-[clamp(36px,4.5vw,60px)] font-[350] leading-none text-balance text-[var(--eventaj-ink)]">
               {title}
-            </motion.h1>
+            </h1>
           )}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.5, duration: 0.6 }}
-            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto text-white/80"
-          >
+          <p className="mt-4 text-[15px] leading-relaxed text-[var(--eventaj-ink-2)]">
             {description}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.6 }}
-            className="max-w-3xl mx-auto"
+          </p>
+          <a
+            href="mailto:info@eventaj.si"
+            className="mt-6 inline-block border-b border-[var(--eventaj-accent)] pb-0.5 text-sm text-[var(--eventaj-accent)] no-underline"
           >
-            <div className="relative">
-              <Input
-                type="search"
-                placeholder="Išči vprašanja..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-12 bg-white/10 border-white/20 text-white placeholder:text-white/60 rounded-2xl"
-              />
-              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-white/60" />
-            </div>
-          </motion.div>
-        </motion.div>
-      </motion.section>
-
-      {/* FAQ Content */}
-      <section className="overflow-hidden">
-        <div className="mx-auto max-w-7xl px-6 py-4 sm:py-8 lg:px-8">
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10">
-            {/* Left Column */}
-            <div className="space-y-4">
-              <Accordion type="single" collapsible className="w-full space-y-4">
-                {leftColumnItems.map((faq, index) => (
-                  <AccordionItem
-                    key={index}
-                    value={`item-${index}`}
-                    className="border border-gray-200 dark:border-gray-800 rounded-lg px-6 py-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white dark:bg-gray-900"
-                  >
-                    <AccordionTrigger className="text-left py-4 text-gray-900 dark:text-gray-100">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-gray-600 dark:text-gray-400 pb-4 pt-0">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-            {/* Right Column */}
-            <div className="space-y-4">
-              <Accordion type="single" collapsible className="w-full space-y-4">
-                {rightColumnItems.map((faq, index) => (
-                  <AccordionItem
-                    key={index + midPoint}
-                    value={`item-${index + midPoint}`}
-                    className="border border-gray-200 dark:border-gray-800 rounded-lg px-6 py-0 shadow-sm hover:shadow-md transition-shadow duration-200 bg-white dark:bg-gray-900"
-                  >
-                    <AccordionTrigger className="text-left py-4 text-gray-900 dark:text-gray-100">
-                      {faq.question}
-                    </AccordionTrigger>
-                    <AccordionContent className="text-gray-600 dark:text-gray-400 pb-4 pt-0">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </div>
-          </div>
-          {filteredItems.length === 0 && (
-            <p className="text-center text-gray-500 dark:text-gray-400 mt-8">
-              No questions found matching your search.
-            </p>
-          )}
+            info@eventaj.si
+          </a>
         </div>
-      </section>
-    </>
+
+        {/* Accordion */}
+        <div>
+          {items.map((item, index) => (
+            <div
+              key={item.question}
+              className={cn(
+                "border-t border-[rgba(20,17,15,0.12)]",
+                index === items.length - 1 && "border-b",
+              )}
+            >
+              <button
+                type="button"
+                onClick={() => setOpen(open === index ? -1 : index)}
+                className="flex w-full items-center justify-between bg-transparent py-7 text-left text-[var(--eventaj-ink)]"
+              >
+                <span className="pr-6 font-serif-display text-[22px] font-normal">
+                  {item.question}
+                </span>
+                <span
+                  className={cn(
+                    "flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-[rgba(20,17,15,0.2)] text-lg font-light transition-transform",
+                    open === index && "rotate-45",
+                  )}
+                >
+                  +
+                </span>
+              </button>
+              <div
+                className={cn(
+                  "overflow-hidden transition-[max-height] duration-300",
+                  open === index ? "max-h-56" : "max-h-0",
+                )}
+              >
+                <p className="mb-7 pr-14 text-[15px] leading-relaxed text-[var(--eventaj-ink-2)]">
+                  {item.answer}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }

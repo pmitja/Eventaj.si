@@ -215,3 +215,4 @@ export default function FAQPage() {
     </>
   );
 }
+export const dynamic = "force-static"

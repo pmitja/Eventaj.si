@@ -115,3 +115,4 @@ export default function PhotoBooth() {
     </>
   );
 }
+export const dynamic = "force-static"

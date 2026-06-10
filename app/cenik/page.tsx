@@ -43,3 +43,4 @@ export const metadata: Metadata = {
 export default function CenikPage() {
   return <CenikPageContent seoTitle={pageTitle} />;
 }
+export const dynamic = "force-static"

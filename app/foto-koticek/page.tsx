@@ -1,22 +1,18 @@
-import BasicBoothHero from "@/components/basic-booth-hero";
-import { CTAContactSection } from "@/components/sections/cta-contact-section";
-import Features from "@/components/sections/features";
-import { basicBoothFeatures } from "@/components/sections/features-content";
-import HowItWorks from "@/components/sections/how-it-works";
-import {
-  PricingPlans,
-  type PricingPlan,
-} from "@/components/sections/pricing-plans";
-import PromoImage from "@/components/sections/promo-image";
-import { ReferencesSection } from "@/components/sections/references-section";
-import WhenToChoose from "@/components/sections/when-to-choose";
-import { photoBoothWhenToChoose } from "@/content/when-to-choose";
+import { ServicePageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
+const pageTitle = "Foto kotiček najem od 279 € | Eventaj.si";
+
+const pricingPlans = [
+  { name: "Basic", price: "279", description: "2 uri foto kotička" },
+  { name: "Standard", price: "329", description: "3 ure foto kotička" },
+  { name: "Premium", price: "379", description: "4 ure foto kotička" },
+] as const;
+
 export const metadata: Metadata = {
-  title: "Foto kotiček najem od 279 € | Eventaj.si",
+  title: pageTitle,
   description:
     "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 279 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in spletna galerija.",
   keywords: [
@@ -29,7 +25,7 @@ export const metadata: Metadata = {
     "Foto kotiček za dogodke",
   ],
   openGraph: {
-    title: "Foto kotiček najem od 279 € | Eventaj.si",
+    title: pageTitle,
     description:
       "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
     url: "https://www.eventaj.si/foto-koticek",
@@ -47,7 +43,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foto kotiček najem od 279 € | Eventaj.si",
+    title: pageTitle,
     description:
       "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
     images: ["/og/photo-booth.webp"],
@@ -65,61 +61,7 @@ export const metadata: Metadata = {
   },
 };
 
-const pricingPlans: PricingPlan[] = [
-  {
-    name: "Basic",
-    price: "279",
-    period: "2 uri",
-    features: [
-      "najem do 2 uri",
-      "neomejeno narejenih in natisnjenih fotografij",
-      "pomoč pri uporabi",
-      "Izbrani rekviziti",
-      "digitalne fotografije",
-      "Personaliziran okvir z logotipom",
-      "online galerija",
-    ],
-    description: "Popoln paket za manjše dogodke in zabave.",
-    buttonText: "Rezerviraj termin",
-    isPopular: false,
-  },
-  {
-    name: "Standard",
-    price: "329",
-    period: "3 ure",
-    features: [
-      "najem do 3 ure",
-      "neomejeno narejenih in natisnjenih fotografij",
-      "pomoč pri uporabi",
-      "Izbrani rekviziti",
-      "digitalne fotografije",
-      "Personaliziran okvir z logotipom",
-      "online galerija",
-    ],
-    description: "Najpogostejša izbira za večje dogodke.",
-    buttonText: "Rezerviraj termin",
-    isPopular: true,
-  },
-  {
-    name: "Premium",
-    price: "379",
-    period: "4 ure",
-    features: [
-      "najem do 4 ure",
-      "neomejeno narejenih in natisnjenih fotografij",
-      "pomoč pri uporabi",
-      "Izbrani rekviziti",
-      "digitalne fotografije",
-      "Personaliziran okvir z logotipom",
-      "online galerija",
-    ],
-    description: "Premium paket za posebne priložnosti.",
-    buttonText: "Rezerviraj termin",
-    isPopular: false,
-  },
-];
-
-export default function PhotoBooth() {
+export default function FotoKoticek() {
   return (
     <>
       <JsonLd<Service>
@@ -150,7 +92,7 @@ export default function PhotoBooth() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2025-12-31",
+            priceValidUntil: "2026-12-31",
           },
           serviceType: "Foto kotiček Rental",
           category: ["Foto kotiček", "Event Services", "Photography Services"],
@@ -163,61 +105,14 @@ export default function PhotoBooth() {
               price: plan.price,
               priceCurrency: "EUR",
               description: plan.description,
-              itemOffered: {
-                "@type": "Service",
-                name: `${plan.name} Foto kotiček Package`,
-                description: plan.features.join(", "),
-              },
             })),
           },
           termsOfService: "https://www.eventaj.si/pogoji-uporabe",
-          isRelatedTo: [
-            {
-              "@type": "Service",
-              name: "Wedding Services",
-            },
-            {
-              "@type": "Service",
-              name: "Event Planning",
-            },
-            {
-              "@type": "Service",
-              name: "Party Services",
-            },
-          ],
-          additionalType: [
-            "https://schema.org/PhotographyStore",
-            "https://schema.org/EventService",
-            "https://schema.org/EntertainmentBusiness",
-          ],
         }}
       />
-
-      <main className="pt-[48px]">
-        <BasicBoothHero
-          title="Foto Kotiček Najem"
-          seoTitle="Foto kotiček najem od 279 € | Eventaj.si"
-          text="Naša foto kotiček je središče vsake zabave. Gostje se zabavajo, smejijo in ustvarjajo spomine pred kamero. Fotografije lahko natisnejo ali jih pošljejo na svoje telefone ter delijo na družbenih omrežjih."
-        />
-        <WhenToChoose content={photoBoothWhenToChoose} />
-        <PromoImage />
-        <Features {...basicBoothFeatures} />
-        <HowItWorks type="basic" />
-        <PricingPlans plans={pricingPlans} />
-        <ReferencesSection
-          title="Kaj pravijo naši zadovoljni uporabniki"
-          description="Preverite, kaj o nas menijo stranke, ki so že uporabljale našo foto kotiček"
-        />
-        <CTAContactSection
-          title="Ni ustreznega paketa?"
-          description="Kontaktiraj nas in skupaj bomo našli najboljšo rešitev za vaš dogodek."
-          action={{
-            text: "Pošlji povpraševanje",
-            variant: "glow",
-          }}
-          isGlow={true}
-        />
-      </main>
+      <ServicePageContent type="photo" seoTitle={pageTitle} />
     </>
   );
 }
+
+export const dynamic = "force-static";
