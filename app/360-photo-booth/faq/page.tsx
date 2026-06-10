@@ -4,28 +4,28 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { FAQPage } from "schema-dts";
 
-const pageTitle = "360 Photo Booth FAQ - Pogosta vprašanja | Eventaj.si";
+const pageTitle = "360° Booth FAQ - Pogosta vprašanja | Eventaj.si";
 
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Odgovori na pogosta vprašanja o najemu 360 photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360 photo booth stojnice za vaš dogodek.",
+    "Odgovori na pogosta vprašanja o najemu 360° Bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360° Booth stojnice za vaš dogodek.",
   keywords: [
-    "360 photo booth vprašanja",
-    "360 photo booth informacije",
-    "najem 360 photo booth cena",
-    "360 photo booth za poroko",
-    "360 photo booth delovanje",
-    "360 photo booth rezervacija",
-    "360 photo booth najem po Sloveniji",
-    "360 photo booth navodila",
-    "360 photo booth za dogodke",
+    "360° Booth vprašanja",
+    "360° Booth informacije",
+    "najem 360° Booth cena",
+    "360° Booth za poroko",
+    "360° Booth delovanje",
+    "360° Booth rezervacija",
+    "360° Booth najem po Sloveniji",
+    "360° Booth navodila",
+    "360° Booth za dogodke",
     "360 foto stojnica",
   ],
   openGraph: {
     title: pageTitle,
     description:
-      "Odgovori na pogosta vprašanja o najemu 360 photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360 photo booth stojnice za vaš dogodek.",
+      "Odgovori na pogosta vprašanja o najemu 360° Bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360° Booth stojnice za vaš dogodek.",
     url: "https://eventaj.si/360-photo-booth/faq",
     siteName: "Eventaj.si",
     locale: "sl_SI",
@@ -35,7 +35,7 @@ export const metadata: Metadata = {
         url: "https://eventaj.si/application/hero-image-2.webp",
         width: 1200,
         height: 630,
-        alt: "360 Photo Booth FAQ Eventaj.si",
+        alt: "360° Booth FAQ Eventaj.si",
       },
     ],
   },
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: pageTitle,
     description:
-      "Odgovori na pogosta vprašanja o najemu 360 photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360 photo booth stojnice za vaš dogodek.",
+      "Odgovori na pogosta vprašanja o najemu 360° Bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji 360° Booth stojnice za vaš dogodek.",
     images: ["https://eventaj.si/application/hero-image-2.webp"],
   },
   alternates: {
@@ -61,12 +61,12 @@ export const metadata: Metadata = {
 
 const faqItems = [
   {
-    question: "Kako deluje 360 Photo Booth?",
+    question: "Kako deluje 360° Booth?",
     answer:
-      "360 Photo Booth deluje tako, da gosta postavimo na platformo, kamera pa kroži okoli in posname 360-stopinjski video. Videoposnetki so nato na voljo za takojšnje deljenje ali prilagoditev.",
+      "360° Booth deluje tako, da gosta postavimo na platformo, kamera pa kroži okoli in posname 360-stopinjski video. Videoposnetki so nato na voljo za takojšnje deljenje ali prilagoditev.",
   },
   {
-    question: "Kako velik prostor potrebujemo za 360 photo booth?",
+    question: "Kako velik prostor potrebujemo za 360° Booth?",
     answer:
       "Priporočamo vsaj 3x3 metre prostora za optimalno izkušnjo. Poskrbimo za varno postavitev in nemoteno gibanje gostov.",
   },
@@ -83,17 +83,17 @@ const faqItems = [
   {
     question: "Kako se rezerviram?",
     answer:
-      "Rezervacija se izvede preko telefona na +386 31 285 143 / +386 41 688 143. V kolikor želite rezervirati 360 photo booth, vas prosimo kontaktirajte.",
+      "Rezervacija se izvede preko telefona na +386 31 285 143 / +386 41 688 143. V kolikor želite rezervirati 360° Booth, vas prosimo kontaktirajte.",
   },
   {
-    question: "Ali potrebujem posebno mesto za 360 Photo Booth?",
+    question: "Ali potrebujem posebno mesto za 360° Booth?",
     answer:
       "Da, priporočamo odprt prostor vsaj 3x3 metre, da zagotovimo varno uporabo in dovolj prostora za goste.",
   },
   {
     question: "Koliko časa potrebujete za postavitev?",
     answer:
-      "Za postavitev 360 Photo Booth potrebujemo približno 60 minut, odvisno od lokacije in zahtev.",
+      "Za postavitev 360° Booth potrebujemo približno 60 minut, odvisno od lokacije in zahtev.",
   },
   {
     question: "Ali lahko prilagodim videoposnetke z logotipom ali grafiko?",
@@ -108,10 +108,10 @@ const faqItems = [
   {
     question: "Ali je potrebna električna energija?",
     answer:
-      "Da, za delovanje 360 Photo Booth potrebujemo električni priključek (220V) v bližini postavitve.",
+      "Da, za delovanje 360° Booth potrebujemo električni priključek (220V) v bližini postavitve.",
   },
   {
-    question: "Ali lahko 360 Photo Booth uporabljamo na prostem?",
+    question: "Ali lahko 360° Booth uporabljamo na prostem?",
     answer:
       "Da, vendar je potrebna zaščita pred vremenskimi vplivi (npr. streha ali šotor), da zagotovimo varno in nemoteno delovanje.",
   },
@@ -123,7 +123,7 @@ const faqItems = [
   {
     question: "Kakšna je največja teža, ki jo platforma podpira?",
     answer:
-      "Naša 360 Photo Booth platforma podpira do 200 kg, kar omogoča uporabo za več gostov hkrati.",
+      "Naša 360° Booth platforma podpira do 200 kg, kar omogoča uporabo za več gostov hkrati.",
   },
   {
     question: "Kako dolgo traja snemanje in obdelava videoposnetkov?",
@@ -152,9 +152,9 @@ export default function ThreeSixtyBoothFAQPage() {
 
       <main>
         <FAQSection
-          title="360 Photo Booth - Pogosta vprašanja"
+          title="360° Booth - Pogosta vprašanja"
           seoTitle={pageTitle}
-          description="Odgovori na najpogostejša vprašanja o najemu 360 photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
+          description="Odgovori na najpogostejša vprašanja o najemu 360° Bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />
 

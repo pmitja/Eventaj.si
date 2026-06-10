@@ -15,9 +15,9 @@ import {
   processSteps,
   services,
   testimonials,
-} from "@/components/claude/data";
-import { PhotoScene } from "@/components/claude/photo-scenes";
-import { InquiryTrigger, TrustLogosText } from "@/components/claude/site-shell";
+} from "@/content/eventaj/data";
+import { PhotoScene } from "@/components/media/photo-scene";
+import { InquiryTrigger, TrustLogosText } from "@/components/layout/site-shell";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { cn } from "@/lib/utils";
@@ -45,12 +45,12 @@ function HomeHero() {
   const leftHeroPhotos = [
     {
       variant: 0,
-      label: "Rojstnodnevna zabava s photo booth rekviziti",
+      label: "Rojstnodnevna zabava s Photo Booth rekviziti",
       className: "w-full max-w-[380px] -rotate-[5deg]",
     },
     {
       variant: 6,
-      label: "Skupinski photo booth posnetek pred zlatim ozadjem",
+      label: "Skupinski Photo Booth posnetek pred zlatim ozadjem",
       className: "w-[86%] max-w-[330px] justify-self-end rotate-[4deg]",
     },
   ];
@@ -63,7 +63,7 @@ function HomeHero() {
     },
     {
       variant: 2,
-      label: "Smešni photo booth rekviziti na podjetnem dogodku",
+      label: "Smešni Photo Booth rekviziti na podjetnem dogodku",
       className: "w-[86%] max-w-[330px] justify-self-start -rotate-[4deg]",
     },
   ];
@@ -103,7 +103,7 @@ function HomeHero() {
           <div className="mx-auto mb-8 grid max-w-[340px] grid-cols-2 gap-3 md:max-w-[420px] min-[1440px]:hidden">
             <HeroMobilePhoto
               variant={0}
-              label="Druzinski photo booth spomin"
+              label="Druzinski Photo Booth spomin"
               rotate="-rotate-[4deg]"
             />
             <HeroMobilePhoto
@@ -115,7 +115,7 @@ function HomeHero() {
 
           <div className="mb-8 inline-flex max-w-full items-center gap-2.5 rounded-full border border-[rgba(20,17,15,0.15)] bg-[rgba(251,248,242,0.6)] px-3 py-2 text-[10px] uppercase tracking-[0.08em] text-[var(--eventaj-muted)] backdrop-blur-md sm:px-4 sm:text-xs sm:tracking-[0.12em]">
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--eventaj-accent)]" />
-            Photo booth najem · Slovenija
+            Photo Booth najem · Slovenija
           </div>
 
           <h1 className="sr-only">
@@ -887,23 +887,23 @@ const serviceVisualStories = {
     images: [
       {
         src: "/application/photo-booth-device.webp",
-        alt: "Photo booth naprava pripravljena za uporabo na dogodku",
+        alt: "Photo Booth naprava pripravljena za uporabo na dogodku",
         label: "Profesionalna oprema",
       },
       {
         src: "/application/photo-booth-hero/alja-anze.webp",
-        alt: "Poročni gostje s photo booth tablicami v personaliziranem okvirju",
+        alt: "Poročni gostje s Photo Booth tablicami v personaliziranem okvirju",
         label: "Personaliziran okvir",
       },
       {
         src: "/application/photo-booth-hero/jozek-50.webp",
-        alt: "Gostje s photo booth rekviziti na rojstnodnevnem praznovanju",
+        alt: "Gostje s Photo Booth rekviziti na rojstnodnevnem praznovanju",
         label: "Gostje v akciji",
       },
     ],
   },
   "360": {
-    eyebrow: "360° v akciji",
+    eyebrow: "360° Booth v akciji",
     title:
       "Namesto statične fotografije nastane kratek video, pripravljen za deljenje.",
     description:
@@ -913,21 +913,21 @@ const serviceVisualStories = {
         type: "video",
         src: "/application/360-photo-booth-videos/video-3.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-3.webp",
-        alt: "360 photo booth video z gostmi med snemanjem na dogodku",
+        alt: "360° Booth video z gostmi med snemanjem na dogodku",
         label: "Glavni trenutek",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-6.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-6.webp",
-        alt: "Dinamičen 360 photo booth video z efekti in gibanjem",
+        alt: "Dinamičen 360° Booth video z efekti in gibanjem",
         label: "Gibanje in efekti",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-8.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-8.webp",
-        alt: "Kratek 360 photo booth video posnetek s platforme",
+        alt: "Kratek 360° Booth video posnetek s platforme",
         label: "Platforma",
       },
     ],
@@ -968,17 +968,17 @@ const serviceHeroVisuals = {
     images: [
       {
         src: "/application/photo-booth-hero/jozek-50.webp",
-        alt: "Gostje s photo booth rekviziti na praznovanju Jožek 50",
+        alt: "Gostje s Photo Booth rekviziti na praznovanju Jožek 50",
         label: "Jožek 50",
       },
       {
         src: "/application/photo-booth-hero/alja-anze.webp",
-        alt: "Poročni gostje s photo booth tablicami na dogodku Alja in Anže",
+        alt: "Poročni gostje s Photo Booth tablicami na dogodku Alja in Anže",
         label: "Poroka",
       },
       {
         src: "/application/photo-booth-hero/srecko-50.webp",
-        alt: "Par z zabavnimi photo booth očali na praznovanju Srečko 50 let",
+        alt: "Par z zabavnimi Photo Booth očali na praznovanju Srečko 50 let",
         label: "Srečko 50",
       },
       {
@@ -988,32 +988,32 @@ const serviceHeroVisuals = {
       },
       {
         src: "/application/photo-booth-hero/lets-party-jasna.webp",
-        alt: "Skupina gostov v retro kostumih na photo booth fotografiji Let's party z Jasno",
+        alt: "Skupina gostov v retro kostumih na Photo Booth fotografiji Let's party z Jasno",
         label: "Let's party",
       },
       {
         src: "/application/photo-booth-hero/doris-40.webp",
-        alt: "Velika skupinska photo booth fotografija s praznovanja Doris 40 let",
+        alt: "Velika skupinska Photo Booth fotografija s praznovanja Doris 40 let",
         label: "Doris 40",
       },
       {
         src: "/application/photo-booth-hero/halcom-2025.webp",
-        alt: "Novoletna photo booth fotografija za Halcom s štirimi gosti",
+        alt: "Novoletna Photo Booth fotografija za Halcom s štirimi gosti",
         label: "Halcom",
       },
       {
         src: "/application/photo-booth-hero/kelag-2026.webp",
-        alt: "Skupina gostij z novoletnimi očali na photo booth fotografiji Kelag International",
+        alt: "Skupina gostij z novoletnimi očali na Photo Booth fotografiji Kelag International",
         label: "Kelag",
       },
       {
         src: "/application/photo-booth-hero/disco-night.webp",
-        alt: "Gostja pred bleščečim photo booth ozadjem v okvirju Disco Night",
+        alt: "Gostja pred bleščečim Photo Booth ozadjem v okvirju Disco Night",
         label: "Disco night",
       },
       {
         src: "/application/photo-booth-hero/tamara-40.webp",
-        alt: "Trije gostje na photo booth fotografiji s praznovanja Tamara 40",
+        alt: "Trije gostje na Photo Booth fotografiji s praznovanja Tamara 40",
         label: "Tamara 40",
       },
     ],
@@ -1028,63 +1028,63 @@ const serviceHeroVisuals = {
         type: "video",
         src: "/application/360-photo-booth-videos/video-1.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-1.webp",
-        alt: "360 photo booth video z dogodka",
+        alt: "360° Booth video z dogodka",
         label: "360° trenutek",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-2.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-2.webp",
-        alt: "Gostje na 360 photo booth platformi v gibanju",
+        alt: "Gostje na 360° Booth platformi v gibanju",
         label: "Gibanje",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-3.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-3.webp",
-        alt: "Slow-motion 360 photo booth posnetek z dogodka",
+        alt: "Slow-motion 360° Booth posnetek z dogodka",
         label: "Slow-motion",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-4.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-4.webp",
-        alt: "360 photo booth video za deljenje na družbenih omrežjih",
+        alt: "360° Booth video za deljenje na družbenih omrežjih",
         label: "Za deljenje",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-5.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-5.webp",
-        alt: "Zabaven 360 photo booth posnetek gostov",
+        alt: "Zabaven 360° Booth posnetek gostov",
         label: "Zabava",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-6.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-6.webp",
-        alt: "Dinamičen 360 photo booth video z dogodka",
+        alt: "Dinamičen 360° Booth video z dogodka",
         label: "Efekt",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-7.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-7.webp",
-        alt: "Gostje pozirajo na 360 photo booth platformi",
+        alt: "Gostje pozirajo na 360° Booth platformi",
         label: "Poziranje",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-8.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-8.webp",
-        alt: "Kratek 360 photo booth video posnetek",
+        alt: "Kratek 360° Booth video posnetek",
         label: "Video",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-9.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-9.webp",
-        alt: "360 photo booth video spomin z dogodka",
+        alt: "360° Booth video spomin z dogodka",
         label: "Spomin",
       },
     ],
@@ -1107,7 +1107,7 @@ export function ServicePageContent({
         description={
           is360
             ? "Dinamični 360° videoposnetki, ki ujamejo energijo dogodka iz vseh kotov. Za poroke, poslovne dogodke in praznovanja, kjer trenutki postanejo del zgodbe."
-            : "Profesionalni photo booth s takojšnjim tiskom fotografij. Elegantna popestritev porok, poslovnih dogodkov in zasebnih praznovanj."
+            : "Profesionalni Photo Booth s takojšnjim tiskom fotografij. Elegantna popestritev porok, poslovnih dogodkov in zasebnih praznovanj."
         }
         price={is360 ? 299 : 279}
         accent={accent}
@@ -1475,7 +1475,7 @@ function HeroProof({ accent }: { accent: string }) {
           ))}
         </div>
         <span className="max-w-[240px] text-left text-[12px] font-medium leading-snug text-[var(--eventaj-muted)] md:max-w-none md:text-sm">
-          Zaupali so nam ŠKSG, AutoDelta, Forvis Mazars in Mlada Slovenija.
+          Med drugim so nam zaupali ŠKSG, AutoDelta, Forvis Mazars in Mlada Slovenija.
         </span>
       </div>
     </div>
@@ -1897,7 +1897,7 @@ function PricingConfigurator({ compact = false }: { compact?: boolean }) {
   const addonLabels = {
     album: "Album",
     woodenSigns: "Personalizirane lesene tablice",
-    animations360: "Personalizirane animacije za 360°",
+    animations360: "Personalizirane animacije za 360° Booth",
   };
   const addonsTotal = Object.entries(selectedAddons)
     .filter(
@@ -2032,7 +2032,7 @@ function PricingConfigurator({ compact = false }: { compact?: boolean }) {
                   },
                   {
                     id: "animations360",
-                    label: "Personalizirane animacije za 360°",
+                    label: "Personalizirane animacije za 360° Booth",
                     price: "+59 €",
                     available: animations360Available,
                     note: "Na voljo samo pri paketu 360° Booth",
@@ -2197,7 +2197,7 @@ function AddonsSection() {
             Dodatki
           </div>
           <h2 className="font-serif-display text-[clamp(36px,4.8vw,60px)] font-[350] leading-none text-balance">
-            Dodaj, kar potrebuješ.
+            Dodatki po meri
           </h2>
         </div>
         <div className="border border-[rgba(20,17,15,0.1)]">

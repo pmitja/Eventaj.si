@@ -13,23 +13,23 @@ interface BoothOption {
 
 const options: BoothOption[] = [
   {
-    title: "Photo booth",
+    title: "Photo Booth",
     description:
-      "Photo booth je idealna izbira za vsako zabavo ali dogodek! Ustvarite nepozabne trenutke z zabavnimi fotografijami, ki jih lahko še dodatno obogatite z različnimi dodatki.",
+      "Photo Booth je idealna izbira za vsako zabavo ali dogodek! Ustvarite nepozabne trenutke z zabavnimi fotografijami, ki jih lahko še dodatno obogatite z različnimi dodatki.",
     image: "/application/photo-booth.webp",
     href: "/photo-booth",
   },
   {
-    title: "360° photo booth",
+    title: "360° Booth",
     description:
-      "360° photo booth vam omogoča, da svoje spomine ujamete v dinamične videoposnetke, ki jih lahko enostavno delite s prijatelji in družino ter ohranite te posebne trenutke za vedno!",
+      "360° Booth vam omogoča, da svoje spomine ujamete v dinamične videoposnetke, ki jih lahko enostavno delite s prijatelji in družino ter ohranite te posebne trenutke za vedno!",
     image: "/application/360-action-images.webp",
     href: "/360-photo-booth",
   },
   // {
-  //   title: "Duet photo booth",
+  //   title: "Duet Photo Booth",
   //   description:
-  //     "Photo booth in 360° Photo booth sta popolna kombinacija, ki ne sme manjkati na nobeni zabavi, saj omogoča da spomine ohranite tako v fotografijah kot tudi v videoposnetkih.",
+  //     "Photo Booth in 360° Booth sta popolna kombinacija, ki ne sme manjkati na nobeni zabavi, saj omogoča da spomine ohranite tako v fotografijah kot tudi v videoposnetkih.",
   //   image: "/application/combo-image.webp",
   //   href: "/duet-photo-booth",
   // },

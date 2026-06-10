@@ -10,7 +10,7 @@ export const threeSixtyFeatures = {
   heading: "ODLIČNA IZBIRA ZA VAŠ DOGODEK",
   text: (
     <>
-      {"Naš 360° photo booth je prava atrakcija vsakega dogodka! Ustvarite " +
+      {"Naš 360° Booth je prava atrakcija vsakega dogodka! Ustvarite " +
         "edinstvene posnetke, ki ujamejo vsak kot, vsak nasmeh in vsako potezo " +
         "– kot pravi filmski trenutek. Gostje lahko stopijo na 100 cm veliko " +
         "platformo, kamera pa jih v krogu snema iz nizkega kota v visoki " +
@@ -18,7 +18,7 @@ export const threeSixtyFeatures = {
         "deljenje na družbenih omrežjih."}
       <br />
       <br />
-      {"360° photo booth je popolna izbira za poroke, rojstne dneve, poslovne " +
+      {"360° Booth je popolna izbira za poroke, rojstne dneve, poslovne " +
         "dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega. " +
         "Dodajte rekvizite, učinke ali napise in zagotovite, da bo vaš dogodek " +
         "ostal v spominu za vedno!"}
@@ -28,13 +28,13 @@ export const threeSixtyFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° Bootha in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
       title: "Prevoz",
       description:
-        "Naša ekipa dostavi 360° photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth.",
+        "Naša ekipa dostavi 360° Booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični Photo Booth.",
       icon: CarWithRoad,
     },
     {
@@ -52,20 +52,20 @@ export const threeSixtyFeatures = {
     {
       title: "Kakovostni videoposnetki",
       description:
-        "Zaradi profesionalne zasnove 360° photo booth-a boste prejeli kratke videoposnetke vrhunske kakovosti.",
+        "Zaradi profesionalne zasnove 360° Bootha boste prejeli kratke videoposnetke vrhunske kakovosti.",
       icon: HqVideo,
     },
     {
       title: "Zabavni rekviziti",
       description:
-        "Ob poplesavanju na 360° photo booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
+        "Ob poplesavanju na 360° Booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
       icon: GlassesWithMustache,
     },
   ],
   media: {
     type: "video" as const,
     src: "/application/video/360-photo-video.mp4",
-    alt: "360 Photo Booth",
+    alt: "360° Booth",
   },
   headingClassName: "text-[#94A3B8]",
 };
@@ -74,7 +74,7 @@ export const videoFeatures = {
   heading: "ODLIČNA IZBIRA ZA VAŠ DOGODEK",
   text: (
     <>
-      {"Naš 360° photo booth je prava atrakcija vsakega dogodka! Ustvarite " +
+      {"Naš 360° Booth je prava atrakcija vsakega dogodka! Ustvarite " +
         "edinstvene posnetke, ki ujamejo vsak kot, vsak nasmeh in vsako potezo " +
         "– kot pravi filmski trenutek. Gostje lahko stopijo na 100 cm veliko " +
         "platformo, kamera pa jih v krogu snema iz nizkega kota v visoki " +
@@ -82,7 +82,7 @@ export const videoFeatures = {
         "deljenje na družbenih omrežjih."}
       <br />
       <br />
-      {"360° photo booth je popolna izbira za poroke, rojstne dneve, poslovne " +
+      {"360° Booth je popolna izbira za poroke, rojstne dneve, poslovne " +
         "dogodke, festivale in zasebne zabave, kjer iščete nekaj posebnega. " +
         "Dodajte rekvizite, učinke ali napise in zagotovite, da bo vaš dogodek " +
         "ostal v spominu za vedno!"}
@@ -92,13 +92,13 @@ export const videoFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev 360° Bootha in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
       title: "Prevoz",
       description:
-        "Naša ekipa dostavi 360° photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični photo booth.",
+        "Naša ekipa dostavi 360° Booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še klasični Photo Booth.",
       icon: CarWithRoad,
     },
     {
@@ -116,20 +116,20 @@ export const videoFeatures = {
     {
       title: "Kakovostni videoposnetki",
       description:
-        "Zaradi profesionalne zasnove 360° photo booth-a boste prejeli kratke videoposnetke vrhunske kakovosti.",
+        "Zaradi profesionalne zasnove 360° Bootha boste prejeli kratke videoposnetke vrhunske kakovosti.",
       icon: HqVideo,
     },
     {
       title: "Zabavni rekviziti",
       description:
-        "Ob poplesavanju na 360° photo booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
+        "Ob poplesavanju na 360° Booth platformi lahko uporabite tudi nekaj naših različnih zabavnih rekviziti kot so tematska očala, tablice z napisi, naprave za pihanje mehurčkov in ustvarjanje megle!",
       icon: GlassesWithMustache,
     },
   ],
   media: {
     type: "video" as const,
     src: "/application/video/feature-video.MP4",
-    alt: "360 Photo Booth",
+    alt: "360° Booth",
   },
   headingClassName: "text-[#94A3B8]",
 };
@@ -139,7 +139,7 @@ export const basicBoothFeatures = {
   text: (
     <>
       {
-        "Fotograf. Povod k pogovoru. Ustvarjalec spominov. Vse to je photo booth – popoln dodatek vsaki zabavi ali dogodku. Gostje se pred photo booth-om sprostijo in preizkušajo svojo kreativnost pred kamero, ustvarjajo zabavne trenutke, ki jih lahko takoj ovekovečijo v fotografijah ali GIF posnetkih."
+        "Fotograf. Povod k pogovoru. Ustvarjalec spominov. Vse to je Photo Booth – popoln dodatek vsaki zabavi ali dogodku. Gostje se pred Photo Boothom sprostijo in preizkušajo svojo kreativnost pred kamero, ustvarjajo zabavne trenutke, ki jih lahko takoj ovekovečijo v fotografijah ali GIF posnetkih."
       }
     </>
   ),
@@ -147,13 +147,13 @@ export const basicBoothFeatures = {
     {
       title: "Odlična ekipa",
       description:
-        "Naše prijazno in strokovno osebje poskrbi za namestitev photo booth-a in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
+        "Naše prijazno in strokovno osebje poskrbi za namestitev Photo Bootha in brezskrbno delovanje. Po želji vas tudi animira in pomaga pri izbiri dodatkov.",
       icon: PersonWithHeart,
     },
     {
       title: "Prevoz",
       description:
-        "Naša ekipa dostavi photo booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še 360° photo booth",
+        "Naša ekipa dostavi Photo Booth na katerokoli lokacijo. Prihranite pri prevozu in naročite še 360° Booth",
       icon: CarWithRoad,
     },
     {
@@ -177,7 +177,7 @@ export const basicBoothFeatures = {
     {
       title: "Zabavni rekviziti",
       description:
-        "Ob poziranju pred photo booth-om lahko uporabite tudi nekaj naših zabavnih rekvizitov kot so tematska očala, tablice z napisi, tematska pokrivala.",
+        "Ob poziranju pred Photo Boothom lahko uporabite tudi nekaj naših zabavnih rekvizitov kot so tematska očala, tablice z napisi, tematska pokrivala.",
       icon: GlassesWithMustache,
     },
   ],

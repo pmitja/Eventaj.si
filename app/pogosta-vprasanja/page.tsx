@@ -5,29 +5,29 @@ import { JsonLd } from "react-schemaorg";
 import type { FAQPage } from "schema-dts";
 
 const pageTitle =
-  "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Photo Booth | Eventaj.si";
+  "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Booth | Eventaj.si";
 
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Odgovori na pogosta vprašanja o najemu photo bootha in 360° photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
+    "Odgovori na pogosta vprašanja o najemu Photo Bootha in 360° Bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
   keywords: [
-    "photo booth vprašanja",
-    "360 photo booth informacije",
-    "najem photo booth cena",
-    "photo booth za poroko",
-    "360 photo booth delovanje",
-    "photo booth rezervacija",
-    "photo booth najem po Sloveniji",
-    "360 photo booth navodila",
-    "photo booth za dogodke",
+    "Photo Booth vprašanja",
+    "360° Booth informacije",
+    "najem Photo Booth cena",
+    "Photo Booth za poroko",
+    "360° Booth delovanje",
+    "Photo Booth rezervacija",
+    "Photo Booth najem po Sloveniji",
+    "360° Booth navodila",
+    "Photo Booth za dogodke",
     "360 video booth",
     "najem foto stojnice",
   ],
   openGraph: {
-    title: "Pogosta vprašanja | Photo Booth & 360° Photo Booth | Eventaj.si",
+    title: "Pogosta vprašanja | Photo Booth & 360° Booth | Eventaj.si",
     description:
-      "Odgovori na pogosta vprašanja o najemu photo bootha in 360° photo bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
+      "Odgovori na pogosta vprašanja o najemu Photo Bootha in 360° Bootha. Vse informacije o cenah, postavitvi, delovanju in rezervaciji.",
     url: "https://eventaj.si/pogosta-vprasanja",
     siteName: "Eventaj.si",
     locale: "sl_SI",
@@ -50,23 +50,23 @@ const faqItems = [
       "Izberete fotografijo ter število kopij, ki jih želite natisniti in jih prejmete takoj.",
   },
   {
-    question: "Kakšen prostor potrebujemo za najem photo booth-a?",
-    answer: "Prostor za photo booth naj bo velik vsaj 2x2 m.",
+    question: "Kakšen prostor potrebujemo za najem Photo Bootha?",
+    answer: "Prostor za Photo Booth naj bo velik vsaj 2x2 m.",
   },
   {
-    question: "Kako rezerviram najem photo bootha?",
+    question: "Kako rezerviram najem Photo Bootha?",
     answer:
       "Sledite korakom rezervacije na spletni strani ali nam pišete na email info@eventaj.si ali nas pokličete na tel. št. 031 285 143 ali 031 544 751.",
   },
   {
-    question: "Kaj je potrebno za najem photo booth-a?",
+    question: "Kaj je potrebno za najem Photo Bootha?",
     answer:
       "Najprej je potrebna urejena rezervacija termina. Na samem dogodku pa je potrebno zagotoviti ravno površino velikosti 2x2 m ter dostop do električne napeljave.",
   },
   {
-    question: "Kaj vključuje najem photo bootha?",
+    question: "Kaj vključuje najem Photo Bootha?",
     answer:
-      "Uporaba photo booth-a, prisotnost tehnika, uporaba različnih zabavnih rekvizitov, tisk fotografij in delitev fotografij.",
+      "Uporaba Photo Bootha, prisotnost tehnika, uporaba različnih zabavnih rekvizitov, tisk fotografij in delitev fotografij.",
   },
   {
     question: "Ali lahko prilagodim izgled fotografij?",
@@ -75,9 +75,9 @@ const faqItems = [
   },
   {
     question:
-      "Kako dolgo traja postavitev photo booth-a ali 360° photo booth-a?",
+      "Kako dolgo traja postavitev Photo Bootha ali 360° Bootha?",
     answer:
-      "Sama postavitev photo booth-a traja približno od 30 min do 1 ure, odvisno od same lokacije.",
+      "Sama postavitev Photo Bootha traja približno od 30 min do 1 ure, odvisno od same lokacije.",
   },
   {
     question: "Kako je s plačilom?",
@@ -85,9 +85,9 @@ const faqItems = [
       "Plačilo je potrebno izvesti 24h pred dogodkom. Plačilo je možno izvesti preko bančnega nakazila.",
   },
   {
-    question: "Kako velik prostor potrebujemo za 360° photo booth?",
+    question: "Kako velik prostor potrebujemo za 360° Booth?",
     answer:
-      "Za postavitev 360° photo booth-a je potrebno zagotoviti ravno površino v velikosti 3x3 m.",
+      "Za postavitev 360° Bootha je potrebno zagotoviti ravno površino v velikosti 3x3 m.",
   },
   {
     question: "Ali lahko prilagodite ozadje?",
@@ -95,12 +95,12 @@ const faqItems = [
       "Ozadja si lahko izberete po želji. Če nam zaupate tematiko vašega dogodka, se bomo potrudili, da ustvarimo ozadje, ki bo najbolj ustrezalo vašim željam.",
   },
   {
-    question: "Kako hitro dobimo videoposnetke posnete s 360° photo booth-om?",
+    question: "Kako hitro dobimo videoposnetke posnete s 360° Boothom?",
     answer:
       "Videoposnetki so na voljo takoj, preko QR kode si jih prenesete na svoj telefon.",
   },
   {
-    question: "Kako deluje 360° photo booth?",
+    question: "Kako deluje 360° Booth?",
     answer:
       "Z izbranimi rekviziti stopite na okroglo platformo, kjer ustvarite posnetek s 360° kamero, ki vas večkrat obkroži. Ko se snemanje zaključi, si lahko posnetek ogledate na dodatnem zaslonu in ga prenesete preko QR kode.",
   },
@@ -117,7 +117,7 @@ const faqItems = [
   {
     question: "Ali je med dogodkom ves čas prisoten tehnik?",
     answer:
-      "Tako je, tehnik je na voljo celoten čas najema photo booth-a ali 360° photo booth-a.",
+      "Tako je, tehnik je na voljo celoten čas najema Photo Bootha ali 360° Bootha.",
   },
   {
     question: "Kakšne rekvizite priskrbite?",
@@ -126,17 +126,17 @@ const faqItems = [
   },
   {
     question:
-      "Ali lahko uporabljamo photo booth ali 360° photo booth na prostem?",
+      "Ali lahko uporabljamo Photo Booth ali 360° Booth na prostem?",
     answer:
       "Da, vendar mora biti zaščitena pred direktnim soncem in padavinami, zagotovljena mora biti ravna površina 2x2 m oz. 3x3 m ter dostop do električne napeljave.",
   },
   {
-    question: "Koliko časa lahko najamemo photo booth ali 360° photo booth?",
+    question: "Koliko časa lahko najamemo Photo Booth ali 360° Booth?",
     answer:
       "Paketi so pripravljeni za 2-urni, 3-urni ali 4-urni najem, vi pa ga lahko po želji podaljšate z doplačilom.",
   },
   {
-    question: "Kdaj je potrebno rezervirati photo booth?",
+    question: "Kdaj je potrebno rezervirati Photo Booth?",
     answer:
       "Za zagotovitev razpoložljivosti priporočamo rezervacijo vsaj 30 dni pred dogodkom, posebej v poletni sezoni, praznični sezoni in ob koncih tedna.",
   },
@@ -161,7 +161,7 @@ const faqItems = [
   },
   {
     question:
-      "Kam se shranjujejo posnete fotografije iz Photo Booth-a in videoposnetki iz 360° Photo Booth-a?",
+      "Kam se shranjujejo posnete fotografije iz Photo Bootha in videoposnetki iz 360° Bootha?",
     answer:
       "Posnete fotografije in videoposnetki se shranijo v oblak, ki bo na voljo 3 mesece. Po teh 3 mesecih jih več ne bo možno obnoviti.",
   },
@@ -199,7 +199,7 @@ export default function FAQPage() {
         <FAQSection
           title="Pogosta vprašanja"
           seoTitle={pageTitle}
-          description="Odgovori na najpogostejša vprašanja o najemu photo bootha in 360° photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
+          description="Odgovori na najpogostejša vprašanja o najemu Photo Bootha in 360° Bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />
 

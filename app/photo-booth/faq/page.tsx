@@ -9,23 +9,23 @@ const pageTitle = "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si";
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Odgovori na pogosta vprašanja o najemu photo bootha po celi Sloveniji. Spoznajte cene, logistiko postavitve, dostavo v Ljubljano, Maribor, Celje in ostale regije ter rezervacijo photo booth stojnice za vaš dogodek.",
+    "Odgovori na pogosta vprašanja o najemu Photo Bootha po celi Sloveniji. Spoznajte cene, logistiko postavitve, dostavo v Ljubljano, Maribor, Celje in ostale regije ter rezervacijo Photo Booth stojnice za vaš dogodek.",
   keywords: [
-    "photo booth vprašanja",
-    "photo booth informacije",
-    "najem photo booth cena",
-    "photo booth za poroko",
-    "photo booth delovanje",
-    "photo booth rezervacija",
-    "photo booth najem po Sloveniji",
-    "photo booth navodila",
-    "photo booth za dogodke",
+    "Photo Booth vprašanja",
+    "Photo Booth informacije",
+    "najem Photo Booth cena",
+    "Photo Booth za poroko",
+    "Photo Booth delovanje",
+    "Photo Booth rezervacija",
+    "Photo Booth najem po Sloveniji",
+    "Photo Booth navodila",
+    "Photo Booth za dogodke",
     "najem foto stojnice",
   ],
   openGraph: {
     title: pageTitle,
     description:
-      "Odgovori na pogosta vprašanja o najemu photo bootha po Sloveniji – cene, postavitev, logistika in rezervacije.",
+      "Odgovori na pogosta vprašanja o najemu Photo Bootha po Sloveniji – cene, postavitev, logistika in rezervacije.",
     url: "https://eventaj.si/photo-booth/faq",
     siteName: "Eventaj.si",
     locale: "sl_SI",
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: pageTitle,
     description:
-      "Vsa ključna vprašanja o photo booth najemu po Sloveniji – cene, postavitev, logistika in rezervacije.",
+      "Vsa ključna vprašanja o Photo Booth najemu po Sloveniji – cene, postavitev, logistika in rezervacije.",
     images: ["https://eventaj.si/application/hero-image-2.webp"],
   },
   alternates: {
@@ -71,14 +71,14 @@ const faqItems = [
       "Fotografije so natisnjene takoj! V nekaj sekundah po fotografiranju gostje prejmejo visokokakovostne tiskane fotografije, ki jih lahko odnesejo domov kot spomin.",
   },
   {
-    question: "Kakšen prostor potrebujemo za photo booth?",
+    question: "Kakšen prostor potrebujemo za Photo Booth?",
     answer:
-      "Photo booth potrebuje približno 2x2 metra prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
+      "Photo Booth potrebuje približno 2x2 metra prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
   },
   {
     question: "Kako poteka rezervacija najema?",
     answer:
-      "Rezervacija najema photo booth poteka preko telefona +386 31 285 143 ali e-pošte info@eventaj.si. Posredujte nam datum, lokacijo in okvirni urnik, mi pa pripravimo ponudbo in pogodbo za potrditev termina.",
+      "Rezervacija najema Photo Booth poteka preko telefona +386 31 285 143 ali e-pošte info@eventaj.si. Posredujte nam datum, lokacijo in okvirni urnik, mi pa pripravimo ponudbo in pogodbo za potrditev termina.",
   },
   {
     question: "Ali pokrivate Ljubljano, Maribor, Celje in Primorsko?",
@@ -88,7 +88,7 @@ const faqItems = [
   {
     question: "Ali je v ceno vključena postavitev in asistenca?",
     answer:
-      "V ceno najema je vključena profesionalna postavitev photo booth naprave, testiranje opreme in prisotnost asistenta, ki vodi goste ter poskrbi za rekvizite in personalizirane predloge.",
+      "V ceno najema je vključena profesionalna postavitev Photo Booth naprave, testiranje opreme in prisotnost asistenta, ki vodi goste ter poskrbi za rekvizite in personalizirane predloge.",
   },
   {
     question: "Kako je z dodatnimi kilometri ali daljšim najemom?",
@@ -96,12 +96,12 @@ const faqItems = [
       "Vsak paket vključuje brezplačen prevoz do 20 km in dogovorjeno trajanje (2–4 ure). Za daljše razdalje ali dodatne ure pripravimo jasno ponudbo, zato nam ob povpraševanju sporočite lokacijo in želene čase.",
   },
   {
-    question: "Kaj je potrebno za najem photo bootha?",
+    question: "Kaj je potrebno za najem Photo Bootha?",
     answer:
-      "Potrebno je imeti dostop do elektrike. V kolikor želite rezervirati photo booth, vas prosimo kontaktirajte.",
+      "Potrebno je imeti dostop do elektrike. V kolikor želite rezervirati Photo Booth, vas prosimo kontaktirajte.",
   },
   {
-    question: "Kaj vključuje najem Photo Booth-a?",
+    question: "Kaj vključuje najem Photo Bootha?",
     answer:
       "Najem vključuje foto kabino, profesionalno opremo, rekvizite, personalizirane predloge za fotografije, tiskanje na licu mesta in pomoč asistenta.",
   },
@@ -169,7 +169,7 @@ export default function PhotoBoothFAQPage() {
         <FAQSection
           title="Photo Booth - Pogosta vprašanja"
           seoTitle={pageTitle}
-          description="Odgovori na najpogostejša vprašanja o najemu photo bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
+          description="Odgovori na najpogostejša vprašanja o najemu Photo Bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />
 

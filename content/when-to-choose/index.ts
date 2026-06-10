@@ -17,8 +17,8 @@ export interface WhenToChooseContent {
 }
 
 export const threeSixtyWhenToChoose: WhenToChooseContent = {
-  heading: "KDAJ IZBRATI 360° PHOTO BOOTH?",
-  text: "360° photo booth je idealen za vsak dogodek, kjer imate na voljo 3x3 m prostora za ustvarjanje nepozabnih videoposnetkov.",
+  heading: "KDAJ IZBRATI 360° Booth?",
+  text: "360° Booth je idealen za vsak dogodek, kjer imate na voljo 3x3 m prostora za ustvarjanje nepozabnih videoposnetkov.",
   occasions: [
     {
       title: "Poroke",
@@ -48,8 +48,8 @@ export const threeSixtyWhenToChoose: WhenToChooseContent = {
 };
 
 export const photoBoothWhenToChoose: WhenToChooseContent = {
-  heading: "KDAJ IZBRATI PHOTO BOOTH?",
-  text: "Photo booth je primeren za vse dogodke, kjer si želite dodati nekaj zabave popestritev.",
+  heading: "KDAJ IZBRATI Photo Booth?",
+  text: "Photo Booth je primeren za vse dogodke, kjer si želite dodati nekaj zabave popestritev.",
   occasions: [
     {
       title: "Poroke",
@@ -79,8 +79,8 @@ export const photoBoothWhenToChoose: WhenToChooseContent = {
 };
 
 export const duetWhenToChoose: WhenToChooseContent = {
-  heading: "KDAJ IZBRATI DUET PHOTO BOOTH?",
-  text: "Duet photo booth je popolna izbira, ko želite svojim gostom ponuditi najboljše iz obeh svetov - klasično fotografiranje in 360° snemanje.",
+  heading: "KDAJ IZBRATI DUET Photo Booth?",
+  text: "Duet Photo Booth je popolna izbira, ko želite svojim gostom ponuditi najboljše iz obeh svetov - klasično fotografiranje in 360° snemanje.",
   occasions: [
     {
       title: "Poroke",

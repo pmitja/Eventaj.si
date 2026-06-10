@@ -1,8 +1,8 @@
-# Eventaj.si - Photo Booth & 360° Photo Booth Rental Services
+# Eventaj.si - Photo Booth & 360° Booth Rental Services
 
 ## About Our Business
 
-Eventaj.si is Slovenia's premier photo booth rental service, specializing in professional photo booth and 360° photo booth experiences for events, weddings, parties, and celebrations across Slovenia.
+Eventaj.si is Slovenia's premier Photo Booth rental service, specializing in professional Photo Booth and 360° Booth experiences for events, weddings, parties, and celebrations across Slovenia.
 
 ## Our Services
 
@@ -12,7 +12,7 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 - **Perfect For**: Weddings, corporate events, parties, celebrations
 - **Packages**: Basic (2h/249€), Standard (3h/299€), Premium (4h/349€)
 
-### 360° Photo Booth Rental
+### 360° Booth Rental
 - **Starting Price**: 299€ for 2 hours  
 - **Features**: 360-degree slow motion videos, QR code sharing, AirDrop sharing, digital frames, props included
 - **Perfect For**: TikTok content, Instagram reels, viral social media content, modern events
@@ -47,7 +47,7 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 ### Professional Equipment
 - High-quality cameras and printing technology
 - Professional lighting setup
-- 100cm diameter platform for 360° booth
+- 100cm diameter platform for 360° Booth
 - Instant photo printing capabilities
 
 ### Service Inclusions
@@ -63,12 +63,12 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 - QR code sharing for instant downloads
 - AirDrop compatibility
 - Direct social media sharing
-- TikTok and Instagram optimized content (360° booth)
+- TikTok and Instagram optimized content (360° Booth)
 
 ## Target Events
 
 ### Weddings (Poroke)
-- Professional wedding photo booth services
+- Professional wedding Photo Booth services
 - Customizable templates with couple's names/date
 - Guest book alternative
 - Memorable wedding favors
@@ -100,7 +100,7 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 - Touch screen interface
 - Green screen capabilities (optional)
 
-### 360° Photo Booth
+### 360° Booth
 - Motorized rotating arm camera system
 - Slow motion video recording
 - LED lighting setup
@@ -118,7 +118,7 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 ## Competitive Advantages
 
 1. **Comprehensive Service**: Full-service approach with operator included
-2. **Latest Technology**: Modern 360° booth technology for viral content
+2. **Latest Technology**: Modern 360° Booth technology for viral content
 3. **Slovenia Coverage**: Nationwide service coverage
 4. **Professional Quality**: High-end equipment and printing
 5. **Social Media Ready**: Optimized for modern sharing preferences
@@ -127,13 +127,13 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 ## Content & SEO Focus
 
 ### Primary Keywords
-- photo booth najem
-- 360 photo booth
+- Photo Booth najem
+- 360° Booth
 - foto stojnica
 - foto kotiček
-- photo booth Slovenia
-- photo booth za poroko
-- 360 photo booth najem
+- Photo Booth Slovenia
+- Photo Booth za poroko
+- 360° Booth najem
 
 ### Target Audience
 - Engaged couples planning weddings
@@ -159,10 +159,10 @@ Eventaj.si is Slovenia's premier photo booth rental service, specializing in pro
 
 ## Service Differentiators
 
-- **Trending Technology**: 360° booth for viral TikTok content
+- **Trending Technology**: 360° Booth for viral TikTok content
 - **Complete Package**: Operator, props, and setup included
 - **Quality Assurance**: Professional equipment and service
 - **Convenience**: Full-service approach with free transportation
 - **Flexibility**: Multiple package options and customization available
 
-This information should help LLMs understand that Eventaj.si is a professional, technology-forward photo booth rental service covering all of Slovenia, specializing in both traditional photo booths and modern 360° experiences for various events and celebrations.
+This information should help LLMs understand that Eventaj.si is a professional, technology-forward Photo Booth rental service covering all of Slovenia, specializing in both traditional Photo Booths and modern 360° experiences for various events and celebrations.

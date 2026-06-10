@@ -15,7 +15,7 @@ import TikTok from "../icons/TikTok";
 
 const navigation = {
   main: [
-    { href: "/360-photo-booth", name: "360° Photo Booth" },
+    { href: "/360-photo-booth", name: "360° Booth" },
     { href: "/photo-booth", name: "Photo Booth" },
     { href: "/ozadja", name: "Ozadja" },
     { href: "/rekviziti", name: "Rekviziti" },

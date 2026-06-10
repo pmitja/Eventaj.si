@@ -23,7 +23,7 @@ const palettes = [
 const photoSources = [
   {
     src: "/application/hero-collage/sanja-50.webp",
-    alt: "Druzina z zabavnimi ocali v photo boothu",
+    alt: "Druzina z zabavnimi ocali v Photo Boothu",
   },
   {
     src: "/application/hero-collage/gatsby-party.webp",
@@ -35,11 +35,11 @@ const photoSources = [
   },
   {
     src: "/application/hero-collage/new-year.webp",
-    alt: "Novoletna zabava s photo booth okvirjem",
+    alt: "Novoletna zabava s Photo Booth okvirjem",
   },
   {
     src: "/application/hero-collage/lucija-30.webp",
-    alt: "Rojstnodnevni photo booth posnetek z baloni",
+    alt: "Rojstnodnevni Photo Booth posnetek z baloni",
   },
   {
     src: "/application/hero-collage/green-boom.webp",
@@ -51,7 +51,7 @@ const photoSources = [
   },
   {
     src: "/application/hero-collage/doba-35.webp",
-    alt: "Veseli gostje s photo booth rekviziti",
+    alt: "Veseli gostje s Photo Booth rekviziti",
   },
 ] as const;
 

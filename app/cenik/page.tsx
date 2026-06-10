@@ -1,7 +1,7 @@
-import { CenikPageContent } from "@/components/claude/sections";
+import { CenikPageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 
-const pageTitle = "Cenik photo booth in 360° booth najema | Eventaj.si";
+const pageTitle = "Cenik Photo Booth in 360° Booth najema | Eventaj.si";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
         url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
-        alt: "Cenik Photo Booth in 360 Booth najema - Eventaj.si",
+        alt: "Cenik Photo Booth in 360° Booth najema - Eventaj.si",
       },
     ],
     locale: "sl_SI",

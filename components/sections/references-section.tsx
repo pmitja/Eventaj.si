@@ -56,7 +56,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Mlada Slovenija",
     eventType: "Srečanje članov",
     description:
-      "Na dogodku je bil photo booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
+      "Na dogodku je bil Photo Booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
     image: "/application/primeri/msi-primer.webp",
     date: "2025",
     attendees: "1100 gostov",
@@ -66,7 +66,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Forvis Marzars",
     eventType: "Poslovni dogodek",
     description:
-      "Zelo korektna in profesionalna izkušnja – od začetne komunikacije do izvedbe na dogodku. Mitja je bil izjemno prijazen in zanesljiv, kar je sodelovanje naredilo res enostavno. Priporočamo vsem, ki razmišljajo o najemu photobootha – z ekipo Eventaj poteka vse gladko in brez zapletov.",
+      "Zelo korektna in profesionalna izkušnja – od začetne komunikacije do izvedbe na dogodku. Mitja je bil izjemno prijazen in zanesljiv, kar je sodelovanje naredilo res enostavno. Priporočamo vsem, ki razmišljajo o najemu Photo Bootha – z ekipo Eventaj poteka vse gladko in brez zapletov.",
     image: "/application/primeri/forvis-mazars-primer.webp",
     date: "2025",
     attendees: "80 udeležencev",
@@ -86,7 +86,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Zaključek leta",
     eventType: "Dogodek družbenega društva",
     description:
-      "Photo booth je bil odlična dodatek na našem zaključku leta. Gostje so se zabavali in ustvarili nepozabne spomine.",
+      "Photo Booth je bil odlična dodatek na našem zaključku leta. Gostje so se zabavali in ustvarili nepozabne spomine.",
     image: "/application/primeri/20241214_225221741.webp",
     date: "December 2024",
     attendees: "80 gostov",
@@ -96,7 +96,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Rojnodnevna zabava",
     eventType: "Rojstnodnevna zabava",
     description:
-      "Naš rojnodnevni dogodek je bil še bolj poseben z vašim photo booth-om. Ekipa je bila profesionalna in gostje navdušeni.",
+      "Naš rojnodnevni dogodek je bil še bolj poseben z vašim Photo Boothom. Ekipa je bila profesionalna in gostje navdušeni.",
     image: "/application/primeri/20250612_022056055.webp",
     date: "Junij 2025",
     attendees: "50 udeležencev",
@@ -106,7 +106,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Rojnodnevna zabava",
     eventType: "Rojstnodnevna zabava",
     description:
-      "Photo booth je bil središče naše rojnodnevne zabave. Vsi so želeli biti del tega nepozabnega doživetja.",
+      "Photo Booth je bil središče naše rojnodnevne zabave. Vsi so želeli biti del tega nepozabnega doživetja.",
     image: "/application/primeri/20250621_161011627 (4).webp",
     date: "Junij 2025",
     attendees: "80 gostov",
@@ -126,7 +126,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Rojnodnevna zabava",
     eventType: "Rojstnodnevna zabava",
     description:
-      "Photo booth je dodal poseben čar naši rojnodnevni večerji. Gostje so bili navdušeni nad rekviziti in kvaliteto fotografij.",
+      "Photo Booth je dodal poseben čar naši rojnodnevni večerji. Gostje so bili navdušeni nad rekviziti in kvaliteto fotografij.",
     image: "/application/primeri/20250726_210028119 (4).webp",
     date: "Julij 2025",
     attendees: "100 gostov",
@@ -146,7 +146,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Poroka",
     eventType: "Poroka",
     description:
-      "Odlično doživetje! Photo booth je bil središče naše poroke in vsi so bili navdušeni.",
+      "Odlično doživetje! Photo Booth je bil središče naše poroke in vsi so bili navdušeni.",
     image: "/application/primeri/20250802_194512229.webp",
     date: "Avgust 2025",
     attendees: "110 gostov",
@@ -156,7 +156,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Rojnodnevna zabava",
     eventType: "Rojstnodnevna zabava",
     description:
-      "Photo booth je dodal posebno noto naši rojnodnevni zabavi. Priporočamo vsem, ki želijo nekaj posebnega.",
+      "Photo Booth je dodal posebno noto naši rojnodnevni zabavi. Priporočamo vsem, ki želijo nekaj posebnega.",
     image: "/application/primeri/20250815_213827130 (1).webp",
     date: "Avgust 2025",
     attendees: "95 gostov",
@@ -166,7 +166,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Poroka",
     eventType: "Poroka",
     description:
-      "Photo booth je bil odličen dodatek našemu poročnem dogodku. Vsi so bili navdušeni nad izkušnjo.",
+      "Photo Booth je bil odličen dodatek našemu poročnem dogodku. Vsi so bili navdušeni nad izkušnjo.",
     image: "/application/primeri/20250906_192544302.webp",
     date: "September 2025",
     attendees: "130 gostov",
@@ -176,7 +176,7 @@ const defaultEventExamples: EventExample[] = [
     title: "Večerna zabava",
     eventType: "Zabava",
     description:
-      "Najboljši photo booth, ki smo ga imeli na naših dogodkih. Profesionalna storitev in odlične fotografije.",
+      "Najboljši Photo Booth, ki smo ga imeli na naših dogodkih. Profesionalna storitev in odlične fotografije.",
     image: "/application/primeri/20250906_203416839.webp",
     date: "September 2025",
     attendees: "105 gostov",
@@ -190,7 +190,7 @@ const defaultReferences: Reference[] = [
     event: "Zaključek leta",
     logo: "/application/sksg.webp",
     description:
-      "Najem Photo Bootha in 360 Photo Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta!",
+      "Najem Photo Bootha in 360° Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta!",
     rating: 5,
   },
   {
@@ -199,7 +199,7 @@ const defaultReferences: Reference[] = [
     event: "Poslovni dogodek",
     logo: "/application/autodelta.webp",
     description:
-      "Najlepša hvala za sodelovanje! 360 Photo Booth sta dodala posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej.",
+      "Najlepša hvala za sodelovanje! 360° Booth je dodal posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej.",
     rating: 5,
   },
   {
@@ -208,7 +208,7 @@ const defaultReferences: Reference[] = [
     event: "Dogodek",
     logo: "/application/LOGO_MSI_POZ.webp",
     description:
-      "Na dogodku je bil photo booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
+      "Na dogodku je bil Photo Booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
     rating: 5,
   },
   {
@@ -269,7 +269,7 @@ export function ReferencesSection({
                 Poglejte si naše najboljše trenutke
               </h3>
               <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-                Od porok do poslovnih dogodkov - naš photo booth je bil del
+                Od porok do poslovnih dogodkov - naš Photo Booth je bil del
                 nepozabnih spominov
               </p>
             </div>
@@ -520,7 +520,7 @@ export function ReferencesSection({
               <PartyPopper className="w-6 h-6" />
             </div>
             <p className="text-xl text-muted-foreground mb-10">
-              Ustvarite nepozabne spomine z našim photo booth-om
+              Ustvarite nepozabne spomine z našim Photo Boothom
             </p>
             <HeroBookingDialog>
               <Button

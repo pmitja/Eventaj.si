@@ -15,7 +15,7 @@ export default function ThreeSixtyBoothHero() {
             transition={{ duration: 0.5 }}
             className="max-w-3xl text-4xl font-bold tracking-tight text-foreground sm:text-6xl"
           >
-            360° Photo Booth
+            360° Booth
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -24,7 +24,7 @@ export default function ThreeSixtyBoothHero() {
             className="mx-auto mt-8 max-w-xl text-lg text-muted-foreground"
           >
             Ustvarite edinstvene 360° video posnetke, ki bodo navdušili vaše
-            goste. Naš 360° Photo Booth je popolna izbira za vse, ki želijo
+            goste. Naš 360° Booth je popolna izbira za vse, ki želijo
             nekaj posebnega na svojem dogodku.
           </motion.p>
           <motion.div

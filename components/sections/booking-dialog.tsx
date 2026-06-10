@@ -170,9 +170,9 @@ export function BookingDialog({ children }: BookingDialogProps) {
         {step === 1 && (
           <>
             <DialogHeader>
-              <DialogTitle>Izberite vrsto Photo Booth-a</DialogTitle>
+              <DialogTitle>Izberite vrsto Photo Bootha</DialogTitle>
               <DialogDescription>
-                Izberite med 360° Photo Booth in klasičnim Photo Booth.
+                Izberite med 360° Booth in klasičnim Photo Booth.
               </DialogDescription>
             </DialogHeader>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pt-4">
@@ -191,7 +191,7 @@ export function BookingDialog({ children }: BookingDialogProps) {
                     360°
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">360° Photo Booth</h3>
+                <h3 className="text-lg font-semibold mb-2">360° Booth</h3>
                 <p className="text-sm text-gray-500 text-center">
                   Edinstveno 360° snemanje za posebne trenutke
                 </p>

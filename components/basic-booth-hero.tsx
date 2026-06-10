@@ -50,7 +50,7 @@ const BasicBoothHero = ({ title, seoTitle, text }: HeroProps) => {
             className="mb-6 inline-flex max-w-full items-center gap-2.5 rounded-full border border-[rgba(20,17,15,0.15)] bg-[rgba(251,248,242,0.7)] px-3 py-2 text-[10px] uppercase tracking-[0.08em] text-[var(--eventaj-muted)] backdrop-blur-md sm:px-4 sm:text-xs sm:tracking-[0.12em]"
           >
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--eventaj-accent)]" />
-            Photo booth najem · od 279 €
+            Photo Booth najem · od 279 €
           </FadeIn>
 
           <div className="max-w-[660px]">

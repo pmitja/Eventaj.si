@@ -3,12 +3,12 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Pogoji uporabe | eventaj.si",
   description:
-    "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem photo booth in 360 photo booth opreme.",
-  keywords: "pogoji uporabe, photo booth, 360 photo booth, najem opreme",
+    "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem Photo Booth in 360° Booth opreme.",
+  keywords: "pogoji uporabe, Photo Booth, 360° Booth, najem opreme",
   openGraph: {
     title: "Pogoji uporabe | eventaj.si",
     description:
-      "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem photo booth in 360 photo booth opreme.",
+      "Splošni pogoji uporabe storitev eventaj.si. Preberite naše pogoje uporabe za najem Photo Booth in 360° Booth opreme.",
     url: "https://eventaj.si/pogoji-uporabe",
     siteName: "eventaj.si",
     type: "website",
@@ -45,7 +45,7 @@ export default function TermsPage() {
             eventaj.si (v nadaljevanju: uporabnik).
           </p>
           <p>
-            Ponudnik ponuja storitve najema photo booth in 360 photo booth
+            Ponudnik ponuja storitve najema Photo Booth in 360° Booth
             opreme za različne dogodke, vključno s profesionalno postavitvijo,
             tehnično podporo in upravljanjem opreme med dogodkom.
           </p>

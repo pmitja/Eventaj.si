@@ -25,9 +25,9 @@ const videoSteps = [
 const photoSteps = [
   {
     number: "1",
-    title: "Stopite pred photo booth",
+    title: "Stopite pred Photo Booth",
     description:
-      "Opremljeni z rekviziti se postavite pred photo booth in pozirajte. Ob kliku na zaslon, se bo pričelo fotografiranje.",
+      "Opremljeni z rekviziti se postavite pred Photo Booth in pozirajte. Ob kliku na zaslon, se bo pričelo fotografiranje.",
   },
   {
     number: "2",

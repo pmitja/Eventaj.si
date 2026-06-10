@@ -8,7 +8,7 @@ const PromoImage = () => {
 
       <Image
         src="/application/promo-image.webp"
-        alt="360° Photo Booth Promo"
+        alt="360° Booth Promo"
         fill
         className="object-cover"
         priority

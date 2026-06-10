@@ -8,7 +8,7 @@ export const eventajNav = [
 
 export const marqueeItems = [
   "Poroke",
-  "Korporativni dogodki",
+  "Poslovni dogodki",
   "Rojstni dnevi",
   "Maturantski plesi",
   "Zasebne zabave",
@@ -43,12 +43,12 @@ export const services = [
       {
         type: "image",
         src: "/application/hero-collage/doba-35.webp",
-        alt: "Gostje s photo booth rekviziti pred bleščečim ozadjem",
+        alt: "Gostje s Photo Booth rekviziti pred bleščečim ozadjem",
       },
       {
         type: "image",
         src: "/application/hero-collage/gold-group.webp",
-        alt: "Skupina gostov s photo booth rekviziti pred zlatim ozadjem",
+        alt: "Skupina gostov s Photo Booth rekviziti pred zlatim ozadjem",
       },
     ],
     href: "/photo-booth",
@@ -59,12 +59,12 @@ export const services = [
     title: "360°",
     italicWord: "Booth",
     description:
-      "Dinamični videoposnetki, ki ujamejo vsak detajl. 360° photo booth ustvari kratke filme, ki jih gostje takoj delijo na družbenih omrežjih.",
+      "Dinamični videoposnetki, ki ujamejo vsak detajl. 360° Booth ustvari kratke filme, ki jih gostje takoj delijo na družbenih omrežjih.",
     features: [
       "Dinamični 360° videoposnetki v slow-motion tehniki",
       "Personalizirane animacije in zvočni efekti",
       "Takojšnji dostop in deljenje prek QR kode",
-      "Profesionalno osvetlitev",
+      "Profesionalna osvetlitev",
       "Vključena oprema in podpora naše ekipe",
       "Izvedba po vsej Sloveniji",
     ],
@@ -75,13 +75,13 @@ export const services = [
         type: "video",
         src: "/application/360-photo-booth-videos/video-1.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-1.webp",
-        alt: "360 photo booth video z gostjo in rekviziti",
+        alt: "360° Booth video z gostjo in rekviziti",
       },
       {
         type: "video",
         src: "/application/360-photo-booth-videos/video-2.mp4",
         poster: "/application/360-photo-booth-videos/posters/video-2.webp",
-        alt: "360 photo booth video na prazničnem dogodku",
+        alt: "360° Booth video na prazničnem dogodku",
       },
     ],
     href: "/360-photo-booth",
@@ -114,21 +114,21 @@ export const galleryItems = [
     poster: "/application/360-photo-booth-videos/posters/video-1.webp",
     label: "360° trenutek",
     category: "Video",
-    alt: "Prva sličica 360 photo booth videa z gostjo in rekviziti",
+    alt: "Prva sličica 360° Booth videa z gostjo in rekviziti",
   },
   {
     type: "image",
     src: "/application/hero-collage/doba-35.webp",
     label: "Photo Booth",
     category: "Dogodek",
-    alt: "Gostje s photo booth rekviziti pred bleščečim ozadjem",
+    alt: "Gostje s Photo Booth rekviziti pred bleščečim ozadjem",
   },
   {
     type: "image",
     src: "/application/hero-collage/gold-group.webp",
     label: "Skupinska zabava",
     category: "Zasebna zabava",
-    alt: "Skupina gostov s photo booth rekviziti pred zlatim ozadjem",
+    alt: "Skupina gostov s Photo Booth rekviziti pred zlatim ozadjem",
   },
   {
     type: "video",
@@ -136,21 +136,21 @@ export const galleryItems = [
     poster: "/application/360-photo-booth-videos/posters/video-2.webp",
     label: "Slow-motion",
     category: "Video",
-    alt: "Prva sličica 360 photo booth videa na prazničnem dogodku",
+    alt: "Prva sličica 360° Booth videa na prazničnem dogodku",
   },
   {
     type: "image",
     src: "/application/primeri/msi-primer.webp",
     label: "Photo Booth",
     category: "Dogodek",
-    alt: "Gostje na dogodku Mlada Slovenija s photo booth rekviziti",
+    alt: "Gostje na dogodku Mlada Slovenija s Photo Booth rekviziti",
   },
   {
     type: "image",
     src: "/application/primeri/forvis-mazars-primer.webp",
     label: "Korporativni utrinek",
     category: "Poslovni dogodek",
-    alt: "Photo booth fotografija s poslovnega dogodka Forvis Mazars",
+    alt: "Photo Booth fotografija s poslovnega dogodka Forvis Mazars",
   },
   {
     type: "video",
@@ -158,21 +158,21 @@ export const galleryItems = [
     poster: "/application/360-photo-booth-videos/posters/video-3.webp",
     label: "360° zabava",
     category: "Video",
-    alt: "Prva sličica 360 photo booth videa z gosti na dogodku",
+    alt: "Prva sličica 360° Booth videa z gosti na dogodku",
   },
   {
     type: "image",
     src: "/application/primeri/maja-primer.webp",
     label: "Rojstni dan",
     category: "Zasebna zabava",
-    alt: "Nasmejani gostje na rojstnodnevni zabavi s photo booth rekviziti",
+    alt: "Nasmejani gostje na rojstnodnevni zabavi s Photo Booth rekviziti",
   },
   {
     type: "image",
     src: "/application/primeri/20250802_194512229.webp",
     label: "Poroka",
     category: "Poročni dan",
-    alt: "Poročni gostje ustvarjajo spomin v photo boothu",
+    alt: "Poročni gostje ustvarjajo spomin v Photo Boothu",
   },
   {
     type: "video",
@@ -180,21 +180,21 @@ export const galleryItems = [
     poster: "/application/360-photo-booth-videos/posters/video-6.webp",
     label: "Slow-motion",
     category: "Video",
-    alt: "Prva sličica dinamičnega 360 photo booth videa",
+    alt: "Prva sličica dinamičnega 360° Booth videa",
   },
   {
     type: "image",
     src: "/application/primeri/20250906_203416839.webp",
     label: "Večerna zabava",
     category: "Zabava",
-    alt: "Večerna photo booth fotografija z rekviziti",
+    alt: "Večerna Photo Booth fotografija z rekviziti",
   },
   {
     type: "image",
     src: "/application/primeri/20250621_161011627 (4).webp",
     label: "Skupinski spomin",
     category: "Rojstni dan",
-    alt: "Skupina gostov med photo booth fotografiranjem",
+    alt: "Skupina gostov med Photo Booth fotografiranjem",
   },
   {
     type: "video",
@@ -202,26 +202,26 @@ export const galleryItems = [
     poster: "/application/360-photo-booth-videos/posters/video-8.webp",
     label: "360° trenutek",
     category: "Video",
-    alt: "Prva sličica kratkega 360 photo booth videa",
+    alt: "Prva sličica kratkega 360° Booth videa",
   },
 ] as const;
 
 export const testimonials = [
   {
     quote:
-      "Najem Photo Bootha in 360 Photo Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta.",
+      "Najem Photo Bootha in 360° Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta.",
     author: "Mojca Šauperl",
-    role: "ŠKSG · Dogodek podjetja",
+    role: "ŠKSG · Poslovni dogodek",
   },
   {
     quote:
-      "360 Photo Booth sta dodala posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej.",
+      "360° Booth je dodal posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej.",
     author: "Jure Tadina",
-    role: "AutoDelta · Korporativni dogodek",
+    role: "AutoDelta · Poslovni dogodek",
   },
   {
     quote:
-      "360 Photo Booth je bil absolutni hit na najinem 30. rojstnem dnevu. Gostje so govorili, da česa tako zabavnega še niso doživeli.",
+      "360° Booth je bil absolutni hit na najinem 30. rojstnem dnevu. Gostje so govorili, da česa tako zabavnega še niso doživeli.",
     author: "Eva in Ana",
     role: "Rojstnodnevna zabava",
   },
@@ -262,7 +262,7 @@ export const faqItems = [
   },
   {
     q: "Koliko časa traja postavitev?",
-    a: "Postavitev traja približno 30–45 minut. Pridemo dovolj zgodaj, da je vse pripravljeno pred prihodom prvih gostov.",
+    a: "Za postavitev potrebujemo približno 30–45 minut. Poskrbimo, da je vse pripravljeno ob dogovorjeni uri začetka.",
   },
   {
     q: "Kaj se zgodi s fotografijami po dogodku?",
@@ -304,7 +304,7 @@ export const photoFeatures = [
 export const photoSpecs = [
   { label: "Trajanje", value: "Paketi za 2, 3 ali 4 ure z možnostjo podaljšanja dogodka.", icon: "clock" },
   { label: "Prostor", value: "Za postavitev potrebujemo približno 2,5 × 2 m prostora in dostop do električne vtičnice.", icon: "space" },
-  { label: "Postavitev", value: "Photo booth pripravimo in postavimo 30–45 minut pred začetkom dogodka.", icon: "setup" },
+  { label: "Postavitev", value: "Photo Booth pripravimo in postavimo 30–45 minut pred začetkom dogodka.", icon: "setup" },
   { label: "Tisk fotografij", value: "Neomejen tisk fotografij v formatu 10 × 15 cm ali foto trakovih 5 × 15 cm.", icon: "print" },
   { label: "Digitalna galerija", value: "Po dogodku prejmete vse fotografije v polni ločljivosti v zasebni galeriji.", icon: "gallery" },
   { label: "Prevoz", value: "Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v končno ponudbo.", icon: "truck" },
@@ -344,9 +344,9 @@ export const booth360Specs = [
   { label: "Prostor", value: "Za postavitev potrebujemo približno 3 × 3 m prostora in dostop do električne vtičnice.", icon: "space" },
   { label: "Postavitev", value: "360° Booth pripravimo in postavimo 30–45 minut pred začetkom dogodka.", icon: "setup" },
   { label: "Format videa", value: "Videoposnetki so optimizirani za deljenje na družbenih omrežjih.", icon: "video" },
-  { label: "Personalizacija", value: "Prilagodimo glasbo, animacije, grafične elemente in vizualno podobo posnetkov.", icon: "music" },
   { label: "Galerija", value: "Po dogodku prejmete vse videoposnetke v polni ločljivosti v zasebni galeriji.", icon: "share" },
   { label: "Prevoz", value: "Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v končno ponudbo.", icon: "truck" },
+  { label: "Personalizacija", value: "Prilagodimo glasbo, animacije, grafične elemente in vizualno podobo posnetkov.", icon: "music" },
   { label: "Cena", value: "Paketi od 299 € dalje. Brez skritih stroškov.", icon: "tag" },
 ] as const;
 
@@ -444,7 +444,7 @@ export const booth360Packages = [
 export const addons = [
   { item: "Dodatna ura · Photo Booth", price: "+50 €" },
   { item: "Dodatna ura · 360° Booth", price: "+80 €" },
-  { item: "Personalizirane animacije za 360°", price: "+59 €" },
+  { item: "Personalizirane animacije za 360° Booth", price: "+59 €" },
   { item: "Album", price: "+20 €" },
   {
     item: "Personalizirane lesene tablice 10 kosov. Ostanejo vam.",

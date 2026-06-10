@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-page-custom-font */
 import "@/app/globals.css";
 import "@/app/notion.css";
-import SiteShell from "@/components/claude/site-shell";
+import SiteShell from "@/components/layout/site-shell";
 import { Toaster } from "@/components/ui/toaster";
 import { baloo2 } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -10,12 +10,12 @@ import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Eventaj.si | Photo booth & 360° photo booth po Sloveniji",
+  title: "Eventaj.si | Photo Booth & 360° Booth po Sloveniji",
   description:
-    "Eventaj.si ponuja profesionalni photo booth in 360° photo booth najem z asistenco, rekviziti in instant tiskom po celotni Sloveniji.",
+    "Eventaj.si ponuja profesionalni Photo Booth in 360° Booth najem z asistenco, rekviziti in instant tiskom po celotni Sloveniji.",
   keywords: [
-    "photo booth Slovenija",
-    "360 photo booth najem",
+    "Photo Booth Slovenija",
+    "360° Booth najem",
     "eventaj",
     "foto stojnica",
   ],
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Eventaj.si | Photo booth & 360° photo booth po Sloveniji",
+    title: "Eventaj.si | Photo Booth & 360° Booth po Sloveniji",
     description:
-      "Najem photo booth in 360° photo booth storitev z brezplačnim prevozom po celotni Sloveniji.",
+      "Najem Photo Booth in 360° Booth storitev z brezplačnim prevozom po celotni Sloveniji.",
     siteName: "Eventaj.si",
     url: "https://www.eventaj.si",
     locale: "sl_SI",
@@ -34,9 +34,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Eventaj.si | Photo booth & 360° photo booth po Sloveniji",
+    title: "Eventaj.si | Photo Booth & 360° Booth po Sloveniji",
     description:
-      "Photo booth in 360° photo booth najem z asistenco in rekviziti po Sloveniji.",
+      "Photo Booth in 360° Booth najem z asistenco in rekviziti po Sloveniji.",
   },
   other: {
     "google-site-verification":

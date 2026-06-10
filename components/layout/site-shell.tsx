@@ -1,6 +1,6 @@
 "use client";
 
-import { eventajNav, trustedNames } from "@/components/claude/data";
+import { eventajNav, trustedNames } from "@/content/eventaj/data";
 import Logo from "@/components/logo";
 import { SlovenianDatePicker } from "@/components/ui/slovenian-date-picker";
 import { cn } from "@/lib/utils";

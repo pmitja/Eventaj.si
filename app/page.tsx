@@ -1,4 +1,4 @@
-import { HomePageContent } from "@/components/claude/sections";
+import { HomePageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
@@ -9,14 +9,14 @@ export const metadata: Metadata = {
     "Photo Booth & 360° najem po Sloveniji. Že od 279€ za 2 uri. Takojšnje tiskanje, rekviziti, personalizacija in profesionalna izvedba.",
   keywords: [
     "foto zabava",
-    "photobooth 360",
-    "photobooth",
-    "photobooth najem",
-    "360 photobooth",
+    "360° Booth",
+    "Photo Booth",
+    "Photo Booth najem",
+    "360° Booth",
     "foto stojnica",
-    "photo booth najem",
-    "najem photo booth",
-    "360 photo booth najem",
+    "Photo Booth najem",
+    "najem Photo Booth",
+    "360° Booth najem",
     "foto stojnica za poroko",
     "foto box za poroko",
     "foto booth zabava",
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
-        alt: "Photo Booth in 360 Photo Booth Eventaj.si",
+        alt: "Photo Booth in 360° Booth Eventaj.si",
       },
     ],
     type: "website",
@@ -68,7 +68,7 @@ export default function Home() {
           name: "Eventaj.si",
           url: "https://eventaj.si",
           description:
-            "Profesionalni najem photo booth in 360 photo booth naprav za dogodke, poroke in zabave v Sloveniji.",
+            "Profesionalni najem Photo Booth in 360° Booth naprav za dogodke, poroke in zabave v Sloveniji.",
         }}
       />
       <JsonLd<Organization>
@@ -79,7 +79,7 @@ export default function Home() {
           url: "https://eventaj.si",
           logo: "https://eventaj.si/application/logo.svg",
           description:
-            "Vodilni ponudnik photo booth in 360 photo booth storitev v Sloveniji. Specializirani za poroke, dogodke in zabave.",
+            "Vodilni ponudnik Photo Booth in 360° Booth storitev v Sloveniji. Specializirani za poroke, dogodke in zabave.",
           sameAs: [
             "https://www.facebook.com/eventaj.si",
             "https://www.instagram.com/eventaj.si/",
@@ -103,7 +103,7 @@ export default function Home() {
           url: "https://eventaj.si",
           telephone: "+386 31 285 143",
           email: "info@eventaj.si",
-          slogan: "Photo booth in 360° photo booth najem po celi Sloveniji",
+          slogan: "Photo Booth in 360° Booth najem po celi Sloveniji",
           address: {
             "@type": "PostalAddress",
             streetAddress: "Slomškova ulica 1",

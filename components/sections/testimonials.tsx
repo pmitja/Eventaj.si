@@ -21,32 +21,32 @@ const testimonials = [
   {
     author: {
       name: "Mojca Šauperl - ŠKSG",
-      title: "Dogodek podjetja",
+      title: "Poslovni dogodek",
       image: "/application/sksg.webp",
     },
-    text: "Najem Photo Bootha in 360 Photo Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta!",
+    text: "Najem Photo Bootha in 360° Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta!",
   },
   {
     author: {
       name: "Jure Tadina - AutoDelta",
-      title: "Dogodek podjetja",
+      title: "Poslovni dogodek",
       image: "/application/autodelta.webp",
     },
-    text: "Najlepša hvala za sodelovanje! 360 Photo Booth sta dodala posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej. Želim vam uspešen december!",
+    text: "Najlepša hvala za sodelovanje! 360° Booth je dodal posebno čarobnost našemu dogodku, gostje so bili navdušeni. Priporočilo gre z veseljem naprej. Želim vam uspešen december!",
   },
   {
     author: {
       name: "Eva in Ana",
       title: "Rojstnodnevna zabava",
     },
-    text: "360 Photo Booth je bil absolutni hit na najinem 30. rojstnem dnevu! Gostje so govorili, da česa tako zabavnega še niso doživeli, in vsi posnetki so nepozabni. Hvala za čudovite spomine! Priporočilo gre zagotovo naprej.",
+    text: "360° Booth je bil absolutni hit na najinem 30. rojstnem dnevu! Gostje so govorili, da česa tako zabavnega še niso doživeli, in vsi posnetki so nepozabni. Hvala za čudovite spomine! Priporočilo gre zagotovo naprej.",
   },
   {
     author: {
       name: "Katja",
       title: "Rojstnodnevna zabava",
     },
-    text: "360 Photo Booth je poskrbel za res zabavne trenutke in spomine. Hvala za odlično storitev, priporočamo naprej! Ekipa Eventaj.si je super!",
+    text: "360° Booth je poskrbel za res zabavne trenutke in spomine. Hvala za odlično storitev, priporočamo naprej! Ekipa Eventaj.si je super!",
   },
   {
     author: {
@@ -61,7 +61,7 @@ const testimonials = [
       title: "Dogodek",
       image: "/application/LOGO_MSI_POZ.webp",
     },
-    text: "Na dogodku je bil photo booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
+    text: "Na dogodku je bil Photo Booth / foto stojnica zelo dobro sprejet in sem prepričana, da se vidimo še ob kakšni priložnosti, hvala!",
   },
   {
     author: {
@@ -69,7 +69,7 @@ const testimonials = [
       title: "Poslovni dogodek",
       image: "/application/forvis-marzars.webp",
     },
-    text: "Zelo korektna in profesionalna izkušnja – od začetne komunikacije do izvedbe na dogodku. Mitja je bil izjemno prijazen in zanesljiv, kar je sodelovanje naredilo res enostavno. Priporočamo vsem, ki razmišljajo o najemu photobootha – z ekipo Eventaj poteka vse gladko in brez zapletov.",
+    text: "Zelo korektna in profesionalna izkušnja – od začetne komunikacije do izvedbe na dogodku. Mitja je bil izjemno prijazen in zanesljiv, kar je sodelovanje naredilo res enostavno. Priporočamo vsem, ki razmišljajo o najemu Photo Bootha – z ekipo Eventaj poteka vse gladko in brez zapletov.",
   },
 ];
 

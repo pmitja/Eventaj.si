@@ -184,7 +184,7 @@ export function BookingForm({
                 <span className="text-2xl font-bold text-[#C99566]">360°</span>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
-                360° photo booth
+                360° Booth
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
                 Edinstveno 360° snemanje za posebne trenutke
@@ -209,10 +209,10 @@ export function BookingForm({
                 <span className="text-2xl font-bold text-[#C99566]">PB</span>
               </div>
               <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">
-                Photo booth
+                Photo Booth
               </h3>
               <p className="text-sm text-gray-500 dark:text-gray-400 text-center">
-                Klasičen photo booth za zabavne fotografije
+                Klasičen Photo Booth za zabavne fotografije
               </p>
               {form.getValues("type") === "basic" && (
                 <div className="absolute top-2 right-2 h-6 w-6 bg-[#C99566] rounded-full flex items-center justify-center">

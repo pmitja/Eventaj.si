@@ -19,7 +19,7 @@ const photoBoothSteps: Step[] = [
     number: "2",
     title: "Pozirajte pred kamero",
     description:
-      "Postavite se pred photo booth in ustvarite svoje najboljše poze. Ob kliku na zaslon se bo pričelo fotografiranje - bodite pripravljeni na smeh!",
+      "Postavite se pred Photo Booth in ustvarite svoje najboljše poze. Ob kliku na zaslon se bo pričelo fotografiranje - bodite pripravljeni na smeh!",
     video: "/application/video/photo-booth/poziraj.mp4",
   },
   {

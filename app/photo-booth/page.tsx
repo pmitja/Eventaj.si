@@ -1,36 +1,36 @@
-import { ServicePageContent } from "@/components/claude/sections";
+import { ServicePageContent } from "@/components/sections/eventaj-pages";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { Service } from "schema-dts";
 
-const photoBoothPageTitle = "Photo booth najem po Sloveniji od 279 € | Eventaj.si";
+const photoBoothPageTitle = "Photo Booth najem po Sloveniji od 279 € | Eventaj.si";
 
 const pricingPlans = [
-  { name: "Basic", price: "279", description: "2 uri photo booth najema" },
-  { name: "Standard", price: "329", description: "3 ure photo booth najema" },
-  { name: "Premium", price: "379", description: "4 ure photo booth najema" },
+  { name: "Basic", price: "279", description: "2 uri Photo Booth najema" },
+  { name: "Standard", price: "329", description: "3 ure Photo Booth najema" },
+  { name: "Premium", price: "379", description: "4 ure Photo Booth najema" },
 ] as const;
 
 export const metadata: Metadata = {
   title: photoBoothPageTitle,
   description:
-    "Photo booth najem za poroke, zabave in poslovne dogodke po celotni Sloveniji. Od 279 €/2h z neomejenimi fotografijami, rekviziti, takojšnjim tiskom, spletno galerijo in profesionalno izvedbo. Pokličite 031 285 143.",
+    "Photo Booth najem za poroke, zabave in poslovne dogodke po celotni Sloveniji. Od 279 €/2h z neomejenimi fotografijami, rekviziti, takojšnjim tiskom, spletno galerijo in profesionalno izvedbo. Pokličite 031 285 143.",
   keywords: [
-    "photo booth najem",
-    "photo booth Slovenija",
-    "photo booth Ljubljana",
-    "photo booth Maribor",
-    "photo booth Celje",
-    "najem photo booth cena",
-    "photo booth za poroko",
-    "photo booth za zabavo",
+    "Photo Booth najem",
+    "Photo Booth Slovenija",
+    "Photo Booth Ljubljana",
+    "Photo Booth Maribor",
+    "Photo Booth Celje",
+    "najem Photo Booth cena",
+    "Photo Booth za poroko",
+    "Photo Booth za zabavo",
     "foto stojnica za dogodke",
-    "photo booth cena",
+    "Photo Booth cena",
   ],
   openGraph: {
     title: photoBoothPageTitle,
     description:
-      "Najem photo booth stojnice z neomejenimi fotografijami in rekviziti po vsej Sloveniji.",
+      "Najem Photo Booth stojnice z neomejenimi fotografijami in rekviziti po vsej Sloveniji.",
     url: "https://www.eventaj.si/photo-booth",
     siteName: "Eventaj.si",
     images: [
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: photoBoothPageTitle,
     description:
-      "Najem photo booth naprave z asistenco in rekviziti po celotni Sloveniji. Rezerviraj termin že danes.",
+      "Najem Photo Booth naprave z asistenco in rekviziti po celotni Sloveniji. Rezerviraj termin že danes.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
@@ -87,7 +87,7 @@ export default function PhotoBooth() {
           },
           areaServed: "Slovenija",
           description:
-            "Profesionalni najem photo booth naprave za poroke, poslovne dogodke, festivale in zabave po vsej Sloveniji. Vključuje operaterja, rekvizite, personalizirane predloge in takojšnje tiskanje fotografij.",
+            "Profesionalni najem Photo Booth naprave za poroke, poslovne dogodke, festivale in zabave po vsej Sloveniji. Vključuje operaterja, rekvizite, personalizirane predloge in takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
             lowPrice: "279",

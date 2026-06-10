@@ -4,7 +4,7 @@ export const metadata: Metadata = {
   title: "Politika zasebnosti | Eventaj.si",
   description:
     "Politika zasebnosti in varstvo osebnih podatkov za uporabnike storitev Eventaj.si.",
-  keywords: "zasebnost, varstvo podatkov, GDPR, photo booth, 360 photo booth",
+  keywords: "zasebnost, varstvo podatkov, GDPR, Photo Booth, 360° Booth",
   openGraph: {
     title: "Politika zasebnosti | Eventaj.si",
     description:
@@ -73,7 +73,7 @@ export default function PrivacyPage() {
 
           <h3>2.2 Podatki, ki nastanejo med izvajanjem storitev</h3>
           <ul>
-            <li>Fotografije in video posnetki iz photo booth-a</li>
+            <li>Fotografije in video posnetki iz Photo Bootha</li>
             <li>360° video posnetki</li>
             <li>Podatki o uporabi naših storitev</li>
           </ul>
@@ -93,7 +93,7 @@ export default function PrivacyPage() {
 
           <h3>3.1 Izvajanje pogodbe (člen 6(1)(b) GDPR)</h3>
           <ul>
-            <li>Zagotavljanje naročenih storitev photo booth-a</li>
+            <li>Zagotavljanje naročenih storitev Photo Bootha</li>
             <li>Komunikacija glede rezervacij in dogodkov</li>
             <li>Izdajanje računov in vodenje evidenc</li>
           </ul>

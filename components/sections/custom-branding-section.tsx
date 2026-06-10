@@ -70,7 +70,7 @@ const brandingFeatures: BrandingFeature[] = [
         />
       </svg>
     ),
-    title: "Korporativni dogodki",
+    title: "Poslovni dogodki",
     description:
       "Profesionalno oblikovanje z vašim logotipom podjetja, barvami blagovne znamke in sporočili za team buildinge, otvoritve ali promocije",
   },
@@ -135,7 +135,7 @@ const CustomBrandingSection = () => {
         <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-[#C99566]/10 via-[#6695C9]/10 to-[#C99566]/10 border border-white/20 p-8 md:p-12">
           <div className="relative z-10 text-center max-w-3xl mx-auto">
             <h3 className="text-2xl md:text-3xl font-bold mb-4">
-              Naredite si svoj photo booth
+              Naredite si svoj Photo Booth
             </h3>
             <p className="text-base md:text-lg mb-8 text-muted-foreground">
               Ne glede na to, ali načrtujete poroko, praznujete rojstni dan ali

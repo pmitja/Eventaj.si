@@ -46,7 +46,7 @@ const ThreeSixtyHero = () => {
               ease: [0.19, 1, 0.22, 1],
             }}
           >
-            360° Photo Booth Najem
+            360° Booth Najem
           </motion.h1>
 
           {/* Subtext */}
