@@ -315,7 +315,7 @@ export const photoSpecs = [
 export const booth360Features = [
   {
     title: "Slow-motion 360° video",
-    desc: "Kamera ujame trenutek iz vseh kotov in ga pretvori v dinamičen slow-motion videoposnetek.",
+    desc: "Kamera ujame dogajanje iz vseh kotov in ga pretvori v dinamičen slow-motion videoposnetek.",
   },
   {
     title: "Takojšnje deljenje",
@@ -330,7 +330,7 @@ export const booth360Features = [
     desc: "LED ring s prilagodljivo barvno temperaturo. Vsak posnetek izgleda kot studijski.",
   },
   {
-    title: "Premium platforma",
+    title: "Stabilna platforma",
     desc: "Stabilna platforma omogoča sproščeno izkušnjo za posameznike, pare ali skupine do 4 osebe.",
   },
   {
