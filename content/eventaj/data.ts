@@ -296,13 +296,13 @@ export const photoFeatures = [
     desc: "Za postavitev, pomoč gostom in nemoten potek poskrbi član naše ekipe.",
   },
   {
-    title: "Spletna galerija",
-    desc: "Vse fotografije prejmete v 48 urah v zasebni spletni galeriji za ogled, deljenje in prenos.",
+    title: "Digitalna galerija",
+    desc: "Vse fotografije prejmete v 48 urah v zasebni digitalni galeriji za ogled, deljenje in prenos.",
   },
 ] as const;
 
 export const photoSpecs = [
-  { label: "Trajanje", value: "Paketi za 2, 3 ali 4 ure z možnostjo podaljšanja dogodka.", icon: "clock" },
+  { label: "Trajanje", value: "Paketi za 2, 3 ali 4 ure z možnostjo podaljšanja najema.", icon: "clock" },
   { label: "Prostor", value: "Za postavitev potrebujemo približno 2,5 × 2 m prostora in dostop do električne vtičnice.", icon: "space" },
   { label: "Postavitev", value: "Photo Booth pripravimo in postavimo 30–45 minut pred začetkom dogodka.", icon: "setup" },
   { label: "Tisk fotografij", value: "Neomejen tisk fotografij v formatu 10 × 15 cm ali foto trakovih 5 × 15 cm.", icon: "print" },
@@ -318,12 +318,12 @@ export const booth360Features = [
     desc: "Kamera ujame trenutek iz vseh kotov in ga pretvori v dinamičen slow-motion videoposnetek.",
   },
   {
-    title: "Trenutno deljenje",
-    desc: "Gostje prejmejo videoposnetek v nekaj sekundah in ga lahko takoj delijo naprej.",
+    title: "Takojšnje deljenje",
+    desc: "Gostje prejmejo videoposnetek v nekaj sekundah in ga lahko takoj delijo na družbenih omrežjih.",
   },
   {
     title: "Personaliziran zvok",
-    desc: "Posnetkom dodamo glasbo, zvočne učinke ali prepoznavne elemente vaše blagovne znamke.",
+    desc: "Posnetkom dodamo glasbo, zvočne učinke in druge prepoznavne elemente vaše blagovne znamke.",
   },
   {
     title: "Profesionalna osvetlitev",
@@ -335,16 +335,16 @@ export const booth360Features = [
   },
   {
     title: "Animacije in filtri",
-    desc: "Animacije, grafični elementi in vizualni učinki po meri vašega dogodka.",
+    desc: "Animacije, grafični elementi in vizualni učinki, prilagojeni vašemu dogodku.",
   },
 ] as const;
 
 export const booth360Specs = [
-  { label: "Trajanje", value: "Paketi za 2, 3 ali 4 ure z možnostjo podaljšanja dogodka.", icon: "clock" },
+  { label: "Trajanje", value: "Paketi za 2, 3 ali 4 ure z možnostjo podaljšanja najema.", icon: "clock" },
   { label: "Prostor", value: "Za postavitev potrebujemo približno 3 × 3 m prostora in dostop do električne vtičnice.", icon: "space" },
   { label: "Postavitev", value: "360° Booth pripravimo in postavimo 30–45 minut pred začetkom dogodka.", icon: "setup" },
   { label: "Format videa", value: "Videoposnetki so optimizirani za deljenje na družbenih omrežjih.", icon: "video" },
-  { label: "Galerija", value: "Po dogodku prejmete vse videoposnetke v polni ločljivosti v zasebni galeriji.", icon: "share" },
+  { label: "Digitalna galerija", value: "Po dogodku prejmete vse videoposnetke v polni ločljivosti v zasebni galeriji.", icon: "share" },
   { label: "Prevoz", value: "Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v končno ponudbo.", icon: "truck" },
   { label: "Personalizacija", value: "Prilagodimo glasbo, animacije, grafične elemente in vizualno podobo posnetkov.", icon: "music" },
   { label: "Cena", value: "Paketi od 299 € dalje. Brez skritih stroškov.", icon: "tag" },
@@ -442,8 +442,8 @@ export const booth360Packages = [
 ] as const;
 
 export const addons = [
-  { item: "Dodatna ura · Photo Booth", price: "+50 €" },
-  { item: "Dodatna ura · 360° Booth", price: "+80 €" },
+  { item: "Dodatna ura najema Photo Booth", price: "+50 €" },
+  { item: "Dodatna ura najema 360° Booth", price: "+80 €" },
   { item: "Personalizirane animacije za 360° Booth", price: "+59 €" },
   { item: "Album", price: "+20 €" },
   {

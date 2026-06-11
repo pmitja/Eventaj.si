@@ -14,7 +14,7 @@ const pricingPlans = [
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 279 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in spletna galerija.",
+    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 279 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in digitalna galerija.",
   keywords: [
     "Foto kotiček najem",
     "foto zabava",
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: pageTitle,
     description:
-      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
+      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
     url: "https://www.eventaj.si/foto-koticek",
     siteName: "Eventaj.si",
     images: [
@@ -45,7 +45,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: pageTitle,
     description:
-      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in spletna galerija.",
+      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
