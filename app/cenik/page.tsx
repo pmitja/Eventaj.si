@@ -1,4 +1,4 @@
-import { CenikPageContent } from "@/components/sections/eventaj-pages";
+import { CenikPageContent } from "@/components/sections/eventaj/cenik/cenik-page-content";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { BreadcrumbList } from "schema-dts";

@@ -1,4 +1,4 @@
-import { ServicePageContent } from "@/components/sections/eventaj-pages";
+import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { BreadcrumbList, Service } from "schema-dts";

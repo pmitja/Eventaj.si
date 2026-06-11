@@ -1,4 +1,4 @@
-import { HomePageContent } from "@/components/sections/eventaj-pages";
+import { HomePageContent } from "@/components/sections/eventaj/home/home-page-content";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
