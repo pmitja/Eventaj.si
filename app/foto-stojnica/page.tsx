@@ -1,7 +1,12 @@
 import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import {
+  buildFaqPageSchema,
+  eventajAggregateRating,
+  priceValidUntil,
+} from "@/content/eventaj/structured-data";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { BreadcrumbList, Service } from "schema-dts";
+import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const pageTitle = "Foto stojnica najem po Sloveniji od 279 € | Eventaj.si";
 
@@ -80,7 +85,7 @@ export default function FotoStojnica() {
             email: "info@eventaj.si",
             address: {
               "@type": "PostalAddress",
-              addressCountry: "Slovenija",
+              addressCountry: "SI",
               addressLocality: "Lenart v Slovenskih goricah",
               addressRegion: "Štajerska",
               postalCode: "2230",
@@ -101,6 +106,7 @@ export default function FotoStojnica() {
             { "@type": "AdministrativeArea", name: "Primorska" },
             { "@type": "AdministrativeArea", name: "Gorenjska" },
           ],
+          aggregateRating: eventajAggregateRating,
           description:
             "Profesionalni najem foto stojnice za dogodke, poroke, rojstne dneve in zabave po celotni Sloveniji. Vključuje operaterja, rekvizite, personalizirane predloge ter takojšnje tiskanje fotografij.",
           offers: {
@@ -110,7 +116,7 @@ export default function FotoStojnica() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2026-12-31",
+            priceValidUntil,
           },
           serviceType: "Foto Stojnica Rental",
           category: ["Foto Stojnica", "Event Services", "Photography Services"],
@@ -138,7 +144,18 @@ export default function FotoStojnica() {
           ],
         }}
       />
-      <ServicePageContent type="photo" seoTitle={pageTitle} />
+      <JsonLd<FAQPage> item={buildFaqPageSchema()} />
+      <ServicePageContent
+        type="photo"
+        seoTitle={pageTitle}
+        h1="Najem foto stojnice po Sloveniji"
+        heroTag="Foto stojnica"
+        heroTitle="Foto stojnica,"
+        heroItalicWord="ki poveže goste"
+        heroDescription="Foto stojnica s takojšnjim tiskom in neomejenimi fotografijami. Rekviziti, personaliziran dizajn in spletna galerija — popestritev porok, rojstnih dni in poslovnih dogodkov po vsej Sloveniji."
+        featureTitle="Vse vključeno,"
+        featureItalicWord="brez skritih stroškov"
+      />
     </>
   );
 }

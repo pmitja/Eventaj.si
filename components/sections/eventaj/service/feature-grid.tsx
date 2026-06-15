@@ -5,18 +5,20 @@ export function FeatureGrid({
   italicWord,
   features,
   accent,
+  eyebrow = "Kaj je vključeno",
 }: {
   title: string;
   italicWord: string;
   features: ReadonlyArray<{ title: string; desc: string }>;
   accent: string;
+  eyebrow?: string;
 }) {
   return (
     <section className="bg-[var(--eventaj-paper-2)] px-5 py-24 md:px-10 md:py-28">
       <div className="mx-auto max-w-7xl">
         <div className="mb-16 max-w-[720px]">
           <div className="mb-5 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]">
-            Kaj je vključeno
+            {eyebrow}
           </div>
           <h2 className="font-serif-display text-[clamp(36px,4.8vw,64px)] font-[350] leading-none text-balance">
             {title}{" "}

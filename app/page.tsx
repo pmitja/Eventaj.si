@@ -1,30 +1,30 @@
 import { HomePageContent } from "@/components/sections/eventaj/home/home-page-content";
+import { eventajAggregateRating } from "@/content/eventaj/structured-data";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Photo Booth Najem po Sloveniji - že od 279€ | Eventaj.si",
+  title: "Foto box & photo booth najem po Sloveniji – od 279€ | Eventaj.si",
   description:
-    "Photo Booth & 360° najem po Sloveniji. Že od 279€ za 2 uri. Takojšnje tiskanje, rekviziti, personalizacija in profesionalna izvedba.",
+    "Foto box (photo booth) in 360° booth najem po Sloveniji. Že od 279€ za 2 uri. Takojšen tisk, rekviziti, personalizacija in profesionalna izvedba.",
   keywords: [
-    "foto zabava",
-    "360° Booth",
-    "Photo Booth",
-    "Photo Booth najem",
-    "360° Booth",
+    "foto box",
+    "fotobox",
+    "foto box najem",
+    "photo booth najem",
+    "photo booth",
+    "360 booth najem",
     "foto stojnica",
-    "Photo Booth najem",
-    "najem Photo Booth",
-    "360° Booth najem",
-    "foto stojnica za poroko",
+    "foto kotiček",
     "foto box za poroko",
-    "foto booth zabava",
+    "fotobox za zabavo",
+    "foto zabava",
   ],
   openGraph: {
-    title: "Photo Booth Najem po Sloveniji - že od 279€ | Eventaj.si",
+    title: "Foto box & photo booth najem po Sloveniji – od 279€ | Eventaj.si",
     description:
-      "Photo Booth & 360° najem po Sloveniji. Takojšnje tiskanje, rekviziti, personalizacija in profesionalna izvedba.",
+      "Foto box (photo booth) & 360° najem po Sloveniji. Takojšen tisk, rekviziti, personalizacija in profesionalna izvedba.",
     images: [
       {
         url: "/og/photo-booth.webp",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Photo Booth Najem po Sloveniji - že od 279€ | Eventaj.si",
+    title: "Foto box & photo booth najem po Sloveniji – od 279€ | Eventaj.si",
     description:
-      "Photo Booth & 360° najem po Sloveniji. Takojšnje tiskanje, rekviziti, personalizacija in profesionalna izvedba.",
+      "Foto box (photo booth) & 360° najem po Sloveniji. Takojšen tisk, rekviziti, personalizacija in profesionalna izvedba.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
@@ -101,6 +101,7 @@ export default function Home() {
           telephone: "+386 31 285 143",
           email: "info@eventaj.si",
           slogan: "Photo Booth in 360° Booth najem po celi Sloveniji",
+          aggregateRating: eventajAggregateRating,
           address: {
             "@type": "PostalAddress",
             streetAddress: "Slomškova ulica 1",

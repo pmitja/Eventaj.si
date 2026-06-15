@@ -4,7 +4,13 @@ import { faqItems } from "@/content/eventaj/data";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 
-export function FAQSection() {
+export function FAQSection({
+  items = faqItems,
+  eyebrow = "Pogosta vprašanja",
+}: {
+  items?: ReadonlyArray<{ q: string; a: string }>;
+  eyebrow?: string;
+} = {}) {
   const [open, setOpen] = useState(0);
   return (
     <section
@@ -14,7 +20,7 @@ export function FAQSection() {
       <div className="mx-auto grid max-w-[1100px] gap-12 lg:grid-cols-[1fr_1.5fr] lg:gap-20">
         <div className="lg:sticky lg:top-28 lg:self-start">
           <div className="mb-5 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]">
-            Pogosta vprašanja
+            {eyebrow}
           </div>
           <h2 className="font-serif-display text-[clamp(36px,4.5vw,60px)] font-[350] leading-none text-balance">
             Vse, kar te{" "}
@@ -35,12 +41,12 @@ export function FAQSection() {
           </a>
         </div>
         <div>
-          {faqItems.map((item, index) => (
+          {items.map((item, index) => (
             <div
               key={item.q}
               className={cn(
                 "border-t border-[rgba(20,17,15,0.12)]",
-                index === faqItems.length - 1 && "border-b",
+                index === items.length - 1 && "border-b",
               )}
             >
               <button

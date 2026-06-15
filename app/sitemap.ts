@@ -2,7 +2,9 @@ import { MetadataRoute } from 'next'
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://www.eventaj.si'
-	const currentDate = new Date().toISOString().split('T')[0] // YYYY-MM-DD format
+	// Release date — bump this when content meaningfully changes (avoids a
+	// fresh lastmod on every build, which Google learns to distrust).
+	const currentDate = '2026-06-15'
 
 	return [
 		// Main pages
@@ -44,6 +46,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'weekly',
 			priority: 0.9,
 		},
+
+		// SEO landing pages by event type
+		...[
+			'photo-booth-za-poroko',
+			'photo-booth-za-rojstni-dan',
+			'photo-booth-za-poslovni-dogodek',
+			'photo-booth-za-maturantski-ples',
+			'photo-booth-za-obletnico',
+			'360-booth-za-poroko',
+			'360-booth-za-rojstni-dan',
+			'360-booth-za-poslovni-dogodek',
+			'360-booth-za-promocijo',
+			'360-booth-za-festival',
+		].map((slug) => ({
+			url: `${baseUrl}/${slug}`,
+			lastModified: currentDate,
+			changeFrequency: 'monthly' as const,
+			priority: 0.8,
+		})),
 
 		// Product FAQ pages
 		{

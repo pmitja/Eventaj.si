@@ -1,7 +1,12 @@
 import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import {
+  buildFaqPageSchema,
+  eventajAggregateRating,
+  priceValidUntil,
+} from "@/content/eventaj/structured-data";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { BreadcrumbList, Service } from "schema-dts";
+import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const pricingPlans = [
   { name: "Mini paket", price: "299", description: "2 uri 360° Booth najema" },
@@ -16,16 +21,16 @@ export const metadata: Metadata = {
   description:
     "360° Booth najem za viralne slow-motion posnetke, QR deljenje, rekvizite in profesionalno izvedbo po Sloveniji. Paketi od 299 €.",
   keywords: [
-    "360° Booth najem",
-    "360° Booth",
-    "360° Booth",
-    "360° Booth",
-    "foto booth 360",
-    "360 fotografiranje",
+    "360 booth najem",
+    "360 photo booth",
     "360 video booth",
-    "360° Booth za poroko",
-    "najem 360° Booth Ljubljana",
-    "360° Booth cena",
+    "360 booth za poroko",
+    "360 booth za zabavo",
+    "360 booth najem Ljubljana",
+    "360 booth cena",
+    "selfie 360 booth",
+    "360 fotografiranje",
+    "viralni 360 posnetki",
   ],
   openGraph: {
     title: pageTitle,
@@ -74,14 +79,16 @@ export default function ThreeSixtyPhotoBooth() {
             image: "https://www.eventaj.si/application/logo.svg",
             address: {
               "@type": "PostalAddress",
+              addressCountry: "SI",
               addressLocality: "Lenart v Slovenskih goricah",
-              addressRegion: "Slovenija",
+              addressRegion: "Štajerska",
               postalCode: "2230",
               streetAddress: "Slomškova ulica 1",
             },
             telephone: "+386 31 285 143",
           },
           areaServed: "Slovenija",
+          aggregateRating: eventajAggregateRating,
           description:
             "Profesionalni najem 360° Booth naprave za dogodke, poroke in zabave. Vključuje operaterja, rekvizite in takojšnje deljenje posnetkov.",
           offers: {
@@ -90,7 +97,7 @@ export default function ThreeSixtyPhotoBooth() {
             highPrice: "399",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
-            priceValidUntil: "2026-12-31",
+            priceValidUntil,
           },
           serviceType: "360° Booth Rental",
           category: ["360° Booth", "Event Services", "Video Services"],
@@ -117,7 +124,12 @@ export default function ThreeSixtyPhotoBooth() {
           ],
         }}
       />
-      <ServicePageContent type="360" seoTitle={pageTitle} />
+      <JsonLd<FAQPage> item={buildFaqPageSchema()} />
+      <ServicePageContent
+        type="360"
+        seoTitle={pageTitle}
+        h1="Najem 360° bootha po Sloveniji"
+      />
     </>
   );
 }

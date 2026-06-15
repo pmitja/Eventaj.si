@@ -7,6 +7,7 @@ export function SubpageHero({
   tag,
   title,
   seoTitle,
+  h1,
   italicWord,
   description,
   price,
@@ -16,6 +17,7 @@ export function SubpageHero({
   tag: string;
   title: string;
   seoTitle: string;
+  h1?: string;
   italicWord: string;
   description: string;
   price: number;
@@ -42,7 +44,7 @@ export function SubpageHero({
           {tag}
         </div>
 
-        <h1 className="sr-only">{seoTitle}</h1>
+        <h1 className="sr-only">{h1 ?? seoTitle}</h1>
         <div
           aria-hidden="true"
           className="mt-7 max-w-[900px] pb-2 font-serif-display text-[clamp(48px,9vw,118px)] font-[350] leading-[0.9] text-balance md:mt-9"

@@ -1,5 +1,10 @@
 "use client";
 
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { galleryItems } from "@/content/eventaj/data";
 import { useMediaQuery } from "@/hooks/use-media-query";
@@ -14,6 +19,42 @@ export function GallerySection() {
   const isMobile = useMediaQuery("(max-width: 767px)");
   const lightboxItem =
     lightboxIndex === null ? null : galleryItems[lightboxIndex];
+
+  const renderCard = (
+    item: (typeof galleryItems)[number],
+    index: number,
+    layoutClass: string,
+    key: string,
+  ) => (
+    <button
+      key={key}
+      type="button"
+      onMouseEnter={() => setActive(index)}
+      onMouseLeave={() => setActive(null)}
+      onFocus={() => setActive(index)}
+      onBlur={() => setActive(null)}
+      onClick={(event) => {
+        if (isMobile) {
+          setLightboxIndex(index);
+          return;
+        }
+        event.currentTarget.blur();
+        setActive(null);
+      }}
+      aria-label={`Odpri referenco: ${item.label}`}
+      className={cn(
+        "group relative cursor-pointer overflow-hidden bg-[var(--eventaj-ink)] text-left shadow-[0_18px_45px_-30px_rgba(20,17,15,0.5)] transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--eventaj-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--eventaj-paper-2)] motion-safe:hover:z-10 motion-safe:hover:scale-[1.035] motion-safe:hover:shadow-[0_32px_70px_-34px_rgba(20,17,15,0.65)]",
+        layoutClass,
+        active === index && "md:z-10 md:scale-[1.015]",
+      )}
+    >
+      <GalleryCardMedia
+        item={item}
+        priority={index < 4}
+        isActive={active === index}
+      />
+    </button>
+  );
 
   return (
     <section
@@ -39,37 +80,41 @@ export function GallerySection() {
             zadnjih 12 mesecih.
           </p>
         </div>
-        <div className="grid grid-cols-1 gap-4 overflow-visible sm:grid-cols-2 lg:grid-flow-dense lg:auto-rows-[292px] lg:grid-cols-4">
-          {galleryItems.map((item, index) => (
-            <button
-              key={`${item.label}-${index}`}
-              type="button"
-              onMouseEnter={() => setActive(index)}
-              onMouseLeave={() => setActive(null)}
-              onFocus={() => setActive(index)}
-              onBlur={() => setActive(null)}
-              onClick={(event) => {
-                if (isMobile) {
-                  setLightboxIndex(index);
-                  return;
-                }
-                event.currentTarget.blur();
-                setActive(null);
-              }}
-              aria-label={`Odpri referenco: ${item.label}`}
-              className={cn(
-                "group relative cursor-pointer overflow-hidden bg-[var(--eventaj-ink)] text-left shadow-[0_18px_45px_-30px_rgba(20,17,15,0.5)] transition duration-300 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--eventaj-accent)] focus-visible:ring-offset-4 focus-visible:ring-offset-[var(--eventaj-paper-2)] lg:h-full lg:[aspect-ratio:auto] motion-safe:hover:z-10 motion-safe:hover:scale-[1.035] motion-safe:hover:shadow-[0_32px_70px_-34px_rgba(20,17,15,0.65)]",
+        {/* Mobile: horizontal swiper to avoid endless vertical scrolling */}
+        <Carousel
+          opts={{ align: "start", dragFree: true }}
+          className="max-[767px]:block min-[768px]:hidden"
+        >
+          <CarouselContent className="-ml-3">
+            {galleryItems.map((item, index) => (
+              <CarouselItem
+                key={`swipe-${item.label}-${index}`}
+                className="basis-[82%] pl-3"
+              >
+                {renderCard(
+                  item,
+                  index,
+                  "aspect-[4/5] w-full",
+                  `swipe-card-${item.label}-${index}`,
+                )}
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+        </Carousel>
+
+        {/* Tablet and desktop: bento grid */}
+        <div className="hidden gap-4 overflow-visible min-[768px]:grid min-[768px]:grid-cols-2 lg:grid-flow-dense lg:auto-rows-[292px] lg:grid-cols-4">
+          {galleryItems.map((item, index) =>
+            renderCard(
+              item,
+              index,
+              cn(
                 getGalleryCardClass(item.type),
-                active === index && "md:z-10 md:scale-[1.015]",
-              )}
-            >
-              <GalleryCardMedia
-                item={item}
-                priority={index < 4}
-                isActive={active === index}
-              />
-            </button>
-          ))}
+                "lg:h-full lg:[aspect-ratio:auto]",
+              ),
+              `grid-card-${item.label}-${index}`,
+            ),
+          )}
         </div>
       </div>
 

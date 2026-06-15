@@ -1,7 +1,12 @@
 import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import {
+  buildFaqPageSchema,
+  eventajAggregateRating,
+  priceValidUntil,
+} from "@/content/eventaj/structured-data";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import { BreadcrumbList, Service } from "schema-dts";
+import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const pageTitle = "Foto kotiček najem od 279 € | Eventaj.si";
 
@@ -75,14 +80,16 @@ export default function FotoKoticek() {
             image: "https://www.eventaj.si/application/logo.svg",
             address: {
               "@type": "PostalAddress",
+              addressCountry: "SI",
               addressLocality: "Lenart v Slovenskih goricah",
-              addressRegion: "Slovenija",
+              addressRegion: "Štajerska",
               postalCode: "2230",
               streetAddress: "Slomškova ulica 1",
             },
             telephone: "+386 31 285 143",
           },
           areaServed: "Slovenija",
+          aggregateRating: eventajAggregateRating,
           description:
             "Profesionalni najem foto kotička za dogodke, poroke, rojstne dneve in zabave. Vključuje operaterja, rekvizite in takojšnje tiskanje fotografij.",
           offers: {
@@ -92,7 +99,7 @@ export default function FotoKoticek() {
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",
-            priceValidUntil: "2026-12-31",
+            priceValidUntil,
           },
           serviceType: "Foto kotiček Rental",
           category: ["Foto kotiček", "Event Services", "Photography Services"],
@@ -120,7 +127,18 @@ export default function FotoKoticek() {
           ],
         }}
       />
-      <ServicePageContent type="photo" seoTitle={pageTitle} />
+      <JsonLd<FAQPage> item={buildFaqPageSchema()} />
+      <ServicePageContent
+        type="photo"
+        seoTitle={pageTitle}
+        h1="Najem foto kotička za poroke in dogodke"
+        heroTag="Foto kotiček"
+        heroTitle="Foto kotiček,"
+        heroItalicWord="poln spominov"
+        heroDescription="Foto kotiček z neomejenimi fotografijami in takojšnjim tiskom. Rekviziti, personaliziran okvir in digitalna galerija — za poroke, rojstne dneve in zabave po vsej Sloveniji."
+        featureTitle="Vse vključeno,"
+        featureItalicWord="brez skritih stroškov"
+      />
     </>
   );
 }
