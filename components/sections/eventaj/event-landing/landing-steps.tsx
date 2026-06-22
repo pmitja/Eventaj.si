@@ -2,7 +2,10 @@ import { eventLandingSteps, EventLanding } from "@/content/eventaj/event-pages";
 import { cn } from "@/lib/utils";
 
 export function LandingSteps({ landing }: { landing: EventLanding }) {
-  const steps = eventLandingSteps[landing.product];
+  const steps = landing.steps ?? eventLandingSteps[landing.product];
+  const description =
+    landing.stepsDescription ??
+    "Pridemo 60–90 minut prej, postavimo in vodimo booth ves dogodek. Po zabavi vse pospravimo — vi ne dvignete niti prsta.";
   return (
     <section className="bg-[var(--eventaj-ink)] px-5 py-24 text-[var(--eventaj-paper)] md:px-10 md:py-32">
       <div className="mx-auto grid max-w-[1100px] gap-12 lg:grid-cols-2 lg:items-center lg:gap-20">
@@ -20,8 +23,7 @@ export function LandingSteps({ landing }: { landing: EventLanding }) {
             .
           </h2>
           <p className="mt-6 max-w-[440px] text-[15px] leading-relaxed text-[var(--eventaj-cream)] opacity-75">
-            Pridemo 60–90 minut prej, postavimo in vodimo booth ves dogodek. Po
-            zabavi vse pospravimo — vi ne dvignete niti prsta.
+            {description}
           </p>
         </div>
         <div className="flex flex-col">

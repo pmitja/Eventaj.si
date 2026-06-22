@@ -2,7 +2,7 @@ import { eventLandingIncluded, EventLanding } from "@/content/eventaj/event-page
 import { cn } from "@/lib/utils";
 
 export function LandingIncluded({ landing }: { landing: EventLanding }) {
-  const rows = eventLandingIncluded[landing.product];
+  const rows = landing.included ?? eventLandingIncluded[landing.product];
   return (
     <section className="bg-[var(--eventaj-paper)] px-5 py-24 md:px-10 md:py-28">
       <div className="mx-auto max-w-[880px]">
