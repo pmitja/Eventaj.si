@@ -5,26 +5,18 @@ import { JsonLd } from "react-schemaorg";
 import { LocalBusiness, Organization, WebSite } from "schema-dts";
 
 export const metadata: Metadata = {
-  title: "Foto box & photo booth najem po Sloveniji – od 279€ | Eventaj.si",
+  title: "Eventaj.si | Photo Booth in 360° Booth za dogodke",
   description:
-    "Foto box (photo booth) in 360° booth najem po Sloveniji. Že od 279€ za 2 uri. Takojšen tisk, rekviziti, personalizacija in profesionalna izvedba.",
+    "Eventaj.si ustvarja Photo Booth in 360° Booth doživetja za poroke, poslovne dogodke in praznovanja po Sloveniji. Oglejte si storitve, pakete in proste termine.",
   keywords: [
-    "foto box",
-    "fotobox",
-    "foto box najem",
-    "photo booth najem",
-    "photo booth",
-    "360 booth najem",
-    "foto stojnica",
-    "foto kotiček",
-    "foto box za poroko",
-    "fotobox za zabavo",
-    "foto zabava",
+    "Eventaj.si",
+    "Photo Booth dogodki",
+    "360° Booth dogodki",
   ],
   openGraph: {
-    title: "Foto box & photo booth najem po Sloveniji – od 279€ | Eventaj.si",
+    title: "Eventaj.si | Photo Booth in 360° Booth za dogodke",
     description:
-      "Foto box (photo booth) & 360° najem po Sloveniji. Takojšen tisk, rekviziti, personalizacija in profesionalna izvedba.",
+      "Photo Booth in 360° Booth doživetja za poroke, poslovne dogodke in praznovanja po Sloveniji.",
     images: [
       {
         url: "/og/photo-booth.webp",
@@ -37,9 +29,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Foto box & photo booth najem po Sloveniji – od 279€ | Eventaj.si",
+    title: "Eventaj.si | Photo Booth in 360° Booth za dogodke",
     description:
-      "Foto box (photo booth) & 360° najem po Sloveniji. Takojšen tisk, rekviziti, personalizacija in profesionalna izvedba.",
+      "Photo Booth in 360° Booth doživetja za poroke, poslovne dogodke in praznovanja po Sloveniji.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {

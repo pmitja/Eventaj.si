@@ -88,7 +88,7 @@ export function HomeHero() {
           </div>
 
           <h1 className="sr-only">
-            Photo Booth Najem po Sloveniji - že od 279€ | Eventaj.si
+            Eventaj.si – Photo Booth in 360° Booth za dogodke
           </h1>
           <div
             aria-hidden="true"

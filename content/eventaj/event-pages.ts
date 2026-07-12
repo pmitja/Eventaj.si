@@ -27,6 +27,7 @@ export interface EventLanding {
   reasonsTitle: string;
   reasonsItalic: string;
   reasons: { title: string; desc: string }[];
+  idealFor?: { eyebrow: string; title: string; description: string; items: string[] };
   stepsDescription?: string;
   steps?: { title: string; desc: string }[];
   included?: { label: string; desc: string }[];
@@ -111,9 +112,9 @@ export const eventLandings: Record<string, EventLanding> = {
     breadcrumbLabel: "Za poroko",
     eyebrow: "Photo Booth za poroko",
     title: "Vajina poroka, ujeta",
-    italicWord: "v papir",
+    italicWord: "v fotografijah.",
     description:
-      "Photo Booth s tiski, oblikovanimi po vajini poroki — imeni, datum in barve. Gostje se zabavajo, spominska knjiga se napolni sama.",
+      "Photo Booth s personaliziranim tiskom, usklajenim z vajinimi imeni, datumom in stilom poroke. Gostje ustvarjajo spomine, spominska knjiga pa se polni sama.",
     proof: "4.9/5 · 50+ porok vsako sezono",
     seoTitle: "Foto box (photo booth) za poroko – 279 € | Eventaj.si",
     metaDescription:
@@ -128,10 +129,10 @@ export const eventLandings: Record<string, EventLanding> = {
     reasonsTitle: "Zabava za goste,",
     reasonsItalic: "spomini za vaju",
     reasons: [
-      { title: "Usklajeno z vajino poroko", desc: "Personaliziran tisk z vajinima imenoma, datumom in elementi poročne grafične podobe — usklajen z vabili in dekoracijo." },
-      { title: "Spominska knjiga se piše sama", desc: "Vsaka fotografija se natisne v dveh izvodih. En izvod gost odnese domov, drugi ostane v spominski knjigi s posvetili, ki jo ob koncu večera odneseta s seboj." },
+      { title: "Prilagojeno vajini poroki", desc: "Personaliziran tisk z vajinima imenoma, datumom in elementi poročne grafične podobe — usklajen z vabili in dekoracijo." },
+      { title: "Spominska knjiga se piše sama", desc: "Vsaka fotografija se natisne v dveh izvodih. En izvod gost odnese domov, drugi ostane v spominski knjigi skupaj s posvetili, ki vama ostanejo za vedno." },
       { title: "Zabava za vse generacije", desc: "Gostje vseh generacij se radi vračajo pred objektiv in ustvarjajo spomine, ki ostanejo tudi po poroki." },
-      { title: "Zabava brez omejitev", desc: "Gostje lahko ustvarijo toliko fotografij, kot želijo. Število fotografij ni omejeno in ne prinaša dodatnih stroškov." },
+      { title: "Brez omejitve fotografij", desc: "Neomejeno fotografiranje brez doplačil. Gostje ustvarijo toliko fotografij, kot jih želijo." },
       { title: "Eleganten, ne vsiljiv", desc: "Minimalistična postavitev, ki se naravno zlije z ambientom in poročno dekoracijo." },
       { title: "Digitalna galerija po poroki", desc: "Po poroki prejmeta zasebno galerijo z vsemi fotografijami, ki jo lahko delita z družino in gosti." },
     ],
@@ -143,7 +144,7 @@ export const eventLandings: Record<string, EventLanding> = {
         desc: "Pošljeta datum in lokacijo poroke. V 24 urah preverimo razpoložljivost in pripravimo ponudbo.",
       },
       {
-        title: "Dizajn po vajini poroki",
+        title: "V podobi vajine poroke",
         desc: "Pred poroko uskladimo imena, datum in podobo tiska, da se ujema z vajinimi vabili in dekoracijo.",
       },
       {
@@ -179,7 +180,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { q: "Kdaj naj rezervirava termin za poroko?", a: "Najbolj priljubljeni sobotni termini se pogosto zapolnijo že 6–12 mesecev vnaprej. Ko potrdita lokacijo, nama pošljita datum in ga brezplačno rezerviramo za 7 dni." },
       { q: "Ali se dizajn tiska ujema z najinimi vabili?", a: "Da. Tisk prilagodimo vajinim barvam, tipografiji in motivom, zato se lepo ujema z vabili in celotno podobo poroke." },
       { q: "Koliko prostora potrebuje booth v dvorani?", a: "Približno 2,5 × 2 m in dostop do električne vtičnice. Postavitev uskladimo z lokacijo, da se booth lepo zlije s prostorom." },
-      { q: "Kako dolgo je ekipa prisotna na poroki?", a: "Ostanemo ves čas dogovorjenega najema. Če se zabava zavleče, lahko termin po dogovoru tudi podaljšate." },
+      { q: "Kako dolgo je ekipa prisotna na poroki?", a: "Ob Photo Boothu je prisotna naša ekipa skozi celoten dogovorjeni čas najema. Po potrebi lahko termin tudi podaljšamo." },
       { q: "Kaj če se poroka premakne ali odpove?", a: "Termin lahko enkrat brezplačno prestavimo na nov prost datum. O podrobnostih se vedno dogovorimo individualno in brez zapletov." },
     ],
     related: [
@@ -212,12 +213,36 @@ export const eventLandings: Record<string, EventLanding> = {
     reasonsTitle: "Zabava, ki se",
     reasonsItalic: "natisne",
     reasons: [
-      { title: "Prilagojeno vašemu praznovanju", desc: "Fotografije opremimo z imenom, letnico in dizajnom po meri praznovanja." },
+      { title: "Prilagojeno vašemu praznovanju", desc: "Fotografije opremimo z imenom, letnico in dizajnom, prilagojenim vaši zabavi." },
       { title: "Zabavni rekviziti", desc: "Zabavni rekviziti poskrbijo, da se sprostijo tudi najbolj zadržani gostje." },
       { title: "Neomejeno fotografiranje", desc: "Gostje se lahko fotografirajo in tiskajo fotografije kolikokrat želijo." },
-      { title: "Spomin, ki ga odnesejo domov", desc: "Vsak gost prejme natisnjeno fotografijo kot trajen spomin na praznovanje." },
-      { title: "Brez skrbi za organizacijo", desc: "Postavimo, vodimo in pospravimo – vi samo praznujete." },
-      { title: "Brez skrbi za organizacijo", desc: "Postavimo, vodimo in pospravimo – vi samo praznujete." },
+      { title: "Spomin, ki ga odnesejo domov", desc: "Vsak gost prejme natisnjeno fotografijo za spomin na zabavo." },
+      { title: "Brez skrbi za organizacijo", desc: "Postavimo, vodimo in pospravimo. Vi samo praznujete." },
+      { title: "Digitalna galerija po praznovanju", desc: "Po dogodku prejmete dostop do zasebne digitalne galerije z vsemi fotografijami." },
+    ],
+    stepsDescription:
+      "Pridemo pred začetkom, postavimo Photo Booth in skrbimo za nemoten potek skozi ves dogodek. Po zabavi vse pospravimo. Vi se lahko brez skrbi posvetite svojim gostom.",
+    steps: [
+      {
+        title: "Povpraševanje in termin",
+        desc: "Pošljete datum in lokacijo, v 24 urah potrdimo prost termin in pripravimo ponudbo po meri.",
+      },
+      {
+        title: "Dizajn tiska po vašem dogodku",
+        desc: "Pred dogodkom uskladimo predlogo tiska z imenom, datumom in izbranim dizajnom.",
+      },
+      {
+        title: "Na dan dogodka — vse mi",
+        desc: "Poskrbimo za postavitev, rekvizite, tiskanje fotografij in pospravljanje. Fotografije prejmete tudi v zasebni spletni galeriji.",
+      },
+    ],
+    included: [
+      { label: "Neomejeni tiski", desc: "Vsak gost lahko fotografije natisne kolikokrat želi. Tiski so pripravljeni v nekaj sekundah." },
+      { label: "Personaliziran dizajn tiska", desc: "Predloga z imeni, datumom ali logotipom, usklajena pred dogodkom." },
+      { label: "Izbrani rekviziti", desc: "Skrbno izbrana kolekcija rekvizitov, prilagojena vašemu dogodku." },
+      { label: "Spremljanje skozi ves dogodek", desc: "Naša ekipa je prisotna skozi celoten dogodek in poskrbi za brezhibno izkušnjo gostov." },
+      { label: "Spletna galerija", desc: "Vse fotografije v zasebni galeriji v 48 urah po dogodku." },
+      { label: "Cena", desc: "Paketi od 279 €. Končna cena je odvisna od lokacije dogodka." },
     ],
     galleryImages: [
       { src: "/application/birthday-parties/birthday-11.webp", alt: "Photo Booth na rojstnodnevni zabavi" },
@@ -241,10 +266,10 @@ export const eventLandings: Record<string, EventLanding> = {
     faqEyebrow: "Rojstnodnevna vprašanja",
     faq: [
       { q: "Koliko časa pred zabavo naj rezerviram?", a: "Priporočamo rezervacijo čim prej, zlasti za vikende in december. Največ rezervacij prejmemo 2–4 mesece pred dogodkom." },
-      { q: "Ali deluje tudi v domačem prostoru ali šotoru?", a: "Da. Potrebujemo približno 2,5 × 2 m prostora in električno vtičnico — booth postavimo v dvorani, gostilni, doma ali pod šotorom." },
+      { q: "Ali deluje tudi v domačem prostoru ali šotoru?", a: "Da. Potrebujemo približno 2,5 × 2 m prostora in električno vtičnico. Photo Booth lahko postavimo v dvorani, gostilni, doma ali pod šotorom." },
       { q: "Lahko tisk prilagodimo slavljencu?", a: "Seveda. Predlogo oblikujemo z imenom, letnico in motivom zabave ter jo uskladimo z vami pred dogodkom." },
-      { q: "Koliko gostov lahko uporablja booth?", a: "Ni omejitve — fotografiranje in tisk sta neomejena za vse goste skozi celoten najem." },
-      { q: "Kaj se zgodi s fotografijami po zabavi?", a: "Vse fotografije prejmete v zasebni digitalni galeriji v 48 urah, natisnjene pa gostje odnesejo domov že med zabavo." },
+      { q: "Koliko gostov lahko uporablja booth?", a: "Ni omejitve. Fotografiranje in tiskanje sta vključena za vse goste skozi celoten najem." },
+      { q: "Kaj se zgodi s fotografijami po zabavi?", a: "Vse fotografije prejmete v zasebni spletni galeriji v 48 urah. Natisnjene fotografije pa gostje odnesejo domov že med zabavo." },
     ],
     related: [
       { label: "360° Booth za rojstni dan", href: "/360-booth-za-rojstni-dan" },
@@ -261,7 +286,7 @@ export const eventLandings: Record<string, EventLanding> = {
     title: "Vaš logotip na",
     italicWord: "vsaki fotografiji",
     description:
-      "Photo Booth z brandiranim tiskom za novoletne zabave, team buildinge in konference. Branding, ki ga gostje odnesejo s sabo.",
+      "Photo Booth z brandiranim tiskom za novoletne zabave, team buildinge in konference. Vaša znamka na fotografijah, ki jih gostje odnesejo domov.",
     proof: "4.9/5 · zaupajo nam ŠKSG, AutoDelta, Forvis Mazars",
     seoTitle: "Foto box za poslovni dogodek – 279 € | Eventaj.si",
     metaDescription:
@@ -276,12 +301,50 @@ export const eventLandings: Record<string, EventLanding> = {
     reasonsTitle: "Branding, ki gre",
     reasonsItalic: "z gosti domov",
     reasons: [
-      { title: "Logotip na vsakem tisku", desc: "Na fotografije vključimo vaš logotip in jih oblikujemo v skladu s podobo podjetja." },
-      { title: "Sproščeno druženje", desc: "Photo Booth ustvari sproščeno vzdušje in spodbuja druženje med sodelavci." },
+      { title: "Vaša znamka na vsaki fotografiji", desc: "Fotografije oblikujemo po podobi vašega podjetja in jim dodamo logotip, barve ter druge elemente vaše blagovne znamke." },
+      { title: "Povezuje sodelavce in goste", desc: "Photo Booth ustvari sproščeno vzdušje in spodbuja druženje med sodelavci." },
       { title: "Ekipa, ki poskrbi za vse", desc: "Poskrbimo za postavitev, pomoč gostom in nemoten potek skozi celoten dogodek." },
-      { title: "Fotografiranje brez omejitev", desc: "Gostje se lahko fotografirajo kolikokrat želijo, brez doplačil in brez omejitev." },
-      { title: "Brez dodatnega dela", desc: "Po potrditvi termina poskrbimo za organizacijo, postavitev in izvedbo." },
+      { title: "Fotografiranje brez omejitev", desc: "Gostje se lahko fotografirajo neomejeno, brez doplačil in brez skrbi glede števila fotografij." },
+      { title: "Brez organizacijskih skrbi", desc: "Po potrditvi termina poskrbimo za organizacijo, postavitev in izvedbo." },
       { title: "Vse fotografije na enem mestu", desc: "Po dogodku prejmete dostop do zasebne galerije z vsemi fotografijami." },
+    ],
+    idealFor: {
+      eyebrow: "Primerno za",
+      title: "Dogodke, ki povezujejo ljudi in znamke.",
+      description: "Photo Booth prilagodimo tonu in cilju vašega dogodka — od sproščenega druženja do prepoznavne aktivacije znamke.",
+      items: [
+        "Novoletne zabave",
+        "Team buildinge",
+        "Konference",
+        "Otvoritve poslovalnic",
+        "Sejme",
+        "Dneve odprtih vrat",
+        "Promocijske dogodke",
+      ],
+    },
+    stepsDescription:
+      "Pridemo pred začetkom dogodka, poskrbimo za postavitev in spremljamo dogajanje skozi ves čas dogodka. Ko se zaključi, vse pospravimo. Vi se lahko brez skrbi posvetite svojim gostom.",
+    steps: [
+      {
+        title: "Povpraševanje in rezervacija termina",
+        desc: "Pošljete datum in lokacijo, v 24 urah potrdimo prost termin in pripravimo ponudbo po meri.",
+      },
+      {
+        title: "Oblikovanje fotografij po meri",
+        desc: "Pred dogodkom uskladimo predlogo tiska — imena, datum, barve in tipografijo.",
+      },
+      {
+        title: "Na dan dogodka poskrbimo za vse",
+        desc: "Postavitev, vodenje, rekviziti, tisk in pospravljanje. Digitalna galerija sledi v 48 urah.",
+      },
+    ],
+    included: [
+      { label: "Neomejeni tiski", desc: "Gostje lahko fotografije tiskajo neomejeno, brez doplačil." },
+      { label: "Personaliziran dizajn tiska", desc: "Predlogo fotografij prilagodimo z logotipom, barvami, datumom ali drugimi elementi vaše blagovne znamke." },
+      { label: "Izbrani rekviziti", desc: "Rekvizite izberemo glede na tip dogodka in profil udeležencev." },
+      { label: "Spremljanje skozi ves dogodek", desc: "Naša ekipa je prisotna skozi celoten dogodek in poskrbi za brezhibno izkušnjo gostov." },
+      { label: "Spletna galerija", desc: "Po dogodku prejmete dostop do zasebne spletne galerije z vsemi fotografijami." },
+      { label: "Cena", desc: "Paketi od 279 €. Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v ponudbo." },
     ],
     galleryImages: [
       { src: "/application/busniess-booths/poslovna-4.webp", alt: "Photo Booth na poslovnem dogodku" },
@@ -298,73 +361,15 @@ export const eventLandings: Record<string, EventLanding> = {
     },
     faqEyebrow: "Vprašanja podjetij",
     faq: [
-      { q: "Ali lahko tisk popolnoma prilagodite naši znamki?", a: "Da. Fotografije lahko prilagodimo vaši celostni podobi. Dodamo logotip, uporabimo vaše barve in pripravimo predlogo po meri." },
-      { q: "Izstavite račun podjetju?", a: "Seveda. Ponudbo in račun izstavimo na podjetje, plačilo je možno po dogodku na podlagi računa." },
+      { q: "Ali lahko fotografije prilagodite naši blagovni znamki?", a: "Da. Fotografije oblikujemo po podobi vašega podjetja ter dodamo logotip, barve in druge elemente blagovne znamke." },
+      { q: "Ali lahko račun izstavite podjetju?", a: "Seveda. Ponudbo in račun izstavimo na podjetje, plačilo je možno po dogodku na podlagi računa." },
       { q: "Koliko prostora potrebujete na lokaciji?", a: "Za postavitev Photo Bootha potrebujemo približno 2,5 × 2 m prostora. Potreben je tudi dostop do električne vtičnice v bližini. Vse podrobnosti uskladimo pred dogodkom." },
       { q: "Ali pokrivate dogodke po vsej Sloveniji?", a: "Da, izvajamo dogodke po celotni Sloveniji. Prevoz uskladimo glede na lokacijo in ga vključimo v ponudbo." },
-      { q: "Kako gostje dostopajo do fotografij?", a: "Tiski so na voljo takoj, vse digitalne fotografije pa prejmete v zasebni galeriji v 48 urah po dogodku." },
+      { q: "Kako gostje prejmejo fotografije?", a: "Fotografije natisnemo takoj na dogodku. Digitalne fotografije pa prejmete v zasebni spletni galeriji najpozneje v 48 urah po dogodku." },
     ],
     related: [
       { label: "360° Booth za poslovni dogodek", href: "/360-booth-za-poslovni-dogodek" },
       { label: "360° Booth za promocijo znamke", href: "/360-booth-za-promocijo" },
-      { label: "Vse o najemu Photo Bootha", href: "/photo-booth" },
-    ],
-  },
-
-  "photo-booth-za-maturantski-ples": {
-    ...photoBase,
-    slug: "photo-booth-za-maturantski-ples",
-    breadcrumbLabel: "Za maturantski ples",
-    eyebrow: "Photo Booth za maturantski ples",
-    title: "Večer, ki se zgodi",
-    italicWord: "enkrat",
-    description:
-      "Photo Booth z neomejenim tiskom za ves razred. Svečane obleke, najboljša družba in fotografije, ki jih maturanti odnesejo domov.",
-    proof: "4.9/5 · 50+ dogodkov vsako leto",
-    seoTitle: "Foto box za maturantski ples – 279 € | Eventaj.si",
-    metaDescription:
-      "Foto box (photo booth) za maturantski ples z neomejenim tiskom za ves razred, rekviziti in personaliziranim dizajnom. Od 279 €, po vsej Sloveniji.",
-    keywords: ["foto box za maturantski ples", "fotobox matura", "photo booth maturantski ples", "foto stojnica maturanci", "foto box najem ples"],
-    heroImages: [
-      { src: "/application/birthday-parties/birthday-16.webp", alt: "Maturanti v svečanih oblekah pred Photo Boothom" },
-      { src: "/application/wedding-photos/poroka-7.webp", alt: "Razred s tiski v rokah" },
-      { src: "/application/busniess-booths/poslovna-2.webp", alt: "Personaliziran tisk z imenom šole in letnico" },
-    ],
-    reasonsEyebrow: "Zakaj na maturantski ples",
-    reasonsTitle: "Spomin za",
-    reasonsItalic: "ves razred",
-    reasons: [
-      { title: "Neomejeno tiskov za vse", desc: "Ves razred, profesorji in starši — vsak odnese svojo fotografijo domov." },
-      { title: "Dizajn z imenom šole", desc: "Tisk z imenom šole, razredom in letnico — spomin, ki ga ni mogoče izgubiti." },
-      { title: "Vrstе ni nikoli dolgo", desc: "Hiter tisk in izkušena ekipa poskrbita, da pridejo na vrsto vsi." },
-      { title: "Rekviziti za svečani večer", desc: "Elegantna kolekcija rekvizitov, ki se poda svečanim oblekam." },
-      { title: "Preverjen partner za šole", desc: "Točna postavitev, profesionalna izvedba in jasna ponudba za organizatorje." },
-      { title: "Spletna galerija po plesu", desc: "Vse fotografije v zasebni galeriji — povezava za ves razred." },
-    ],
-    galleryImages: [
-      { src: "/application/birthday-parties/birthday-12.webp", alt: "Maturanti pred Photo Boothom" },
-      { src: "/application/birthday-parties/birthday-5.webp", alt: "Tisk z letnico mature" },
-      { src: "/application/busniess-booths/poslovna-8.webp", alt: "Razred med fotografiranjem" },
-      { src: "/application/birthday-parties/birthday-9.webp", alt: "Maturantke z rekviziti" },
-      { src: "/application/wedding-photos/poroka-3.webp", alt: "Svečana dvorana s Photo Boothom" },
-      { src: "/application/birthday-parties/birthday-2.webp", alt: "Skupinska fotografija razreda" },
-    ],
-    testimonial: {
-      quote: "Najem Photo Bootha in 360° Bootha je bil vrhunec našega zaključka leta. Gostje so se zabavali ob ustvarjanju spominov, ki jih bomo lahko obujali še leta.",
-      author: "Mojca Šauperl",
-      role: "ŠKSG · Dogodek",
-    },
-    faqEyebrow: "Vprašanja organizatorjev",
-    faq: [
-      { q: "Kdaj naj rezerviramo termin za ples?", a: "Maturantski plesi se zgostijo med februarjem in majem — priporočamo rezervacijo vsaj 3–6 mesecev vnaprej." },
-      { q: "Ali je tisk res neomejen za ves razred?", a: "Da. Vsi gostje se lahko fotografirajo in tiskajo neomejeno skozi celoten najet termin, brez doplačil." },
-      { q: "Se uskladite z organizatorjem plesa in dvorano?", a: "Seveda. Z dvorano in organizatorjem uskladimo postavitev, prostor in urnik — vse je pripravljeno pred prihodom maturantov." },
-      { q: "Lahko na tisk dodamo ime šole in letnico?", a: "Da, predlogo oblikujemo z imenom šole, razredom in letnico ter jo pošljemo v potrditev pred dogodkom." },
-      { q: "Kako dolgo traja najem?", a: "Paketi so za 2, 3 ali 4 ure z možnostjo podaljšanja na dogodku, če zabava traja dlje." },
-    ],
-    related: [
-      { label: "Photo Booth za rojstni dan", href: "/photo-booth-za-rojstni-dan" },
-      { label: "360° Booth za rojstni dan", href: "/360-booth-za-rojstni-dan" },
       { label: "Vse o najemu Photo Bootha", href: "/photo-booth" },
     ],
   },
@@ -374,10 +379,10 @@ export const eventLandings: Record<string, EventLanding> = {
     slug: "photo-booth-za-obletnico",
     breadcrumbLabel: "Za obletnico",
     eyebrow: "Photo Booth za obletnico",
-    title: "Trenutki, ki si zaslužijo",
-    italicWord: "papir",
+    title: "Trenutki, ki jih je vredno",
+    italicWord: "ohraniti.",
     description:
-      "Abraham, zlata poroka ali 50 let podjetja — Photo Booth zbere vse generacije na enem mestu in vsakemu pusti spomin v roki.",
+      "Abraham, zlata poroka ali jubilej podjetja. Photo Booth poveže vse generacije in vsakemu gostu podari fotografijo za spomin.",
     proof: "4.9/5 · 50+ dogodkov vsako leto",
     seoTitle: "Foto box (photo booth) za obletnico – 279 € | Eventaj.si",
     metaDescription:
@@ -392,12 +397,36 @@ export const eventLandings: Record<string, EventLanding> = {
     reasonsTitle: "Vse generacije,",
     reasonsItalic: "en spomin",
     reasons: [
-      { title: "Dizajn po jubileju", desc: "Tisk z imenom, letnico in motivom praznovanja — od Abrahama do zlate poroke." },
-      { title: "Povezuje generacije", desc: "Od vnukov do starih staršev — booth zbere vse na isti fotografiji." },
-      { title: "Spominska knjiga", desc: "Drugi izvod vsakega tiska gre v knjigo s posvetili — darilo za slavljenca." },
-      { title: "Neomejeno fotografij", desc: "Brez štetja in doplačil — vsi gostje, kolikorkrat želijo, ves večer." },
-      { title: "Preprosto za vse goste", desc: "Naša ekipa pomaga vsem — tudi tistim, ki se s tehniko ne razumejo najbolje." },
-      { title: "Spletna galerija po praznovanju", desc: "Vse fotografije v zasebni galeriji — povezavo delite z družino." },
+      { title: "Prilagojen dizajn fotografije", desc: "Personaliziran dizajn fotografije z imenom, letnico ali motivom praznovanja." },
+      { title: "Povezuje generacije", desc: "Od najmlajših do najstarejših gostov. Photo Booth združi vse generacije na isti fotografiji." },
+      { title: "Spominska knjiga", desc: "Vsaka fotografija se natisne v dveh izvodih. En izvod obdržijo gostje, drugega dodamo v spominsko knjigo s posvetili." },
+      { title: "Neomejeno fotografij", desc: "Gostje se lahko fotografirajo neomejeno in brez dodatnih stroškov." },
+      { title: "Preprosto za vse goste", desc: "Gostje se lahko fotografirajo neomejeno in brez dodatnih stroškov." },
+      { title: "Digitalna galerija po praznovanju", desc: "Po dogodku prejmete povezavo do zasebne digitalne galerije z vsemi fotografijami." },
+    ],
+    stepsDescription:
+      "Pridemo pred začetkom, postavimo Photo Booth in skrbimo za nemoten potek skozi ves dogodek. Po zabavi vse pospravimo. Vi se lahko brez skrbi posvetite svojim gostom.",
+    steps: [
+      {
+        title: "Povpraševanje in rezervacija termina",
+        desc: "Pošljete datum in lokacijo, v 24 urah potrdimo prost termin in pripravimo ponudbo po meri.",
+      },
+      {
+        title: "Dizajn fotografije po meri",
+        desc: "Pred dogodkom pripravimo dizajn fotografije in ga uskladimo z vašim praznovanjem.",
+      },
+      {
+        title: "Na dan dogodka poskrbimo za vse",
+        desc: "Poskrbimo za postavitev, rekvizite, tiskanje fotografij in pospravljanje. Fotografije prejmete tudi v zasebni spletni galeriji.",
+      },
+    ],
+    included: [
+      { label: "Neomejeni tiski", desc: "Vsak gost lahko fotografije natisne kolikokrat želi. Tiski so pripravljeni v nekaj sekundah." },
+      { label: "Personaliziran dizajn tiska", desc: "Predloga z imeni, datumom ali logotipom, usklajena pred dogodkom." },
+      { label: "Izbrani rekviziti", desc: "Rekvizite izberemo glede na tip praznovanja in starost gostov." },
+      { label: "Spremljanje skozi ves dogodek", desc: "Naša ekipa je prisotna skozi celoten dogodek in poskrbi za brezhibno izkušnjo gostov." },
+      { label: "Spletna galerija", desc: "Vse fotografije v zasebni galeriji v 48 urah po dogodku." },
+      { label: "Cena", desc: "Paketi od 279 €. Končna cena je odvisna od lokacije dogodka." },
     ],
     galleryImages: [
       { src: "/application/birthday-parties/birthday-13.webp", alt: "Photo Booth na obletnici" },
@@ -414,11 +443,11 @@ export const eventLandings: Record<string, EventLanding> = {
     },
     faqEyebrow: "Vprašanja o praznovanjih",
     faq: [
-      { q: "Ali je booth primeren tudi za starejše goste?", a: "Da. Uporaba je preprosta, naša ekipa pa je ves čas ob boothu in pomaga vsem gostom — fotografira se lahko prav vsak." },
-      { q: "Lahko pripravite spominsko knjigo?", a: "Da. Vsak tisk nastane v dveh izvodih — enega gost odnese, drugega prilepimo v knjigo, kamor gostje dopišejo posvetila." },
-      { q: "Deluje booth tudi v gostilni ali doma?", a: "Seveda. Potrebujemo približno 2,5 × 2 m prostora in električno vtičnico — postavimo se v dvorani, gostilni ali na domačem vrtu." },
-      { q: "Kako prilagodite dizajn tiska?", a: "Predlogo oblikujemo z imenom slavljenca, letnico in motivom praznovanja ter jo uskladimo z vami pred dogodkom." },
-      { q: "Koliko časa pred praznovanjem naj rezerviramo?", a: "Priporočamo rezervacijo 2–4 mesece vnaprej, za vikende in december pa še prej." },
+      { q: "Ali je booth primeren tudi za starejše goste?", a: "Da. Uporaba je zelo preprosta. Naša ekipa je ves čas prisotna in pomaga gostom vseh generacij." },
+      { q: "Lahko pripravite spominsko knjigo?", a: "Da. Vsaka fotografija nastane v dveh izvodih. En izvod obdržijo gostje, drugega dodamo v spominsko knjigo, kamor lahko napišejo tudi posvetilo." },
+      { q: "Deluje booth tudi v gostilni ali doma?", a: "Da. Za postavitev potrebujemo približno 2,5 × 2 m prostora in električni priključek. Photo Booth lahko postavimo v gostilni, dvorani ali na domačem praznovanju." },
+      { q: "Kako prilagodite dizajn tiska?", a: "Dizajn fotografije prilagodimo imenu slavljenke ali slavljenca, letnici in temi praznovanja." },
+      { q: "Koliko časa pred praznovanjem naj rezerviramo?", a: "Priporočamo rezervacijo vsaj 2 do 4 mesece vnaprej. Za termine ob koncih tedna in v decembru še prej." },
     ],
     related: [
       { label: "Photo Booth za poroko", href: "/photo-booth-za-poroko" },
@@ -745,14 +774,6 @@ export const photoEventCards = [
   },
   {
     size: "small" as const,
-    title: "Maturantski plesi",
-    desc: "Večer, ki se zgodi enkrat. Neomejeno tiskov za ves razred.",
-    cta: "Za maturantski ples",
-    href: "/photo-booth-za-maturantski-ples",
-    image: { src: "/application/hero-collage/doba-35.webp", alt: "Maturanti v svečanih oblekah" },
-  },
-  {
-    size: "small" as const,
     title: "Obletnice",
     desc: "Abraham, zlata poroka, 50 let — trenutki, ki si zaslužijo papir.",
     cta: "Za obletnico",
@@ -803,7 +824,6 @@ export const homeEventTeasers = [
   { label: "Poroka", href: "/photo-booth-za-poroko", image: { src: "/application/wedding-photos/poroka-2.webp", alt: "Photo Booth na poroki" } },
   { label: "Rojstni dan", href: "/photo-booth-za-rojstni-dan", image: { src: "/application/birthday-parties/birthday-6.webp", alt: "Rojstnodnevna zabava" } },
   { label: "Poslovni dogodek", href: "/photo-booth-za-poslovni-dogodek", image: { src: "/application/busniess-booths/poslovna-1.webp", alt: "Poslovni dogodek" } },
-  { label: "Maturantski ples", href: "/photo-booth-za-maturantski-ples", image: { src: "/application/birthday-parties/birthday-16.webp", alt: "Maturantski ples" } },
   { label: "Promocija znamke", href: "/360-booth-za-promocijo", image: { src: "/application/photo-booth-hero/kelag-2026.webp", alt: "Promocija blagovne znamke" } },
   { label: "Festival", href: "/360-booth-za-festival", image: { src: "/application/photo-booth-hero/robis-tomorrowland.webp", alt: "Festival" } },
 ] as const;

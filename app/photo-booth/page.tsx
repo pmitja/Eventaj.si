@@ -19,7 +19,7 @@ const pricingPlans = [
 export const metadata: Metadata = {
   title: photoBoothPageTitle,
   description:
-    "Foto box oz. photo booth najem za poroke, zabave in poslovne dogodke po vsej Sloveniji. Od 279 €/2h: neomejene fotografije, takojšen tisk, rekviziti in spletna galerija. Pokličite 031 285 143.",
+    "Najem foto boxa oziroma photo bootha (foto stojnice ali foto kotička) za dogodke po Sloveniji. Od 279 €/2h: neomejene fotografije, takojšen tisk, rekviziti in spletna galerija.",
   keywords: [
     "foto box",
     "fotobox",
@@ -30,6 +30,9 @@ export const metadata: Metadata = {
     "photo booth najem",
     "photo booth cena",
     "foto box cena",
+    "foto stojnica najem",
+    "foto kotiček najem",
+    "selfie box",
     "najem foto box Slovenija",
   ],
   openGraph: {
@@ -131,9 +134,9 @@ export default function PhotoBooth() {
       <ServicePageContent
         type="photo"
         seoTitle={photoBoothPageTitle}
-        h1="Najem foto boxa (photo booth) po Sloveniji"
+        h1="Najem foto boxa oziroma photo bootha po Sloveniji"
         heroTag="Foto box · Photo Booth"
-        heroDescription="Foto box (photo booth) s takojšnjim tiskom fotografij. Neomejene fotografije, rekviziti in spletna galerija — elegantna popestritev porok, poslovnih dogodkov in zasebnih praznovanj po vsej Sloveniji."
+        heroDescription="Foto box oziroma photo booth, znan tudi kot foto stojnica ali foto kotiček, s takojšnjim tiskom fotografij. Neomejene fotografije, rekviziti in spletna galerija — za poroke, poslovne dogodke in zasebna praznovanja po vsej Sloveniji."
       />
     </>
   );

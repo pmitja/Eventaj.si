@@ -34,25 +34,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'weekly',
 			priority: 0.8,
 		},
-		{
-			url: `${baseUrl}/foto-koticek`,
-			lastModified: currentDate,
-			changeFrequency: 'weekly',
-			priority: 0.9,
-		},
-		{
-			url: `${baseUrl}/foto-stojnica`,
-			lastModified: currentDate,
-			changeFrequency: 'weekly',
-			priority: 0.9,
-		},
-
 		// SEO landing pages by event type
 		...[
 			'photo-booth-za-poroko',
 			'photo-booth-za-rojstni-dan',
 			'photo-booth-za-poslovni-dogodek',
-			'photo-booth-za-maturantski-ples',
 			'photo-booth-za-obletnico',
 			'360-booth-za-poroko',
 			'360-booth-za-rojstni-dan',
