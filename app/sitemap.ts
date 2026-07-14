@@ -4,7 +4,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://www.eventaj.si'
 	// Release date — bump this when content meaningfully changes (avoids a
 	// fresh lastmod on every build, which Google learns to distrust).
-	const currentDate = '2026-06-15'
+	const currentDate = '2026-07-14'
 
 	return [
 		// Main pages
@@ -33,6 +33,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			lastModified: currentDate,
 			changeFrequency: 'weekly',
 			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/oprema-za-dogodke`,
+			lastModified: currentDate,
+			changeFrequency: 'weekly',
+			priority: 0.9,
+		},
+		{
+			url: `${baseUrl}/oprema-za-dogodke/najem-stojecih-miz`,
+			lastModified: currentDate,
+			changeFrequency: 'weekly',
+			priority: 0.9,
 		},
 		// SEO landing pages by event type
 		...[

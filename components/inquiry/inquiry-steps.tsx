@@ -1,4 +1,5 @@
 import { SlovenianDatePicker } from "@/components/ui/slovenian-date-picker";
+import { standingTable } from "@/content/eventaj/equipment";
 import { Field, PillGrid } from "./inquiry-fields";
 import { InquiryData } from "./inquiry-types";
 
@@ -12,12 +13,63 @@ export function InquiryStepService({ data, update }: StepProps) {
     <div className="grid gap-6">
       <Field label="Izberi storitev">
         <PillGrid
-          columns="md:grid-cols-3"
-          items={["Photo Booth", "360° Booth", "Oba"]}
+          columns="grid-cols-2"
+          items={["Photo Booth", "360° Booth", "Oba", "Oprema za dogodke"]}
           value={data.type}
-          onChange={(value) => update("type", value)}
+          onChange={(value) => {
+            update("type", value);
+            if (value === "Oprema za dogodke") {
+              update("product", standingTable.name);
+            }
+          }}
         />
       </Field>
+      {data.type === "Oprema za dogodke" && (
+        <div className="grid gap-5 border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-5">
+          <div>
+            <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--eventaj-muted)]">Izdelek</div>
+            <div className="mt-2 flex items-center justify-between gap-5">
+              <strong className="font-serif-display text-2xl font-normal">{standingTable.name}</strong>
+              <span className="text-sm font-medium">10 € / dan</span>
+            </div>
+          </div>
+          <div className="grid gap-4 md:grid-cols-[0.65fr_1.35fr]">
+            <Field label="Količina (1–15)">
+              <input
+                type="number"
+                min={1}
+                max={standingTable.available}
+                value={data.quantity}
+                onChange={(event) =>
+                  update(
+                    "quantity",
+                    String(
+                      Math.min(
+                        standingTable.available,
+                        Math.max(1, Number(event.target.value) || 1),
+                      ),
+                    ),
+                  )
+                }
+                className="eventaj-input"
+                aria-label="Število stoječih miz"
+              />
+            </Field>
+            <Field label="Barva prta">
+              <PillGrid
+                columns="grid-cols-2"
+                items={[...standingTable.clothColors]}
+                value={data.tableclothColor}
+                onChange={(value) => update("tableclothColor", value)}
+              />
+            </Field>
+          </div>
+          <div className="flex items-end justify-between border-t border-[rgba(20,17,15,0.1)] pt-4">
+            <span className="text-xs text-[var(--eventaj-muted)]">Informativna cena najema</span>
+            <strong className="font-serif-display text-3xl font-normal">{(Number(data.quantity) || 1) * standingTable.price} €</strong>
+          </div>
+        </div>
+      )}
       <Field label="Tip dogodka">
         <PillGrid
           columns="md:grid-cols-2"
@@ -57,6 +109,22 @@ export function InquiryStepDetails({ data, update }: StepProps) {
           required
         />
       </Field>
+      {data.type === "Oprema za dogodke" && (
+        <Field label="Način prevzema">
+          <PillGrid
+            columns="grid-cols-2"
+            items={[
+              "Osebni prevzem",
+              `Dostava do ${standingTable.delivery.maxDistanceKm} km · ${standingTable.delivery.priceLabel}`,
+            ]}
+            value={data.fulfillment}
+            onChange={(value) => update("fulfillment", value)}
+          />
+          <p className="mt-3 text-xs leading-relaxed text-[var(--eventaj-muted)]">
+            Končno razdaljo in strošek dostave potrdimo v ponudbi.
+          </p>
+        </Field>
+      )}
       <Field label="Predvideno število gostov (opcijsko)">
         <PillGrid
           columns="grid-cols-2 md:grid-cols-4"

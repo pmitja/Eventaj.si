@@ -1,6 +1,7 @@
 "use client";
 
 import { InquiryDialog } from "@/components/inquiry/inquiry-dialog";
+import type { InquiryData } from "@/components/inquiry/inquiry-types";
 import { useScrolled } from "@/hooks/use-scrolled";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
@@ -16,10 +17,15 @@ export default function SiteShell({ children }: SiteShellProps) {
   const scrolled = useScrolled(60);
   const [menuOpen, setMenuOpen] = useState(false);
   const [inquiryOpen, setInquiryOpen] = useState(false);
+  const [inquiryDefaults, setInquiryDefaults] = useState<Partial<InquiryData>>({});
   const pathname = usePathname();
 
   useEffect(() => {
-    const open = () => setInquiryOpen(true);
+    const open = (event: Event) => {
+      const customEvent = event as CustomEvent<Partial<InquiryData>>;
+      setInquiryDefaults(customEvent.detail ?? {});
+      setInquiryOpen(true);
+    };
     window.addEventListener("eventaj:open-inquiry", open);
     return () => window.removeEventListener("eventaj:open-inquiry", open);
   }, []);
@@ -29,11 +35,11 @@ export default function SiteShell({ children }: SiteShellProps) {
   }, [pathname]);
 
   useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow = menuOpen || inquiryOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen]);
+  }, [menuOpen, inquiryOpen]);
 
   return (
     <div className="eventaj-redesign min-h-screen bg-[var(--eventaj-paper)] text-[var(--eventaj-ink)]">
@@ -48,7 +54,11 @@ export default function SiteShell({ children }: SiteShellProps) {
 
       <SiteFooter />
       <StickyCTA />
-      <InquiryDialog open={inquiryOpen} onClose={() => setInquiryOpen(false)} />
+      <InquiryDialog
+        open={inquiryOpen}
+        onClose={() => setInquiryOpen(false)}
+        initialData={inquiryDefaults}
+      />
     </div>
   );
 }

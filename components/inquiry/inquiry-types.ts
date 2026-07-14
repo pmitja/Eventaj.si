@@ -8,6 +8,10 @@ export type InquiryData = {
   email: string;
   phone: string;
   notes: string;
+  product: string;
+  quantity: string;
+  tableclothColor: string;
+  fulfillment: string;
 };
 
 export const initialInquiryData: InquiryData = {
@@ -20,4 +24,8 @@ export const initialInquiryData: InquiryData = {
   email: "",
   phone: "",
   notes: "",
+  product: "",
+  quantity: "1",
+  tableclothColor: "Bel prt",
+  fulfillment: "",
 };

@@ -202,6 +202,24 @@
   border-color: var(--eventaj-ink);
 }
 
+.equipment-category-hero-media,
+.equipment-home-teaser-media {
+  min-height: 360px;
+}
+
+@media (min-width: 768px) {
+  .equipment-category-hero-media {
+    min-height: 480px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .equipment-category-hero-media,
+  .equipment-home-teaser-media {
+    min-height: 560px;
+  }
+}
+
 @keyframes eventaj-marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-33.333%); }

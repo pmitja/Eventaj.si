@@ -3,7 +3,10 @@
 import { FormEvent, useEffect, useState } from "react";
 import { InquiryData, initialInquiryData } from "./inquiry-types";
 
-export function useInquiryForm(open: boolean) {
+export function useInquiryForm(
+  open: boolean,
+  defaults: Partial<InquiryData> = {},
+) {
   const [step, setStep] = useState(1);
   const [data, setData] = useState<InquiryData>(initialInquiryData);
   const [submitted, setSubmitted] = useState(false);
@@ -13,10 +16,11 @@ export function useInquiryForm(open: boolean) {
   useEffect(() => {
     if (open) {
       setStep(1);
+      setData({ ...initialInquiryData, ...defaults });
       setSubmitted(false);
       setError("");
     }
-  }, [open]);
+  }, [open, defaults]);
 
   const update = (key: keyof InquiryData, value: string) => {
     setData((current) => ({ ...current, [key]: value }));
@@ -24,8 +28,25 @@ export function useInquiryForm(open: boolean) {
   };
 
   const canNext = () => {
-    if (step === 1) return Boolean(data.type && data.eventType);
-    if (step === 2) return Boolean(data.date && data.location);
+    if (step === 1) {
+      if (data.type === "Oprema za dogodke") {
+        return Boolean(
+          data.type &&
+            data.eventType &&
+            data.product &&
+            data.quantity &&
+            data.tableclothColor,
+        );
+      }
+      return Boolean(data.type && data.eventType);
+    }
+    if (step === 2) {
+      return Boolean(
+        data.date &&
+          data.location &&
+          (data.type !== "Oprema za dogodke" || data.fulfillment),
+      );
+    }
     return Boolean(data.name && data.email && data.phone);
   };
 
@@ -47,14 +68,28 @@ export function useInquiryForm(open: boolean) {
           ? "360"
           : data.type === "Oba"
             ? "both"
-            : "basic";
-      const totalPrice = serviceType === "360" ? 299 : serviceType === "basic" ? 279 : 0;
-      const hours = serviceType === "360" || serviceType === "basic" ? "2" : "po meri";
+            : data.type === "Oprema za dogodke"
+              ? "equipment"
+              : "basic";
+      const quantity = Math.min(15, Math.max(1, Number(data.quantity) || 1));
+      const totalPrice =
+        serviceType === "360"
+          ? 299
+          : serviceType === "basic"
+            ? 279
+            : serviceType === "equipment"
+              ? quantity * 10
+              : 0;
+      const hours = serviceType === "equipment" ? "1 dan" : serviceType === "360" || serviceType === "basic" ? "2" : "po meri";
       const message = [
         data.notes,
         data.eventType ? `Tip dogodka: ${data.eventType}` : "",
         data.guests ? `Število gostov: ${data.guests}` : "",
         data.type === "Oba" ? "Storitev: Photo Booth + 360° Booth po meri" : "",
+        serviceType === "equipment" ? `Izdelek: ${data.product}` : "",
+        serviceType === "equipment" ? `Količina: ${quantity}` : "",
+        serviceType === "equipment" ? `Prt: ${data.tableclothColor}` : "",
+        serviceType === "equipment" ? `Prevzem/dostava: ${data.fulfillment}` : "",
       ]
         .filter(Boolean)
         .join("\n");
@@ -74,6 +109,10 @@ export function useInquiryForm(open: boolean) {
             message,
             eventType: data.eventType,
             guests: data.guests,
+            product: serviceType === "equipment" ? data.product : undefined,
+            quantity: serviceType === "equipment" ? String(quantity) : undefined,
+            tableclothColor: serviceType === "equipment" ? data.tableclothColor : undefined,
+            fulfillment: serviceType === "equipment" ? data.fulfillment : undefined,
           },
           totalPrice,
         }),

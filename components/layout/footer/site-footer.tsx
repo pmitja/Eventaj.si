@@ -15,8 +15,8 @@ export function SiteFooter() {
               <span className="font-serif-italic italic opacity-60">.si</span>
             </div>
             <p className="max-w-sm text-sm leading-relaxed text-[var(--eventaj-cream)] opacity-65">
-              Najem Photo Bootha in 360° Bootha za poroke, poslovne dogodke in
-              zasebne zabave po vsej Sloveniji.
+              Photo Booth, 360° Booth in izbrana oprema za poroke, poslovne
+              dogodke ter zasebne zabave po vsej Sloveniji.
             </p>
           </div>
           <FooterColumn
@@ -24,6 +24,7 @@ export function SiteFooter() {
             links={[
               ["Photo Booth", "/photo-booth"],
               ["360° Booth", "/360-photo-booth"],
+              ["Oprema za dogodke", "/oprema-za-dogodke"],
               ["Cenik", "/cenik"],
               ["Reference", "/#reference"],
             ]}

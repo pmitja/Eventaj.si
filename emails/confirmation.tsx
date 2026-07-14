@@ -19,7 +19,22 @@ interface EmailTemplateProps {
 }
 
 export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
-  const { name, email, phone, date, location, hours, message, type, eventType, guests } = formData;
+  const {
+    name,
+    email,
+    phone,
+    date,
+    location,
+    hours,
+    message,
+    type,
+    eventType,
+    guests,
+    product,
+    quantity,
+    tableclothColor,
+    fulfillment,
+  } = formData;
 
   return (
     <Html>
@@ -70,7 +85,7 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
             )}
             {hours && (
               <Text style={detailItem}>
-                <strong>Število ur:</strong> {hours}
+                <strong>{type === "equipment" ? "Obdobje najema" : "Število ur"}:</strong> {hours}
               </Text>
             )}
             {type && (
@@ -80,7 +95,29 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
                   ? "360° Photo Booth"
                   : type === "both"
                     ? "Photo Booth + 360° Photo Booth"
-                    : "Photo Booth"}
+                    : type === "equipment"
+                      ? "Oprema za dogodke"
+                      : "Photo Booth"}
+              </Text>
+            )}
+            {product && (
+              <Text style={detailItem}>
+                <strong>Izdelek:</strong> {product}
+              </Text>
+            )}
+            {quantity && (
+              <Text style={detailItem}>
+                <strong>Količina:</strong> {quantity}
+              </Text>
+            )}
+            {tableclothColor && (
+              <Text style={detailItem}>
+                <strong>Prt:</strong> {tableclothColor}
+              </Text>
+            )}
+            {fulfillment && (
+              <Text style={detailItem}>
+                <strong>Prevzem oziroma dostava:</strong> {fulfillment}
               </Text>
             )}
             {eventType && (

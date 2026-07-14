@@ -1,8 +1,19 @@
 export const eventajNav = [
   { label: "Photo Booth", href: "/photo-booth" },
   { label: "360° Booth", href: "/360-photo-booth" },
+  {
+    label: "Oprema",
+    href: "/oprema-za-dogodke",
+    children: [
+      {
+        label: "Stoječe barske mize",
+        description: "10 € na mizo za en dan",
+        href: "/oprema-za-dogodke/najem-stojecih-miz",
+        icon: "standing-table",
+      },
+    ],
+  },
   { label: "Cenik", href: "/cenik" },
-  { label: "Reference", href: "/#reference" },
   { label: "FAQ", href: "/#faq" },
 ] as const;
 

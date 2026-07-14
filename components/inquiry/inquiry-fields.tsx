@@ -36,6 +36,7 @@ export function PillGrid({
           key={item}
           type="button"
           onClick={() => onChange(item)}
+          aria-pressed={value === item}
           className={cn(
             "border px-4 py-3.5 text-center text-[13px] font-medium transition-colors",
             value === item

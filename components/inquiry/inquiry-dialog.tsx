@@ -7,16 +7,19 @@ import {
   InquiryStepService,
 } from "./inquiry-steps";
 import { useInquiryForm } from "./use-inquiry-form";
+import type { InquiryData } from "./inquiry-types";
 
 export function InquiryDialog({
   open,
   onClose,
+  initialData,
 }: {
   open: boolean;
   onClose: () => void;
+  initialData?: Partial<InquiryData>;
 }) {
   const { step, data, submitted, loading, error, update, canNext, back, submit } =
-    useInquiryForm(open);
+    useInquiryForm(open, initialData);
 
   if (!open) return null;
 
@@ -95,7 +98,9 @@ export function InquiryDialog({
             </h3>
             <p className="mb-8 mt-2 text-sm text-[var(--eventaj-muted)]">
               {step === 1 &&
-                "V nekaj korakih zberemo informacije za pripravo ponudbe."}
+                (data.type === "Oprema za dogodke"
+                  ? "Izberi količino in prt. Nato preverimo razpoložljivost za tvoj datum."
+                  : "V nekaj korakih zberemo informacije za pripravo ponudbe.")}
               {step === 2 &&
                 "Preverimo razpoložljivost termina in pripravimo okvirno ponudbo."}
               {step === 3 &&

@@ -7,6 +7,7 @@ import { HomeHero } from "./home-hero";
 import { Marquee } from "./marquee";
 import { ProcessSection } from "./process-section";
 import { ServicesSection } from "./services-section";
+import { EquipmentTeaser } from "./equipment-teaser";
 
 export function HomePageContent() {
   return (
@@ -14,6 +15,7 @@ export function HomePageContent() {
       <HomeHero />
       <Marquee />
       <ServicesSection />
+      <EquipmentTeaser />
       <HomeEventTeaser />
       <ProcessSection />
       <GallerySection />
