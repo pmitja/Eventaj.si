@@ -12,6 +12,7 @@ export const metadata: Metadata = {
     "Eventaj.si",
     "Photo Booth dogodki",
     "360° Booth dogodki",
+    "QR galerija za dogodke",
   ],
   openGraph: {
     title: "Eventaj.si | Photo Booth in 360° Booth za dogodke",

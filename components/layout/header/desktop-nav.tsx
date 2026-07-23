@@ -38,7 +38,7 @@ export function DesktopNav({ pathname }: { pathname: string }) {
 
   return (
     <>
-      <div className="hidden items-center gap-8 text-sm lg:flex">
+      <div className="hidden items-center gap-4 text-sm lg:flex xl:gap-7">
         {eventajNav.map((item) => {
           const active =
             pathname === item.href ||
@@ -124,6 +124,23 @@ export function DesktopNav({ pathname }: { pathname: string }) {
             );
           }
 
+          if ("external" in item && item.external) {
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className="group inline-flex items-center gap-1.5 font-medium text-[var(--eventaj-ink)] no-underline opacity-85 transition-opacity hover:opacity-100 focus-visible:opacity-100"
+              >
+                {item.label}
+                {"isNew" in item && item.isNew && (
+                  <span className="hidden rounded-full bg-[var(--eventaj-accent)] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.12em] text-[var(--eventaj-paper)] xl:inline">
+                    Novo
+                  </span>
+                )}
+              </a>
+            );
+          }
+
           return (
             <Link
               key={item.href}
@@ -142,7 +159,7 @@ export function DesktopNav({ pathname }: { pathname: string }) {
       <div className="hidden items-center gap-3 lg:flex">
         <a
           href="tel:+38631285143"
-          className="text-[13px] tracking-[0.02em] text-[var(--eventaj-ink)] tabular-nums no-underline"
+          className="hidden text-[13px] tracking-[0.02em] text-[var(--eventaj-ink)] tabular-nums no-underline 2xl:block"
         >
           031 285 143
         </a>

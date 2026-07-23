@@ -68,6 +68,38 @@ export function MobileMenu() {
             );
           }
 
+          if ("external" in item && item.external) {
+            return (
+              <a
+                key={item.href}
+                href={item.href}
+                className="group flex min-h-16 items-center justify-between gap-4 border-b border-[rgba(20,17,15,0.08)] py-3 no-underline"
+              >
+                <span>
+                  <span className="flex items-center gap-2 font-serif-display text-2xl">
+                    {item.label}
+                    {"isNew" in item && item.isNew && (
+                      <span className="rounded-full bg-[var(--eventaj-accent)] px-2 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.12em] text-[var(--eventaj-paper)]">
+                        Novo
+                      </span>
+                    )}
+                  </span>
+                  {"description" in item && (
+                    <span className="mt-1 block text-xs text-[var(--eventaj-muted)]">
+                      {item.description}
+                    </span>
+                  )}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className="text-xl text-[var(--eventaj-accent)] transition-transform duration-200 group-hover:translate-x-0.5"
+                >
+                  ↗
+                </span>
+              </a>
+            );
+          }
+
           return (
             <Link
               key={item.href}

@@ -2,6 +2,13 @@ export const eventajNav = [
   { label: "Photo Booth", href: "/photo-booth" },
   { label: "360° Booth", href: "/360-photo-booth" },
   {
+    label: "QR Galerija",
+    href: "https://galerija.eventaj.si/",
+    description: "Vse fotografije gostov na enem mestu",
+    external: true,
+    isNew: true,
+  },
+  {
     label: "Oprema",
     href: "/oprema-za-dogodke",
     children: [

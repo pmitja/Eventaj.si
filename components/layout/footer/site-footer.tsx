@@ -24,6 +24,7 @@ export function SiteFooter() {
             links={[
               ["Photo Booth", "/photo-booth"],
               ["360° Booth", "/360-photo-booth"],
+              ["QR Galerija ↗", "https://galerija.eventaj.si/"],
               ["Oprema za dogodke", "/oprema-za-dogodke"],
               ["Cenik", "/cenik"],
               ["Reference", "/#reference"],

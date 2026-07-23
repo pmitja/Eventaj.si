@@ -40,6 +40,10 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: '*.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'galerija.eventaj.si',
       }
     ],
   },

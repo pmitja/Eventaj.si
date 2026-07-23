@@ -2,6 +2,7 @@ import { PricingConfigurator } from "../cenik/pricing-configurator";
 import { FAQSection } from "../shared/faq-section";
 import { TestimonialsSection } from "../shared/testimonials-section";
 import { GallerySection } from "./gallery-section";
+import { GalleryToolTeaser } from "./gallery-tool-teaser";
 import { HomeEventTeaser } from "./home-event-teaser";
 import { HomeHero } from "./home-hero";
 import { Marquee } from "./marquee";
@@ -15,6 +16,7 @@ export function HomePageContent() {
       <HomeHero />
       <Marquee />
       <ServicesSection />
+      <GalleryToolTeaser />
       <EquipmentTeaser />
       <HomeEventTeaser />
       <ProcessSection />
