@@ -1,5 +1,6 @@
 export type InquiryData = {
   type: string;
+  hours: string;
   eventType: string;
   date: string;
   location: string;
@@ -16,6 +17,7 @@ export type InquiryData = {
 
 export const initialInquiryData: InquiryData = {
   type: "",
+  hours: "",
   eventType: "",
   date: "",
   location: "",

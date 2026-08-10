@@ -38,7 +38,7 @@ export function useInquiryForm(
             data.tableclothColor,
         );
       }
-      return Boolean(data.type && data.eventType);
+      return Boolean(data.type && data.hours && data.eventType);
     }
     if (step === 2) {
       return Boolean(
@@ -80,7 +80,7 @@ export function useInquiryForm(
             : serviceType === "equipment"
               ? quantity * 10
               : 0;
-      const hours = serviceType === "equipment" ? "1 dan" : serviceType === "360" || serviceType === "basic" ? "2" : "po meri";
+      const hours = serviceType === "equipment" ? "1 dan" : data.hours;
       const message = [
         data.notes,
         data.eventType ? `Tip dogodka: ${data.eventType}` : "",

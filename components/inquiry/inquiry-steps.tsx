@@ -24,6 +24,16 @@ export function InquiryStepService({ data, update }: StepProps) {
           }}
         />
       </Field>
+      {data.type && data.type !== "Oprema za dogodke" && (
+        <Field label="Število ur">
+          <PillGrid
+            columns="grid-cols-3"
+            items={["2", "3", "4"]}
+            value={data.hours}
+            onChange={(value) => update("hours", value)}
+          />
+        </Field>
+      )}
       {data.type === "Oprema za dogodke" && (
         <div className="grid gap-5 border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-5">
           <div>
