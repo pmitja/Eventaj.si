@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
+import { calculateInquiryPrice } from "./inquiry-price";
 import { InquiryData, initialInquiryData } from "./inquiry-types";
 
 export function useInquiryForm(
@@ -72,14 +73,7 @@ export function useInquiryForm(
               ? "equipment"
               : "basic";
       const quantity = Math.min(15, Math.max(1, Number(data.quantity) || 1));
-      const totalPrice =
-        serviceType === "360"
-          ? 299
-          : serviceType === "basic"
-            ? 279
-            : serviceType === "equipment"
-              ? quantity * 10
-              : 0;
+      const totalPrice = calculateInquiryPrice(serviceType, data.hours, quantity);
       const hours = serviceType === "equipment" ? "1 dan" : data.hours;
       const message = [
         data.notes,
