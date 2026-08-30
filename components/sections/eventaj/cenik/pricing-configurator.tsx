@@ -34,6 +34,13 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
 
   const addonRows = [
     {
+      id: "qrGallery",
+      label: "QR galerija dogodka",
+      price: "+35 €",
+      available: true,
+      note: "Neomejeno gostov, fotografije, komentarji in live slideshow",
+    },
+    {
       id: "album",
       label: "Album",
       price: "+20 €",

@@ -12,6 +12,7 @@ const pricingPlans = [
   { name: "Mini paket", price: "299", description: "2 uri 360° Booth najema" },
   { name: "Osnovni paket", price: "349", description: "3 ure 360° Booth najema" },
   { name: "Maxi paket", price: "399", description: "4 ure 360° Booth najema" },
+  { name: "Mini + QR galerija", price: "334", description: "2 uri 360° Booth najema in QR galerija dogodka" },
 ] as const;
 
 const pageTitle = "360° Booth najem po Sloveniji od 299 € | Eventaj.si";
@@ -19,7 +20,7 @@ const pageTitle = "360° Booth najem po Sloveniji od 299 € | Eventaj.si";
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "360° Booth najem za viralne slow-motion posnetke, QR deljenje, rekvizite in profesionalno izvedbo po Sloveniji. Paketi od 299 €.",
+    "360° Booth najem za slow-motion posnetke, QR deljenje in profesionalno izvedbo po Sloveniji. Dodaj QR galerijo za 35 € na dogodek.",
   keywords: [
     "360 booth najem",
     "360 photo booth",

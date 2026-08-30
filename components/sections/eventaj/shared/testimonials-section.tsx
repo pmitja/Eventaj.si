@@ -31,7 +31,7 @@ export function TestimonialsSection() {
             </span>
           ))}
           <span className="ml-3 text-sm text-[var(--eventaj-muted)]">
-            4.9 / 5 · 30+ ocen
+            4.9 / 5 · 30 Google ocen
           </span>
         </div>
         <blockquote

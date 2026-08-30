@@ -4,12 +4,13 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { PackageTiers } from "../service/package-tiers";
 import { FAQSection } from "../shared/faq-section";
+import { QrGalleryOffer } from "../shared/qr-gallery-offer";
 import { TestimonialsSection } from "../shared/testimonials-section";
 import { AddonsSection } from "./addons-section";
 import { PricingConfigurator } from "./pricing-configurator";
 
 export function CenikPageContent({ seoTitle }: { seoTitle: string }) {
-  const [tab, setTab] = useState<"photo" | "360" | "custom">("photo");
+  const [tab, setTab] = useState<"photo" | "360" | "gallery" | "custom">("photo");
   return (
     <main>
       <section className="bg-[var(--eventaj-paper)] px-5 pb-16 pt-40 text-center md:px-10">
@@ -33,12 +34,13 @@ export function CenikPageContent({ seoTitle }: { seoTitle: string }) {
             {[
               ["photo", "Photo Booth"],
               ["360", "360° Booth"],
+              ["gallery", "QR Galerija · 35 €"],
               ["custom", "Individualno"],
             ].map(([value, label]) => (
               <button
                 key={value}
                 type="button"
-                onClick={() => setTab(value as "photo" | "360" | "custom")}
+                onClick={() => setTab(value as "photo" | "360" | "gallery" | "custom")}
                 className={cn(
                   "rounded-full px-6 py-3 text-sm font-medium transition-colors",
                   tab === value
@@ -52,7 +54,9 @@ export function CenikPageContent({ seoTitle }: { seoTitle: string }) {
           </div>
         </div>
       </section>
-      {tab !== "custom" ? (
+      {tab === "gallery" ? (
+        <QrGalleryOffer />
+      ) : tab !== "custom" ? (
         <PackageTiers service={tab} />
       ) : (
         <PricingConfigurator />

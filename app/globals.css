@@ -120,6 +120,35 @@
   color: inherit;
 }
 
+.eventaj-redesign a.qr-gallery-primary {
+  background-color: var(--eventaj-ink);
+  color: var(--eventaj-paper);
+}
+
+.eventaj-redesign a.qr-gallery-primary:hover {
+  background-color: var(--eventaj-accent);
+  color: var(--eventaj-paper);
+}
+
+.eventaj-redesign a.qr-gallery-secondary {
+  color: var(--eventaj-ink);
+}
+
+.eventaj-redesign a.qr-gallery-secondary:hover {
+  background-color: var(--eventaj-ink);
+  color: var(--eventaj-paper);
+}
+
+.eventaj-redesign a.qr-gallery-inverse {
+  background-color: var(--eventaj-paper);
+  color: var(--eventaj-ink);
+}
+
+.eventaj-redesign a.qr-gallery-inverse:hover {
+  background-color: #E8B584;
+  color: var(--eventaj-ink);
+}
+
 .eventaj-redesign button,
 .eventaj-redesign input,
 .eventaj-redesign textarea,

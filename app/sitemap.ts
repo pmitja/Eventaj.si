@@ -1,10 +1,12 @@
 import { MetadataRoute } from 'next'
+import { qrGalleryUseCases } from '@/content/qr-gallery'
+import { guides } from '@/content/nasveti'
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://www.eventaj.si'
 	// Release date — bump this when content meaningfully changes (avoids a
 	// fresh lastmod on every build, which Google learns to distrust).
-	const currentDate = '2026-07-14'
+	const currentDate = '2026-08-30'
 
 	return [
 		// Main pages
@@ -14,7 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'weekly',
 			priority: 1.0,
 		},
-		
+
 		// Product pages
 		{
 			url: `${baseUrl}/360-photo-booth`,
@@ -46,6 +48,51 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'weekly',
 			priority: 0.9,
 		},
+		{
+			url: `${baseUrl}/qr-galerija`,
+			lastModified: currentDate,
+			changeFrequency: 'weekly',
+			priority: 0.9,
+		},
+		{
+			url: `${baseUrl}/qr-galerija/funkcije`,
+			lastModified: currentDate,
+			changeFrequency: 'monthly',
+			priority: 0.8,
+		},
+		{
+			url: `${baseUrl}/qr-galerija/poroka`,
+			lastModified: currentDate,
+			changeFrequency: 'monthly',
+			priority: 0.9,
+		},
+		{
+			url: `${baseUrl}/qr-galerija/poslovni-dogodek`,
+			lastModified: currentDate,
+			changeFrequency: 'monthly',
+			priority: 0.9,
+		},
+		...qrGalleryUseCases
+			.filter(({ slug }) => !['poroke', 'poslovni-dogodki'].includes(slug))
+			.map(({ slug }) => ({
+				url: `${baseUrl}/qr-galerija/za-dogodke/${slug}`,
+				lastModified: currentDate,
+				changeFrequency: 'monthly' as const,
+				priority: 0.8,
+			})),
+		// Advice hub and guides
+		{
+			url: `${baseUrl}/nasveti`,
+			lastModified: currentDate,
+			changeFrequency: 'monthly',
+			priority: 0.7,
+		},
+		...guides.map((guide) => ({
+			url: `${baseUrl}/nasveti/${guide.slug}`,
+			lastModified: guide.updated,
+			changeFrequency: 'monthly' as const,
+			priority: 0.8,
+		})),
 		// SEO landing pages by event type
 		...[
 			'photo-booth-za-poroko',

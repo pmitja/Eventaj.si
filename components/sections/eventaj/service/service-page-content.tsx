@@ -8,6 +8,7 @@ import { serviceHeroVisuals, ServiceType } from "@/content/eventaj/service-visua
 import { Booth360EventTypes } from "../event-types/booth360-event-types";
 import { PhotoEventTypes } from "../event-types/photo-event-types";
 import { FAQSection } from "../shared/faq-section";
+import { QrGalleryOffer } from "../shared/qr-gallery-offer";
 import { TestimonialsSection } from "../shared/testimonials-section";
 import { FeatureGrid } from "./feature-grid";
 import { PackageTiers } from "./package-tiers";
@@ -66,6 +67,7 @@ export function ServicePageContent({
       <ServiceVisualStory type={type} accent={accent} />
       {is360 ? <Booth360EventTypes /> : <PhotoEventTypes />}
       <SpecsSection specs={is360 ? booth360Specs : photoSpecs} accent={accent} />
+      <QrGalleryOffer service={type} />
       <PackageTiers service={type} />
       <TestimonialsSection />
       <FAQSection />

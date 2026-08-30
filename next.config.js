@@ -13,6 +13,16 @@ const nextConfig = {
         destination: '/photo-booth',
         permanent: true,
       },
+      {
+        source: '/qr-galerija/za-dogodke/poroke',
+        destination: '/qr-galerija/poroka',
+        permanent: true,
+      },
+      {
+        source: '/qr-galerija/za-dogodke/poslovni-dogodki',
+        destination: '/qr-galerija/poslovni-dogodek',
+        permanent: true,
+      },
     ];
   },
   images: {

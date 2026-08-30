@@ -42,7 +42,7 @@ export function SiteHeader({
         <HamburgerButton open={menuOpen} onToggle={onToggleMenu} />
       </nav>
 
-      {menuOpen && <MobileMenu />}
+      {menuOpen && <MobileMenu pathname={pathname} />}
     </header>
   );
 }

@@ -2,10 +2,10 @@ import { FooterCta } from "./footer-cta";
 import { FooterColumn } from "./footer-column";
 import { FooterSocials } from "./footer-socials";
 
-export function SiteFooter() {
+export function SiteFooter({ showCta = true }: { showCta?: boolean }) {
   return (
     <footer className="bg-[var(--eventaj-ink)] text-[var(--eventaj-paper)]">
-      <FooterCta />
+      {showCta && <FooterCta />}
 
       <div className="mx-auto max-w-7xl px-5 py-16 md:px-10">
         <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] lg:gap-14">
@@ -24,7 +24,7 @@ export function SiteFooter() {
             links={[
               ["Photo Booth", "/photo-booth"],
               ["360° Booth", "/360-photo-booth"],
-              ["QR Galerija ↗", "https://galerija.eventaj.si/"],
+              ["QR Galerija", "/qr-galerija"],
               ["Oprema za dogodke", "/oprema-za-dogodke"],
               ["Cenik", "/cenik"],
               ["Reference", "/#reference"],
@@ -33,6 +33,7 @@ export function SiteFooter() {
           <FooterColumn
             title="Podjetje"
             links={[
+              ["Nasveti", "/nasveti"],
               ["FAQ", "/#faq"],
               ["Zasebnost", "/zasebnost"],
               ["Pogoji uporabe", "/pogoji-uporabe"],

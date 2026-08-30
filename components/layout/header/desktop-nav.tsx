@@ -18,6 +18,7 @@ import { useEffect, useRef, useState } from "react";
 export function DesktopNav({ pathname }: { pathname: string }) {
   const [equipmentMenuOpen, setEquipmentMenuOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isQrGallery = pathname.startsWith("/qr-galerija");
 
   const keepEquipmentMenuOpen = () => {
     if (closeTimer.current) clearTimeout(closeTimer.current);
@@ -124,23 +125,6 @@ export function DesktopNav({ pathname }: { pathname: string }) {
             );
           }
 
-          if ("external" in item && item.external) {
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className="group inline-flex items-center gap-1.5 font-medium text-[var(--eventaj-ink)] no-underline opacity-85 transition-opacity hover:opacity-100 focus-visible:opacity-100"
-              >
-                {item.label}
-                {"isNew" in item && item.isNew && (
-                  <span className="hidden rounded-full bg-[var(--eventaj-accent)] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.12em] text-[var(--eventaj-paper)] xl:inline">
-                    Novo
-                  </span>
-                )}
-              </a>
-            );
-          }
-
           return (
             <Link
               key={item.href}
@@ -151,6 +135,11 @@ export function DesktopNav({ pathname }: { pathname: string }) {
               )}
             >
               {item.label}
+              {"isNew" in item && item.isNew && (
+                <span className="ml-1.5 hidden rounded-full bg-[var(--eventaj-accent)] px-1.5 py-0.5 text-[8px] font-semibold uppercase tracking-[0.12em] text-[var(--eventaj-paper)] xl:inline">
+                  Novo
+                </span>
+              )}
             </Link>
           );
         })}
@@ -163,9 +152,18 @@ export function DesktopNav({ pathname }: { pathname: string }) {
         >
           031 285 143
         </a>
-        <InquiryTrigger className="rounded-full bg-[var(--eventaj-ink)] px-5 py-3 text-[13px] font-medium tracking-[0.02em] text-[var(--eventaj-paper)] transition-colors hover:bg-[var(--eventaj-accent)]">
-          Pridobi ponudbo →
-        </InquiryTrigger>
+        {isQrGallery ? (
+          <a
+            href="https://galerija.eventaj.si/naroci"
+            className="qr-gallery-primary rounded-full px-5 py-3 text-[13px] font-medium tracking-[0.02em] no-underline transition-colors"
+          >
+            Ustvari galerijo · 35 €
+          </a>
+        ) : (
+          <InquiryTrigger className="rounded-full bg-[var(--eventaj-ink)] px-5 py-3 text-[13px] font-medium tracking-[0.02em] text-[var(--eventaj-paper)] transition-colors hover:bg-[var(--eventaj-accent)]">
+            Pridobi ponudbo →
+          </InquiryTrigger>
+        )}
       </div>
     </>
   );

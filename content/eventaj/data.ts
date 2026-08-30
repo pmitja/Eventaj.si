@@ -3,9 +3,7 @@ export const eventajNav = [
   { label: "360° Booth", href: "/360-photo-booth" },
   {
     label: "QR Galerija",
-    href: "https://galerija.eventaj.si/",
-    description: "Vse fotografije gostov na enem mestu",
-    external: true,
+    href: "/qr-galerija",
     isNew: true,
   },
   {
@@ -21,6 +19,7 @@ export const eventajNav = [
     ],
   },
   { label: "Cenik", href: "/cenik" },
+  { label: "Nasveti", href: "/nasveti" },
   { label: "FAQ", href: "/#faq" },
 ] as const;
 
@@ -460,6 +459,7 @@ export const booth360Packages = [
 ] as const;
 
 export const addons = [
+  { item: "QR galerija dogodka", price: "+35 €" },
   { item: "Dodatna ura najema Photo Booth", price: "+50 €" },
   { item: "Dodatna ura najema 360° Booth", price: "+80 €" },
   { item: "Personalizirane animacije za 360° Booth", price: "+59 €" },

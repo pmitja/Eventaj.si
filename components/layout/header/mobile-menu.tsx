@@ -8,8 +8,9 @@ import { ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
-export function MobileMenu() {
+export function MobileMenu({ pathname }: { pathname: string }) {
   const [equipmentOpen, setEquipmentOpen] = useState(false);
+  const isQrGallery = pathname.startsWith("/qr-galerija");
 
   return (
     <div className="border-b border-[rgba(20,17,15,0.08)] bg-[rgba(251,248,242,0.98)] px-5 pb-6 pt-2 shadow-2xl shadow-black/10 backdrop-blur-xl lg:hidden">
@@ -68,45 +69,18 @@ export function MobileMenu() {
             );
           }
 
-          if ("external" in item && item.external) {
-            return (
-              <a
-                key={item.href}
-                href={item.href}
-                className="group flex min-h-16 items-center justify-between gap-4 border-b border-[rgba(20,17,15,0.08)] py-3 no-underline"
-              >
-                <span>
-                  <span className="flex items-center gap-2 font-serif-display text-2xl">
-                    {item.label}
-                    {"isNew" in item && item.isNew && (
-                      <span className="rounded-full bg-[var(--eventaj-accent)] px-2 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.12em] text-[var(--eventaj-paper)]">
-                        Novo
-                      </span>
-                    )}
-                  </span>
-                  {"description" in item && (
-                    <span className="mt-1 block text-xs text-[var(--eventaj-muted)]">
-                      {item.description}
-                    </span>
-                  )}
-                </span>
-                <span
-                  aria-hidden="true"
-                  className="text-xl text-[var(--eventaj-accent)] transition-transform duration-200 group-hover:translate-x-0.5"
-                >
-                  ↗
-                </span>
-              </a>
-            );
-          }
-
           return (
             <Link
               key={item.href}
               href={item.href}
-              className="border-b border-[rgba(20,17,15,0.08)] py-4 font-serif-display text-2xl"
+              className="flex items-center gap-2 border-b border-[rgba(20,17,15,0.08)] py-4 font-serif-display text-2xl"
             >
               {item.label}
+              {"isNew" in item && item.isNew && (
+                <span className="rounded-full bg-[var(--eventaj-accent)] px-2 py-1 font-sans text-[9px] font-semibold uppercase tracking-[0.12em] text-[var(--eventaj-paper)]">
+                  Novo
+                </span>
+              )}
             </Link>
           );
         })}
@@ -118,9 +92,18 @@ export function MobileMenu() {
         >
           Pokliči 031 285 143
         </a>
-        <InquiryTrigger className="rounded-full bg-[var(--eventaj-ink)] px-5 py-4 text-center font-medium text-[var(--eventaj-paper)]">
-          Pridobi ponudbo →
-        </InquiryTrigger>
+        {isQrGallery ? (
+          <a
+            href="https://galerija.eventaj.si/naroci"
+            className="qr-gallery-primary rounded-full px-5 py-4 text-center font-medium no-underline transition-colors"
+          >
+            Ustvari galerijo · 35 €
+          </a>
+        ) : (
+          <InquiryTrigger className="rounded-full bg-[var(--eventaj-ink)] px-5 py-4 text-center font-medium text-[var(--eventaj-paper)]">
+            Pridobi ponudbo →
+          </InquiryTrigger>
+        )}
       </div>
     </div>
   );

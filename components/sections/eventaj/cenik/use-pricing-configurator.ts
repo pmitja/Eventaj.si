@@ -4,8 +4,9 @@ import { useState } from "react";
 
 type ConfiguratorType = "photo" | "360" | "custom";
 
-const addonPrices = { album: 20, woodenSigns: 40, animations360: 59 };
+const addonPrices = { qrGallery: 35, album: 20, woodenSigns: 40, animations360: 59 };
 const addonLabels = {
+  qrGallery: "QR galerija dogodka",
   album: "Album",
   woodenSigns: "Personalizirane lesene tablice",
   animations360: "Personalizirane animacije za 360° Booth",
@@ -15,6 +16,7 @@ export function usePricingConfigurator() {
   const [hours, setHours] = useState(3);
   const [type, setType] = useState<ConfiguratorType>("photo");
   const [selectedAddons, setSelectedAddons] = useState({
+    qrGallery: false,
     album: false,
     woodenSigns: false,
     animations360: false,

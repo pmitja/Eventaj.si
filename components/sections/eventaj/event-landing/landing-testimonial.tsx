@@ -12,7 +12,7 @@ export function LandingTestimonial({ landing }: { landing: EventLanding }) {
             </span>
           ))}
           <span className="ml-3 text-sm text-[var(--eventaj-muted)]">
-            4.9 / 5 · mnenja strank
+            4.9 / 5 · 30 Google ocen
           </span>
         </div>
         <blockquote className="font-serif-display text-[clamp(26px,3.2vw,40px)] font-[350] leading-tight text-balance">

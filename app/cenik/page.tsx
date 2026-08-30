@@ -3,19 +3,19 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { BreadcrumbList } from "schema-dts";
 
-const pageTitle = "Cenik Photo Booth in 360° Booth najema | Eventaj.si";
+const pageTitle = "Cenik Photo Bootha, 360° Bootha in QR galerije | Eventaj.si";
 
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Pregleden cenik za Photo Booth in 360° Booth najem. Photo Booth od 279 €, 360° Booth od 299 €, dodatki in ponudba po meri.",
+    "Pregleden cenik za Photo Booth, 360° Booth in QR galerijo. Photo Booth od 279 €, 360° Booth od 299 €, QR galerija 35 € na dogodek.",
   alternates: {
     canonical: "https://www.eventaj.si/cenik",
   },
   openGraph: {
     title: pageTitle,
     description:
-      "Pregledni paketi, dodatki in konfigurator ponudbe za Photo Booth in 360° Booth najem.",
+      "Paketi za Photo Booth in 360° Booth ter QR galerija za 35 € na dogodek.",
     url: "https://www.eventaj.si/cenik",
     siteName: "Eventaj.si",
     images: [
@@ -23,7 +23,7 @@ export const metadata: Metadata = {
         url: "/og/photo-booth.webp",
         width: 1200,
         height: 630,
-        alt: "Cenik Photo Booth in 360° Booth najema - Eventaj.si",
+        alt: "Cenik Photo Bootha, 360° Bootha in QR galerije - Eventaj.si",
       },
     ],
     locale: "sl_SI",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: pageTitle,
     description:
-      "Pregledni paketi, dodatki in konfigurator ponudbe za Photo Booth in 360° Booth najem.",
+      "Paketi za Photo Booth in 360° Booth ter QR galerija za 35 € na dogodek.",
     images: ["/og/photo-booth.webp"],
   },
   robots: {

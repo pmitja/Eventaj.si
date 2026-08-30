@@ -19,6 +19,7 @@ export default function SiteShell({ children }: SiteShellProps) {
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryDefaults, setInquiryDefaults] = useState<Partial<InquiryData>>({});
   const pathname = usePathname();
+  const isQrGallery = pathname.startsWith("/qr-galerija");
 
   useEffect(() => {
     const open = (event: Event) => {
@@ -52,8 +53,8 @@ export default function SiteShell({ children }: SiteShellProps) {
 
       {children}
 
-      <SiteFooter />
-      <StickyCTA />
+      <SiteFooter showCta={!isQrGallery} />
+      {!isQrGallery && <StickyCTA />}
       <InquiryDialog
         open={inquiryOpen}
         onClose={() => setInquiryOpen(false)}
