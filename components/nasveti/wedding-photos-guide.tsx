@@ -1,5 +1,5 @@
 import {
-  guides,
+  getGuide,
   weddingPhotoMethods,
   weddingPhotoTips,
 } from "@/content/nasveti";
@@ -20,7 +20,7 @@ import {
 import { WeddingMethodTable } from "./comparison-tables";
 import type { TocItem } from "./guide-toc";
 
-const guide = guides[0];
+const guide = getGuide("kako-zbrati-fotografije-gostov-na-poroki");
 
 const toc: readonly TocItem[] = [
   { id: "uvod", label: "Uvod" },

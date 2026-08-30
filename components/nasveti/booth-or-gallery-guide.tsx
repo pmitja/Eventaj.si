@@ -1,4 +1,4 @@
-import { guides, serviceVerdicts } from "@/content/nasveti";
+import { getGuide, serviceVerdicts } from "@/content/nasveti";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -13,7 +13,7 @@ import {
 import { ServiceComparisonTable } from "./comparison-tables";
 import type { TocItem } from "./guide-toc";
 
-const guide = guides[2];
+const guide = getGuide("photo-booth-ali-qr-galerija");
 
 const toc: readonly TocItem[] = [
   { id: "uvod", label: "Uvod" },

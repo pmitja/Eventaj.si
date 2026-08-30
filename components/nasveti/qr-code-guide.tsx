@@ -1,5 +1,5 @@
 import {
-  guides,
+  getGuide,
   qrCodeMistakes,
   qrCodePrintRules,
   qrCodeRequirements,
@@ -22,7 +22,7 @@ import {
 } from "./guide-shell";
 import type { TocItem } from "./guide-toc";
 
-const guide = guides[1];
+const guide = getGuide("qr-koda-za-fotografije");
 
 const toc: readonly TocItem[] = [
   { id: "kaj-je", label: "Kaj koda zna" },

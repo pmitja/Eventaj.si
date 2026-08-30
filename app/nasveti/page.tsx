@@ -24,6 +24,20 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     locale: "sl_SI",
     type: "website",
+    images: [
+      {
+        url: "/og/photo-booth.webp",
+        width: 1731,
+        height: 909,
+        alt: "Nasveti za fotografije z dogodkov",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title,
+    description,
+    images: ["/og/photo-booth.webp"],
   },
   robots: { index: true, follow: true },
 };

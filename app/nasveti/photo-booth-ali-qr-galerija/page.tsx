@@ -1,5 +1,5 @@
 import { BoothOrGalleryGuide } from "@/components/nasveti/booth-or-gallery-guide";
-import { guides } from "@/content/nasveti";
+import { getGuide } from "@/content/nasveti";
 import { guideArticleSchema, guideBreadcrumbSchema } from "@/content/nasveti-schema";
 import { priceValidUntil } from "@/content/eventaj/structured-data";
 import { qrGalleryOrderUrl } from "@/content/qr-gallery";
@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { Article, BreadcrumbList, ItemList } from "schema-dts";
 
-const guide = guides[2];
+const guide = getGuide("photo-booth-ali-qr-galerija");
 const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "Photo booth ali QR galerija? Primerjava in cene";
 const description =
@@ -34,8 +34,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 1024,
         alt: "Gostje v photo booth kotičku z rekviziti",
       },
     ],

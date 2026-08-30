@@ -1,11 +1,11 @@
 import { QrCodeGuide } from "@/components/nasveti/qr-code-guide";
-import { guides, qrCodeSteps } from "@/content/nasveti";
+import { getGuide, qrCodeSteps } from "@/content/nasveti";
 import { guideArticleSchema, guideBreadcrumbSchema } from "@/content/nasveti-schema";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { Article, BreadcrumbList, HowTo } from "schema-dts";
 
-const guide = guides[1];
+const guide = getGuide("qr-koda-za-fotografije");
 const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "QR koda za fotografije z dogodka: kako deluje";
 const description =
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 768,
         alt: "QR koda v stojalu na mizi med dogodkom",
       },
     ],

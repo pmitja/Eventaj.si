@@ -1,11 +1,11 @@
 import { WeddingPhotosGuide } from "@/components/nasveti/wedding-photos-guide";
-import { guides, weddingPhotoComparison } from "@/content/nasveti";
+import { getGuide, weddingPhotoComparison } from "@/content/nasveti";
 import { guideArticleSchema, guideBreadcrumbSchema } from "@/content/nasveti-schema";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { Article, BreadcrumbList, ItemList } from "schema-dts";
 
-const guide = guides[0];
+const guide = getGuide("kako-zbrati-fotografije-gostov-na-poroki");
 const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "Kako zbrati fotografije gostov na poroki: 5 načinov";
 const description =
@@ -32,8 +32,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1200,
-        height: 630,
+        width: 1024,
+        height: 1024,
         alt: "Poročni gostje fotografirajo s telefoni",
       },
     ],

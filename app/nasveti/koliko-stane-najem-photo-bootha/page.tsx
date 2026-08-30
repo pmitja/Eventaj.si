@@ -44,8 +44,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1200,
-        height: 630,
+        width: 1731,
+        height: 909,
         alt: "Photo booth Eventaj na dogodku",
       },
     ],
