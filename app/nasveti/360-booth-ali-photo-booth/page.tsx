@@ -14,7 +14,9 @@ const description =
 const heroImage = "/og/photo-booth.webp";
 
 export const metadata: Metadata = {
-  title: `${title} | Eventaj.si`,
+  // No "| Eventaj.si" suffix: with it these titles run past 60 characters
+  // and Google truncates them mid-phrase.
+  title,
   description,
   keywords: [
     "360 photo booth",
