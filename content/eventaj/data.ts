@@ -142,10 +142,10 @@ export const galleryItems = [
   },
   {
     type: "image",
-    src: "/application/hero-collage/gold-group.webp",
-    label: "Skupinska zabava",
+    src: "/application/birthday-parties/20260801_204550714.webp",
+    label: "Okrogli jubilej",
     category: "Zasebna zabava",
-    alt: "Skupina gostov s Photo Booth rekviziti pred zlatim ozadjem",
+    alt: "Družba z lesenimi napisi in očali v foto boxu na 50. rojstnem dnevu na vrtu",
   },
   {
     type: "video",
@@ -186,10 +186,10 @@ export const galleryItems = [
   },
   {
     type: "image",
-    src: "/application/primeri/20250802_194512229.webp",
+    src: "/application/wedding-photos/20260619_234714086.webp",
     label: "Poroka",
     category: "Poročni dan",
-    alt: "Poročni gostje ustvarjajo spomin v Photo Boothu",
+    alt: "Mladoporočenca z lesenim napisom Ljubezen je v zraku v foto boxu na poroki",
   },
   {
     type: "video",
@@ -201,17 +201,17 @@ export const galleryItems = [
   },
   {
     type: "image",
-    src: "/application/primeri/20250906_203416839.webp",
+    src: "/application/birthday-parties/20260807_230302676.webp",
     label: "Večerna zabava",
     category: "Zabava",
-    alt: "Večerna Photo Booth fotografija z rekviziti",
+    alt: "Oče in hčerka z rekviziti pred zlato bleščečo steno v foto boxu na 70. rojstnem dnevu",
   },
   {
     type: "image",
-    src: "/application/primeri/20250621_161011627 (4).webp",
+    src: "/application/wedding-photos/20260620_233009774.webp",
     label: "Skupinski spomin",
-    category: "Rojstni dan",
-    alt: "Skupina gostov med Photo Booth fotografiranjem",
+    category: "Poročna zabava",
+    alt: "Svatje z rekviziti pred neonskim napisom Better Together v foto boxu na poroki",
   },
   {
     type: "video",

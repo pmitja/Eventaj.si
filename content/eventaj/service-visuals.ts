@@ -13,13 +13,13 @@ export const serviceVisualStories = {
         label: "Profesionalna oprema",
       },
       {
-        src: "/application/photo-booth-hero/alja-anze.webp",
-        alt: "Poročni gostje s Photo Booth tablicami v personaliziranem okvirju",
+        src: "/application/wedding-photos/20260606_181829838.webp",
+        alt: "Družina v foto boxu na poroki s personaliziranim cvetličnim okvirjem tiska z imeni",
         label: "Personaliziran okvir",
       },
       {
-        src: "/application/photo-booth-hero/jozek-50.webp",
-        alt: "Gostje s Photo Booth rekviziti na rojstnodnevnem praznovanju",
+        src: "/application/birthday-parties/20260801_204550714.webp",
+        alt: "Družba z lesenimi napisi in očali med fotografiranjem v foto boxu na 50. rojstnem dnevu",
         label: "Gostje v akciji",
       },
     ],
@@ -86,7 +86,7 @@ export const serviceHeroVisuals = {
     aspectClass: "aspect-[3/2]",
     cardClass: "w-[300px] sm:w-[390px] lg:w-[500px]",
     railDuration:
-      "motion-safe:animate-[eventaj-service-rail_64s_linear_infinite]",
+      "motion-safe:animate-[eventaj-service-rail_128s_linear_infinite]",
     images: [
       {
         src: "/application/photo-booth-hero/jozek-50.webp",
@@ -94,9 +94,19 @@ export const serviceHeroVisuals = {
         label: "Jožek 50",
       },
       {
+        src: "/application/wedding-photos/20260619_234714086.webp",
+        alt: "Mladoporočenca z lesenim napisom Ljubezen je v zraku v foto boxu na poroki",
+        label: "Elisa in Arpi",
+      },
+      {
         src: "/application/photo-booth-hero/alja-anze.webp",
         alt: "Poročni gostje s Photo Booth tablicami na dogodku Alja in Anže",
         label: "Poroka",
+      },
+      {
+        src: "/application/birthday-parties/20260807_230302676.webp",
+        alt: "Oče in hčerka z rekviziti pred zlato bleščečo steno v foto boxu na 70. rojstnem dnevu",
+        label: "Janez 70",
       },
       {
         src: "/application/photo-booth-hero/srecko-50.webp",
@@ -104,9 +114,19 @@ export const serviceHeroVisuals = {
         label: "Srečko 50",
       },
       {
+        src: "/application/wedding-photos/20260620_233009774.webp",
+        alt: "Svatje z rekviziti pred neonskim napisom Better Together v foto boxu na poroki",
+        label: "Vesna in Antonijo",
+      },
+      {
         src: "/application/photo-booth-hero/robis-tomorrowland.webp",
         alt: "Skupina gostov pred bleščečim ozadjem v okvirju Robi's Tomorrowland",
         label: "Tematska zabava",
+      },
+      {
+        src: "/application/birthday-parties/20260801_204550714.webp",
+        alt: "Družba z lesenimi napisi in očali v foto boxu na 50. rojstnem dnevu na vrtu",
+        label: "Polonca 50",
       },
       {
         src: "/application/photo-booth-hero/lets-party-jasna.webp",
@@ -114,9 +134,19 @@ export const serviceHeroVisuals = {
         label: "Let's party",
       },
       {
+        src: "/application/wedding-photos/20260606_181829838.webp",
+        alt: "Družina s smešnimi očali v fotoboxu na poroki s cvetličnim okvirjem tiska",
+        label: "Mišela in Dragan",
+      },
+      {
         src: "/application/photo-booth-hero/doris-40.webp",
         alt: "Velika skupinska Photo Booth fotografija s praznovanja Doris 40 let",
         label: "Doris 40",
+      },
+      {
+        src: "/application/birthday-parties/20260829_212140291.webp",
+        alt: "Par z lesenimi napisi in personaliziranim tiskom v fotoboxu za 40. rojstni dan",
+        label: "Suzana in Tomaž",
       },
       {
         src: "/application/photo-booth-hero/halcom-2025.webp",
@@ -124,9 +154,19 @@ export const serviceHeroVisuals = {
         label: "Halcom",
       },
       {
+        src: "/application/wedding-photos/20260530_171815397.webp",
+        alt: "Par s srčkastimi očali in lesenimi napisi v foto boxu na poroki na prostem",
+        label: "Nastja in Klemen",
+      },
+      {
         src: "/application/photo-booth-hero/kelag-2026.webp",
         alt: "Skupina gostij z novoletnimi očali na Photo Booth fotografiji Kelag International",
         label: "Kelag",
+      },
+      {
+        src: "/application/birthday-parties/20260609_172305184.webp",
+        alt: "Par s srčkastimi očali pred rožnato bleščečo steno v foto boxu na rojstnodnevni zabavi",
+        label: "Franja",
       },
       {
         src: "/application/photo-booth-hero/disco-night.webp",
@@ -134,9 +174,19 @@ export const serviceHeroVisuals = {
         label: "Disco night",
       },
       {
+        src: "/application/wedding-photos/20260627_214331003.webp",
+        alt: "Svata s srčkastimi očali in lesenim napisom v foto boxu na poročni zabavi",
+        label: "Vesna in Matija",
+      },
+      {
         src: "/application/photo-booth-hero/tamara-40.webp",
         alt: "Trije gostje na Photo Booth fotografiji s praznovanja Tamara 40",
         label: "Tamara 40",
+      },
+      {
+        src: "/application/wedding-photos/20260822_194321096.webp",
+        alt: "Svata z rekviziti in personaliziranim poročnim tiskom iz foto boxa",
+        label: "Nataša in Borut",
       },
     ],
   },
