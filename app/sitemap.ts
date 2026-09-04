@@ -1,12 +1,13 @@
 import { MetadataRoute } from 'next'
 import { qrGalleryUseCases } from '@/content/qr-gallery'
 import { guides } from '@/content/nasveti'
+import { equipmentProducts } from '@/content/eventaj/equipment'
 
 export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://www.eventaj.si'
 	// Release date — bump this when content meaningfully changes (avoids a
 	// fresh lastmod on every build, which Google learns to distrust).
-	const currentDate = '2026-08-30'
+	const currentDate = '2026-09-03'
 
 	return [
 		// Main pages
@@ -42,12 +43,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
 			changeFrequency: 'weekly',
 			priority: 0.9,
 		},
-		{
-			url: `${baseUrl}/oprema-za-dogodke/najem-stojecih-miz`,
+		...equipmentProducts.map(({ slug, images }) => ({
+			url: `${baseUrl}/oprema-za-dogodke/${slug}`,
 			lastModified: currentDate,
-			changeFrequency: 'weekly',
+			changeFrequency: 'weekly' as const,
 			priority: 0.9,
-		},
+			images: images.map(({ src }) => `${baseUrl}${src}`),
+		})),
 		{
 			url: `${baseUrl}/qr-galerija`,
 			lastModified: currentDate,

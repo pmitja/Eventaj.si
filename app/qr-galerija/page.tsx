@@ -6,7 +6,7 @@ import {
 } from "@/content/eventaj/structured-data";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import type { FAQPage, Product } from "schema-dts";
+import type { FAQPage, Service } from "schema-dts";
 import { qrGalleryFaqs } from "@/content/qr-gallery";
 
 export const metadata: Metadata = {
@@ -44,10 +44,10 @@ export const metadata: Metadata = {
 export default function QrGalleryPage() {
   return (
     <>
-      <JsonLd<Product>
+      <JsonLd<Service>
         item={{
           "@context": "https://schema.org",
-          "@type": "Product",
+          "@type": "Service",
           name: "Eventaj QR galerija za dogodke",
           description:
             "Zasebna QR galerija za zbiranje fotografij, kratkih videov in voščil gostov brez aplikacije ali registracije.",
@@ -56,11 +56,12 @@ export default function QrGalleryPage() {
             "https://www.eventaj.si/qr-galerija/screenshots/galerija-mobile.png",
           ],
           url: "https://www.eventaj.si/qr-galerija",
-          sku: "QR-GALERIJA-DOGODEK",
-          brand: {
-            "@type": "Brand",
+          provider: {
+            "@type": "Organization",
             name: "Eventaj.si",
+            url: "https://www.eventaj.si",
           },
+          areaServed: { "@type": "Country", name: "Slovenija" },
           aggregateRating: eventajAggregateRating,
           offers: {
             "@type": "Offer",

@@ -89,7 +89,7 @@ export function ServiceCard({
                 : "left-[-12px] md:left-[-28px]",
             )}
           >
-            <div className="aspect-[4/5]">
+            <div className="relative aspect-[4/5]">
               <ServiceCardMedia media={media[1]} />
             </div>
           </div>

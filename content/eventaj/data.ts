@@ -11,6 +11,54 @@ export const eventajNav = [
     href: "/oprema-za-dogodke",
     children: [
       {
+        label: "Igre za dogodke",
+        description: "Paket štirih iger od 149 €",
+        href: "/oprema-za-dogodke/igre-za-dogodke",
+        icon: "games",
+      },
+      {
+        label: "Tabla dobrodošlice",
+        description: "Najem ali izdelava po meri",
+        href: "/oprema-za-dogodke/tabla-dobrodoslice",
+        icon: "sign",
+      },
+      {
+        label: "Številke miz",
+        description: "Akrilne številke s podstavki",
+        href: "/oprema-za-dogodke/stevilke-miz",
+        icon: "numbers",
+      },
+      {
+        label: "Imena za na krožnik",
+        description: "Lesena ali akrilna imena",
+        href: "/oprema-za-dogodke/imena-za-na-kroznik",
+        icon: "names",
+      },
+      {
+        label: "Knjiga gostov v okvirju",
+        description: "Personalizirana, srce ali drevo",
+        href: "/oprema-za-dogodke/knjiga-gostov-v-okvirju",
+        icon: "guest-book",
+      },
+      {
+        label: "Poročni puzzle",
+        description: "Personaliziran, 90 ali 160 koščkov",
+        href: "/oprema-za-dogodke/porocni-puzzle",
+        icon: "puzzle",
+      },
+      {
+        label: "Beer pong miza",
+        description: "Poročna ali LED izvedba",
+        href: "/oprema-za-dogodke/beer-pong-miza",
+        icon: "beer-pong",
+      },
+      {
+        label: "Pahljače za goste",
+        description: "Obojestranski tisk po meri",
+        href: "/oprema-za-dogodke/pahljace-za-goste",
+        icon: "fans",
+      },
+      {
         label: "Stoječe barske mize",
         description: "10 € na mizo za en dan",
         href: "/oprema-za-dogodke/najem-stojecih-miz",

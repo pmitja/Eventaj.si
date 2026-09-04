@@ -38,6 +38,7 @@ export const NotificationEmail = ({
     quantity,
     tableclothColor,
     fulfillment,
+    equipmentSummary,
   } = formData;
 
   return (
@@ -121,6 +122,11 @@ export const NotificationEmail = ({
             {fulfillment && (
               <Text style={detailItem}>
                 <strong>Prevzem oziroma dostava:</strong> {fulfillment}
+              </Text>
+            )}
+            {equipmentSummary && (
+              <Text style={{ ...detailItem, whiteSpace: "pre-line" as const }}>
+                <strong>Izbrana oprema:</strong>{"\n"}{equipmentSummary}
               </Text>
             )}
             {eventType && (

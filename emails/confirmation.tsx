@@ -34,6 +34,7 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
     quantity,
     tableclothColor,
     fulfillment,
+    equipmentSummary,
   } = formData;
 
   return (
@@ -118,6 +119,11 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
             {fulfillment && (
               <Text style={detailItem}>
                 <strong>Prevzem oziroma dostava:</strong> {fulfillment}
+              </Text>
+            )}
+            {equipmentSummary && (
+              <Text style={{ ...detailItem, whiteSpace: "pre-line" as const }}>
+                <strong>Izbrana oprema:</strong>{"\n"}{equipmentSummary}
               </Text>
             )}
             {eventType && (

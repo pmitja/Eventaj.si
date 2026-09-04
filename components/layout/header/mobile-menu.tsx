@@ -4,16 +4,29 @@ import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
 import { StandingTableIcon } from "@/components/icons/StandingTableIcon";
 import { eventajNav } from "@/content/eventaj/data";
 import { cn } from "@/lib/utils";
-import { ChevronDown } from "lucide-react";
+import {
+  Beer,
+  BookHeart,
+  ChevronDown,
+  Dices,
+  Fan,
+  ListOrdered,
+  PackageOpen,
+  PanelsTopLeft,
+  Puzzle,
+  Tags,
+} from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 
 export function MobileMenu({ pathname }: { pathname: string }) {
-  const [equipmentOpen, setEquipmentOpen] = useState(false);
+  const [equipmentOpen, setEquipmentOpen] = useState(
+    pathname.startsWith("/oprema-za-dogodke"),
+  );
   const isQrGallery = pathname.startsWith("/qr-galerija");
 
   return (
-    <div className="border-b border-[rgba(20,17,15,0.08)] bg-[rgba(251,248,242,0.98)] px-5 pb-6 pt-2 shadow-2xl shadow-black/10 backdrop-blur-xl lg:hidden">
+    <div className="max-h-[calc(100vh-72px)] overflow-y-auto border-b border-[rgba(20,17,15,0.08)] bg-[rgba(251,248,242,0.98)] px-5 pb-6 pt-2 shadow-2xl shadow-black/10 backdrop-blur-xl lg:hidden">
       <div className="grid gap-1">
         {eventajNav.map((item) => {
           if ("children" in item) {
@@ -30,7 +43,7 @@ export function MobileMenu({ pathname }: { pathname: string }) {
                     type="button"
                     onClick={() => setEquipmentOpen((value) => !value)}
                     aria-expanded={equipmentOpen}
-                    aria-label="Prikaži izdelke za najem"
+                    aria-label="Prikaži izdelke opreme"
                     className="flex h-12 w-12 items-center justify-center rounded-full border border-[rgba(20,17,15,0.12)]"
                   >
                     <ChevronDown
@@ -51,7 +64,7 @@ export function MobileMenu({ pathname }: { pathname: string }) {
                         className="flex items-center gap-3 py-3 no-underline"
                       >
                         <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-[rgba(20,17,15,0.14)]">
-                          <StandingTableIcon className="h-5 w-5" />
+                          <EquipmentIcon icon={child.icon} />
                         </span>
                         <span>
                           <span className="block font-serif-display text-lg leading-tight">
@@ -107,4 +120,23 @@ export function MobileMenu({ pathname }: { pathname: string }) {
       </div>
     </div>
   );
+}
+
+const equipmentIcons = {
+  games: Dices,
+  sign: PanelsTopLeft,
+  numbers: ListOrdered,
+  names: Tags,
+  "guest-book": BookHeart,
+  puzzle: Puzzle,
+  "beer-pong": Beer,
+  fans: Fan,
+} as const;
+
+function EquipmentIcon({ icon }: { icon: string }) {
+  if (icon === "standing-table") {
+    return <StandingTableIcon className="h-5 w-5" />;
+  }
+  const Icon = equipmentIcons[icon as keyof typeof equipmentIcons] ?? PackageOpen;
+  return <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />;
 }

@@ -1,3 +1,9 @@
+export type EquipmentSelection = {
+  productId: string;
+  quantity: number;
+  options?: string;
+};
+
 export type InquiryData = {
   type: string;
   hours: string;
@@ -13,6 +19,8 @@ export type InquiryData = {
   quantity: string;
   tableclothColor: string;
   fulfillment: string;
+  estimatedPrice: string;
+  equipmentSelections: EquipmentSelection[];
 };
 
 export const initialInquiryData: InquiryData = {
@@ -30,4 +38,6 @@ export const initialInquiryData: InquiryData = {
   quantity: "1",
   tableclothColor: "Bel prt",
   fulfillment: "",
+  estimatedPrice: "",
+  equipmentSelections: [],
 };

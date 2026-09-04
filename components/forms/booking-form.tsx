@@ -500,4 +500,5 @@ export type FormField = {
   quantity?: string;
   tableclothColor?: string;
   fulfillment?: string;
+  equipmentSummary?: string;
 };

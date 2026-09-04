@@ -2,7 +2,8 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { calculateInquiryPrice } from "./inquiry-price";
-import { InquiryData, initialInquiryData } from "./inquiry-types";
+import { equipmentProducts } from "@/content/eventaj/equipment";
+import { EquipmentSelection, InquiryData, initialInquiryData } from "./inquiry-types";
 
 export function useInquiryForm(
   open: boolean,
@@ -16,14 +17,23 @@ export function useInquiryForm(
 
   useEffect(() => {
     if (open) {
+      const defaultProduct = equipmentProducts.find((product) => product.name === defaults.product);
+      const defaultEquipment: EquipmentSelection[] = defaults.equipmentSelections
+        ?? (defaultProduct
+          ? [{
+              productId: defaultProduct.id,
+              quantity: Number(defaults.quantity) || defaultProduct.quantity?.defaultValue || 1,
+              options: defaults.tableclothColor,
+            }]
+          : []);
       setStep(1);
-      setData({ ...initialInquiryData, ...defaults });
+      setData({ ...initialInquiryData, ...defaults, equipmentSelections: defaultEquipment });
       setSubmitted(false);
       setError("");
     }
   }, [open, defaults]);
 
-  const update = (key: keyof InquiryData, value: string) => {
+  const update = <K extends keyof InquiryData>(key: K, value: InquiryData[K]) => {
     setData((current) => ({ ...current, [key]: value }));
     setError("");
   };
@@ -34,19 +44,13 @@ export function useInquiryForm(
         return Boolean(
           data.type &&
             data.eventType &&
-            data.product &&
-            data.quantity &&
-            data.tableclothColor,
+            data.equipmentSelections.length > 0,
         );
       }
       return Boolean(data.type && data.hours && data.eventType);
     }
     if (step === 2) {
-      return Boolean(
-        data.date &&
-          data.location &&
-          (data.type !== "Oprema za dogodke" || data.fulfillment),
-      );
+      return Boolean(data.date && data.location);
     }
     return Boolean(data.name && data.email && data.phone);
   };
@@ -72,18 +76,42 @@ export function useInquiryForm(
             : data.type === "Oprema za dogodke"
               ? "equipment"
               : "basic";
-      const quantity = Math.min(15, Math.max(1, Number(data.quantity) || 1));
-      const totalPrice = calculateInquiryPrice(serviceType, data.hours, quantity);
+      const equipmentTotal = data.equipmentSelections.reduce((sum, selection) => {
+        const product = equipmentProducts.find((item) => item.id === selection.productId);
+        if (!product) return sum;
+        const unitPrice = product.quantityTiers?.reduce(
+          (price, tier) => selection.quantity >= tier.min ? tier.unitPrice : price,
+          product.price,
+        ) ?? product.price;
+        return sum + unitPrice * selection.quantity;
+      }, 0);
+      const boothPrice = serviceType === "equipment"
+        ? 0
+        : calculateInquiryPrice(serviceType, data.hours, 1);
+      const totalPrice = boothPrice + equipmentTotal;
       const hours = serviceType === "equipment" ? "1 dan" : data.hours;
+      const equipmentSummary = data.equipmentSelections.map((selection) => {
+        const product = equipmentProducts.find((item) => item.id === selection.productId);
+        if (!product) return "";
+        return `${product.name}: ${selection.quantity}${selection.options ? `, ${selection.options}` : ""}`;
+      }).filter(Boolean).join("\n");
+      const selectedProducts = data.equipmentSelections
+        .map((selection) => equipmentProducts.find((product) => product.id === selection.productId))
+        .filter(Boolean);
+      const needsPost = selectedProducts.some((product) => product?.fulfillmentMode === "post");
+      const needsTransport = selectedProducts.some((product) => product?.fulfillmentMode === "transport");
+      const fulfillment = needsPost && needsTransport
+        ? "Po pošti in s prevozom na lokacijo"
+        : needsTransport
+          ? "Prevoz na lokacijo"
+          : needsPost
+            ? "Pošiljanje po pošti"
+            : "";
       const message = [
         data.notes,
         data.eventType ? `Tip dogodka: ${data.eventType}` : "",
         data.guests ? `Število gostov: ${data.guests}` : "",
         data.type === "Oba" ? "Storitev: Photo Booth + 360° Booth po meri" : "",
-        serviceType === "equipment" ? `Izdelek: ${data.product}` : "",
-        serviceType === "equipment" ? `Količina: ${quantity}` : "",
-        serviceType === "equipment" ? `Prt: ${data.tableclothColor}` : "",
-        serviceType === "equipment" ? `Prevzem/dostava: ${data.fulfillment}` : "",
       ]
         .filter(Boolean)
         .join("\n");
@@ -103,10 +131,8 @@ export function useInquiryForm(
             message,
             eventType: data.eventType,
             guests: data.guests,
-            product: serviceType === "equipment" ? data.product : undefined,
-            quantity: serviceType === "equipment" ? String(quantity) : undefined,
-            tableclothColor: serviceType === "equipment" ? data.tableclothColor : undefined,
-            fulfillment: serviceType === "equipment" ? data.fulfillment : undefined,
+            equipmentSummary: equipmentSummary || undefined,
+            fulfillment: fulfillment || undefined,
           },
           totalPrice,
         }),

@@ -99,7 +99,7 @@ export function InquiryDialog({
             <p className="mb-8 mt-2 text-sm text-[var(--eventaj-muted)]">
               {step === 1 &&
                 (data.type === "Oprema za dogodke"
-                  ? "Izberi količino in prt. Nato preverimo razpoložljivost za tvoj datum."
+                  ? "Izberi opremo in količine. Nato preverimo razpoložljivost za tvoj datum."
                   : "V nekaj korakih zberemo informacije za pripravo ponudbe.")}
               {step === 2 &&
                 "Preverimo razpoložljivost termina in pripravimo okvirno ponudbo."}

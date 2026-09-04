@@ -81,12 +81,12 @@ export default function BoothOrGalleryGuidePage() {
               "@type": "ListItem",
               position: 1,
               item: {
-                "@type": "Product",
+                "@type": "Service",
                 name: "Photo Booth najem",
                 description:
                   "Fizični foto kotiček z DSLR fotoaparatom, osvetlitvijo, rekviziti, asistenco in takojšnjim tiskom fotografij.",
                 url: "https://www.eventaj.si/photo-booth",
-                brand: { "@type": "Brand", name: "Eventaj.si" },
+                provider: { "@type": "Organization", name: "Eventaj.si", url: "https://www.eventaj.si" },
                 offers: {
                   "@type": "Offer",
                   url: "https://www.eventaj.si/photo-booth",
@@ -101,12 +101,12 @@ export default function BoothOrGalleryGuidePage() {
               "@type": "ListItem",
               position: 2,
               item: {
-                "@type": "Product",
+                "@type": "Service",
                 name: "QR galerija za dogodke",
                 description:
                   "Zasebna QR galerija za zbiranje fotografij, kratkih videov in voščil gostov brez aplikacije ali registracije.",
                 url: "https://www.eventaj.si/qr-galerija",
-                brand: { "@type": "Brand", name: "Eventaj.si" },
+                provider: { "@type": "Organization", name: "Eventaj.si", url: "https://www.eventaj.si" },
                 offers: {
                   "@type": "Offer",
                   url: qrGalleryOrderUrl,

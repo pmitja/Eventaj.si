@@ -236,6 +236,31 @@
   min-height: 360px;
 }
 
+@keyframes equipment-hero-slide-in {
+  from { opacity: 0; transform: scale(1.015); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes equipment-product-slide-in {
+  from { opacity: 0.55; transform: scale(1.018); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.equipment-hero-slide {
+  animation: equipment-hero-slide-in 0.7s ease-out both;
+}
+
+.equipment-product-slide-active {
+  animation: equipment-product-slide-in 0.55s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .equipment-hero-slide,
+  .equipment-product-slide-active {
+    animation: none;
+  }
+}
+
 @media (min-width: 768px) {
   .equipment-category-hero-media {
     min-height: 480px;

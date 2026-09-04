@@ -4,6 +4,7 @@ import { ArrowRight, CalendarCheck, PackageCheck, Send } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { FAQSection } from "../shared/faq-section";
+import { EquipmentHeroCarousel } from "./equipment-hero-carousel";
 
 const steps = [
   {
@@ -22,11 +23,17 @@ const steps = [
     icon: PackageCheck,
     number: "03",
     title: "Potrdi podrobnosti",
-    description: "Uskladimo prevzem ali dostavo do 75 km po ceni 0,40 €/km ter ti pošljemo jasno končno ponudbo.",
+    description: "Uskladimo prevoz na lokacijo ali pošiljanje po pošti ter ti pošljemo končno ponudbo.",
   },
 ] as const;
 
 export function EquipmentCategoryPage() {
+  const heroProducts = equipmentProducts.map((product) => ({
+    name: product.name,
+    href: `/oprema-za-dogodke/${product.slug}`,
+    image: product.slug === "najem-stojecih-miz" ? product.images[2] : product.images[0],
+  }));
+
   return (
     <main>
       <section className="px-5 pb-20 pt-32 md:px-10 md:pb-28 md:pt-40">
@@ -40,32 +47,20 @@ export function EquipmentCategoryPage() {
           <div className="grid items-end gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:gap-16">
             <div className="pb-2 lg:pb-12">
               <div className="mb-6 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--eventaj-accent)]">
-                Najem · osebni prevzem ali dostava
+                Najem in izdelava · dostava po Sloveniji
               </div>
               <h1 className="max-w-[760px] font-serif-display text-[clamp(52px,7vw,104px)] font-[350] leading-[0.92] text-balance">
                 Oprema za dogodke, <em className="font-serif-italic italic text-[var(--eventaj-accent)]">brez kompliciranja.</em>
               </h1>
               <p className="mt-8 max-w-xl text-lg leading-relaxed text-[var(--eventaj-ink-2)] md:text-xl">
-                Izberi opremo, količino in datum dogodka. Preverimo razpoložljivost ter ti v 24 urah pošljemo vse podrobnosti.
+                Izberi opremo ali personaliziran izdelek. Preverimo razpoložljivost oziroma rok izdelave ter ti v 24 urah pošljemo vse podrobnosti.
               </p>
               <a href="#oprema" className="mt-9 inline-flex items-center gap-3 rounded-full bg-[var(--eventaj-ink)] px-7 py-4 text-sm font-medium !text-[var(--eventaj-paper)] no-underline transition-colors hover:bg-[var(--eventaj-accent)]">
                 Oglej si opremo <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </a>
             </div>
 
-            <div className="equipment-category-hero-media relative overflow-hidden rounded-[4px] bg-[var(--eventaj-paper-2)]">
-              <Image
-                src="/application/oprema/stojeca-miza/dogodek.webp"
-                alt="Stoječe barske mize z belimi in črnimi prti na dogodku"
-                fill
-                priority
-                sizes="(min-width: 1024px) 58vw, 100vw"
-                className="object-cover"
-              />
-              <div className="absolute bottom-4 left-4 rounded-full bg-[rgba(251,248,242,0.92)] px-4 py-2 text-xs font-medium backdrop-blur-md md:bottom-6 md:left-6">
-                Jasne cene · hiter dogovor
-              </div>
-            </div>
+            <EquipmentHeroCarousel products={heroProducts} />
           </div>
         </div>
       </section>
@@ -74,11 +69,11 @@ export function EquipmentCategoryPage() {
         <div className="mx-auto max-w-[1480px]">
           <div className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
-              <div className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]">Na voljo za najem</div>
+              <div className="mb-4 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]">Najem in izdelava</div>
               <h2 className="font-serif-display text-[clamp(40px,5vw,68px)] font-[350] leading-none">Izberi opremo.</h2>
             </div>
             <p className="max-w-md text-sm leading-relaxed text-[var(--eventaj-muted)]">
-              Ponudbo širimo premišljeno. Vsak izdelek ima svojo ceno, zalogo in obrazec za preverjanje termina.
+              Vsak izdelek ima svojo ceno, možnosti in rok. Pri najemu preverimo termin, pri izdelavi pa potrdimo osnutek in datum dostave.
             </p>
           </div>
 
@@ -95,7 +90,7 @@ export function EquipmentCategoryPage() {
                       className="object-cover transition-transform duration-500 ease-out group-hover:scale-[1.025] motion-reduce:transition-none"
                     />
                     <span className="absolute left-4 top-4 rounded-full bg-[rgba(251,248,242,0.94)] px-3 py-2 text-[11px] font-medium uppercase tracking-[0.12em] backdrop-blur-md">
-                      Na voljo {product.available}
+                      {product.status}
                     </span>
                   </div>
                   <div className="p-6 md:p-7">
@@ -107,8 +102,8 @@ export function EquipmentCategoryPage() {
                       <ArrowRight className="mt-2 h-5 w-5 shrink-0 transition-transform group-hover:translate-x-1 motion-reduce:transition-none" aria-hidden="true" />
                     </div>
                     <div className="mt-6 flex items-end justify-between border-t border-[rgba(20,17,15,0.1)] pt-5">
-                      <span className="text-xs text-[var(--eventaj-muted)]">Bel ali črn prt vključen</span>
-                      <strong className="font-serif-display text-2xl font-normal">{product.price} € <span className="font-sans text-xs text-[var(--eventaj-muted)]">/ dan</span></strong>
+                      <span className="text-xs text-[var(--eventaj-muted)]">{product.cardNote}</span>
+                      <strong className="text-right font-serif-display text-2xl font-normal">{product.priceLabel}</strong>
                     </div>
                   </div>
                 </Link>

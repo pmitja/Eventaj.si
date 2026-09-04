@@ -2,7 +2,7 @@ import { EquipmentProductPage } from "@/components/sections/eventaj/equipment/eq
 import { standingTable, standingTableFaq } from "@/content/eventaj/equipment";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import type { BreadcrumbList, FAQPage, Product } from "schema-dts";
+import type { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const pageTitle = "Najem stoječih barskih miz – 10 €/dan | Eventaj.si";
 const pageDescription =
@@ -41,17 +41,17 @@ export const metadata: Metadata = {
 export default function StandingTablePage() {
   return (
     <>
-      <JsonLd<Product>
+      <JsonLd<Service>
         item={{
           "@context": "https://schema.org",
-          "@type": "Product",
+          "@type": "Service",
           name: standingTable.name,
           description: standingTable.description,
           url: pageUrl,
           image: standingTable.images.map((image) => `https://www.eventaj.si${image.src}`),
-          sku: "EVENTAJ-STOJ-MIZA",
           category: "Oprema za dogodke",
-          brand: { "@type": "Brand", name: "Eventaj.si" },
+          provider: { "@type": "Organization", name: "Eventaj.si", url: "https://www.eventaj.si" },
+          areaServed: { "@type": "Country", name: "Slovenija" },
           offers: {
             "@type": "Offer",
             url: pageUrl,
@@ -84,7 +84,7 @@ export default function StandingTablePage() {
           })),
         }}
       />
-      <EquipmentProductPage />
+      <EquipmentProductPage product={standingTable} />
     </>
   );
 }

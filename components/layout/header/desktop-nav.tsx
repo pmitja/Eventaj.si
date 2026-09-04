@@ -11,7 +11,19 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { eventajNav } from "@/content/eventaj/data";
 import { cn } from "@/lib/utils";
-import { ArrowUpRight, ChevronDown, PackageOpen } from "lucide-react";
+import {
+  ArrowUpRight,
+  Beer,
+  BookHeart,
+  ChevronDown,
+  Dices,
+  Fan,
+  ListOrdered,
+  PackageOpen,
+  PanelsTopLeft,
+  Puzzle,
+  Tags,
+} from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
@@ -82,15 +94,16 @@ export function DesktopNav({ pathname }: { pathname: string }) {
                   <DropdownMenuContent
                     align="end"
                     sideOffset={12}
-                    className="w-[310px] rounded-[4px] border-[rgba(20,17,15,0.12)] bg-[#FBF8F2] p-2 text-[#14110F] shadow-[0_24px_70px_-28px_rgba(20,17,15,0.55)]"
+                    className="w-[650px] rounded-[4px] border-[rgba(20,17,15,0.12)] bg-[#FBF8F2] p-2 text-[#14110F] shadow-[0_24px_70px_-28px_rgba(20,17,15,0.55)]"
                     onMouseEnter={keepEquipmentMenuOpen}
                     onMouseLeave={scheduleEquipmentMenuClose}
                     onCloseAutoFocus={(event) => event.preventDefault()}
                   >
                     <DropdownMenuLabel className="flex items-center gap-2.5 px-3 py-2.5 text-[10px] font-medium uppercase tracking-[0.18em] text-[#6B6157]">
                       <PackageOpen className="h-4 w-4" strokeWidth={1.5} aria-hidden="true" />
-                      Izdelki za najem
+                      Najem in izdelava
                     </DropdownMenuLabel>
+                    <div className="grid grid-cols-2 gap-1">
                     {item.children.map((child) => (
                       <DropdownMenuItem
                         key={child.href}
@@ -102,7 +115,7 @@ export function DesktopNav({ pathname }: { pathname: string }) {
                           className="group/item flex w-full cursor-pointer items-center gap-4 px-3 py-3.5 no-underline outline-none"
                         >
                           <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-[rgba(20,17,15,0.14)] bg-[#FBF8F2]">
-                            <StandingTableIcon className="h-5 w-5" />
+                            <EquipmentIcon icon={child.icon} />
                           </span>
                           <span className="min-w-0 flex-1">
                             <span className="block font-serif-display text-lg leading-tight">
@@ -119,6 +132,7 @@ export function DesktopNav({ pathname }: { pathname: string }) {
                         </Link>
                       </DropdownMenuItem>
                     ))}
+                    </div>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
@@ -167,4 +181,23 @@ export function DesktopNav({ pathname }: { pathname: string }) {
       </div>
     </>
   );
+}
+
+const equipmentIcons = {
+  games: Dices,
+  sign: PanelsTopLeft,
+  numbers: ListOrdered,
+  names: Tags,
+  "guest-book": BookHeart,
+  puzzle: Puzzle,
+  "beer-pong": Beer,
+  fans: Fan,
+} as const;
+
+function EquipmentIcon({ icon }: { icon: string }) {
+  if (icon === "standing-table") {
+    return <StandingTableIcon className="h-5 w-5" />;
+  }
+  const Icon = equipmentIcons[icon as keyof typeof equipmentIcons] ?? PackageOpen;
+  return <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />;
 }

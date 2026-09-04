@@ -4,7 +4,7 @@ import { guideArticleSchema, guideBreadcrumbSchema } from "@/content/nasveti-sch
 import { priceValidUntil } from "@/content/eventaj/structured-data";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import type { Article, BreadcrumbList, FAQPage, Product } from "schema-dts";
+import type { Article, BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const guide = getGuide("koliko-stane-najem-photo-bootha");
 const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
@@ -83,15 +83,16 @@ export default function BoothPriceGuidePage() {
       <JsonLd<BreadcrumbList>
         item={guideBreadcrumbSchema({ slug: guide.slug, name: "Cena najema photo bootha" })}
       />
-      <JsonLd<Product>
+      <JsonLd<Service>
         item={{
           "@context": "https://schema.org",
-          "@type": "Product",
+          "@type": "Service",
           name: "Najem photo bootha",
           description:
             "Photo booth z DSLR fotoaparatom, osvetlitvijo, rekviziti, prisotno ekipo in neomejenim tiskom fotografij.",
           url: "https://www.eventaj.si/photo-booth",
-          brand: { "@type": "Brand", name: "Eventaj.si" },
+          provider: { "@type": "Organization", name: "Eventaj.si", url: "https://www.eventaj.si" },
+          areaServed: { "@type": "Country", name: "Slovenija" },
           offers: {
             "@type": "AggregateOffer",
             priceCurrency: "EUR",

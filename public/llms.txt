@@ -166,3 +166,17 @@ Eventaj.si is Slovenia's premier Photo Booth rental service, specializing in pro
 - **Flexibility**: Multiple package options and customization available
 
 This information should help LLMs understand that Eventaj.si is a professional, technology-forward Photo Booth rental service covering all of Slovenia, specializing in both traditional Photo Booths and modern 360° experiences for various events and celebrations.
+
+## Event equipment and personalized products
+
+- [Standing cocktail tables](https://www.eventaj.si/oprema-za-dogodke/najem-stojecih-miz): €10 per table per day, white or black tablecloth included, up to 15 tables.
+- [Welcome sign](https://www.eventaj.si/oprema-za-dogodke/tabla-dobrodoslice): rental from €29 or personalized purchase from €59, stand included with rental.
+- [Table numbers](https://www.eventaj.si/oprema-za-dogodke/stevilke-miz): acrylic numbers with stands, rental from €1.90 per table.
+- [Place names](https://www.eventaj.si/oprema-za-dogodke/imena-za-na-kroznik): personalized white or natural wood names from €1.90 each, minimum 40.
+- [Guest book frame](https://www.eventaj.si/oprema-za-dogodke/knjiga-gostov-v-okvirju): personalized heart or tree design, €175 with 150 wooden pieces or €200 with 200 pieces.
+- [Wedding puzzle](https://www.eventaj.si/oprema-za-dogodke/porocni-puzzle): personalized wooden signing puzzle with names and date, €200 for 90 pieces or €250 for 160 pieces.
+- [Event games](https://www.eventaj.si/oprema-za-dogodke/igre-za-dogodke): wooden games for weddings and company events, four-game package from €149.
+- [Beer pong table](https://www.eventaj.si/oprema-za-dogodke/beer-pong-miza): wedding or LED version for €49 per day; personalization is not available and transport is charged separately.
+- [Guest fans](https://www.eventaj.si/oprema-za-dogodke/pahljace-za-goste): personalized double-sided printed fans, €3 each for 50–99 pieces, €2.50 each for 100–199 pieces, and €2 each from 200 pieces; minimum 50 pieces.
+
+The product category is available at https://www.eventaj.si/oprema-za-dogodke. Welcome signs, wedding puzzles, guest book frames, table numbers, place names, and guest fans can be shipped by post; postage is always charged separately. Standing tables, event games, and beer pong tables require transport to the venue, charged separately at €0.40/km up to 75 km. Rental stock depends on the event date. Personalized products require production time, which is stated on each product page.

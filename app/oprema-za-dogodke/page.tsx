@@ -4,9 +4,9 @@ import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { BreadcrumbList, CollectionPage, ItemList } from "schema-dts";
 
-const pageTitle = "Najem opreme za dogodke | Eventaj.si";
+const pageTitle = "Oprema za dogodke – najem in izdelava | Eventaj.si";
 const pageDescription =
-  "Najem opreme za poroke, poslovne dogodke in praznovanja. Oglejte si razpoložljive izdelke, jasne cene in preverite prost termin.";
+  "Najem opreme in izdelava personaliziranih izdelkov za poroke, poslovne dogodke in praznovanja. Oglejte si cene in možnosti.";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -44,7 +44,7 @@ export default function EquipmentPage() {
         item={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Najem opreme za dogodke",
+          name: "Oprema za dogodke",
           url: "https://www.eventaj.si/oprema-za-dogodke",
           description: pageDescription,
           inLanguage: "sl-SI",

@@ -84,12 +84,12 @@ export default function Booth360GuidePage() {
               "@type": "ListItem",
               position: 1,
               item: {
-                "@type": "Product",
+                "@type": "Service",
                 name: "Photo Booth najem",
                 description:
                   "Photo booth z DSLR fotoaparatom, osvetlitvijo, rekviziti in takojšnjim tiskom fotografij. Potrebuje 2,5 × 2 m prostora.",
                 url: "https://www.eventaj.si/photo-booth",
-                brand: { "@type": "Brand", name: "Eventaj.si" },
+                provider: { "@type": "Organization", name: "Eventaj.si", url: "https://www.eventaj.si" },
                 offers: {
                   "@type": "Offer",
                   url: "https://www.eventaj.si/photo-booth",
@@ -104,12 +104,12 @@ export default function Booth360GuidePage() {
               "@type": "ListItem",
               position: 2,
               item: {
-                "@type": "Product",
+                "@type": "Service",
                 name: "360° Booth najem",
                 description:
                   "360 video stojnica z vrtečo se kamero, ki posname kratek video v počasnem posnetku. Potrebuje 3 × 3 m prostih tal.",
                 url: "https://www.eventaj.si/360-photo-booth",
-                brand: { "@type": "Brand", name: "Eventaj.si" },
+                provider: { "@type": "Organization", name: "Eventaj.si", url: "https://www.eventaj.si" },
                 offers: {
                   "@type": "Offer",
                   url: "https://www.eventaj.si/360-photo-booth",
