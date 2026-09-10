@@ -1,3 +1,4 @@
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
 import {
   ArrowUpRight,
@@ -30,7 +31,8 @@ export function QrGalleryOffer({ service }: { service?: Service }) {
   const isStandalone = service === undefined;
   const isPhotoPackage = service === "photo";
   const basePrice = service === "360" ? 299 : 279;
-  const packagePrice = basePrice + 35;
+  const galleryPrice = isPhotoPackage ? photoBoothQrGalleryPrice : qrGalleryPrice;
+  const packagePrice = basePrice + galleryPrice;
   const serviceName = service === "360" ? "360° Booth" : "Photo Booth";
 
   return (
@@ -87,7 +89,7 @@ export function QrGalleryOffer({ service }: { service?: Service }) {
                   <div className="mt-2 text-xs text-[var(--eventaj-muted)]">
                     {isStandalone
                       ? "za en dogodek"
-                      : `od ${basePrice} € + 35 € za galerijo`}
+                      : `od ${basePrice} € + ${galleryPrice} € za galerijo`}
                   </div>
                 </div>
 
@@ -104,7 +106,7 @@ export function QrGalleryOffer({ service }: { service?: Service }) {
                     defaults={{
                       type: service === "360" ? "360° Booth" : "Photo Booth",
                       hours: "2",
-                      notes: `${serviceName} + QR galerija za 35 €`,
+                      qrGallery: true,
                     }}
                     className="min-h-12 rounded-full bg-[var(--eventaj-ink)] px-6 py-3.5 text-sm font-medium text-[var(--eventaj-paper)] transition-colors duration-200 hover:bg-[var(--eventaj-accent)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--eventaj-ink)]"
                   >

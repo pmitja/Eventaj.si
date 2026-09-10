@@ -1,10 +1,10 @@
 "use client";
 
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { useState } from "react";
 
 type ConfiguratorType = "photo" | "360" | "custom";
 
-const addonPrices = { qrGallery: 35, album: 20, woodenSigns: 40, animations360: 59 };
 const addonLabels = {
   qrGallery: "QR galerija dogodka",
   album: "Album",
@@ -22,6 +22,7 @@ export function usePricingConfigurator() {
     animations360: false,
   });
 
+  const addonPrices = { qrGallery: type === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice, album: 20, woodenSigns: 40, animations360: 59 };
   const baseHours = type === "360" ? 2 : type === "photo" ? 2 : 0;
   const basePrice = type === "360" ? 299 : type === "photo" ? 279 : 0;
   const hourPrice = type === "360" ? 80 : 50;

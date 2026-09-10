@@ -1,7 +1,9 @@
 import { SlovenianDatePicker } from "@/components/ui/slovenian-date-picker";
 import { equipmentProducts } from "@/content/eventaj/equipment";
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
+import { QrGalleryInfo } from "./qr-gallery-info";
 import { Field, PillGrid } from "./inquiry-fields";
 import { EquipmentSelection, InquiryData } from "./inquiry-types";
 
@@ -208,6 +210,45 @@ export function InquiryStepService({ data, update }: StepProps) {
         </Field>
       )}
       {data.type && data.type !== "Oprema za dogodke" && (
+        <div className={cn(
+          "border p-4 transition-colors",
+          data.qrGallery
+            ? "border-[#2F6B47]/30 bg-[#EAF4EC] text-[#245536]"
+            : "border-[#B4473D]/30 bg-[#F9EAE6] text-[#8F3029]",
+        )}>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <strong className="block text-sm font-medium">
+                {data.qrGallery ? "QR galerija je dodana" : "Dodaj še QR galerijo"}
+              </strong>
+              <span className={cn("mt-1 block text-xs", data.qrGallery ? "text-[#386347]" : "text-[#93483F]")}>
+                Fotografije in videi gostov na enem mestu. +{data.type === "360° Booth" ? qrGalleryPrice : photoBoothQrGalleryPrice} € na dogodek.
+              </span>
+            </div>
+            <div className="grid justify-items-center gap-1">
+              <button
+                type="button"
+                aria-pressed={data.qrGallery}
+                onClick={() => update("qrGallery", !data.qrGallery)}
+                className={cn(
+                  "rounded-full border px-5 py-2.5 text-xs font-medium text-white transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4",
+                  data.qrGallery
+                    ? "border-[#2F6B47] bg-[#2F6B47] hover:bg-[#245536] focus-visible:outline-[#2F6B47]"
+                    : "border-[#A63830] bg-[#A63830] hover:bg-[#842B25] focus-visible:outline-[#A63830]",
+                )}
+              >
+                {data.qrGallery ? "Odstrani QR galerijo" : "Dodaj QR galerijo"}
+              </button>
+              <QrGalleryInfo
+                selected={data.qrGallery}
+                price={data.type === "360° Booth" ? qrGalleryPrice : photoBoothQrGalleryPrice}
+                onAdd={() => update("qrGallery", true)}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+      {data.type && data.type !== "Oprema za dogodke" && (
         <div className="border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-4">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div>
@@ -309,14 +350,6 @@ export function InquiryStepDetails({ data, update }: StepProps) {
           </p>
         </Field>
       )}
-      <Field label="Predvideno število gostov (opcijsko)">
-        <PillGrid
-          columns="grid-cols-2 md:grid-cols-4"
-          items={["<50", "50-100", "100-200", "200+"]}
-          value={data.guests}
-          onChange={(value) => update("guests", value)}
-        />
-      </Field>
     </div>
   );
 }
@@ -324,6 +357,11 @@ export function InquiryStepDetails({ data, update }: StepProps) {
 export function InquiryStepContact({ data, update }: StepProps) {
   return (
     <div className="grid gap-6">
+      {data.qrGallery && data.type !== "Oprema za dogodke" && (
+        <div className="border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-4 text-sm">
+          QR galerija je vključena v povpraševanje. +{data.type === "360° Booth" ? qrGalleryPrice : photoBoothQrGalleryPrice} € na dogodek.
+        </div>
+      )}
       <Field label="Ime in priimek">
         <input
           type="text"

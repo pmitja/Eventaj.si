@@ -1,3 +1,4 @@
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { FormField } from "@/components/forms/booking-form";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import {
@@ -39,6 +40,7 @@ export const NotificationEmail = ({
     tableclothColor,
     fulfillment,
     equipmentSummary,
+    qrGallery,
   } = formData;
 
   return (
@@ -104,6 +106,11 @@ export const NotificationEmail = ({
                       : "Photo Booth"}
               </Text>
             )}
+            {qrGallery && type !== "equipment" && (
+              <Text style={detailItem}>
+                <strong>QR galerija:</strong> Da, +{type === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice} € na dogodek
+              </Text>
+            )}
             {product && (
               <Text style={detailItem}>
                 <strong>Izdelek:</strong> {product}
@@ -141,7 +148,8 @@ export const NotificationEmail = ({
             )}
             {totalPrice > 0 && (
               <Text style={detailItem}>
-                <strong>Skupna cena:</strong> {totalPrice}€
+                <strong>{type === "both" ? "Cena izbranih dodatkov in opreme" : "Skupna cena"}:</strong> {totalPrice}€
+                {type === "both" && " · Najem obeh boothov po meri."}
               </Text>
             )}
             {message && (

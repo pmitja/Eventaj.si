@@ -1,5 +1,6 @@
 import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
 import { booth360Packages, photoPackages } from "@/content/eventaj/data";
+import { photoBoothQrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { cn } from "@/lib/utils";
 
 export function PackageTiers({ service }: { service: "photo" | "360" }) {
@@ -114,6 +115,7 @@ export function PackageTiers({ service }: { service: "photo" | "360" }) {
                   ))}
                 </ul>
                 <InquiryTrigger
+                  defaults={{ type: service === "photo" ? "Photo Booth" : "360° Booth", hours: String(item.hours) }}
                   className={cn(
                     "mt-auto w-full rounded-full px-6 py-4 text-sm font-medium transition-colors",
                     featured
@@ -123,6 +125,14 @@ export function PackageTiers({ service }: { service: "photo" | "360" }) {
                 >
                   Izberi paket →
                 </InquiryTrigger>
+                {service === "photo" && (
+                  <InquiryTrigger
+                    defaults={{ type: "Photo Booth", hours: String(item.hours), qrGallery: true }}
+                    className="mt-3 w-full rounded-full border border-current px-5 py-3 text-sm font-medium transition-opacity hover:opacity-75"
+                  >
+                    Dodaj QR galerijo · +{photoBoothQrGalleryPrice} € / dogodek
+                  </InquiryTrigger>
+                )}
               </article>
             );
           })}

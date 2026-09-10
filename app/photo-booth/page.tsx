@@ -14,13 +14,13 @@ const pricingPlans = [
   { name: "Basic", price: "279", description: "2 uri foto box / photo booth najema" },
   { name: "Standard", price: "329", description: "3 ure foto box / photo booth najema" },
   { name: "Premium", price: "379", description: "4 ure foto box / photo booth najema" },
-  { name: "Basic + QR galerija", price: "314", description: "2 uri Photo Booth najema in QR galerija dogodka" },
+  { name: "Basic + QR galerija", price: "304", description: "2 uri Photo Booth najema in QR galerija dogodka" },
 ] as const;
 
 export const metadata: Metadata = {
   title: photoBoothPageTitle,
   description:
-    "Najem foto boxa oziroma photo bootha za dogodke po Sloveniji. Od 279 €/2h, paket Photo Booth + QR galerija od 314 €.",
+    "Najem foto boxa oziroma photo bootha za dogodke po Sloveniji. Od 279 €/2h, paket Photo Booth + QR galerija od 304 €.",
   keywords: [
     "foto box",
     "fotobox",

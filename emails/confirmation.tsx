@@ -1,3 +1,4 @@
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { FormField } from "@/components/forms/booking-form";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import {
@@ -35,6 +36,7 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
     tableclothColor,
     fulfillment,
     equipmentSummary,
+    qrGallery,
   } = formData;
 
   return (
@@ -99,6 +101,11 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
                     : type === "equipment"
                       ? "Oprema za dogodke"
                       : "Photo Booth"}
+              </Text>
+            )}
+            {qrGallery && type !== "equipment" && (
+              <Text style={detailItem}>
+                <strong>QR galerija:</strong> Da, +{type === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice} € na dogodek
               </Text>
             )}
             {product && (

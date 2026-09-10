@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { calculateInquiryPrice } from "./inquiry-price";
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { equipmentProducts } from "@/content/eventaj/equipment";
 import { EquipmentSelection, InquiryData, initialInquiryData } from "./inquiry-types";
 
@@ -34,7 +35,11 @@ export function useInquiryForm(
   }, [open, defaults]);
 
   const update = <K extends keyof InquiryData>(key: K, value: InquiryData[K]) => {
-    setData((current) => ({ ...current, [key]: value }));
+    setData((current) => ({
+      ...current,
+      [key]: value,
+      ...(key === "type" && value === "Oprema za dogodke" ? { qrGallery: false } : {}),
+    }));
     setError("");
   };
 
@@ -88,7 +93,11 @@ export function useInquiryForm(
       const boothPrice = serviceType === "equipment"
         ? 0
         : calculateInquiryPrice(serviceType, data.hours, 1);
-      const totalPrice = boothPrice + equipmentTotal;
+      const qrGallery = data.qrGallery && serviceType !== "equipment";
+      const qrGalleryAddonPrice = qrGallery
+        ? serviceType === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice
+        : 0;
+      const totalPrice = boothPrice + equipmentTotal + qrGalleryAddonPrice;
       const hours = serviceType === "equipment" ? "1 dan" : data.hours;
       const equipmentSummary = data.equipmentSelections.map((selection) => {
         const product = equipmentProducts.find((item) => item.id === selection.productId);
@@ -110,7 +119,6 @@ export function useInquiryForm(
       const message = [
         data.notes,
         data.eventType ? `Tip dogodka: ${data.eventType}` : "",
-        data.guests ? `Število gostov: ${data.guests}` : "",
         data.type === "Oba" ? "Storitev: Photo Booth + 360° Booth po meri" : "",
       ]
         .filter(Boolean)
@@ -130,7 +138,7 @@ export function useInquiryForm(
             date: data.date,
             message,
             eventType: data.eventType,
-            guests: data.guests,
+            qrGallery,
             equipmentSummary: equipmentSummary || undefined,
             fulfillment: fulfillment || undefined,
           },

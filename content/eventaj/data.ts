@@ -302,6 +302,29 @@ export const testimonials = [
     author: "Manuela",
     role: "Rojstnodnevna zabava",
   },
+  {
+    quote:
+      "Super storitev, prijazen in profesionalen odnos, prilagoditev in upoštevanje želja. Priporočam!",
+    author: "Anja Bračič",
+    role: "Google ocena",
+  },
+  {
+    quote:
+      "Zaslužena 5ka! Odlična storitev, vse želje upoštevane in definitivno se še vidimo. Pa priporočilo je že šlo dalje :)",
+    author: "Suzie Potočnik",
+    role: "Google ocena",
+  },
+  {
+    quote: "Priporočam! Super storitev, poskrbijo za vse!",
+    author: "Mitja Hamler",
+    role: "Google ocena",
+  },
+  {
+    quote:
+      "Bilo je enkratno ❣️ Mitja je super dečko. Vse sva se lepo dogovorila in vse želje so bile upoštevane. Še enkrat hvala 🙏 Z veseljem priporočam ❣️",
+    author: "Polonca Ploč",
+    role: "Google ocena",
+  },
 ] as const;
 
 export const trustedNames = [
@@ -507,7 +530,8 @@ export const booth360Packages = [
 ] as const;
 
 export const addons = [
-  { item: "QR galerija dogodka", price: "+35 €" },
+  { item: "QR galerija ob najemu Photo Bootha", price: "+25 € / dogodek" },
+  { item: "QR galerija ob najemu 360° Bootha", price: "+35 € / dogodek" },
   { item: "Dodatna ura najema Photo Booth", price: "+50 €" },
   { item: "Dodatna ura najema 360° Booth", price: "+80 €" },
   { item: "Personalizirane animacije za 360° Booth", price: "+59 €" },

@@ -36,7 +36,7 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
     {
       id: "qrGallery",
       label: "QR galerija dogodka",
-      price: "+35 €",
+      price: `+${addonPrices.qrGallery} € / dogodek`,
       available: true,
       note: "Neomejeno gostov, fotografije, komentarji in live slideshow",
     },
@@ -243,7 +243,12 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
                 </div>
               </div>
             </div>
-            <InquiryTrigger className="mt-8 rounded-full bg-[var(--eventaj-paper)] px-7 py-5 text-[15px] font-medium text-[var(--eventaj-ink)] transition-colors hover:bg-[var(--eventaj-accent)] hover:text-[var(--eventaj-paper)]">
+            <InquiryTrigger
+              defaults={{
+                type: type === "photo" ? "Photo Booth" : type === "360" ? "360° Booth" : "Oba",
+                qrGallery: selectedAddons.qrGallery,
+              }}
+              className="mt-8 rounded-full bg-[var(--eventaj-paper)] px-7 py-5 text-[15px] font-medium text-[var(--eventaj-ink)] transition-colors hover:bg-[var(--eventaj-accent)] hover:text-[var(--eventaj-paper)]">
               Pridobi ponudbo →
             </InquiryTrigger>
           </div>

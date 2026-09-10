@@ -7,10 +7,10 @@ export type EquipmentSelection = {
 export type InquiryData = {
   type: string;
   hours: string;
+  qrGallery: boolean;
   eventType: string;
   date: string;
   location: string;
-  guests: string;
   name: string;
   email: string;
   phone: string;
@@ -26,10 +26,10 @@ export type InquiryData = {
 export const initialInquiryData: InquiryData = {
   type: "",
   hours: "",
+  qrGallery: false,
   eventType: "",
   date: "",
   location: "",
-  guests: "",
   name: "",
   email: "",
   phone: "",

@@ -501,4 +501,5 @@ export type FormField = {
   tableclothColor?: string;
   fulfillment?: string;
   equipmentSummary?: string;
+  qrGallery?: boolean;
 };

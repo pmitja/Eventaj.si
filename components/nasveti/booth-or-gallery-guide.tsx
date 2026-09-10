@@ -144,7 +144,7 @@ export function BoothOrGalleryGuide() {
 
       <GuideClosingCta
         title="Izberite eno ali obe."
-        body="Photo Booth od 279 €, QR galerija 35 €. Skupaj 314 €."
+        body="Photo Booth od 279 €, QR galerija ob najemu 25 €. Skupaj 304 €."
         actions={[
           { href: "/photo-booth", label: "Poglej Photo Booth pakete", variant: "primary" },
           { href: "/qr-galerija", label: "Ustvari QR galerijo, 35 €", variant: "secondary" },
