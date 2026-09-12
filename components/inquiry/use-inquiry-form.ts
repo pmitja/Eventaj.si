@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { calculateInquiryPrice } from "./inquiry-price";
+import { getAlbumPrice } from "@/content/eventaj/album-pricing";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { equipmentProducts } from "@/content/eventaj/equipment";
 import { EquipmentSelection, InquiryData, initialInquiryData } from "./inquiry-types";
@@ -28,18 +29,48 @@ export function useInquiryForm(
             }]
           : []);
       setStep(1);
-      setData({ ...initialInquiryData, ...defaults, equipmentSelections: defaultEquipment });
+      const nextData = { ...initialInquiryData, ...defaults, equipmentSelections: defaultEquipment };
+      if (
+        nextData.type === "Photo Booth" &&
+        Number(nextData.hours) >= 3 &&
+        !nextData.albumSize
+      ) {
+        nextData.albumSize = "small";
+      }
+      setData(nextData);
       setSubmitted(false);
       setError("");
     }
   }, [open, defaults]);
 
   const update = <K extends keyof InquiryData>(key: K, value: InquiryData[K]) => {
-    setData((current) => ({
-      ...current,
-      [key]: value,
-      ...(key === "type" && value === "Oprema za dogodke" ? { qrGallery: false } : {}),
-    }));
+    setData((current) => {
+      const next = { ...current, [key]: value };
+
+      if (key === "type") {
+        if (value !== "Photo Booth") {
+          next.albumSize = "";
+          next.albumColor = "";
+        } else if (Number(next.hours) >= 3 && !next.albumSize) {
+          next.albumSize = "small";
+        }
+        if (value === "Oprema za dogodke") next.qrGallery = false;
+      }
+
+      if (key === "hours" && next.type === "Photo Booth") {
+        const previousHours = Number(current.hours);
+        const nextHours = Number(value);
+        if (nextHours >= 3 && !next.albumSize) next.albumSize = "small";
+        if (nextHours === 2 && previousHours >= 3 && current.albumSize === "small") {
+          next.albumSize = "";
+          next.albumColor = "";
+        }
+      }
+
+      if (key === "albumSize" && !value) next.albumColor = "";
+
+      return next;
+    });
     setError("");
   };
 
@@ -52,7 +83,12 @@ export function useInquiryForm(
             data.equipmentSelections.length > 0,
         );
       }
-      return Boolean(data.type && data.hours && data.eventType);
+      return Boolean(
+        data.type &&
+          data.hours &&
+          data.eventType &&
+          (!data.albumSize || data.albumColor),
+      );
     }
     if (step === 2) {
       return Boolean(data.date && data.location);
@@ -97,7 +133,10 @@ export function useInquiryForm(
       const qrGalleryAddonPrice = qrGallery
         ? serviceType === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice
         : 0;
-      const totalPrice = boothPrice + equipmentTotal + qrGalleryAddonPrice;
+      const albumPrice = serviceType === "basic"
+        ? getAlbumPrice(data.hours, data.albumSize)
+        : 0;
+      const totalPrice = boothPrice + equipmentTotal + qrGalleryAddonPrice + albumPrice;
       const hours = serviceType === "equipment" ? "1 dan" : data.hours;
       const equipmentSummary = data.equipmentSelections.map((selection) => {
         const product = equipmentProducts.find((item) => item.id === selection.productId);
@@ -139,6 +178,8 @@ export function useInquiryForm(
             message,
             eventType: data.eventType,
             qrGallery,
+            albumSize: serviceType === "basic" ? data.albumSize || undefined : undefined,
+            albumColor: serviceType === "basic" ? data.albumColor || undefined : undefined,
             equipmentSummary: equipmentSummary || undefined,
             fulfillment: fulfillment || undefined,
           },

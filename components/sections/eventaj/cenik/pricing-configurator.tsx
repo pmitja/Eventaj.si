@@ -1,6 +1,11 @@
 "use client";
 
 import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
+import {
+  albumColorLabels,
+  albumSizeLabels,
+  getAlbumPriceLabel,
+} from "@/content/eventaj/album-pricing";
 import { cn } from "@/lib/utils";
 import { ConfiguratorBlock, PriceRow } from "./configurator-parts";
 import { usePricingConfigurator } from "./use-pricing-configurator";
@@ -16,11 +21,13 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
     hours,
     type,
     selectedAddons,
+    albumSize,
+    albumColor,
     baseHours,
     basePrice,
     hourPrice,
     extraHours,
-    albumAvailable,
+    albumPrice,
     animations360Available,
     rangeMin,
     rangeProgress,
@@ -29,6 +36,8 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
     total,
     selectType,
     changeHours,
+    selectAlbumSize,
+    setAlbumColor,
     toggleAddon,
   } = usePricingConfigurator();
 
@@ -39,13 +48,6 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
       price: `+${addonPrices.qrGallery} € / dogodek`,
       available: true,
       note: "Neomejeno gostov, fotografije, komentarji in live slideshow",
-    },
-    {
-      id: "album",
-      label: "Album",
-      price: "+20 €",
-      available: albumAvailable,
-      note: "Na voljo pri 2-urnem paketu Photo Booth",
     },
     {
       id: "woodenSigns",
@@ -141,6 +143,59 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
             </ConfiguratorBlock>
             <ConfiguratorBlock label="03 — Dodatki" last>
               <div className="grid gap-2.5">
+                {type === "photo" && (
+                  <div className="border border-[rgba(20,17,15,0.12)] p-4">
+                    <div className="text-sm font-medium">Spominski album</div>
+                    <div className="mt-3 grid gap-2 sm:grid-cols-3">
+                      {[
+                        { id: "", label: "Brez albuma", price: "" },
+                        { id: "small", label: albumSizeLabels.small, price: getAlbumPriceLabel(hours, "small") },
+                        { id: "large", label: albumSizeLabels.large, price: getAlbumPriceLabel(hours, "large") },
+                      ].map((option) => (
+                        <button
+                          key={option.id || "none"}
+                          type="button"
+                          aria-pressed={albumSize === option.id}
+                          onClick={() => selectAlbumSize(option.id as typeof albumSize)}
+                          className={cn(
+                            "border px-3 py-3 text-left text-xs transition-colors",
+                            albumSize === option.id
+                              ? "border-[var(--eventaj-ink)] bg-[var(--eventaj-ink)] text-[var(--eventaj-paper)]"
+                              : "border-[rgba(20,17,15,0.15)]",
+                          )}
+                        >
+                          <span className="block font-medium">{option.label}</span>
+                          {option.price && <span className="mt-1 block opacity-70">{option.price}</span>}
+                        </button>
+                      ))}
+                    </div>
+                    {albumSize && (
+                      <div className="mt-4">
+                        <div className="mb-2 text-[10px] uppercase tracking-[0.15em] text-[var(--eventaj-muted)]">
+                          Barva albuma
+                        </div>
+                        <div className="flex gap-2">
+                          {(["black", "white"] as const).map((color) => (
+                            <button
+                              key={color}
+                              type="button"
+                              aria-pressed={albumColor === color}
+                              onClick={() => setAlbumColor(color)}
+                              className={cn(
+                                "border px-4 py-2 text-xs capitalize transition-colors",
+                                albumColor === color
+                                  ? "border-[var(--eventaj-ink)] bg-[var(--eventaj-ink)] text-[var(--eventaj-paper)]"
+                                  : "border-[rgba(20,17,15,0.15)]",
+                              )}
+                            >
+                              {albumColorLabels[color]}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                )}
                 {addonRows.map((addon) => (
                   <label
                     key={addon.id}
@@ -215,11 +270,16 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
                     value={`${extraHours * hourPrice} €`}
                   />
                 )}
+                {type === "photo" && albumSize && (
+                  <PriceRow
+                    label={`${albumSizeLabels[albumSize]}${albumColor ? ` · ${albumColorLabels[albumColor]}` : ""}`}
+                    value={albumPrice === 0 ? "vključen" : `+${albumPrice} €`}
+                  />
+                )}
                 {Object.entries(selectedAddons)
                   .filter(
                     ([key, value]) =>
                       value &&
-                      (key !== "album" || albumAvailable) &&
                       (key !== "animations360" || animations360Available) &&
                       addonPrices[key as keyof typeof addonPrices] > 0,
                   )
@@ -246,7 +306,10 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
             <InquiryTrigger
               defaults={{
                 type: type === "photo" ? "Photo Booth" : type === "360" ? "360° Booth" : "Oba",
+                hours: String(hours),
                 qrGallery: selectedAddons.qrGallery,
+                albumSize: type === "photo" ? albumSize : "",
+                albumColor: type === "photo" ? albumColor : "",
               }}
               className="mt-8 rounded-full bg-[var(--eventaj-paper)] px-7 py-5 text-[15px] font-medium text-[var(--eventaj-ink)] transition-colors hover:bg-[var(--eventaj-accent)] hover:text-[var(--eventaj-paper)]">
               Pridobi ponudbo →

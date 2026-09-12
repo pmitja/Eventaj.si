@@ -1,3 +1,5 @@
+import type { AlbumColor, AlbumSize } from "@/content/eventaj/album-pricing";
+
 export type EquipmentSelection = {
   productId: string;
   quantity: number;
@@ -8,6 +10,8 @@ export type InquiryData = {
   type: string;
   hours: string;
   qrGallery: boolean;
+  albumSize: AlbumSize;
+  albumColor: AlbumColor;
   eventType: string;
   date: string;
   location: string;
@@ -27,6 +31,8 @@ export const initialInquiryData: InquiryData = {
   type: "",
   hours: "",
   qrGallery: false,
+  albumSize: "",
+  albumColor: "",
   eventType: "",
   date: "",
   location: "",

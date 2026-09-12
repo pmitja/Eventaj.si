@@ -1,4 +1,5 @@
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
+import { albumColorLabels, albumSizeLabels, getAlbumPrice } from "@/content/eventaj/album-pricing";
 import { FormField } from "@/components/forms/booking-form";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import {
@@ -37,6 +38,8 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
     fulfillment,
     equipmentSummary,
     qrGallery,
+    albumSize,
+    albumColor,
   } = formData;
 
   return (
@@ -106,6 +109,14 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
             {qrGallery && type !== "equipment" && (
               <Text style={detailItem}>
                 <strong>QR galerija:</strong> Da, +{type === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice} € na dogodek
+              </Text>
+            )}
+            {albumSize && albumColor && type === "basic" && (
+              <Text style={detailItem}>
+                <strong>Spominski album:</strong> {albumSizeLabels[albumSize]}, {albumColorLabels[albumColor]}
+                {getAlbumPrice(hours, albumSize) === 0
+                  ? ", vključen v paket"
+                  : `, +${getAlbumPrice(hours, albumSize)} €`}
               </Text>
             )}
             {product && (

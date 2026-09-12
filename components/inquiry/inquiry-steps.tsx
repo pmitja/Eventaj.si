@@ -1,5 +1,11 @@
 import { SlovenianDatePicker } from "@/components/ui/slovenian-date-picker";
 import { equipmentProducts } from "@/content/eventaj/equipment";
+import {
+  albumColorLabels,
+  albumSizeLabels,
+  getAlbumPrice,
+  getAlbumPriceLabel,
+} from "@/content/eventaj/album-pricing";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -209,6 +215,63 @@ export function InquiryStepService({ data, update }: StepProps) {
           />
         </Field>
       )}
+      {data.type === "Photo Booth" && data.hours && (
+        <Field label="Spominski album">
+          <div className="grid grid-cols-3 gap-2">
+            {[
+              { id: "", label: "Brez albuma", price: "" },
+              { id: "small", label: albumSizeLabels.small, price: getAlbumPriceLabel(data.hours, "small") },
+              { id: "large", label: albumSizeLabels.large, price: getAlbumPriceLabel(data.hours, "large") },
+            ].map((option) => (
+              <button
+                key={option.id || "none"}
+                type="button"
+                aria-pressed={data.albumSize === option.id}
+                onClick={() => update("albumSize", option.id as InquiryData["albumSize"])}
+                className={cn(
+                  "border px-3 py-3 text-left text-xs transition-colors",
+                  data.albumSize === option.id
+                    ? "border-[var(--eventaj-ink)] bg-[var(--eventaj-ink)] text-[var(--eventaj-paper)]"
+                    : "border-[rgba(20,17,15,0.15)]",
+                )}
+              >
+                <span className="block font-medium">{option.label}</span>
+                {option.price && <span className="mt-1 block opacity-70">{option.price}</span>}
+              </button>
+            ))}
+          </div>
+          {data.albumSize && (
+            <div className="mt-4">
+              <div className="mb-2 text-[10px] uppercase tracking-[0.15em] text-[var(--eventaj-muted)]">
+                Barva albuma
+              </div>
+              <div className="flex gap-2">
+                {(["black", "white"] as const).map((color) => (
+                  <button
+                    key={color}
+                    type="button"
+                    aria-pressed={data.albumColor === color}
+                    onClick={() => update("albumColor", color)}
+                    className={cn(
+                      "border px-5 py-2.5 text-xs capitalize transition-colors",
+                      data.albumColor === color
+                        ? "border-[var(--eventaj-ink)] bg-[var(--eventaj-ink)] text-[var(--eventaj-paper)]"
+                        : "border-[rgba(20,17,15,0.15)]",
+                    )}
+                  >
+                    {albumColorLabels[color]}
+                  </button>
+                ))}
+              </div>
+              {!data.albumColor && (
+                <p className="mt-2 text-xs text-[var(--eventaj-accent)]">
+                  Izberi še barvo albuma.
+                </p>
+              )}
+            </div>
+          )}
+        </Field>
+      )}
       {data.type && data.type !== "Oprema za dogodke" && (
         <div className={cn(
           "border p-4 transition-colors",
@@ -357,6 +420,14 @@ export function InquiryStepDetails({ data, update }: StepProps) {
 export function InquiryStepContact({ data, update }: StepProps) {
   return (
     <div className="grid gap-6">
+      {data.type === "Photo Booth" && data.albumSize && (
+        <div className="border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-4 text-sm">
+          {albumSizeLabels[data.albumSize]}, {albumColorLabels[data.albumColor as "black" | "white"]}
+          {getAlbumPrice(data.hours, data.albumSize) === 0
+            ? " je vključen v paket."
+            : `, doplačilo +${getAlbumPrice(data.hours, data.albumSize)} €.`}
+        </div>
+      )}
       {data.qrGallery && data.type !== "Oprema za dogodke" && (
         <div className="border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-4 text-sm">
           QR galerija je vključena v povpraševanje. +{data.type === "360° Booth" ? qrGalleryPrice : photoBoothQrGalleryPrice} € na dogodek.

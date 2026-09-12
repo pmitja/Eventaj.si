@@ -502,4 +502,6 @@ export type FormField = {
   fulfillment?: string;
   equipmentSummary?: string;
   qrGallery?: boolean;
+  albumSize?: "small" | "large";
+  albumColor?: "black" | "white";
 };
