@@ -85,7 +85,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 		// Advice hub and guides
 		{
 			url: `${baseUrl}/nasveti`,
-			lastModified: currentDate,
+			lastModified: '2026-09-13',
 			changeFrequency: 'monthly',
 			priority: 0.7,
 		},

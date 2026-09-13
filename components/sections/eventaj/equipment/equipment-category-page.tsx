@@ -6,6 +6,12 @@ import Link from "next/link";
 import { FAQSection } from "../shared/faq-section";
 import { EquipmentHeroCarousel } from "./equipment-hero-carousel";
 
+const productGuides: Record<string, { slug: string; label: string }> = {
+ "knjiga-gostov-v-okvirju": { slug: "knjiga-gostov-za-poroko", label: "Kako izbrati knjigo gostov" },
+ "igre-za-dogodke": { slug: "igre-na-poroki", label: "Katere igre izbrati za poroko" },
+ "tabla-dobrodoslice": { slug: "kaj-napisati-na-tablo-dobrodoslice", label: "Kaj napisati na tablo dobrodošlice" },
+};
+
 const steps = [
   {
     icon: Send,
@@ -107,6 +113,7 @@ export function EquipmentCategoryPage() {
                     </div>
                   </div>
                 </Link>
+                {productGuides[product.slug] && <Link href={`/nasveti/${productGuides[product.slug].slug}`} className="mx-6 mb-6 block text-sm underline underline-offset-4 md:mx-7">{productGuides[product.slug].label}</Link>}
               </article>
             ))}
           </div>

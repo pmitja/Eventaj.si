@@ -804,6 +804,9 @@ export function QrGalleryWeddingPage() {
             Na stojalo napišite &ldquo;Naloži svoje fotografije z najine
             poroke&rdquo;. To pove več kot samo &ldquo;Skeniraj QR kodo&rdquo;.
           </p>
+          <p className="mx-auto mt-5 max-w-3xl text-base leading-relaxed text-[var(--eventaj-muted)]">
+            Kodo lahko vključite na <Link href="/oprema-za-dogodke/tabla-dobrodoslice" className="underline underline-offset-4">tablo dobrodošlice</Link> ali jo postavite ob <Link href="/oprema-za-dogodke/stevilke-miz" className="underline underline-offset-4">številke miz</Link>, kjer jo gostje opazijo tudi med večerjo.
+          </p>
         </div>
       </section>
       <section className="border-y border-[rgba(20,17,15,0.08)] bg-[var(--eventaj-paper-2)] py-20 md:py-28">

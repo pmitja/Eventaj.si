@@ -1,7 +1,9 @@
 import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
+import { getAlbumPriceLabel } from "@/content/eventaj/album-pricing";
 import { booth360Packages, photoPackages } from "@/content/eventaj/data";
 import { photoBoothQrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 export function PackageTiers({ service }: { service: "photo" | "360" }) {
   const accent = "var(--eventaj-accent)";
@@ -146,6 +148,60 @@ export function PackageTiers({ service }: { service: "photo" | "360" }) {
             );
           })}
         </div>
+        {service === "photo" && (
+          <div id="albumi" className="mt-24 border-t border-[rgba(20,17,15,0.12)] pt-14 md:mt-32 md:pt-20">
+            <div>
+              <h3 className="font-serif-display text-3xl font-[350] md:text-4xl">
+                Spominski album
+              </h3>
+              <p className="mt-4 max-w-md text-[var(--eventaj-ink-2)]">
+                Natisnjene fotografije z dogodka zberi v albumu. Izbereš lahko
+                mali ali veliki album, oba sta na voljo v črni in beli barvi.
+              </p>
+              <p className="mt-3 text-sm text-[var(--eventaj-muted)]">
+                Pri paketih s 3 ali 4 urami je mali album že vključen.
+                Velikost in barvo izbereš ob povpraševanju.
+              </p>
+            </div>
+            <div className="mt-8 grid gap-10 md:mt-10 md:grid-cols-2 md:gap-8">
+              {([
+                { size: "small", name: "Mali album", image: "/application/mali-album.webp" },
+                { size: "large", name: "Veliki album", image: "/application/veliki-album.webp" },
+              ] as const).map((album) => (
+                <article key={album.size}>
+                  <Image
+                    src={album.image}
+                    alt={`${album.name} v črni in beli barvi s spiralno vezavo`}
+                    width={1448}
+                    height={1086}
+                    sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1380px) calc((100vw - 112px) / 2), 634px"
+                    className="aspect-[4/3] w-full object-cover"
+                  />
+                  <div className="mt-5 flex flex-wrap items-center justify-between gap-3">
+                    <h4 className="font-serif-display text-3xl font-[350]">{album.name}</h4>
+                    <div className="flex items-center gap-2 text-xs text-[var(--eventaj-muted)]">
+                      <span aria-hidden="true" className="h-3 w-3 rounded-full bg-[var(--eventaj-ink)]" />
+                      <span aria-hidden="true" className="h-3 w-3 rounded-full border border-[rgba(20,17,15,0.2)] bg-white" />
+                      Črn ali bel
+                    </div>
+                  </div>
+                  <dl className="mt-5 text-sm">
+                    <div className="flex justify-between gap-4 border-t border-[rgba(20,17,15,0.12)] py-3">
+                      <dt className="text-[var(--eventaj-muted)]">Photo Booth · 2 uri</dt>
+                      <dd>{getAlbumPriceLabel(2, album.size)}</dd>
+                    </div>
+                    <div className="flex justify-between gap-4 border-y border-[rgba(20,17,15,0.12)] py-3">
+                      <dt className="text-[var(--eventaj-muted)]">Photo Booth · 3 ali 4 ure</dt>
+                      <dd className={album.size === "small" ? "font-medium text-[var(--eventaj-accent)]" : ""}>
+                        {album.size === "small" ? "Vključen v paket" : getAlbumPriceLabel(3, album.size)}
+                      </dd>
+                    </div>
+                  </dl>
+                </article>
+              ))}
+            </div>
+          </div>
+        )}
         <div className="mt-12 text-center text-sm text-[var(--eventaj-muted)]">
           Dodatne ure: +50 €/h (Photo Booth), +80 €/h (360° Booth). Prevoz in
           posebne zahteve potrdimo v končni ponudbi.

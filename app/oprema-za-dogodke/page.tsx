@@ -11,6 +11,7 @@ const pageDescription =
 export const metadata: Metadata = {
   title: pageTitle,
   description: pageDescription,
+  keywords: ["najem opreme za dogodke", "oprema za poroko", "igre za dogodke", "tabla dobrodošlice", "knjiga gostov"],
   alternates: { canonical: "https://www.eventaj.si/oprema-za-dogodke" },
   openGraph: {
     title: pageTitle,

@@ -1,0 +1,40 @@
+{
+  "checked_on": "2026-09-06",
+  "sitemap_urls": 43,
+  "all_requests": 55,
+  "sitemap_http_200": 43,
+  "unique_titles": 43,
+  "unique_descriptions": 43,
+  "one_h1": 43,
+  "self_canonicals": 43,
+  "missing_alt_attributes": 0,
+  "unlinked_in_initial_html": [
+    "https://www.eventaj.si/qr-galerija/za-dogodke/praznovanja",
+    "https://www.eventaj.si/qr-galerija/za-dogodke/konference-in-sejmi",
+    "https://www.eventaj.si/photo-booth/faq",
+    "https://www.eventaj.si/360-photo-booth/faq",
+    "https://www.eventaj.si/pogosta-vprasanja"
+  ],
+  "pagespeed": "HTTP 429, no lab or CrUX measurements obtained",
+  "browser_checks": [
+    "Home desktop and 390x844 mobile viewed",
+    "Photo Booth mobile viewed",
+    "Inquiry dialog opened on mobile; no inquiry sent",
+    "Cenik 360 Booth 3h package = 349 EUR; Individualno > 360 Booth > 3h = 379 EUR, addons off"
+  ],
+  "observations": [
+    "Main /photo-booth specifies 2.5x2 m, /photo-booth/faq and /pogosta-vprasanja specify 2x2 m",
+    "Main /360-photo-booth specifies setup 30-45 min, /360-photo-booth/faq 60 min",
+    "Main /360-photo-booth says groups up to 4, /pogosta-vprasanja says max 5",
+    "Shared QR upsell on /photo-booth and /360-photo-booth: Neomejeno videov + do 1.000 videov; /qr-galerija says no number limit",
+    "galerija.eventaj.si root redirects 301 to www.eventaj.si/qr-galerija, current duration 180 days",
+    "HEAD video-1.mp4 returns HTTP200 Content-Length 9701736, image favicons return200"
+  ],
+  "scope_limits": [
+    "No Search Console, GA4 or Keyword Planner authenticated data",
+    "Not a complete backlink or Google Business Profile audit",
+    "No real private event galleries inspected",
+    "No controlled mobile bandwidth benchmark",
+    "HTML link graph excludes browser-only menus and external incoming links"
+  ]
+}

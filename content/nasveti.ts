@@ -14,6 +14,46 @@ export type GuideSummary = {
 /** Index of every /nasveti page. Drives the hub, related links and the sitemap. */
 export const guides = [
   {
+    slug: "najem-opreme-maribor",
+    eyebrow: "Vodnik",
+    label: "Najem opreme za dogodke v Mariboru in okolici",
+    teaser:
+      "Kaj lahko najamete, kako uskladiti dostavo iz Lenarta in kaj preveriti pred potrditvijo termina.",
+    readMinutes: 4,
+    updated: "2026-09-12",
+    related: ["igre-na-poroki", "koliko-stane-najem-photo-bootha"],
+  },
+  {
+    slug: "knjiga-gostov-za-poroko",
+    eyebrow: "Primerjava",
+    label: "Knjiga gostov za poroko: katera se dejansko izpolni",
+    teaser:
+      "Vsaka knjiga gostov je videti dobro na fotografiji s Pinteresta. Razlika se pokaže ob enih zjutraj. Takrat je bodisi polna bodisi na njej stoji kozarec.",
+    readMinutes: 6,
+    updated: "2026-09-12",
+    related: ["kako-zbrati-fotografije-gostov-na-poroki", "igre-na-poroki"],
+  },
+  {
+    slug: "igre-na-poroki",
+    eyebrow: "Vodnik",
+    label: "Igre na poroki: kaj zapolni luknjo med kosilom in prvim plesom",
+    teaser:
+      "Med koncem kosila in prvim plesom sta običajno dve uri. Nihče jih ne načrtuje. Vsi jih preživijo.",
+    readMinutes: 5,
+    updated: "2026-09-12",
+    related: ["knjiga-gostov-za-poroko", "kaj-napisati-na-tablo-dobrodoslice"],
+  },
+  {
+    slug: "kaj-napisati-na-tablo-dobrodoslice",
+    eyebrow: "Vodnik",
+    label: "Kaj napisati na tablo dobrodošlice",
+    teaser:
+      "Tabla je prva stvar, ki jo gost prebere na lokaciji. Ima deset sekund njegove pozornosti. V tem času mora povedati dvoje.",
+    readMinutes: 4,
+    updated: "2026-09-12",
+    related: ["igre-na-poroki", "knjiga-gostov-za-poroko"],
+  },
+  {
     slug: "koliko-stane-najem-photo-bootha",
     eyebrow: "Cene",
     label: "Koliko stane najem photo bootha",

@@ -73,10 +73,10 @@ products.push({
   id: "welcome-sign", slug: "tabla-dobrodoslice", name: "Tabla dobrodošlice", eyebrow: "Oprema za dogodke · Dobrodošlica", heading: ["Najem", "table dobrodošlice."],
   shortDescription: "Prva stvar, ki jo gost vidi na lokaciji. Z imeni, datumom in po želji potekom dneva.",
   description: "Tabla 60 × 90 cm z vajinima imenoma in datumom, na beli ali ogledalni podlagi. Črno kovinsko stojalo je vključeno v ceno.",
-  status: "Na voljo 4", cardNote: "Stojalo vključeno", price: 29, priceLabel: "29 €", priceSubtitle: "za dan dogodka, s stojalom", pricingMode: "fixed", fulfillmentMode: "post",
+  status: "Na voljo 4", cardNote: "Stojalo vključeno", price: 49, priceLabel: "49 €", priceSubtitle: "za dan dogodka, s stojalom", pricingMode: "fixed", fulfillmentMode: "post",
   selectors: [
     { label: "Izvedba", options: [{ label: "Bela podlaga" }, { label: "Ogledalna podlaga" }] },
-    { label: "Namen", options: [{ label: "Najem", price: 29 }, { label: "Nakup po meri", price: 59 }, { label: "Nakup dvodelne", price: 79 }], note: "Pri nakupu stojalo posodimo brezplačno. Varščino 30 € vrnemo ob vračilu." },
+    { label: "Namen", options: [{ label: "Najem", price: 49 }, { label: "Nakup po meri", price: 69 }, { label: "Nakup dvodelne", price: 79 }], note: "Pri nakupu stojalo posodimo brezplačno. Varščino 30 € vrnemo ob vračilu." },
   ],
   calculationLabel: "Izbrana tabla", deliveryText: "Pošiljanje po pošti je na voljo. Poštnina se obračuna posebej.", cta: "Preveri termin", finePrint: "Osnutek prejmeš v 48 urah. Dva popravka sta brezplačna.",
   includedSubtitle: "Vse za urejen sprejem gostov", included: ["Tabla 60 × 90 cm, dibond ali pleksi", "Črno kovinsko stojalo, višina 150 cm", "Oblikovanje z vajinima imenoma in datumom", "Bela ali ogledalna podlaga", "Zaščitna embalaža za pošiljanje"],
