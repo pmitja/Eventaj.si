@@ -43,7 +43,7 @@ export const standingTable: EquipmentProduct = {
   status: "Na voljo 15", cardNote: "Bel ali črn prt vključen", price: 10, priceLabel: "10 €", priceSubtitle: "na mizo za 1 dan", pricingMode: "per-unit", fulfillmentMode: "transport",
   quantity: { label: "Količina", min: 1, max: 15, defaultValue: 1, unit: "miz" },
   selectors: [{ label: "Barva prta", options: [{ label: "Bel prt" }, { label: "Črn prt" }], note: "Želiš kombinacijo? Razmerje barv zapiši v opombe." }],
-  calculationLabel: "Informativna cena najema", deliveryText: "Dostava je možna do 75 km in se obračuna 0,40 €/km.", cta: "Preveri razpoložljivost", finePrint: "Brez obveznosti. Termin in logistiko potrdimo v ponudbi.",
+  calculationLabel: "Informativna cena najema", deliveryText: "Dostava je možna samo v radiju 75 km od Maribora in se obračuna 0,40 €/km.", cta: "Preveri razpoložljivost", finePrint: "Brez obveznosti. Termin in logistiko potrdimo v ponudbi.",
   includedSubtitle: "Vse bistveno za urejeno postavitev", included: ["Stoječa barska miza", "Najem za en dan", "Bel ali črn prt po izbiri", "Možnost kombiniranja barv", "Do 15 miz za isti termin"],
   useCasesTitle: "Več prostora za druženje.", useCases: [
     { title: "Sprejemi in pogostitve", text: "Točka za pijačo, prigrizke in sproščen pogovor." },
@@ -55,7 +55,7 @@ export const standingTable: EquipmentProduct = {
     { q: "Koliko miz je na voljo?", a: "Na voljo je do 15 stoječih miz. Razpoložljivost preverimo po prejemu povpraševanja." },
     { q: "Ali je prt vključen v ceno?", a: "Da. Pri vsaki mizi lahko izbereš bel ali črn prt." },
     { q: "Ali lahko kombiniram bele in črne prte?", a: "Da. Želeno razmerje zapiši v opombe povpraševanja." },
-    { q: "Kako se obračuna prevoz?", a: "Prevoz se obračuna posebej po 0,40 €/km do 75 km." },
+    { q: "Kako se obračuna prevoz?", a: "Dostava je možna samo v radiju 75 km od Maribora. Prevoz se obračuna posebej po 0,40 €/km." },
     { q: "Za kakšne dogodke so mize primerne?", a: "Za poroke, poslovne dogodke, sprejeme, praznovanja in pogostitve." },
     { q: "Kdaj je rezervacija potrjena?", a: "Rezervacija je potrjena ob prejemu predplačila." },
   ],

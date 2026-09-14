@@ -13,6 +13,7 @@ export function EquipmentTeaser() {
           <div className="mb-6 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-accent)]">Novo · Oprema za dogodke</div>
           <h2 className="font-serif-display text-[clamp(42px,5vw,72px)] font-[350] leading-[0.96] text-balance">Za piko na <em className="font-serif-italic italic text-[var(--eventaj-accent)]">i.</em></h2>
           <p className="mt-7 max-w-lg text-lg leading-relaxed text-[var(--eventaj-ink-2)]">Najemi stoječe barske mize z belim ali črnim prtom. Že od 10 € na mizo za en dan.</p>
+          <p className="mt-3 max-w-lg text-sm leading-relaxed text-[var(--eventaj-muted)]">Dostava je možna samo v radiju 75 km od Maribora.</p>
           <div className="mt-9 flex flex-wrap items-center gap-5">
             <Link href="/oprema-za-dogodke" className="inline-flex items-center gap-3 rounded-full bg-[var(--eventaj-ink)] px-7 py-4 text-sm font-medium !text-[var(--eventaj-paper)] no-underline transition-colors hover:bg-[var(--eventaj-accent)]">Oglej si opremo <ArrowRight className="h-4 w-4" aria-hidden="true" /></Link>
             <span className="text-sm text-[var(--eventaj-muted)]">Na voljo do 15 miz</span>
