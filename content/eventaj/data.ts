@@ -47,6 +47,12 @@ export const eventajNav = [
         icon: "puzzle",
       },
       {
+        label: "Kozarci za šampanjec",
+        description: "Komplet 20 kozarcev za 30 €",
+        href: "/oprema-za-dogodke/kozarci-za-sampanjec",
+        icon: "champagne-glasses",
+      },
+      {
         label: "Beer pong miza",
         description: "Poročna ali LED izvedba",
         href: "/oprema-za-dogodke/beer-pong-miza",
