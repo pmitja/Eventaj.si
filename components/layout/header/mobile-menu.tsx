@@ -1,20 +1,11 @@
 "use client";
 
 import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
-import { StandingTableIcon } from "@/components/icons/StandingTableIcon";
+import { EquipmentIcon } from "@/components/icons/EquipmentIcon";
 import { eventajNav } from "@/content/eventaj/data";
 import { cn } from "@/lib/utils";
 import {
-  Beer,
-  BookHeart,
   ChevronDown,
-  Dices,
-  Fan,
-  ListOrdered,
-  PackageOpen,
-  PanelsTopLeft,
-  Puzzle,
-  Tags,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -120,23 +111,4 @@ export function MobileMenu({ pathname }: { pathname: string }) {
       </div>
     </div>
   );
-}
-
-const equipmentIcons = {
-  games: Dices,
-  sign: PanelsTopLeft,
-  numbers: ListOrdered,
-  names: Tags,
-  "guest-book": BookHeart,
-  puzzle: Puzzle,
-  "beer-pong": Beer,
-  fans: Fan,
-} as const;
-
-function EquipmentIcon({ icon }: { icon: string }) {
-  if (icon === "standing-table") {
-    return <StandingTableIcon className="h-5 w-5" />;
-  }
-  const Icon = equipmentIcons[icon as keyof typeof equipmentIcons] ?? PackageOpen;
-  return <Icon className="h-5 w-5" strokeWidth={1.5} aria-hidden="true" />;
 }

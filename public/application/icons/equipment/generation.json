@@ -1,0 +1,26 @@
+[
+  {
+    "name": "champagne-glasses",
+    "endpoint": "recraft/v4/style/text-to-vector",
+    "requestId": "01a0a9d1-897f-76f1-af74-fc1d879eedd1",
+    "url": "https://v3b.fal.media/files/b/0aaaa51d/1Qdq5okC0aSRfRtEWJ3z4_YIj3uerR.svg"
+  },
+  {
+    "name": "fans",
+    "endpoint": "recraft/v4/style/text-to-vector",
+    "requestId": "01a0a9d1-3c8a-7f00-90c5-e7d17d478b1e",
+    "url": "https://v3b.fal.media/files/b/0aaaa51b/x-u7dahl38aJIyUo1j5gk_zPPTrEHx.svg"
+  },
+  {
+    "name": "beer-pong",
+    "endpoint": "recraft/v4/style/text-to-vector",
+    "requestId": "01a0a9d2-40e3-74d2-b295-9d07483e0e34",
+    "url": "https://v3b.fal.media/files/b/0aaaa523/O1_ozkZ7NcflW9tYPqNgP_kDsvM9C8.svg"
+  },
+  {
+    "name": "sign",
+    "endpoint": "recraft/v4/style/text-to-vector",
+    "requestId": "01a0a9d1-cec1-7f53-9fa3-1878960c6510",
+    "url": "https://v3b.fal.media/files/b/0aaaa520/aBXO31oabh9N2TXuSfWIc_SfVwGjM3.svg"
+  }
+]
