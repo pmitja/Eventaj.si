@@ -28,7 +28,8 @@ export function EquipmentInquiryCard({ product }: { product: EquipmentProduct })
   ) ?? product.price;
   const unitPrice = chosenOptions.reduce((price, option) => option?.price ?? price, tierUnitPrice);
   const extras = chosenOptions.reduce((sum, option) => sum + (option?.priceDelta ?? 0), 0);
-  const total = (product.pricingMode === "per-unit" ? unitPrice * quantity : unitPrice) + extras;
+  const subtotal = (product.pricingMode === "per-unit" ? unitPrice * quantity : unitPrice) + extras;
+  const total = subtotal + (product.shippingPrice ?? 0);
   const selectedLabel = chosenOptions.map((option) => option.label).join(", ");
 
   function select(groupIndex: number, optionIndex: number) {
@@ -75,7 +76,7 @@ export function EquipmentInquiryCard({ product }: { product: EquipmentProduct })
         <div key={selector.label} className="border-t border-[rgba(20,17,15,0.1)] py-6 last:border-b">
           <fieldset>
             <legend className="mb-3 block w-full text-[11px] font-semibold uppercase tracking-[0.16em] text-[var(--eventaj-muted)]">{selector.label}</legend>
-            <div className="grid grid-cols-2 gap-2">
+            <div className={`grid gap-2 ${selector.options.length > 1 ? "grid-cols-2" : "grid-cols-1"}`}>
               {selector.options.map((option, optionIndex) => {
                 const active = selections[groupIndex] === optionIndex;
                 return <button key={option.label} type="button" onClick={() => select(groupIndex, optionIndex)} aria-pressed={active} className={`flex min-h-12 items-center justify-between border px-3 py-2 text-left text-sm transition-colors ${active ? "border-[var(--eventaj-ink)] bg-[var(--eventaj-ink)] text-[var(--eventaj-paper)]" : "border-[rgba(20,17,15,0.16)] hover:border-[var(--eventaj-ink)]"}`}>{option.label}{active && <Check className="h-4 w-4 shrink-0" />}</button>;
@@ -86,7 +87,14 @@ export function EquipmentInquiryCard({ product }: { product: EquipmentProduct })
         </div>
       ))}
 
-      <div className="flex items-end justify-between py-6">
+      {product.shippingPrice !== undefined && (
+        <dl className="space-y-2 border-b border-[rgba(20,17,15,0.1)] py-4 text-sm text-[var(--eventaj-muted)]">
+          <div className="flex justify-between gap-4"><dt>{product.packSize ? `${product.packSize} kozarcev` : "Izbrana oprema"}</dt><dd>{euro.format(subtotal)}</dd></div>
+          <div className="flex justify-between gap-4"><dt>Pošiljanje</dt><dd>{euro.format(product.shippingPrice)}</dd></div>
+        </dl>
+      )}
+
+      <div className="flex items-end justify-between gap-4 py-6">
         <div><div className="text-[11px] uppercase tracking-[0.15em] text-[var(--eventaj-muted)]">{product.calculationLabel}</div><div className="mt-1 text-xs text-[var(--eventaj-muted)]">{product.quantity ? `${quantity} ${product.quantity.unit}${product.quantityTiers ? ` · ${euro.format(unitPrice)}/kos` : ""}` : selectedLabel}</div></div>
         <div className="font-serif-display text-4xl font-[350]">{euro.format(total)}</div>
       </div>

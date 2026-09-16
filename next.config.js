@@ -5,6 +5,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/oprema-za-dogodke/akrilni-kozarci-za-sampanjec",
+        destination: "/oprema-za-dogodke/kozarci-za-sampanjec",
+        permanent: true,
+      },
+      {
         source: '/foto-stojnica',
         destination: '/photo-booth',
         permanent: true,

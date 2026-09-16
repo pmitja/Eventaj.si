@@ -13,6 +13,9 @@ export type EquipmentProduct = {
   price: number;
   priceLabel: string;
   priceSubtitle: string;
+  cardPriceLabel?: string;
+  packSize?: number;
+  shippingPrice?: number;
   pricingMode: "fixed" | "per-unit";
   fulfillmentMode: "post" | "transport";
   quantity?: { label: string; min: number; max?: number; defaultValue: number; unit: string };
@@ -335,6 +338,37 @@ products.push({
       alt: "Obokana poročna pahljača z dobrodošlico, imenoma in datumom poroke",
       fit: "contain",
     },
+  ],
+});
+
+products.push({
+  id: "champagne-glasses", slug: "kozarci-za-sampanjec", name: "Kozarci za šampanjec", eyebrow: "Oprema za dogodke · Kozarci", heading: ["Najem", "kozarcev za šampanjec"],
+  shortDescription: "Rebrasti akrilni coupe kozarci, ki so videti kot steklo in se ne razbijejo. Dovolj trdni za stolp iz kozarcev.",
+  description: "Rebrasti akrilni coupe kozarci, 200 ml. Na fotografijah jih od stekla ne ločiš, na travi in ob bazenu pa se ne razbijejo.\n\nSestavljeni so iz dveh delov. Čašo potisneš na nogo in kozarec drži. Zato gredo v majhen paket in zato jih je treba pred dogodkom sestaviti, kar za dvajset kosov vzame pet minut.",
+  status: "Na voljo 20", cardNote: "Komplet 20 kosov", price: 30, priceLabel: "30 €", cardPriceLabel: "30 € / dogodek", priceSubtitle: "komplet 20 kozarcev za dan dogodka", pricingMode: "fixed", fulfillmentMode: "post", packSize: 20, shippingPrice: 4,
+  selectors: [{ label: "Količina", options: [{ label: "20 kosov 30 €", price: 30 }] }],
+  calculationLabel: "Skupaj s pošiljanjem", deliveryText: "Pošiljanje 4 € v eno smer. Vračilo je na tvoj strošek. Ob najemu druge opreme jih pripeljemo brez doplačila.", cta: "Preveri termin", finePrint: "Pranje je v ceni. Kozarce vrni splaknjene in razstavljene v isti škatli. Manjkajoč ali opraskan kozarec 3 €.",
+  includedSubtitle: "Pripravljeno za nazdravljanje", included: ["20 rebrastih akrilnih coupe kozarcev", "Pranje po dogodku, ti jih samo splakneš", "Škatla za prevoz in vračilo", "Navodilo za sestavljanje in za postavitev stolpa"],
+  useCasesTitle: "Tam, kjer steklo ni dobra ideja", useCases: [
+    { title: "Stolp iz kozarcev", text: "Prizor, ki ga vsi fotografirajo in ki se s steklom redko kdo upa narediti. Z akrilom pade strah stran, ker padec pomeni polito peno in ne črepinj po plesišču." },
+    { title: "Sprejem gostov", text: "Prvi kozarec, ki ga gost dobi v roke ob prihodu. Na travi, na peščenem dvorišču ali pod kozolcem, kjer bi se steklo prej ali slej razbilo." },
+    { title: "Bazen, ladja, plaža", text: "Marsikje steklo ni odsvetovano, ampak prepovedano. Akril reši prireditev ob vodi brez razmišljanja o bosih nogah." },
+  ],
+  helpTitle: "Koliko kozarcev za stolp?", helpText: "Na voljo imamo en komplet 20 kozarcev. Z njim lahko postaviš štiristopenjski stolp v trikotnih plasteh: 10 kozarcev spodaj, nato 6, potem 3 in 1 na vrhu. Za stolp porabiš vseh 20 kozarcev.\n\nPostavi ga na trdno in vodoravno podlago, nikoli na travo. Napolniš ga šele, ko stoji.",
+  faq: [
+    { q: "Se res ne razbijejo?", a: "Ne. Padec na travo, pesek ali beton prenesejo brez posledic. Prav zato so edina razumna izbira za stolp iz kozarcev in za dogodke ob vodi." },
+    { q: "Ali jih moram sestaviti sam?", a: "Da. Čašo potisneš na nogo, dokler ne klikne. Za dvajset kosov je to pet minut in je edini razlog, da jih lahko pošljemo po pošti tako poceni." },
+    { q: "Koliko jih potrebujem za stolp?", a: "Za štiristopenjski stolp v trikotnih plasteh potrebuješ vseh 20 kozarcev: 10 spodaj, nato 6, potem 3 in 1 na vrhu. Za nazdravljanje brez stolpa komplet zadošča za 20 gostov." },
+    { q: "Ali gredo v pomivalni stroj?", a: "Ne pri visoki temperaturi. Akril nad 60 stopinjami pobledi in razpoka, zato jih peremo ročno. To je tudi razlog, da jih ne peri sam." },
+    { q: "Kaj če se kakšen izgubi?", a: "Manjkajoč ali opraskan kozarec zaračunamo po 3 €. Razbitih pri teh ni." },
+    { q: "So videti kot plastika?", a: "Na fotografijah in z razdalje ne. Če jih vzameš v roko in potrkaš po njih, razliko opaziš. Zato jih priporočamo za sprejem, stolp in dogodke na prostem, ne pa za celotno večerjo v dvorani." },
+  ],
+  seoTitle: "Najem kozarcev za šampanjec – 20 kosov za 30 € | Eventaj.si", seoDescription: "Najem 20 rebrastih akrilnih coupe kozarcev za šampanjec, 200 ml. Za stolp iz kozarcev, sprejem in dogodke ob vodi. Pranje vključeno, pošiljanje 4 €.", sku: "EVENTAJ-KOZARCI-SAMPANJEC", availability: "LimitedAvailability",
+  images: [
+    { src: "/application/oprema/kozarci-za-sampanjec/stolp-kozarcev.webp", alt: "Stolp iz rebrastih coupe kozarcev za šampanjec na poročni mizi" },
+    { src: "/application/oprema/kozarci-za-sampanjec/kozarec-pogrinjek.webp", alt: "Rebrast akrilni kozarec za šampanjec ob poročnem pogrinjku" },
+    { src: "/application/oprema/kozarci-za-sampanjec/akrilni-kozarec.webp", alt: "Prozoren rebrast akrilni coupe kozarec za šampanjec, 200 ml" },
+    { src: "/application/oprema/kozarci-za-sampanjec/nalivanje-sampanjca.webp", alt: "Nalivanje šampanjca v stolp iz coupe kozarcev na poroki" },
   ],
 });
 

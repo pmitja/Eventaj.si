@@ -18,7 +18,7 @@ export function EquipmentProductPage({ product }: { product: EquipmentProduct })
             <div className="max-w-[980px]">
               <div className="mb-5 text-[11px] font-medium uppercase tracking-[0.2em] text-[var(--eventaj-accent)]">{product.eyebrow}</div>
               <h1 className="font-serif-display text-[clamp(48px,7vw,96px)] font-[350] leading-[0.94] text-balance">{product.heading[0]} <em className="font-serif-italic italic text-[var(--eventaj-accent)]">{product.heading[1]}</em></h1>
-              <p className="mt-7 max-w-3xl text-lg leading-relaxed text-[var(--eventaj-ink-2)] md:text-xl">{product.description}</p>
+              <p className="mt-7 max-w-3xl whitespace-pre-line text-lg leading-relaxed text-[var(--eventaj-ink-2)] md:text-xl">{product.description}</p>
             </div>
           </div>
           <div className="mx-auto flex max-w-[1200px] flex-col items-center gap-8 lg:flex-row lg:items-start xl:gap-12">
@@ -44,7 +44,7 @@ export function EquipmentProductPage({ product }: { product: EquipmentProduct })
         </div>
       </section>
 
-      <section className="bg-[var(--eventaj-paper-2)] px-5 py-20 md:px-10 md:py-28"><div className="mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-[1fr_auto]"><div><div className="mb-4 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]"><MessageCircle className="h-4 w-4" /> Hiter dogovor</div><h2 className="font-serif-display text-[clamp(38px,5vw,64px)] font-[350] leading-none text-balance">{product.helpTitle}</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--eventaj-ink-2)]">{product.helpText}</p></div><a href="tel:+38631285143" className="inline-flex min-h-14 items-center justify-center rounded-full border border-[var(--eventaj-ink)] px-7 text-sm font-medium no-underline transition-colors hover:bg-[var(--eventaj-ink)] hover:text-[var(--eventaj-paper)]">Pokliči 031 285 143</a></div></section>
+      <section className="bg-[var(--eventaj-paper-2)] px-5 py-20 md:px-10 md:py-28"><div className="mx-auto grid max-w-[1200px] items-center gap-10 lg:grid-cols-[1fr_auto]"><div><div className="mb-4 flex items-center gap-3 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]"><MessageCircle className="h-4 w-4" /> Hiter dogovor</div><h2 className="font-serif-display text-[clamp(38px,5vw,64px)] font-[350] leading-none text-balance">{product.helpTitle}</h2><p className="mt-5 max-w-2xl whitespace-pre-line text-base leading-relaxed text-[var(--eventaj-ink-2)]">{product.helpText}</p></div><a href="tel:+38631285143" className="inline-flex min-h-14 items-center justify-center rounded-full border border-[var(--eventaj-ink)] px-7 text-sm font-medium no-underline transition-colors hover:bg-[var(--eventaj-ink)] hover:text-[var(--eventaj-paper)]">Pokliči 031 285 143</a></div></section>
       <FAQSection items={product.faq} eyebrow={`${product.name} · FAQ`} />
     </main>
   );

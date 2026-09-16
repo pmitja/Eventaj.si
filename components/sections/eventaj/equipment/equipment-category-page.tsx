@@ -109,7 +109,7 @@ export function EquipmentCategoryPage() {
                     </div>
                     <div className="mt-6 flex items-end justify-between border-t border-[rgba(20,17,15,0.1)] pt-5">
                       <span className="text-xs text-[var(--eventaj-muted)]">{product.cardNote}</span>
-                      <strong className="text-right font-serif-display text-2xl font-normal">{product.priceLabel}</strong>
+                      <strong className="text-right font-serif-display text-2xl font-normal">{product.cardPriceLabel ?? product.priceLabel}</strong>
                     </div>
                   </div>
                 </Link>
