@@ -2,6 +2,9 @@
 const nextConfig = {
   output: "standalone",
   allowedDevOrigins: ['192.168.68.55'],
+  outputFileTracingIncludes: {
+    "/api/admin/offers/[id]/pdf": ["./lib/offers/fonts/**", "./lib/offers/assets/**"],
+  },
   async redirects() {
     return [
       {

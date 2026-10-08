@@ -20,6 +20,7 @@ export default function SiteShell({ children }: SiteShellProps) {
   const [inquiryDefaults, setInquiryDefaults] = useState<Partial<InquiryData>>({});
   const pathname = usePathname();
   const isQrGallery = pathname.startsWith("/qr-galerija");
+  const isAdmin = pathname.startsWith("/admin");
 
   useEffect(() => {
     const open = (event: Event) => {
@@ -41,6 +42,10 @@ export default function SiteShell({ children }: SiteShellProps) {
       document.body.style.overflow = "";
     };
   }, [menuOpen, inquiryOpen]);
+
+  if (isAdmin) {
+    return <div className="eventaj-redesign min-h-screen bg-[var(--eventaj-paper)] text-[var(--eventaj-ink)]">{children}</div>;
+  }
 
   return (
     <div className="eventaj-redesign min-h-screen bg-[var(--eventaj-paper)] text-[var(--eventaj-ink)]">

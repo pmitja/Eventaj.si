@@ -1,5 +1,6 @@
 import ConfirmationEmail from "@/emails/confirmation";
 import NotificationEmail from "@/emails/notification";
+import { saveInquiry } from "@/lib/db/inquiries";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -7,6 +8,13 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 export async function POST(request: Request) {
   try {
     const { formData, totalPrice } = await request.json();
+
+    try {
+      await saveInquiry(formData, totalPrice);
+    } catch (error) {
+      // Emails still go out so the inquiry is never lost.
+      console.error("Error saving inquiry:", error);
+    }
 
     // Send confirmation email to user
     await resend.emails.send({
@@ -29,4 +37,4 @@ export async function POST(request: Request) {
     console.error("Error sending email:", error);
     return Response.json({ error: "Error sending email" }, { status: 500 });
   }
-} 
+}

@@ -417,3 +417,52 @@
   margin-left: -50vw;
   margin-right: -50vw;
 }
+
+/* Admin dashboard: warm paper palette. Set on body so Radix portals (dialogs, selects, toasts)
+   pick it up too, and so it wins over the site's dark-mode class. */
+body:has(.admin-root) {
+  --background: 40 55% 96%;
+  --foreground: 30 17% 9%;
+  --card: 43 100% 99%;
+  --card-foreground: 30 17% 9%;
+  --popover: 43 100% 99%;
+  --popover-foreground: 30 17% 9%;
+  --primary: 30 17% 9%;
+  --primary-foreground: 40 55% 96%;
+  --secondary: 36 38% 90%;
+  --secondary-foreground: 30 17% 9%;
+  --muted: 36 38% 90%;
+  --muted-foreground: 29 11% 39%;
+  --accent: 36 38% 90%;
+  --accent-foreground: 30 17% 9%;
+  --destructive: 17 42% 50%;
+  --destructive-foreground: 40 55% 96%;
+  --border: 36 31% 84%;
+  --input: 30 17% 9%;
+  --ring: 36 37% 85%;
+  --radius: 0.75rem;
+  background: #FAF6EE;
+  color-scheme: light;
+}
+
+.admin-root {
+  font-family: "Instrument Sans", system-ui, -apple-system, sans-serif;
+  font-size: 15px;
+  color: #1C1814;
+  background: #FAF6EE;
+  -webkit-font-smoothing: antialiased;
+}
+
+.admin-root .tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* Segmented control on a 60-column grid; spans come from rowSpans() in form-dialog.tsx. */
+.admin-seg-item {
+  grid-column: span var(--m) / span var(--m);
+}
+@media (min-width: 640px) {
+  .admin-seg-item {
+    grid-column: span var(--d) / span var(--d);
+  }
+}

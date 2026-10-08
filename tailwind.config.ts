@@ -14,6 +14,11 @@ const config: Config = {
   		fontFamily: {
   			baloo: [
   				'var(--font-baloo2)'
+  			],
+  			display: [
+  				'var(--font-newsreader)',
+  				'Georgia',
+  				'serif'
   			]
   		},
   		container: {
@@ -39,6 +44,30 @@ const config: Config = {
   			sm: 'calc(var(--radius) - 4px)'
   		},
   		colors: {
+  			adm: {
+  				bg: '#FAF6EE',
+  				side: '#F2ECE2',
+  				line: '#E3D9CA',
+  				card: '#FFFDF8',
+  				ink: '#1C1814',
+  				muted: '#6E6359',
+  				sub: '#5E544B',
+  				faint: '#9A8F84',
+  				soft: '#CFC4B6',
+  				accent: '#B5694A',
+  				sand: '#EFE7DB',
+  				track: '#F1EADF',
+  				rule: '#EDE5D8',
+  				hover: '#F8F2E8',
+  				hi: '#F6EFE3',
+  				ring: '#E7DCCB',
+  				ok: '#E3E8D6',
+  				'ok-fg': '#3E4A22',
+  				no: '#F4DED3',
+  				'no-fg': '#8A3A1E',
+  				warn: '#F3E7C9',
+  				'warn-fg': '#6B5214'
+  			},
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -84,6 +113,8 @@ const config: Config = {
   			container: '1280px'
   		},
   		animation: {
+  			'collapsible-down': 'collapsible-down 0.25s ease-out',
+  			'collapsible-up': 'collapsible-up 0.2s ease-out',
   			marquee: 'marquee var(--duration) linear infinite',
   			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
   			first: 'moveVertical 30s ease infinite',
@@ -95,6 +126,14 @@ const config: Config = {
   			'scale-in': 'scaleIn 0.7s ease-out forwards'
   		},
   		keyframes: {
+  			'collapsible-down': {
+  				from: { height: '0' },
+  				to: { height: 'var(--radix-collapsible-content-height)' }
+  			},
+  			'collapsible-up': {
+  				from: { height: 'var(--radix-collapsible-content-height)' },
+  				to: { height: '0' }
+  			},
   			marquee: {
   				from: {
   					transform: 'translateX(0)'

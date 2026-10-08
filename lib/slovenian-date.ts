@@ -47,3 +47,9 @@ export function formatSlovenianDate(date: Date | string | undefined | null) {
     year: "numeric",
   }).format(parsedDate);
 }
+
+export function formatNumericSlovenianDate(value: string) {
+  const date = dateFromDateString(value.slice(0, 10));
+  if (!date) return value;
+  return `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
+}
