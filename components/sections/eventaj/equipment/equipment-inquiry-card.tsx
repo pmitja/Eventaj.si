@@ -1,7 +1,7 @@
 "use client";
 
 import { InquiryTrigger } from "@/components/inquiry/inquiry-trigger";
-import type { EquipmentProduct } from "@/content/eventaj/equipment";
+import { getEquipmentFulfillment, getFulfillmentLabel, type EquipmentProduct } from "@/content/eventaj/equipment";
 import { Check, Minus, Plus, Truck } from "lucide-react";
 import { useMemo, useState } from "react";
 
@@ -31,6 +31,7 @@ export function EquipmentInquiryCard({ product }: { product: EquipmentProduct })
   const subtotal = (product.pricingMode === "per-unit" ? unitPrice * quantity : unitPrice) + extras;
   const total = subtotal + (product.shippingPrice ?? 0);
   const selectedLabel = chosenOptions.map((option) => option.label).join(", ");
+  const fulfillment = getEquipmentFulfillment(product, quantity);
 
   function select(groupIndex: number, optionIndex: number) {
     setSelections((current) => current.map((value, index) => index === groupIndex ? optionIndex : value));
@@ -99,8 +100,8 @@ export function EquipmentInquiryCard({ product }: { product: EquipmentProduct })
         <div className="font-serif-display text-4xl font-[350]">{euro.format(total)}</div>
       </div>
 
-      <div className="mb-6 flex gap-3 border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-4"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[var(--eventaj-accent)]" /><p className="text-xs leading-relaxed text-[var(--eventaj-muted)]">{product.deliveryText}</p></div>
-      <InquiryTrigger defaults={{ type: "Oprema za dogodke", product: product.name, quantity: String(quantity), tableclothColor: selectedLabel, fulfillment: product.fulfillmentMode === "post" ? "Pošiljanje po pošti" : "Prevoz na lokacijo", notes: `${product.name}: ${selectedLabel}`, estimatedPrice: String(total) }} className="w-full rounded-full bg-[var(--eventaj-ink)] px-6 py-4 text-sm font-medium text-[var(--eventaj-paper)] transition-colors hover:bg-[var(--eventaj-accent)]">{product.cta} →</InquiryTrigger>
+      <div className="mb-6 flex gap-3 border border-[rgba(20,17,15,0.12)] bg-[var(--eventaj-paper-2)] p-4"><Truck className="mt-0.5 h-4 w-4 shrink-0 text-[var(--eventaj-accent)]" /><p className="text-xs leading-relaxed text-[var(--eventaj-muted)]">{fulfillment === "pickup" ? product.pickupText : product.deliveryText}</p></div>
+      <InquiryTrigger defaults={{ type: "Oprema za dogodke", product: product.name, quantity: String(quantity), tableclothColor: selectedLabel, fulfillment: getFulfillmentLabel([fulfillment]), notes: `${product.name}: ${selectedLabel}`, estimatedPrice: String(total) }} className="w-full rounded-full bg-[var(--eventaj-ink)] px-6 py-4 text-sm font-medium text-[var(--eventaj-paper)] transition-colors hover:bg-[var(--eventaj-accent)]">{product.cta} →</InquiryTrigger>
       <p className="mt-4 text-center text-xs leading-relaxed text-[var(--eventaj-muted)]">{product.finePrint}</p>
     </aside>
   );

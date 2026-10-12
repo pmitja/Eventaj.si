@@ -1,5 +1,5 @@
 import { SlovenianDatePicker } from "@/components/ui/slovenian-date-picker";
-import { equipmentProducts } from "@/content/eventaj/equipment";
+import { equipmentProducts, getSelectionsFulfillmentLabel } from "@/content/eventaj/equipment";
 import {
   albumColorLabels,
   albumSizeLabels,
@@ -375,16 +375,7 @@ export function InquiryStepService({ data, update }: StepProps) {
 }
 
 export function InquiryStepDetails({ data, update }: StepProps) {
-  const selectedProducts = data.equipmentSelections
-    .map((selection) => equipmentProducts.find((product) => product.id === selection.productId))
-    .filter(Boolean);
-  const needsPost = selectedProducts.some((product) => product?.fulfillmentMode === "post");
-  const needsTransport = selectedProducts.some((product) => product?.fulfillmentMode === "transport");
-  const deliveryLabel = needsPost && needsTransport
-    ? "Po pošti in s prevozom na lokacijo"
-    : needsTransport
-      ? "Prevoz na lokacijo"
-      : "Pošiljanje po pošti";
+  const deliveryLabel = getSelectionsFulfillmentLabel(data.equipmentSelections);
 
   return (
     <div className="grid gap-6">

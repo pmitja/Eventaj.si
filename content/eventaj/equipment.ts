@@ -18,6 +18,8 @@ export type EquipmentProduct = {
   shippingPrice?: number;
   pricingMode: "fixed" | "per-unit";
   fulfillmentMode: "post" | "transport";
+  pickupBelowQuantity?: number;
+  pickupText?: string;
   quantity?: { label: string; min: number; max?: number; defaultValue: number; unit: string };
   quantityTiers?: ReadonlyArray<{ min: number; unitPrice: number }>;
   selectors?: ReadonlyArray<{ label: string; options: ReadonlyArray<EquipmentOption>; note?: string }>;
@@ -43,11 +45,12 @@ export const standingTable: EquipmentProduct = {
   id: "standing-table", slug: "najem-stojecih-miz", name: "Stoječa barska miza", eyebrow: "Oprema za dogodke · Mize", heading: ["Najem stoječih", "barskih miz."],
   shortDescription: "Stoječa miza za sprejem, pogostitev ali zabavo. Bel ali črn prt je vključen.",
   description: "Ustvari prostor za pijačo, prigrizke in pogovor. Vsaki mizi lahko dodaš bel ali črn prt, ki je že vključen v ceno najema.",
-  status: "Na voljo 15", cardNote: "Bel ali črn prt vključen", price: 10, priceLabel: "10 €", priceSubtitle: "na mizo za 1 dan", pricingMode: "per-unit", fulfillmentMode: "transport",
-  quantity: { label: "Količina", min: 1, max: 15, defaultValue: 1, unit: "miz" },
+  status: "Na voljo 10", cardNote: "Bel ali črn prt vključen", price: 10, priceLabel: "10 €", priceSubtitle: "na mizo za 1 dan", pricingMode: "per-unit", fulfillmentMode: "transport", pickupBelowQuantity: 5,
+  pickupText: "Za manj kot 5 miz je možen samo osebni prevzem. Dostava je možna od 5 miz naprej v radiju 50 km od Maribora.",
+  quantity: { label: "Količina", min: 1, max: 10, defaultValue: 1, unit: "miz" },
   selectors: [{ label: "Barva prta", options: [{ label: "Bel prt" }, { label: "Črn prt" }], note: "Želiš kombinacijo? Razmerje barv zapiši v opombe." }],
-  calculationLabel: "Informativna cena najema", deliveryText: "Dostava je možna samo v radiju 75 km od Maribora in se obračuna 0,40 €/km.", cta: "Preveri razpoložljivost", finePrint: "Brez obveznosti. Termin in logistiko potrdimo v ponudbi.",
-  includedSubtitle: "Vse bistveno za urejeno postavitev", included: ["Stoječa barska miza", "Najem za en dan", "Bel ali črn prt po izbiri", "Možnost kombiniranja barv", "Do 15 miz za isti termin"],
+  calculationLabel: "Informativna cena najema", deliveryText: "Dostava od 5 miz naprej je možna v radiju 50 km od Maribora in se obračuna 0,40 €/km.", cta: "Preveri razpoložljivost", finePrint: "Brez obveznosti. Termin in logistiko potrdimo v ponudbi.",
+  includedSubtitle: "Vse bistveno za urejeno postavitev", included: ["Stoječa barska miza", "Najem za en dan", "Bel ali črn prt po izbiri", "Možnost kombiniranja barv", "Do 10 miz za isti termin"],
   useCasesTitle: "Več prostora za druženje.", useCases: [
     { title: "Sprejemi in pogostitve", text: "Točka za pijačo, prigrizke in sproščen pogovor." },
     { title: "Poroke in praznovanja", text: "Uporabne so pri aperitivu, druženju ali večernem delu dogodka." },
@@ -55,14 +58,15 @@ export const standingTable: EquipmentProduct = {
   ],
   helpTitle: "Potrebuješ pomoč pri količini?", helpText: "Sporoči število gostov in tip dogodka. Pomagali ti bomo oceniti število miz ter uskladiti dostavo.",
   faq: [
-    { q: "Koliko miz je na voljo?", a: "Na voljo je do 15 stoječih miz. Razpoložljivost preverimo po prejemu povpraševanja." },
+    { q: "Koliko miz je na voljo?", a: "Na voljo je do 10 stoječih miz. Razpoložljivost preverimo po prejemu povpraševanja." },
     { q: "Ali je prt vključen v ceno?", a: "Da. Pri vsaki mizi lahko izbereš bel ali črn prt." },
     { q: "Ali lahko kombiniram bele in črne prte?", a: "Da. Želeno razmerje zapiši v opombe povpraševanja." },
-    { q: "Kako se obračuna prevoz?", a: "Dostava je možna samo v radiju 75 km od Maribora. Prevoz se obračuna posebej po 0,40 €/km." },
+    { q: "Kako se obračuna prevoz?", a: "Dostavljamo od 5 miz naprej, v radiju 50 km od Maribora. Prevoz se obračuna posebej po 0,40 €/km." },
+    { q: "Ali lahko najamem manj kot 5 miz?", a: "Da. Za manj kot 5 miz je možen samo osebni prevzem." },
     { q: "Za kakšne dogodke so mize primerne?", a: "Za poroke, poslovne dogodke, sprejeme, praznovanja in pogostitve." },
     { q: "Kdaj je rezervacija potrjena?", a: "Rezervacija je potrjena ob prejemu predplačila." },
   ],
-  seoTitle: "Najem stoječih barskih miz – 10 €/dan | Eventaj.si", seoDescription: "Najem stoječih barskih miz po 10 € na mizo za en dan. Bel ali črn prt je vključen, na voljo je do 15 miz.", sku: "EVENTAJ-STOJ-MIZA", availability: "LimitedAvailability",
+  seoTitle: "Najem stoječih barskih miz – 10 €/dan | Eventaj.si", seoDescription: "Najem stoječih barskih miz po 10 € na mizo za en dan. Bel ali črn prt je vključen, na voljo je do 10 miz.", sku: "EVENTAJ-STOJ-MIZA", availability: "LimitedAvailability",
   images: [
     { src: "/application/oprema/stojeca-miza/beli-prt.webp", alt: "Stoječa barska miza za najem z belim prtom" },
     { src: "/application/oprema/stojeca-miza/crni-prt.webp", alt: "Stoječa barska miza za najem s črnim prtom" },
@@ -374,6 +378,29 @@ products.push({
 
 export const equipmentProducts: ReadonlyArray<EquipmentProduct> = [standingTable, ...products];
 
+export type EquipmentFulfillment = "post" | "transport" | "pickup";
+
+const fulfillmentLabels: Record<EquipmentFulfillment, string> = {
+  post: "Pošiljanje po pošti",
+  transport: "Prevoz na lokacijo",
+  pickup: "Osebni prevzem",
+};
+
+export function getEquipmentFulfillment(product: EquipmentProduct, quantity: number): EquipmentFulfillment {
+  return product.pickupBelowQuantity && quantity < product.pickupBelowQuantity ? "pickup" : product.fulfillmentMode;
+}
+
+export function getFulfillmentLabel(modes: ReadonlyArray<EquipmentFulfillment>) {
+  return [...new Set(modes)].map((mode) => fulfillmentLabels[mode]).join(" + ");
+}
+
+export function getSelectionsFulfillmentLabel(selections: ReadonlyArray<{ productId: string; quantity: number }>) {
+  return getFulfillmentLabel(selections.flatMap((selection) => {
+    const product = equipmentProducts.find((item) => item.id === selection.productId);
+    return product ? [getEquipmentFulfillment(product, selection.quantity)] : [];
+  }));
+}
+
 export function getEquipmentProduct(slug: string) {
   return equipmentProducts.find((product) => product.slug === slug);
 }
@@ -381,7 +408,7 @@ export function getEquipmentProduct(slug: string) {
 export const equipmentFaq = [
   { q: "Kako naročim ali najamem opremo?", a: "Izberi izdelek in možnosti ter pošlji datum in lokacijo. Preverimo zalogo ali rok izdelave in ti pošljemo ponudbo." },
   { q: "Kateri izdelki so za najem in kateri za nakup?", a: "Pri vsakem izdelku je označeno, ali ga najameš ali ga izdelamo zate. Tabla dobrodošlice je na voljo v obeh različicah." },
-  { q: "Kako potekata prevoz in pošiljanje?", a: "Za stoječe mize, igre in beer pong mizo se prevoz obračuna posebej po 0,40 €/km do 75 km. Ostale izdelke pošljemo po pošti, poštnina pa se obračuna posebej." },
+  { q: "Kako potekata prevoz in pošiljanje?", a: "Stoječe mize dostavimo od 5 kosov naprej do 50 km, manj kot 5 miz lahko prevzameš osebno. Za igre in beer pong mizo je dostava do 75 km. Prevoz se obračuna posebej po 0,40 €/km. Ostale izdelke pošljemo po pošti, poštnina pa se obračuna posebej." },
   { q: "Lahko opremo kombiniram z drugimi storitvami Eventaj?", a: "Da. V opombe zapiši, da želiš opremo združiti s Photo Boothom ali 360° Boothom." },
 ] as const;
 

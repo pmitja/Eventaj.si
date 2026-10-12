@@ -4,7 +4,7 @@ import { FormEvent, useEffect, useState } from "react";
 import { calculateInquiryPrice } from "./inquiry-price";
 import { getAlbumPrice } from "@/content/eventaj/album-pricing";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
-import { equipmentProducts } from "@/content/eventaj/equipment";
+import { equipmentProducts, getSelectionsFulfillmentLabel } from "@/content/eventaj/equipment";
 import { EquipmentSelection, InquiryData, initialInquiryData } from "./inquiry-types";
 
 export function useInquiryForm(
@@ -143,18 +143,7 @@ export function useInquiryForm(
         if (!product) return "";
         return `${product.name}: ${selection.quantity}${selection.options ? `, ${selection.options}` : ""}`;
       }).filter(Boolean).join("\n");
-      const selectedProducts = data.equipmentSelections
-        .map((selection) => equipmentProducts.find((product) => product.id === selection.productId))
-        .filter(Boolean);
-      const needsPost = selectedProducts.some((product) => product?.fulfillmentMode === "post");
-      const needsTransport = selectedProducts.some((product) => product?.fulfillmentMode === "transport");
-      const fulfillment = needsPost && needsTransport
-        ? "Po pošti in s prevozom na lokacijo"
-        : needsTransport
-          ? "Prevoz na lokacijo"
-          : needsPost
-            ? "Pošiljanje po pošti"
-            : "";
+      const fulfillment = getSelectionsFulfillmentLabel(data.equipmentSelections);
       const message = [
         data.notes,
         data.eventType ? `Tip dogodka: ${data.eventType}` : "",

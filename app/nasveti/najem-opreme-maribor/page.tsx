@@ -185,7 +185,8 @@ export default function GuidePage() {
           >
             <P>
               Pri opremi s prevozom se dostava obračuna posebej po 0,40 €/km do
-              75 km. Končni strošek preverite v ponudbi, skupaj s potmi za
+              75 km. Stoječe mize dostavimo od 5 miz naprej v radiju 50 km,
+              manj kot 5 miz lahko prevzamete osebno. Končni strošek preverite v ponudbi, skupaj s potmi za
               dostavo in prevzem. Postavitev in odvoz pri igrah sta vključena v
               paket, prevoz pa se obračuna posebej.
             </P>
