@@ -3,7 +3,12 @@ const nextConfig = {
   output: "standalone",
   allowedDevOrigins: ['192.168.68.55'],
   outputFileTracingIncludes: {
-    "/api/admin/offers/[id]/pdf": ["./lib/offers/fonts/**", "./lib/offers/assets/**"],
+    "/api/admin/offers/[id]/pdf": [
+      "./lib/offers/fonts/**",
+      "./lib/offers/assets/**",
+      // PDFKit loads standard fonts dynamically, so Next.js does not trace them.
+      "./node_modules/**/pdfkit/js/standard-fonts/**",
+    ],
   },
   async redirects() {
     return [
