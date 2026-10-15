@@ -11,6 +11,7 @@ import { formatEur } from "@/lib/offers/pricing";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import { EventDetailsPanel } from "./event-details-panel";
 import { formatReceived } from "./format-received";
+import { InquiryCrewControl } from "./inquiry-crew";
 import { InquiryStatusControl } from "./inquiry-status";
 import { StaggerItem } from "./motion";
 
@@ -101,10 +102,11 @@ export function InquiryCard({ inquiry, onGenerate }: Props) {
 
   return (
     <StaggerItem
+      id={`povprasevanje-${inquiry.id}`}
       layout
       whileHover={{ y: -3, boxShadow: "0 14px 34px rgba(28,24,20,.10)" }}
       transition={{ type: "spring", stiffness: 300, damping: 26 }}
-      className="flex flex-col gap-[18px] rounded-2xl border border-adm-ink bg-adm-card px-5 py-6 sm:px-[26px]"
+      className="flex scroll-mt-6 flex-col gap-[18px] rounded-2xl border border-adm-ink bg-adm-card px-5 py-6 sm:px-[26px]"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex min-w-0 flex-col gap-1.5">
@@ -178,6 +180,7 @@ export function InquiryCard({ inquiry, onGenerate }: Props) {
 
       <div className="flex flex-col gap-3.5 border-t border-adm-ink pt-3.5 text-sm">
         <InquiryStatusControl id={inquiry.id} status={inquiry.status} />
+        {inquiry.status === "confirmed" && <InquiryCrewControl id={inquiry.id} crew={inquiry.crew} />}
         {inquiry.status === "confirmed" && (data.type === "basic" || data.type === "both") && (
           <EventDetailsPanel inquiryId={inquiry.id} request={inquiry.eventDetails} />
         )}

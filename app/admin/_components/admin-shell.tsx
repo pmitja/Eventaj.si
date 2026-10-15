@@ -20,11 +20,12 @@ type Props = {
   children: ReactNode;
 };
 
-type Location = { section: "inquiries" | "ledger" | "settings" | "profile"; year: number | null; tab: string };
+type Location = { section: "inquiries" | "calendar" | "ledger" | "settings" | "profile"; year: number | null; tab: string };
 
 function locate(pathname: string): Location {
   const parts = pathname.split("/").filter(Boolean); // ["admin", "poslovanje", "2026", "dogodki"]
   if (parts[1] === "profil") return { section: "profile", year: null, tab: "" };
+  if (parts[1] === "koledar") return { section: "calendar", year: null, tab: "" };
   if (parts[1] === "poslovanje") {
     if (parts[2] === "nastavitve") return { section: "settings", year: null, tab: "" };
     const year = Number(parts[2]);
@@ -93,7 +94,8 @@ function SidebarNav({ user, inquiryCount, years, counts, pathname }: Omit<Props,
   const thisYear = new Date().getFullYear();
   const year = here.year ?? (years.includes(thisYear) ? thisYear : years[years.length - 1] ?? null);
   const yearCounts = year ? counts[year] : undefined;
-  const activeKey = here.section === "inquiries" ? "inquiries" : here.section === "ledger" ? `tab:${here.tab}` : null;
+  const activeKey =
+    here.section === "inquiries" || here.section === "calendar" ? here.section : here.section === "ledger" ? `tab:${here.tab}` : null;
 
   return (
     <>
@@ -105,6 +107,7 @@ function SidebarNav({ user, inquiryCount, years, counts, pathname }: Omit<Props,
             <span className="rounded-full bg-adm-accent px-2 py-0.5 text-[11px] font-semibold text-adm-card">{inquiryCount}</span>
           )}
         </NavItem>
+        <NavItem href="/admin/koledar" active={activeKey === "calendar"} label="Koledar" />
       </div>
 
       <div className="flex flex-col gap-0.5">

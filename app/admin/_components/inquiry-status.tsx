@@ -12,6 +12,8 @@ const options: { value: InquiryStatus; label: string; active: string }[] = [
   { value: "declined", label: "Zavrnjeno", active: "border-adm-no-fg bg-adm-no text-adm-no-fg" },
 ];
 
+const moved: Record<InquiryStatus, string> = { new: "Aktivna", confirmed: "Potrjena", declined: "Zavrnjena" };
+
 export function InquiryStatusControl({ id, status }: { id: number; status: InquiryStatus }) {
   const [pending, startTransition] = useTransition();
   const [current, setCurrent] = useOptimistic(status);
@@ -22,6 +24,7 @@ export function InquiryStatusControl({ id, status }: { id: number; status: Inqui
       setCurrent(value);
       const result = await changeInquiryStatus(id, value);
       if (!result.ok) toast.error(result.error);
+      else toast.success(`Povpraševanje #${id} je zdaj med »${moved[value]}«`);
     });
   }
 

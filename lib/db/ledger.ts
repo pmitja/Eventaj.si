@@ -204,3 +204,34 @@ export async function createYear(year: number) {
     `;
   }
 }
+
+export type DoneEvent = {
+  id: number;
+  year: number;
+  code: string | null;
+  date: string;
+  client: string | null;
+  service: string | null;
+  hours: number | null;
+  km: number | null;
+  albumUsed: boolean;
+  album: string | null;
+  execution: string | null;
+  initialHelp: string | null;
+  students: string[];
+};
+
+// Completed events from every ledger year, with the students who worked them, for the calendar.
+export async function listDoneEvents(): Promise<DoneEvent[]> {
+  return (await sql()`
+    SELECT e.id, e.year, e.code, to_char(e.date, 'YYYY-MM-DD') AS date, e.client, e.service,
+      e.hours::float8 AS hours, e.km::float8 AS km, e.album_used AS "albumUsed", e.album,
+      e.execution, e.initial_help AS "initialHelp",
+      COALESCE(array_agg(s.student ORDER BY s.id) FILTER (WHERE s.student IS NOT NULL), '{}') AS students
+    FROM ledger_events e
+    LEFT JOIN ledger_students s ON s.event_id = e.id
+    WHERE e.date IS NOT NULL
+    GROUP BY e.id
+    ORDER BY e.date, e.code
+  `) as DoneEvent[];
+}

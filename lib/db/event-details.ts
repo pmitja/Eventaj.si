@@ -6,31 +6,45 @@ import { sql } from "./index";
 
 export type EventDetailsRequest = {
   token: string;
+  // When the link was created; emailedAt is set only if we sent it, not when it was copied by hand.
   sentAt: string;
+  emailedAt: string | null;
   submittedAt: string | null;
   data: EventDetails | null;
 };
 
-type Row = { inquiry_id: number; token: string; sent_at: Date; submitted_at: Date | null; data: EventDetails | null };
+type Row = {
+  inquiry_id: number;
+  token: string;
+  sent_at: Date;
+  emailed_at: Date | null;
+  submitted_at: Date | null;
+  data: EventDetails | null;
+};
 
 export function toEventDetailsRequest(row: Omit<Row, "inquiry_id">): EventDetailsRequest {
   return {
     token: row.token,
     sentAt: new Date(row.sent_at).toISOString(),
+    emailedAt: row.emailed_at ? new Date(row.emailed_at).toISOString() : null,
     submittedAt: row.submitted_at ? new Date(row.submitted_at).toISOString() : null,
     data: row.data,
   };
 }
 
-// Reuses the existing link when the form is sent again, so an older email still works.
-export async function createEventDetailsRequest(inquiryId: number) {
+// One link per inquiry: sending again or copying it reuses the token, so an older email still works.
+export async function ensureEventDetailsRequest(inquiryId: number) {
   const rows = (await sql()`
     INSERT INTO event_details (inquiry_id, token)
     VALUES (${inquiryId}, ${randomBytes(24).toString("base64url")})
-    ON CONFLICT (inquiry_id) DO UPDATE SET sent_at = now()
+    ON CONFLICT (inquiry_id) DO UPDATE SET inquiry_id = excluded.inquiry_id
     RETURNING token
   `) as { token: string }[];
   return rows[0].token;
+}
+
+export async function markEventDetailsEmailed(inquiryId: number) {
+  await sql()`UPDATE event_details SET emailed_at = now() WHERE inquiry_id = ${inquiryId}`;
 }
 
 export async function getEventDetailsByToken(token: string): Promise<(EventDetailsRequest & { inquiry: Inquiry }) | null> {

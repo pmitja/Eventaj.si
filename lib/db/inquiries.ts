@@ -1,6 +1,9 @@
 import type { FormField } from "@/components/forms/booking-form";
+import { albumColorLabels, albumSizeLabels } from "@/content/eventaj/album-pricing";
+import { albumLabel, type EventDetails } from "@/lib/event-details/schema";
 import { toEventDetailsRequest, type EventDetailsRequest } from "./event-details";
 import { sql } from "./index";
+import { toDateKey } from "@/lib/slovenian-date";
 
 export const inquiryStatuses = ["new", "confirmed", "declined"] as const;
 export type InquiryStatus = (typeof inquiryStatuses)[number];
@@ -13,6 +16,7 @@ export type Inquiry = {
   formData: StoredFormData;
   totalPrice: number | null;
   status: InquiryStatus;
+  crew: string | null;
 };
 
 export type OfferSummary = {
@@ -31,6 +35,7 @@ type InquiryRow = {
   form_data: StoredFormData;
   total_price: string | null;
   status: InquiryStatus;
+  crew: string | null;
 };
 
 function toInquiry(row: InquiryRow): Inquiry {
@@ -40,6 +45,7 @@ function toInquiry(row: InquiryRow): Inquiry {
     formData: row.form_data,
     totalPrice: row.total_price === null ? null : Number(row.total_price),
     status: row.status ?? "new",
+    crew: row.crew,
   };
 }
 
@@ -68,7 +74,7 @@ export async function listInquiries(): Promise<InquiryWithOffers[]> {
       '[]'
     ) AS offers,
     CASE WHEN e.token IS NULL THEN NULL ELSE
-      json_build_object('token', e.token, 'sent_at', e.sent_at, 'submitted_at', e.submitted_at, 'data', e.data)
+      json_build_object('token', e.token, 'sent_at', e.sent_at, 'emailed_at', e.emailed_at, 'submitted_at', e.submitted_at, 'data', e.data)
     END AS event_details
     FROM inquiries i
     LEFT JOIN offers o ON o.inquiry_id = i.id
@@ -90,11 +96,67 @@ export async function setInquiryStatus(id: number, status: InquiryStatus) {
   if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
 }
 
+export async function setInquiryCrew(id: number, crew: string | null) {
+  const rows = (await sql()`UPDATE inquiries SET crew = ${crew} WHERE id = ${id} RETURNING id`) as { id: number }[];
+  if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
+}
+
 export async function deleteInquiry(id: number) {
   await sql()`DELETE FROM inquiries WHERE id = ${id}`;
 }
 
-export async function countInquiries() {
-  const rows = (await sql()`SELECT count(*)::int AS count FROM inquiries`) as { count: number }[];
+// Only new inquiries still need a reply, so the sidebar badge counts those.
+export async function countActiveInquiries() {
+  const rows = (await sql()`SELECT count(*)::int AS count FROM inquiries WHERE status = 'new'`) as { count: number }[];
   return rows[0].count;
+}
+
+export type CalendarEvent = {
+  id: number;
+  date: string;
+  name: string;
+  location: string;
+  hours: string;
+  type: StoredFormData["type"];
+  startTime: string | null;
+  crew: string | null;
+  // "Ne", an album name, or null when nobody has said yet.
+  album: string | null;
+  detailsSubmitted: boolean;
+};
+
+// What the customer said about the album: the event-details form wins over the original inquiry.
+function calendarAlbum(form: StoredFormData, details: EventDetails | null) {
+  if (details?.album === "no") return "Ne";
+  if (details?.album === "yes") return albumLabel(details.albumSize, details.albumColor) || "Da";
+  if (!form.albumSize) return null;
+  return `${albumSizeLabels[form.albumSize]}${form.albumColor ? `, ${albumColorLabels[form.albumColor]}` : ""}`;
+}
+
+export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
+  const rows = (await sql()`
+    SELECT i.id, i.form_data, i.crew, e.data AS details
+    FROM inquiries i
+    LEFT JOIN event_details e ON e.inquiry_id = i.id
+    WHERE i.status = 'confirmed'
+  `) as { id: number; form_data: StoredFormData; crew: string | null; details: EventDetails | null }[];
+
+  return rows.flatMap((row) => {
+    const date = toDateKey(row.form_data.date);
+    if (!date) return [];
+    const details = row.details;
+    return [{
+      id: row.id,
+      date,
+      name: row.form_data.name,
+      // The customer's own answers are more precise than what they picked in the inquiry.
+      location: details?.location || row.form_data.location || "",
+      hours: details?.hours || row.form_data.hours,
+      type: row.form_data.type,
+      startTime: details?.startTime || null,
+      crew: row.crew,
+      album: calendarAlbum(row.form_data, details),
+      detailsSubmitted: Boolean(details),
+    }];
+  }).sort((a, b) => a.date.localeCompare(b.date) || (a.startTime ?? "").localeCompare(b.startTime ?? ""));
 }

@@ -53,3 +53,11 @@ export function formatNumericSlovenianDate(value: string) {
   if (!date) return value;
   return `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
 }
+
+// Normalises a stored event date ("YYYY-MM-DD" or an older ISO timestamp) to "YYYY-MM-DD" in Slovenian time.
+export function toDateKey(value: string | null | undefined) {
+  if (!value) return null;
+  if (/^\d{4}-\d{2}-\d{2}$/.test(value)) return value;
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? null : getSlovenianDateString(date);
+}

@@ -28,6 +28,8 @@ await sql`
 await sql`CREATE INDEX IF NOT EXISTS offers_inquiry_id_idx ON offers (inquiry_id)`;
 await sql`ALTER TABLE offers ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ`;
 await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`;
+// Kdo gre na potrjen dogodek (prosto besedilo, npr. "Jan, Klara").
+await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS crew TEXT`;
 
 // Podatki za dogodek, ki jih stranka izpolni po potrditvi (okvir, album, ura pričetka ...).
 await sql`
@@ -39,6 +41,7 @@ await sql`
     data JSONB
   )
 `;
+await sql`ALTER TABLE event_details ADD COLUMN IF NOT EXISTS emailed_at TIMESTAMPTZ`;
 
 await sql`
   CREATE TABLE IF NOT EXISTS admin_users (
