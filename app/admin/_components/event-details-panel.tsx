@@ -1,0 +1,107 @@
+"use client";
+
+import { Check, Clock, Link2, Mail } from "lucide-react";
+import { useTransition } from "react";
+import { toast } from "sonner";
+import { sendEventDetailsForm } from "../(app)/actions";
+import type { EventDetailsRequest } from "@/lib/db/event-details";
+import { albumText, eventTypeText } from "@/lib/event-details/schema";
+import { formatReceived } from "./format-received";
+
+type Props = { inquiryId: number; request: EventDetailsRequest | null };
+
+export function EventDetailsPanel({ inquiryId, request }: Props) {
+  const [sending, startSend] = useTransition();
+  const data = request?.data;
+
+  function send() {
+    const again = Boolean(request);
+    if (again && !window.confirm("Stranki ponovno pošljem e-pošto z obrazcem? Povezava ostane ista.")) return;
+    startSend(async () => {
+      const result = await sendEventDetailsForm(inquiryId);
+      if (!result.ok) toast.error(result.error);
+      else toast.success(again ? "Obrazec je ponovno poslan" : "Obrazec za okvir je poslan stranki");
+    });
+  }
+
+  async function copyLink() {
+    if (!request) return;
+    try {
+      await navigator.clipboard.writeText(`${window.location.origin}/podatki/${request.token}`);
+      toast.success("Povezava do obrazca je kopirana");
+    } catch {
+      toast.error("Kopiranje ni uspelo");
+    }
+  }
+
+  const rows = data
+    ? [
+        ["Točna lokacija", data.location],
+        ["Vrsta dogodka", eventTypeText(data)],
+        ["Pričetek najema", data.startTime],
+        ["Trajanje najema", `${data.hours} h`],
+        ["Kontaktna oseba", `${data.contactName}, ${data.contactPhone}`],
+        ["Album", albumText(data) || "—"],
+        ["Ideja za okvir", data.frameIdea || "—"],
+        ["Izbrano ozadje", data.background || "—"],
+      ]
+    : [];
+
+  return (
+    <div className="flex flex-col gap-3 rounded-xl bg-adm-side px-4 py-3.5">
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <span className="flex items-center gap-2">
+          {!request && <span className="text-adm-muted">Obrazec za okvir še ni poslan.</span>}
+          {request && !request.submittedAt && (
+            <>
+              <Clock className="size-4 text-adm-muted" />
+              Obrazec poslan {formatReceived(request.sentAt)} · čaka na odgovor
+            </>
+          )}
+          {request?.submittedAt && (
+            <>
+              <Check className="size-4 text-adm-accent" />
+              <span className="font-semibold">Podatki izpolnjeni {formatReceived(request.submittedAt)}</span>
+            </>
+          )}
+        </span>
+        <div className="flex flex-wrap gap-2">
+          {request && (
+            <button
+              type="button"
+              onClick={copyLink}
+              className="flex items-center gap-1.5 rounded-full border border-adm-ink px-3 py-1 transition-colors hover:bg-adm-ink hover:text-adm-bg"
+            >
+              <Link2 className="size-3.5" />
+              Kopiraj povezavo
+            </button>
+          )}
+          <button
+            type="button"
+            onClick={send}
+            disabled={sending}
+            className={
+              request
+                ? "flex items-center gap-1.5 rounded-full border border-dashed border-adm-soft px-3 py-1 text-adm-muted transition-colors hover:border-adm-ink hover:text-adm-ink disabled:opacity-50"
+                : "flex items-center gap-1.5 rounded-full bg-adm-ink px-4 py-2 text-adm-bg transition-colors hover:bg-adm-accent disabled:opacity-50"
+            }
+          >
+            <Mail className="size-3.5" />
+            {sending ? "Pošiljam ..." : request ? "Pošlji ponovno" : "Pošlji obrazec za okvir"}
+          </button>
+        </div>
+      </div>
+
+      {data && (
+        <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-8 gap-y-2 border-t border-adm-line pt-3">
+          {rows.map(([label, value]) => (
+            <div key={label} className="flex gap-2">
+              <dt className="shrink-0 text-adm-muted">{label}:</dt>
+              <dd className="m-0 whitespace-pre-line [overflow-wrap:anywhere]">{value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+    </div>
+  );
+}

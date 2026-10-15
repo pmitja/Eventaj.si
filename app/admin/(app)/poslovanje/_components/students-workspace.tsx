@@ -6,20 +6,39 @@ import { KpiCard } from "@/app/admin/_components/kpi-card";
 import { Panel } from "@/app/admin/_components/panel";
 import { formatEur, formatPlain, payerPair, studentPairRefund } from "@/lib/ledger/compute";
 import type { LedgerLists } from "@/lib/ledger/lists";
-import type { EventRow, StudentRow } from "@/lib/ledger/schema";
+import type { EventRow, StudentRow, TableRentalRow } from "@/lib/ledger/schema";
 import { formatDate } from "./format";
 import { LedgerGrid, type GridColumn, type GridRow } from "./ledger-grid";
 import { ChartRow, parseAmount, Strip, useLedgerRows, WorkspaceHeader } from "./workspace";
 
 type Row = StudentRow & GridRow;
 
-export function StudentsWorkspace({ year, rows: initial, events, lists }: { year: number; rows: StudentRow[]; events: EventRow[]; lists: LedgerLists }) {
+type Target = { link: string; code: string; date: string | null; client: string | null; hours: number | null };
+
+export function StudentsWorkspace({
+  year,
+  rows: initial,
+  events,
+  rentals,
+  lists,
+}: {
+  year: number;
+  rows: StudentRow[];
+  events: EventRow[];
+  rentals: TableRentalRow[];
+  lists: LedgerLists;
+}) {
   const { rows, setRows, highlight, adding, setAdding, create } = useLedgerRows("students", year, initial as Row[]);
-  const byId = new Map(events.map((event) => [event.id, event]));
+  // A student works either a photo booth event or a table rental (rentals have no hours).
+  const targets: Target[] = [
+    ...events.map((e) => ({ link: `e:${e.id}`, code: e.code ?? `#${e.id}`, date: e.date, client: e.client, hours: e.hours })),
+    ...rentals.map((t) => ({ link: `t:${t.id}`, code: t.code ?? `#${t.id}`, date: t.date, client: t.client, hours: null })),
+  ].sort((a, b) => (a.date ?? "9999").localeCompare(b.date ?? "9999") || a.code.localeCompare(b.code));
+  const byLink = new Map(targets.map((target) => [target.link, target]));
   // ='Študenti'!B/C/E  =IFERROR(VLOOKUP(A,Dogodki!$A$2:$L$100,n,FALSE),"")
-  const event = (row: Pick<StudentRow, "eventId">) => (row.eventId === null ? undefined : byId.get(row.eventId));
+  const event = (row: Pick<StudentRow, "link">) => (row.link === null ? undefined : byLink.get(row.link));
   const hours = (row: Row) => event(row)?.hours ?? 0;
-  const eventOptions = events.map((e) => ({ value: String(e.id), label: e.code ?? `#${e.id}` }));
+  const eventOptions = targets.map((t) => ({ value: t.link, label: t.code }));
 
   const paidCount = rows.filter((r) => r.paid).length;
   const hoursBy = new Map<string, number>();
@@ -27,7 +46,7 @@ export function StudentsWorkspace({ year, rows: initial, events, lists }: { year
   const students = [...hoursBy.entries()].sort((a, b) => b[1] - a[1]);
 
   const columns: GridColumn<Row>[] = [
-    { key: "eventId", label: "ID", type: "select", options: eventOptions, width: 116 },
+    { key: "link", label: "ID", type: "select", options: eventOptions, width: 116 },
     { key: "date", label: "Datum", type: "computed", width: 116, value: (row) => formatDate(event(row)?.date ?? null) },
     { key: "client", label: "Naročnik", type: "computed", width: 230, value: (row) => event(row)?.client ?? "" },
     { key: "student", label: "Študent", type: "select", options: lists.students, width: 140 },
@@ -52,13 +71,13 @@ export function StudentsWorkspace({ year, rows: initial, events, lists }: { year
 
   const fields: FieldSpec[] = [
     {
-      key: "eventId",
-      label: "Dogodek",
+      key: "link",
+      label: "Dogodek ali najem miz",
       kind: "select",
       required: true,
       wide: true,
-      placeholder: "Izberi dogodek",
-      options: [...events].reverse().map((e) => ({ value: String(e.id), label: `${e.code ?? `#${e.id}`} · ${e.client ?? "brez naročnika"}` })),
+      placeholder: "Izberi dogodek ali najem miz",
+      options: [...targets].reverse().map((t) => ({ value: t.link, label: `${t.code} · ${t.client ?? "brez naročnika"}` })),
     },
     { key: "student", label: "Študent", kind: "select", options: lists.students, required: true },
     { key: "amount", label: "Znesek €", kind: "money", placeholder: "0,00" },

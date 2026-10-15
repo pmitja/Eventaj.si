@@ -1,9 +1,11 @@
 // Shape of the business ledger that replaced the "Eventaj pregled" spreadsheet.
 // Each table maps to one sheet; field keys are what the admin UI edits, `col` is the DB column.
 
-export type FieldType = "text" | "number" | "date" | "bool";
+export type FieldType = "text" | "number" | "date" | "bool" | "link";
 
-type FieldDef = { col: string; type: FieldType };
+// A "link" points at a Dogodki or a Najem miz row. The UI edits one value ("e:<id>" / "t:<id>"),
+// the DB keeps one foreign key per target with at most one of them set.
+export type FieldDef = { col: string; type: Exclude<FieldType, "link"> } | { type: "link"; event: string; rental: string };
 
 export type EventRow = {
   id: number;
@@ -37,7 +39,7 @@ export type CostRow = {
 
 export type StudentRow = {
   id: number;
-  eventId: number | null; // A  ID (link to Dogodki)
+  link: string | null; // A  ID (link to Dogodki "e:<id>" or Najem miz "t:<id>")
   student: string | null; // D  Študent
   amount: number | null; // F  Znesek €
   payer: string | null; // G  Plačal
@@ -111,7 +113,7 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
     table: "ledger_students",
     order: "id",
     fields: {
-      eventId: { col: "event_id", type: "number" },
+      link: { type: "link", event: "event_id", rental: "rental_id" },
       student: { col: "student", type: "text" },
       amount: { col: "amount", type: "number" },
       payer: { col: "payer", type: "text" },

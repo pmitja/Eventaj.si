@@ -20,7 +20,8 @@ export default function SiteShell({ children }: SiteShellProps) {
   const [inquiryDefaults, setInquiryDefaults] = useState<Partial<InquiryData>>({});
   const pathname = usePathname();
   const isQrGallery = pathname.startsWith("/qr-galerija");
-  const isAdmin = pathname.startsWith("/admin");
+  // Admin and the customer's event-details form render without the marketing chrome.
+  const isBare = pathname.startsWith("/admin") || pathname.startsWith("/podatki/");
 
   useEffect(() => {
     const open = (event: Event) => {
@@ -43,7 +44,7 @@ export default function SiteShell({ children }: SiteShellProps) {
     };
   }, [menuOpen, inquiryOpen]);
 
-  if (isAdmin) {
+  if (isBare) {
     return <div className="eventaj-redesign min-h-screen bg-[var(--eventaj-paper)] text-[var(--eventaj-ink)]">{children}</div>;
   }
 

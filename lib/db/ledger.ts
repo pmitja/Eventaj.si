@@ -1,16 +1,20 @@
 import { computeOverview } from "@/lib/ledger/compute";
 import { defaultLists, LIST_KEYS, type LedgerLists, type ListKey } from "@/lib/ledger/lists";
-import { LEDGER_TABLES, type FieldType, type LedgerTableName, type LedgerYear } from "@/lib/ledger/schema";
+import { LEDGER_TABLES, type FieldDef, type FieldType, type LedgerTableName, type LedgerYear } from "@/lib/ledger/schema";
 import { sql } from "./index";
 
 export type LedgerValue = string | number | boolean | null;
 
 // Identifiers below come only from LEDGER_TABLES, never from user input.
 function selectList(name: LedgerTableName) {
-  const columns = Object.entries(LEDGER_TABLES[name].fields).map(([key, { col, type }]) => {
-    if (type === "date") return `to_char(${col}, 'YYYY-MM-DD') AS "${key}"`;
-    if (type === "number") return `${col}::float8 AS "${key}"`;
-    return `${col} AS "${key}"`;
+  const columns = Object.entries(LEDGER_TABLES[name].fields).map(([key, def]) => {
+    if (def.type === "link") {
+      const { event, rental } = def;
+      return `CASE WHEN ${event} IS NOT NULL THEN 'e:' || ${event} WHEN ${rental} IS NOT NULL THEN 't:' || ${rental} END AS "${key}"`;
+    }
+    if (def.type === "date") return `to_char(${def.col}, 'YYYY-MM-DD') AS "${key}"`;
+    if (def.type === "number") return `${def.col}::float8 AS "${key}"`;
+    return `${def.col} AS "${key}"`;
   });
   return ["id", ...columns].join(", ");
 }
@@ -76,7 +80,20 @@ export function parseValue(type: FieldType, raw: LedgerValue): LedgerValue {
     const [y, m, d] = parts;
     return `${y}-${m.padStart(2, "0")}-${d.padStart(2, "0")}`;
   }
+  if (type === "link" && !LINK.test(text)) throw new Error(`Neveljavna povezava: ${text}`);
   return text;
+}
+
+const LINK = /^([et]):(\d+)$/;
+
+// DB columns a parsed field value is written to.
+function assignments(def: FieldDef, value: LedgerValue): [string, LedgerValue][] {
+  if (def.type !== "link") return [[def.col, value]];
+  const match = typeof value === "string" ? LINK.exec(value) : null;
+  return [
+    [def.event, match?.[1] === "e" ? Number(match[2]) : null],
+    [def.rental, match?.[1] === "t" ? Number(match[2]) : null],
+  ];
 }
 
 export async function updateLedgerField(
@@ -89,9 +106,11 @@ export async function updateLedgerField(
   const def = LEDGER_TABLES[name].fields[field];
   if (!def) throw new Error(`Neznano polje ${field}`);
   const value = parseValue(def.type, raw);
+  const sets = assignments(def, value);
+  const n = sets.length;
   await sql().query(
-    `UPDATE ${LEDGER_TABLES[name].table} SET ${def.col} = $1, updated_by = $2, updated_at = now() WHERE id = $3`,
-    [value, userEmail, id],
+    `UPDATE ${LEDGER_TABLES[name].table} SET ${sets.map(([col], i) => `${col} = $${i + 1}`).join(", ")}, updated_by = $${n + 1}, updated_at = now() WHERE id = $${n + 2}`,
+    [...sets.map(([, v]) => v), userEmail, id],
   );
   return value;
 }
@@ -134,7 +153,7 @@ export async function insertLedgerRow(
     const def = LEDGER_TABLES[name].fields[key];
     if (!def) throw new Error(`Neznano polje ${key}`);
     const value = parseValue(def.type, raw);
-    if (value !== null) values[def.col] = value;
+    if (value !== null) for (const [col, v] of assignments(def, value)) values[col] = v;
   }
   if (name === "events" || name === "tables") {
     const rows = (await sql().query(`SELECT code FROM ${table} WHERE year = $1`, [year])) as { code: string | null }[];

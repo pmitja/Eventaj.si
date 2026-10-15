@@ -9,6 +9,9 @@ import { albumColorLabels, albumSizeLabels } from "@/content/eventaj/album-prici
 import type { InquiryWithOffers, OfferSummary } from "@/lib/db/inquiries";
 import { formatEur } from "@/lib/offers/pricing";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
+import { EventDetailsPanel } from "./event-details-panel";
+import { formatReceived } from "./format-received";
+import { InquiryStatusControl } from "./inquiry-status";
 import { StaggerItem } from "./motion";
 
 const typeLabels: Record<string, string> = {
@@ -17,22 +20,6 @@ const typeLabels: Record<string, string> = {
   both: "Photo Booth + 360° Booth",
   equipment: "Oprema za dogodke",
 };
-
-const receivedParts = new Intl.DateTimeFormat("en-GB", {
-  year: "numeric",
-  month: "numeric",
-  day: "numeric",
-  hour: "2-digit",
-  minute: "2-digit",
-  hourCycle: "h23",
-  timeZone: "Europe/Ljubljana",
-});
-
-// Built from numeric parts so server (Node ICU) and browser render identical text.
-function formatReceived(iso: string) {
-  const parts = Object.fromEntries(receivedParts.formatToParts(new Date(iso)).map(({ type, value }) => [type, value]));
-  return `${parts.day}. ${parts.month}. ${parts.year}, ${parts.hour}.${parts.minute}`;
-}
 
 function OfferRow({ offer }: { offer: OfferSummary }) {
   const [pending, startTransition] = useTransition();
@@ -188,6 +175,13 @@ export function InquiryCard({ inquiry, onGenerate }: Props) {
           </ul>
         </div>
       )}
+
+      <div className="flex flex-col gap-3.5 border-t border-adm-ink pt-3.5 text-sm">
+        <InquiryStatusControl id={inquiry.id} status={inquiry.status} />
+        {inquiry.status === "confirmed" && (data.type === "basic" || data.type === "both") && (
+          <EventDetailsPanel inquiryId={inquiry.id} request={inquiry.eventDetails} />
+        )}
+      </div>
     </StaggerItem>
   );
 }

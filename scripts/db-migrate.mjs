@@ -27,6 +27,18 @@ await sql`
 
 await sql`CREATE INDEX IF NOT EXISTS offers_inquiry_id_idx ON offers (inquiry_id)`;
 await sql`ALTER TABLE offers ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ`;
+await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`;
+
+// Podatki za dogodek, ki jih stranka izpolni po potrditvi (okvir, album, ura pričetka ...).
+await sql`
+  CREATE TABLE IF NOT EXISTS event_details (
+    inquiry_id INTEGER PRIMARY KEY REFERENCES inquiries(id) ON DELETE CASCADE,
+    token TEXT NOT NULL UNIQUE,
+    sent_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    submitted_at TIMESTAMPTZ,
+    data JSONB
+  )
+`;
 
 await sql`
   CREATE TABLE IF NOT EXISTS admin_users (
@@ -128,6 +140,8 @@ await sql`
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
   )
 `;
+
+await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS rental_id INTEGER REFERENCES ledger_table_rentals(id) ON DELETE SET NULL`;
 
 await sql`
   CREATE TABLE IF NOT EXISTS ledger_stock (

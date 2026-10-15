@@ -1,5 +1,9 @@
 import type { FormField } from "@/components/forms/booking-form";
+import { toEventDetailsRequest, type EventDetailsRequest } from "./event-details";
 import { sql } from "./index";
+
+export const inquiryStatuses = ["new", "confirmed", "declined"] as const;
+export type InquiryStatus = (typeof inquiryStatuses)[number];
 
 export type StoredFormData = Omit<FormField, "date"> & { date: string };
 
@@ -8,6 +12,7 @@ export type Inquiry = {
   createdAt: string;
   formData: StoredFormData;
   totalPrice: number | null;
+  status: InquiryStatus;
 };
 
 export type OfferSummary = {
@@ -18,13 +23,14 @@ export type OfferSummary = {
   sentAt: string | null;
 };
 
-export type InquiryWithOffers = Inquiry & { offers: OfferSummary[] };
+export type InquiryWithOffers = Inquiry & { offers: OfferSummary[]; eventDetails: EventDetailsRequest | null };
 
 type InquiryRow = {
   id: number;
   created_at: Date;
   form_data: StoredFormData;
   total_price: string | null;
+  status: InquiryStatus;
 };
 
 function toInquiry(row: InquiryRow): Inquiry {
@@ -33,6 +39,7 @@ function toInquiry(row: InquiryRow): Inquiry {
     createdAt: new Date(row.created_at).toISOString(),
     formData: row.form_data,
     totalPrice: row.total_price === null ? null : Number(row.total_price),
+    status: row.status ?? "new",
   };
 }
 
@@ -59,18 +66,28 @@ export async function listInquiries(): Promise<InquiryWithOffers[]> {
         ORDER BY o.created_at DESC
       ) FILTER (WHERE o.id IS NOT NULL),
       '[]'
-    ) AS offers
+    ) AS offers,
+    CASE WHEN e.token IS NULL THEN NULL ELSE
+      json_build_object('token', e.token, 'sent_at', e.sent_at, 'submitted_at', e.submitted_at, 'data', e.data)
+    END AS event_details
     FROM inquiries i
     LEFT JOIN offers o ON o.inquiry_id = i.id
-    GROUP BY i.id
+    LEFT JOIN event_details e ON e.inquiry_id = i.id
+    GROUP BY i.id, e.inquiry_id
     ORDER BY i.created_at DESC
     LIMIT 300
-  `) as (InquiryRow & { offers: OfferSummary[] })[];
+  `) as (InquiryRow & { offers: OfferSummary[]; event_details: Parameters<typeof toEventDetailsRequest>[0] | null })[];
 
   return rows.map((row) => ({
     ...toInquiry(row),
     offers: row.offers.map((offer) => ({ ...offer, total: Number(offer.total) })),
+    eventDetails: row.event_details ? toEventDetailsRequest(row.event_details) : null,
   }));
+}
+
+export async function setInquiryStatus(id: number, status: InquiryStatus) {
+  const rows = (await sql()`UPDATE inquiries SET status = ${status} WHERE id = ${id} RETURNING id`) as { id: number }[];
+  if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
 }
 
 export async function deleteInquiry(id: number) {
