@@ -1,50 +1,85 @@
 "use client";
 
-import { Users } from "lucide-react";
-import { useState, useTransition } from "react";
+import { Check } from "lucide-react";
+import { useOptimistic, useRef, useTransition } from "react";
 import { toast } from "sonner";
 import { changeInquiryCrew } from "../(app)/actions";
+import { cn } from "@/lib/utils";
 
-// Who works a confirmed event. Shown in the calendar; saved when the field loses focus.
-export function InquiryCrewControl({ id, crew }: { id: number; crew: string | null }) {
-  const [pending, startTransition] = useTransition();
-  const [saved, setSaved] = useState(crew ?? "");
-  const [draft, setDraft] = useState(crew ?? "");
+export type CrewLists = { executions: string[]; students: string[] };
 
-  function save() {
-    if (draft.trim() === saved) return setDraft(saved);
+type Crew = { execution: string | null; students: string[] };
+
+const chip = "rounded-full border px-3 py-1 transition-colors";
+const idle = "border-dashed border-adm-soft text-adm-muted hover:border-adm-ink hover:text-adm-ink";
+const active = "border-adm-ink bg-adm-ink text-adm-bg";
+
+// Who works a confirmed event, picked from the same lists as Izvedba dogodka and Študenti in
+// Poslovanje. Every click saves and updates the event's row in Dogodki.
+export function InquiryCrewControl({ id, crew, students, lists }: { id: number; crew: string | null; students: string[]; lists: CrewLists }) {
+  const [, startTransition] = useTransition();
+  const [current, setCurrent] = useOptimistic<Crew>({ execution: crew, students });
+  // Quick clicks each send the whole crew; running them in order keeps the last one in place.
+  const queue = useRef<Promise<unknown>>(Promise.resolve());
+
+  function save(next: Crew) {
     startTransition(async () => {
-      const result = await changeInquiryCrew(id, draft);
-      if (!result.ok) {
-        toast.error(result.error);
-        setDraft(saved);
-        return;
-      }
-      setSaved(result.value ?? "");
-      setDraft(result.value ?? "");
-      toast.success(result.value ? `Na dogodek gre: ${result.value}` : "Ekipa je odstranjena");
+      setCurrent(next);
+      const run = queue.current.then(() => changeInquiryCrew(id, next.execution, next.students));
+      queue.current = run.catch(() => undefined);
+      const result = await run;
+      if (!result.ok) toast.error(result.error);
     });
   }
 
+  const toggleStudent = (student: string) =>
+    save({
+      ...current,
+      students: current.students.includes(student) ? current.students.filter((s) => s !== student) : [...current.students, student],
+    });
+
+  // Keep names that were removed from the list since, so they can still be unticked.
+  const studentOptions = [...lists.students, ...current.students.filter((s) => !lists.students.includes(s))];
+
   return (
-    <label className="flex flex-wrap items-center gap-2.5">
-      <span className="flex items-center gap-1.5 text-adm-muted">
-        <Users className="size-4" />
-        Kdo gre:
-      </span>
-      <input
-        value={draft}
-        onChange={(event) => setDraft(event.target.value)}
-        onBlur={save}
-        onKeyDown={(event) => {
-          if (event.key === "Enter") event.currentTarget.blur();
-          if (event.key === "Escape") setDraft(saved);
-        }}
-        disabled={pending}
-        maxLength={200}
-        placeholder="npr. Jan, Klara"
-        className="min-w-0 flex-1 rounded-full border border-dashed border-adm-soft bg-transparent px-3 py-1 outline-none transition-colors placeholder:text-adm-faint hover:border-adm-ink focus:border-solid focus:border-adm-ink disabled:opacity-50 sm:max-w-[320px]"
-      />
-    </label>
+    <div className="flex flex-col gap-2.5">
+      <div className="flex flex-wrap items-center gap-2.5">
+        <span className="text-adm-muted">Kdo gre:</span>
+        <div role="radiogroup" aria-label="Izvedba dogodka" className="flex flex-wrap gap-1.5">
+          {lists.executions.map((option) => (
+            <button
+              key={option}
+              type="button"
+              role="radio"
+              aria-checked={current.execution === option}
+              onClick={() => save({ ...current, execution: current.execution === option ? null : option })}
+              className={cn(chip, current.execution === option ? active : idle)}
+            >
+              {option}
+            </button>
+          ))}
+        </div>
+      </div>
+      <div className="flex flex-wrap items-center gap-2.5">
+        <span className="text-adm-muted">Študenti:</span>
+        <div role="group" aria-label="Študenti" className="flex flex-wrap gap-1.5">
+          {studentOptions.map((student) => {
+            const on = current.students.includes(student);
+            return (
+              <button
+                key={student}
+                type="button"
+                aria-pressed={on}
+                onClick={() => toggleStudent(student)}
+                className={cn(chip, "flex items-center gap-1", on ? active : idle)}
+              >
+                {on && <Check className="size-3.5" />}
+                {student}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+    </div>
   );
 }

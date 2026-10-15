@@ -11,7 +11,7 @@ import { formatEur } from "@/lib/offers/pricing";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import { EventDetailsPanel } from "./event-details-panel";
 import { formatReceived } from "./format-received";
-import { InquiryCrewControl } from "./inquiry-crew";
+import { InquiryCrewControl, type CrewLists } from "./inquiry-crew";
 import { InquiryStatusControl } from "./inquiry-status";
 import { StaggerItem } from "./motion";
 
@@ -72,9 +72,9 @@ function OfferRow({ offer }: { offer: OfferSummary }) {
   );
 }
 
-type Props = { inquiry: InquiryWithOffers; onGenerate: () => void };
+type Props = { inquiry: InquiryWithOffers; onGenerate: () => void; crewLists: CrewLists };
 
-export function InquiryCard({ inquiry, onGenerate }: Props) {
+export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
   const data = inquiry.formData;
   const [deleting, startDelete] = useTransition();
 
@@ -180,7 +180,9 @@ export function InquiryCard({ inquiry, onGenerate }: Props) {
 
       <div className="flex flex-col gap-3.5 border-t border-adm-ink pt-3.5 text-sm">
         <InquiryStatusControl id={inquiry.id} status={inquiry.status} />
-        {inquiry.status === "confirmed" && <InquiryCrewControl id={inquiry.id} crew={inquiry.crew} />}
+        {inquiry.status === "confirmed" && (
+          <InquiryCrewControl id={inquiry.id} crew={inquiry.crew} students={inquiry.crewStudents} lists={crewLists} />
+        )}
         {inquiry.status === "confirmed" && (data.type === "basic" || data.type === "both") && (
           <EventDetailsPanel inquiryId={inquiry.id} request={inquiry.eventDetails} />
         )}

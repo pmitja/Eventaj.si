@@ -5,15 +5,16 @@ import { useEffect, useMemo, useState } from "react";
 import type { InquiryWithOffers } from "@/lib/db/inquiries";
 import { plural } from "./charts";
 import { groupByEventDate, matchesQuery } from "./inquiry-groups";
+import type { CrewLists } from "./inquiry-crew";
 import { InquiryMonthGroup } from "./inquiry-month-group";
 import { Reveal, Stagger } from "./motion";
 import { OfferDialog } from "./offer-dialog";
 
 const PAGE = 3;
 
-type Props = { inquiries: InquiryWithOffers[]; empty: string; viewLabel: string };
+type Props = { inquiries: InquiryWithOffers[]; empty: string; viewLabel: string; crewLists: CrewLists };
 
-export function InquiryList({ inquiries, empty, viewLabel }: Props) {
+export function InquiryList({ inquiries, empty, viewLabel, crewLists }: Props) {
   const [active, setActive] = useState<InquiryWithOffers | null>(null);
   const [query, setQuery] = useState("");
   const [shown, setShown] = useState(PAGE);
@@ -92,6 +93,7 @@ export function InquiryList({ inquiries, empty, viewLabel }: Props) {
               open={isOpen(group.key, group.muted)}
               onOpenChange={(open) => setToggled((current) => ({ ...current, [group.key]: open }))}
               onGenerate={setActive}
+              crewLists={crewLists}
             />
           ))}
         </Stagger>

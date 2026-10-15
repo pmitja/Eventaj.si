@@ -6,6 +6,8 @@ import EventDetailsRequestEmail from "@/emails/event-details-request";
 import { requireAdminAction } from "@/lib/admin-auth";
 import { ensureEventDetailsRequest, markEventDetailsEmailed } from "@/lib/db/event-details";
 import { deleteInquiry, getInquiry, inquiryStatuses, setInquiryCrew, setInquiryStatus, type InquiryStatus } from "@/lib/db/inquiries";
+import { getLists } from "@/lib/db/ledger";
+import { dropInquiryFromLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 
@@ -21,8 +23,11 @@ async function attempt<T>(run: () => Promise<T>): Promise<Result<T>> {
 
 export async function removeInquiry(id: number) {
   await requireAdminAction();
-  const result = await attempt(() => deleteInquiry(id));
-  if (result.ok) revalidatePath("/admin");
+  const result = await attempt(async () => {
+    await dropInquiryFromLedger(id);
+    await deleteInquiry(id);
+  });
+  if (result.ok) revalidatePath("/admin", "layout");
   return result;
 }
 
@@ -38,23 +43,24 @@ export async function changeInquiryStatus(id: number, status: InquiryStatus) {
   const result = await attempt(async () => {
     if (!inquiryStatuses.includes(status)) throw new Error("Neznan status");
     await setInquiryStatus(id, status);
+    await syncInquiryToLedger(id);
   });
-  if (result.ok) revalidatePath("/admin");
+  // Dogodki, Študenti, the calendar and the sidebar counts all change with it.
+  if (result.ok) revalidatePath("/admin", "layout");
   return result;
 }
 
-export async function changeInquiryCrew(id: number, crew: string) {
+export async function changeInquiryCrew(id: number, crew: string | null, students: string[]) {
   await requireAdminAction();
   const result = await attempt(async () => {
-    const value = crew.trim();
-    if (value.length > 200) throw new Error("Besedilo je predolgo");
-    await setInquiryCrew(id, value || null);
-    return value || null;
+    const lists = await getLists();
+    if (crew !== null && !lists.executions.includes(crew)) throw new Error("Neznana izvedba");
+    const unknown = students.find((student) => !lists.students.includes(student));
+    if (unknown) throw new Error(`Neznan študent: ${unknown}`);
+    await setInquiryCrew(id, crew, [...new Set(students)]);
+    await syncInquiryToLedger(id);
   });
-  if (result.ok) {
-    revalidatePath("/admin");
-    revalidatePath("/admin/koledar");
-  }
+  if (result.ok) revalidatePath("/admin", "layout");
   return result;
 }
 

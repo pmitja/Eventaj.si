@@ -28,8 +28,9 @@ await sql`
 await sql`CREATE INDEX IF NOT EXISTS offers_inquiry_id_idx ON offers (inquiry_id)`;
 await sql`ALTER TABLE offers ADD COLUMN IF NOT EXISTS sent_at TIMESTAMPTZ`;
 await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DEFAULT 'new'`;
-// Kdo gre na potrjen dogodek (prosto besedilo, npr. "Jan, Klara").
+// Kdo gre na potrjen dogodek: izvedba (kot "Izvedba dogodka" v Dogodkih) in študenti.
 await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS crew TEXT`;
+await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS crew_students JSONB NOT NULL DEFAULT '[]'::jsonb`;
 
 // Podatki za dogodek, ki jih stranka izpolni po potrditvi (okvir, album, ura pričetka ...).
 await sql`
@@ -144,6 +145,8 @@ await sql`
   )
 `;
 
+// Potrjeno povpraševanje ima svojo vrstico v Dogodkih.
+await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS inquiry_id INTEGER UNIQUE REFERENCES inquiries(id) ON DELETE SET NULL`;
 await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS rental_id INTEGER REFERENCES ledger_table_rentals(id) ON DELETE SET NULL`;
 
 await sql`

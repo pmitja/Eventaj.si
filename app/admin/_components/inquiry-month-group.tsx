@@ -6,6 +6,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import type { InquiryWithOffers } from "@/lib/db/inquiries";
 import { cn } from "@/lib/utils";
 import { InquiryCard } from "./inquiry-card";
+import type { CrewLists } from "./inquiry-crew";
 import type { InquiryGroup } from "./inquiry-groups";
 
 type Props = {
@@ -13,9 +14,10 @@ type Props = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onGenerate: (inquiry: InquiryWithOffers) => void;
+  crewLists: CrewLists;
 };
 
-export function InquiryMonthGroup({ group, open, onOpenChange, onGenerate }: Props) {
+export function InquiryMonthGroup({ group, open, onOpenChange, onGenerate, crewLists }: Props) {
   return (
     <Collapsible open={open} onOpenChange={onOpenChange} asChild>
       <section aria-label={group.label} className="flex flex-col">
@@ -34,7 +36,7 @@ export function InquiryMonthGroup({ group, open, onOpenChange, onGenerate }: Pro
         <CollapsibleContent className="overflow-hidden data-[state=closed]:animate-collapsible-up data-[state=open]:animate-collapsible-down">
           <div className="flex flex-col gap-5 pb-2 pt-4">
             {group.inquiries.map((inquiry) => (
-              <InquiryCard key={inquiry.id} inquiry={inquiry} onGenerate={() => onGenerate(inquiry)} />
+              <InquiryCard key={inquiry.id} inquiry={inquiry} onGenerate={() => onGenerate(inquiry)} crewLists={crewLists} />
             ))}
           </div>
         </CollapsibleContent>

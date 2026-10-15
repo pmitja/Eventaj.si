@@ -2,7 +2,7 @@ import Link from "next/link";
 import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
 import { cn } from "@/lib/utils";
-import { doneFacts, plannedFacts, whoText, type Entry } from "./calendar-entries";
+import { crewText, doneFacts, plannedFacts, whoText, type Entry } from "./calendar-entries";
 
 function dayLabel(date: string) {
   return `${Number(date.slice(8))}. ${Number(date.slice(5, 7))}.`;
@@ -56,8 +56,8 @@ export function MonthList({ entries }: { entries: Entry[] }) {
                     <span className="font-semibold">{entry.title}</span>
                     <span className="text-adm-muted"> · {entry.event.location || "lokacija ni znana"}</span>
                   </span>
-                  <span className={entry.event.crew ? "text-adm-muted" : "text-adm-faint"}>
-                    Kdo gre: {entry.event.crew || "ni določeno"}
+                  <span className={entry.event.crew || entry.event.crewStudents.length ? "text-adm-muted" : "text-adm-faint"}>
+                    Kdo gre: {crewText(entry.event.crew, entry.event.crewStudents) ?? "ni določeno"}
                   </span>
                 </span>
                 <span className="text-adm-muted sm:max-w-[300px] sm:text-right">Potrjeno · {plannedFacts(entry.event).join(" · ")}</span>

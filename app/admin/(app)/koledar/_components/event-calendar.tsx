@@ -9,7 +9,7 @@ import { LegendDot, Panel } from "@/app/admin/_components/panel";
 import type { CalendarEvent } from "@/lib/db/inquiries";
 import type { DoneEvent } from "@/lib/db/ledger";
 import { cn } from "@/lib/utils";
-import { plannedFacts, toEntries, whoText, type Entry } from "./calendar-entries";
+import { crewText, plannedFacts, toEntries, whoText, type Entry } from "./calendar-entries";
 import { MonthList, MonthSummary } from "./month-list";
 
 const WEEKDAYS = ["Po", "To", "Sr", "Če", "Pe", "So", "Ne"];
@@ -25,11 +25,11 @@ function shift(month: string, by: number) {
 
 function chipTitle(entry: Entry) {
   if (entry.kind === "planned") {
-    const { startTime, location, crew } = entry.event;
+    const { startTime, location, crew, crewStudents } = entry.event;
     return [
       `Potrjeno: ${entry.title}`,
       [startTime, location].filter(Boolean).join(" · "),
-      `Kdo gre: ${crew || "ni določeno"}`,
+      `Kdo gre: ${crewText(crew, crewStudents) ?? "ni določeno"}`,
       plannedFacts(entry.event).join(" · "),
     ].filter(Boolean).join("\n");
   }
@@ -37,7 +37,7 @@ function chipTitle(entry: Entry) {
 }
 
 export function EventCalendar({ planned, done, today }: Props) {
-  const entries = useMemo(() => toEntries(planned, done), [planned, done]);
+  const entries = useMemo(() => toEntries(planned, done, today), [planned, done, today]);
   const pathname = usePathname();
   const param = useSearchParams().get("mesec");
 

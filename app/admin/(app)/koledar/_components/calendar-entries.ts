@@ -14,9 +14,13 @@ export const typeLabels: Record<string, string> = {
   equipment: "Oprema",
 };
 
-export function toEntries(planned: CalendarEvent[], done: DoneEvent[]): Entry[] {
+// A confirmed inquiry also has its row in Dogodki: until the day it shows as planned (start time,
+// location), afterwards as done (the ledger row then carries the real hours and money).
+export function toEntries(planned: CalendarEvent[], done: DoneEvent[], today: string): Entry[] {
+  const plannedIds = new Set(planned.map((event) => event.id));
+  const doneInquiries = new Set(done.flatMap((event) => (event.inquiryId === null ? [] : [event.inquiryId])));
   return [
-    ...done.map((event): Entry => ({
+    ...done.filter((event) => !(event.inquiryId !== null && plannedIds.has(event.inquiryId) && event.date >= today)).map((event): Entry => ({
       kind: "done",
       key: `d${event.id}`,
       date: event.date,
@@ -24,7 +28,7 @@ export function toEntries(planned: CalendarEvent[], done: DoneEvent[]): Entry[] 
       href: `/admin/poslovanje/${event.year}/dogodki`,
       event,
     })),
-    ...planned.map((event): Entry => ({
+    ...planned.filter((event) => !(doneInquiries.has(event.id) && event.date < today)).map((event): Entry => ({
       kind: "planned",
       key: `p${event.id}`,
       date: event.date,
@@ -35,11 +39,18 @@ export function toEntries(planned: CalendarEvent[], done: DoneEvent[]): Entry[] 
   ].sort((a, b) => a.date.localeCompare(b.date));
 }
 
+// "Jan", "Študenti: Klara, Luka" or "Jan, študenti: Klara"; null when nobody is set.
+export function crewText(execution: string | null, students: string[]) {
+  if (!execution && students.length === 0) return null;
+  const names = students.join(", ");
+  if (!names) return execution;
+  if (!execution || execution === "Študenti") return `Študenti: ${names}`;
+  return `${execution}, študenti: ${names}`;
+}
+
 // Who worked the event: the execution column, the students linked to it and any initial help.
 export function whoText(event: DoneEvent) {
-  const execution = event.execution || "izvedba ni vpisana";
-  const students = event.students.join(", ");
-  let text = !students ? execution : execution === "Študenti" ? `Študenti: ${students}` : `${execution}, študenti: ${students}`;
+  let text = crewText(event.execution, event.students) ?? "izvedba ni vpisana";
   if (event.initialHelp && event.initialHelp !== "Brez") text += ` · začetna pomoč: ${event.initialHelp}`;
   return text;
 }

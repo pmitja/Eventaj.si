@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { Resend } from "resend";
 import { saveEventDetails } from "@/lib/db/event-details";
 import { getInquiry } from "@/lib/db/inquiries";
+import { syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { albumText, eventDetailsSchema, eventTypeText, type EventDetails } from "@/lib/event-details/schema";
 
 type Result = { ok: true } | { ok: false; error: string };
@@ -32,7 +33,13 @@ export async function submitEventDetails(token: string, input: unknown): Promise
     console.error("Error saving event details:", error);
     return { ok: false, error: "Podatkov ni bilo mogoče shraniti. Poskusite znova ali nam pišite na info@eventaj.si." };
   }
-  revalidatePath("/admin");
+  try {
+    // Hours and album from the form go straight into Dogodki.
+    await syncInquiryToLedger(inquiryId);
+  } catch (error) {
+    console.error("Error syncing event details to ledger:", error);
+  }
+  revalidatePath("/admin", "layout");
 
   try {
     const inquiry = await getInquiry(inquiryId);

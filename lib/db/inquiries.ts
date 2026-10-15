@@ -16,7 +16,9 @@ export type Inquiry = {
   formData: StoredFormData;
   totalPrice: number | null;
   status: InquiryStatus;
+  // Who works the event: execution as in Dogodki ("Jan", "Študenti" …) plus the students going.
   crew: string | null;
+  crewStudents: string[];
 };
 
 export type OfferSummary = {
@@ -36,6 +38,7 @@ type InquiryRow = {
   total_price: string | null;
   status: InquiryStatus;
   crew: string | null;
+  crew_students: string[] | null;
 };
 
 function toInquiry(row: InquiryRow): Inquiry {
@@ -46,6 +49,7 @@ function toInquiry(row: InquiryRow): Inquiry {
     totalPrice: row.total_price === null ? null : Number(row.total_price),
     status: row.status ?? "new",
     crew: row.crew,
+    crewStudents: row.crew_students ?? [],
   };
 }
 
@@ -96,8 +100,10 @@ export async function setInquiryStatus(id: number, status: InquiryStatus) {
   if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
 }
 
-export async function setInquiryCrew(id: number, crew: string | null) {
-  const rows = (await sql()`UPDATE inquiries SET crew = ${crew} WHERE id = ${id} RETURNING id`) as { id: number }[];
+export async function setInquiryCrew(id: number, crew: string | null, students: string[]) {
+  const rows = (await sql()`
+    UPDATE inquiries SET crew = ${crew}, crew_students = ${JSON.stringify(students)}::jsonb WHERE id = ${id} RETURNING id
+  `) as { id: number }[];
   if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
 }
 
@@ -120,6 +126,7 @@ export type CalendarEvent = {
   type: StoredFormData["type"];
   startTime: string | null;
   crew: string | null;
+  crewStudents: string[];
   // "Ne", an album name, or null when nobody has said yet.
   album: string | null;
   detailsSubmitted: boolean;
@@ -135,11 +142,11 @@ function calendarAlbum(form: StoredFormData, details: EventDetails | null) {
 
 export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
   const rows = (await sql()`
-    SELECT i.id, i.form_data, i.crew, e.data AS details
+    SELECT i.id, i.form_data, i.crew, i.crew_students, e.data AS details
     FROM inquiries i
     LEFT JOIN event_details e ON e.inquiry_id = i.id
     WHERE i.status = 'confirmed'
-  `) as { id: number; form_data: StoredFormData; crew: string | null; details: EventDetails | null }[];
+  `) as { id: number; form_data: StoredFormData; crew: string | null; crew_students: string[]; details: EventDetails | null }[];
 
   return rows.flatMap((row) => {
     const date = toDateKey(row.form_data.date);
@@ -155,6 +162,7 @@ export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
       type: row.form_data.type,
       startTime: details?.startTime || null,
       crew: row.crew,
+      crewStudents: row.crew_students,
       album: calendarAlbum(row.form_data, details),
       detailsSubmitted: Boolean(details),
     }];
