@@ -28,7 +28,7 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
     albumColor: hasAlbum ? data.albumColor ?? "" : "",
     qrGallery: Boolean(data.qrGallery),
     qrGalleryPromo: false,
-    tableCount: tables.count,
+    tableCount: Math.min(tables.count, tableRental.maxTables),
     tableclothColor: tables.color,
     pickup: service === "tables" && (tables.count < tableRental.pickupBelow || data.fulfillment === "Osebni prevzem"),
     customItems: [],

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { tableRental } from "./services";
 
 export const offerOptionsSchema = z.object({
   service: z.enum(["photo", "360", "combo", "tables"]),
@@ -9,7 +10,7 @@ export const offerOptionsSchema = z.object({
   qrGallery: z.boolean(),
   qrGalleryPromo: z.boolean().default(false),
   // Standing bar tables only.
-  tableCount: z.number().int().min(1).max(50).default(1),
+  tableCount: z.number().int().min(1).max(tableRental.maxTables).default(1),
   tableclothColor: z.enum(["", "white", "black", "mixed"]).default(""),
   pickup: z.boolean().default(false),
   customItems: z

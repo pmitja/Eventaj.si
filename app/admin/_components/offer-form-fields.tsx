@@ -63,9 +63,9 @@ function TableFields({ options, update }: Props) {
         <input
           type="number"
           min={1}
-          max={50}
+          max={tableRental.maxTables}
           value={options.tableCount}
-          onChange={(event) => update("tableCount", Math.max(1, Number(event.target.value) || 1))}
+          onChange={(event) => update("tableCount", Math.min(tableRental.maxTables, Math.max(1, Number(event.target.value) || 1)))}
           className={inputClass}
         />
       </Field>
