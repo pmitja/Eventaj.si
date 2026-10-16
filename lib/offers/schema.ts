@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const offerOptionsSchema = z.object({
-  service: z.enum(["photo", "360"]),
+  service: z.enum(["photo", "360", "combo"]),
   hours: z.enum(["2", "3", "4"]),
   extraHours: z.number().int().min(0).max(12),
   albumSize: z.enum(["", "small", "large"]),
@@ -37,6 +37,8 @@ export const offerContentSchema = z.object({
   uvod: z.string(),
   razpolozljivost: z.string(),
   opis_storitve: z.array(z.string()),
+  // Combo only: opis_storitve covers the Photo Booth, this the 360° Booth.
+  opis_storitve_360: z.array(z.string()),
   tematska_prilagoditev: z.array(z.string()),
   tehnicni_pogoji: z.array(z.string()),
   placilni_pogoji: z.array(z.string()),

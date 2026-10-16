@@ -14,7 +14,11 @@ export function OfferDocument({ offer }: { offer: Offer }) {
   const event = content.dogodek;
   const validUntil = formatNumericSlovenianDate(options.validUntil);
   const theme = content.tema.trim();
-  const description = content.opis_storitve.length > 0 ? content.opis_storitve : pkg.included;
+  const descriptions = (pkg.parts ?? [pkg]).map((part, index) => {
+    // Offers created before combo support have no opis_storitve_360.
+    const written = index === 0 ? content.opis_storitve : content.opis_storitve_360 ?? [];
+    return { name: part.name, items: written.length > 0 ? written : part.included };
+  });
 
   let section = 0;
   const numbered = (title: string) => `${++section}. ${title}`;
@@ -50,9 +54,11 @@ export function OfferDocument({ offer }: { offer: Offer }) {
           <RichText>{content.razpolozljivost}</RichText>
         </Section>
 
-        <Section title={numbered(`Opis storitve – ${pkg.name}`)}>
-          <Bullets items={description} />
-        </Section>
+        {descriptions.map((description) => (
+          <Section key={description.name} title={numbered(`Opis storitve – ${description.name}`)}>
+            <Bullets items={description.items} />
+          </Section>
+        ))}
 
         {content.tematska_prilagoditev.length > 0 && (
           <Section title={numbered(theme ? `Tematska prilagoditev – ${theme}` : "Tematska prilagoditev")}>

@@ -1,9 +1,16 @@
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 
-export type OfferService = "photo" | "360";
+export type OfferService = "photo" | "360" | "combo";
 export type PackageHours = "2" | "3" | "4";
 
-export type ServicePackage = { name: string; shortName: string; price: number; included: string[] };
+export type ServicePackage = {
+  name: string;
+  shortName: string;
+  price: number;
+  included: string[];
+  /** Combo packages are priced and described as their booth packages side by side. */
+  parts?: ServicePackage[];
+};
 
 export type ServiceConfig = {
   label: string;
@@ -75,6 +82,29 @@ function booth360Package(hours: PackageHours, shortName: string, price: number):
   };
 }
 
+const photoPackages = {
+  "2": photoPackage("2", "Basic", 279),
+  "3": photoPackage("3", "Standard", 329),
+  "4": photoPackage("4", "Premium", 379),
+} satisfies Record<PackageHours, ServicePackage>;
+
+const booth360Packages = {
+  "2": booth360Package("2", "Mini", 299),
+  "3": booth360Package("3", "Osnovni", 349),
+  "4": booth360Package("4", "Maxi", 399),
+} satisfies Record<PackageHours, ServicePackage>;
+
+function comboPackage(hours: PackageHours): ServicePackage {
+  const parts = [photoPackages[hours], booth360Packages[hours]];
+  return {
+    name: `Combo paket Photo Booth + 360° Booth (${hours} ${hours === "2" ? "uri" : "ure"})`,
+    shortName: parts.map((part) => part.shortName).join(" + "),
+    price: parts.reduce((sum, part) => sum + part.price, 0),
+    included: parts.flatMap((part) => part.included),
+    parts,
+  };
+}
+
 export const services: Record<OfferService, ServiceConfig> = {
   photo: {
     label: "Photo Booth",
@@ -84,11 +114,7 @@ export const services: Record<OfferService, ServiceConfig> = {
     hasAlbum: true,
     staffItem: "Vodenje fotografiranja in tehnik na mestu",
     presets: [{ description: "Tematski napisi in rekviziti", amount: 20 }],
-    packages: {
-      "2": photoPackage("2", "Basic", 279),
-      "3": photoPackage("3", "Standard", 329),
-      "4": photoPackage("4", "Premium", 379),
-    },
+    packages: photoPackages,
   },
   "360": {
     label: "360° Booth",
@@ -98,16 +124,27 @@ export const services: Record<OfferService, ServiceConfig> = {
     hasAlbum: false,
     staffItem: "Vodenje snemanja in tehnik na mestu",
     presets: [{ description: "Personalizirane animacije za 360° Booth", amount: 59 }],
-    packages: {
-      "2": booth360Package("2", "Mini", 299),
-      "3": booth360Package("3", "Osnovni", 349),
-      "4": booth360Package("4", "Maxi", 399),
-    },
+    packages: booth360Packages,
+  },
+  combo: {
+    label: "Photo Booth + 360° Booth",
+    subtitle: "Najem Photo Bootha in 360° Bootha",
+    extraHourPrice: 50 + 80,
+    // One QR gallery collects photos and 360° videos, so it is priced as the 360° one.
+    qrGalleryPrice,
+    hasAlbum: true,
+    staffItem: "Vodenje fotografiranja in snemanja ter tehnika na mestu",
+    presets: [
+      { description: "Tematski napisi in rekviziti", amount: 20 },
+      { description: "Personalizirane animacije za 360° Booth", amount: 59 },
+    ],
+    packages: { "2": comboPackage("2"), "3": comboPackage("3"), "4": comboPackage("4") },
   },
 };
 
 export function serviceForInquiryType(type: string): OfferService | null {
   if (type === "basic") return "photo";
   if (type === "360") return "360";
+  if (type === "both") return "combo";
   return null;
 }

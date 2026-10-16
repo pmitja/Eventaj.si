@@ -31,14 +31,33 @@ const serviceText = {
   "– *vključeno v paket*"). Če so med POSTAVKAMI personalizirane animacije ali druge doplačljive postavke, jih navedi
   z "– **doplačilo X €**" in zneskom iz POSTAVK.`,
   },
+  combo: {
+    noun: "foto stojnice (photobooth) in 360° Bootha (360° video stojnice) v kombinaciji",
+    rental: "najem Photo Bootha",
+    staff: "vodenje fotografiranja in tehnik na mestu",
+    media: "fotografij in videoposnetkov",
+    cenik: `- Kombinacija obsega oba paketa z enakim trajanjem; cena je vsota obeh paketov (brez popusta, razen če je popust med POSTAVKAMI).
+- Spominski album (40 listov, za Photo Booth): pri Basic paketu doplačilo 20,00 €, veliki album 30,00 €. Pri Standard in Premium paketu je album vključen, nadgradnja na veliki album 15,00 €.
+- QR galerija za goste (ena galerija za fotografije in videoposnetke): ${formatEur(services.combo.qrGalleryPrice)}
+- Tematski napisi in rekviziti na lesenih tablicah: 20,00 €
+- Personalizirane animacije za 360° Booth, izdelane po meri: 59,00 € (samo če so med POSTAVKAMI)
+- Grafični okvir fotografij in digitalni okvir videoposnetkov po meri: vključeno
+- Na dogodku sta prisotna dva člana ekipe Eventaj.si, eden pri vsaki stojnici.`,
+    theme: `Alineje za **grafični okvir fotografij in videoposnetkov**, **ozadje Photo Bootha**, **glasbo in animacije
+  360° Bootha** ter **tematske napise in rekvizite**; pri vsaki navedi "– *vključeno v paket*" ali "– **doplačilo X €**"
+  z zneskom iz POSTAVK. Tematski napisi in rekviziti so doplačilo samo, če so med POSTAVKAMI; sicer jih navedi kot
+  možnost doplačila (20,00 €).`,
+  },
 } satisfies Record<OfferService, Record<string, string>>;
 
 export function buildOfferSystemPrompt(serviceKey: OfferService) {
   const service = services[serviceKey];
   const text = serviceText[serviceKey];
   const cenik = Object.values(service.packages)
+    .flatMap((pkg) => pkg.parts ?? [pkg])
     .map((pkg) => `- ${pkg.name}: ${formatEur(pkg.price)}\n  Vključeno: ${pkg.included.join("; ")}.`)
     .join("\n");
+  const isCombo = serviceKey === "combo";
 
   return `# VLOGA
 Si pomočnik za pripravo uradnih ponudb podjetja Eventaj.si (Mitja Pak s.p., Mipa, Slomškova ulica 1, 2230 Lenart).
@@ -78,12 +97,17 @@ Ti pripraviš besedilne dele po shemi.
 - opis_storitve: alineje na podlagi seznama "Vključeno" za izbrani paket, prilagojene dogodku. Prva alineja: ${text.rental}
   za X ur s časom dogodka. Pri grafičnem okvirju omeni logotip, imena ali naziv dogodka, kar ustreza naročniku.
   Pri osebju zapiši **${text.staff}**. Ne dodajaj storitev, ki niso v paketu ali med
-  POSTAVKAMI. Če je med POSTAVKAMI album ali QR galerija, ju vključi.
+  POSTAVKAMI. Če je med POSTAVKAMI album ali QR galerija, ju vključi.${isCombo ? `
+  Pri kombinaciji opis_storitve opisuje SAMO Photo Booth paket (album sodi sem), opis_storitve_360 pa SAMO 360° Booth
+  paket (prva alineja: najem 360° Bootha za X ur s časom dogodka; pri osebju **vodenje snemanja in tehnik na mestu**).
+  QR galerijo omeni v obeh opisih kot skupno galerijo fotografij in videoposnetkov.` : ""}
+- opis_storitve_360: ${isCombo ? "glej opis_storitve; enaka pravila oblike." : "prazen seznam."}
 - tematska_prilagoditev: samo če ima dogodek tematiko, sicer prazen seznam. ${text.theme}
 - POSTAVKE lahko vsebujejo tudi postavke, ki jih je ponudnik dodal ročno. Upoštevaj jih v opisu storitve ali tematski
   prilagoditvi, kjer je smiselno, in jim ne spreminjaj zneskov.
-- tehnicni_pogoji: notranji prostor z ravno površino, velik približno 3 × 3 m; ena standardna vtičnica (230 V) v bližini
-  mesta postavitve; dostop do prostora za dostavo opreme ob uri prihoda. Če naročnik želi okvir z logotipom (podjetje,
+- tehnicni_pogoji: ${isCombo
+    ? "notranji prostor z ravno površino za obe stojnici, skupaj približno 6 × 3 m (vsaka stojnica okoli 3 × 3 m); dve standardni vtičnici (230 V) v bližini mest postavitve;"
+    : "notranji prostor z ravno površino, velik približno 3 × 3 m; ena standardna vtičnica (230 V) v bližini\n  mesta postavitve;"} dostop do prostora za dostavo opreme ob uri prihoda. Če naročnik želi okvir z logotipom (podjetje,
   zavod, šola ipd.), dodaj: logotip v vektorski obliki (SVG, PDF ali AI) ali kot PNG v visoki ločljivosti, najpozneje
   5 dni pred dogodkom.
 - placilni_pogoji: brez alinej o veljavnosti in DDV (oboje doda sistem). Če je naročnik javni zavod (šola, vrtec, občina, zavod,

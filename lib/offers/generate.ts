@@ -6,7 +6,7 @@ import { getOffer, insertOffer, nextOfferNumber } from "@/lib/db/offers";
 import { formatNumericSlovenianDate, getSlovenianDateString } from "@/lib/slovenian-date";
 import { buildOfferItems, sumItems } from "./pricing";
 import { buildOfferSystemPrompt, buildOfferUserPrompt } from "./prompt";
-import { serviceForInquiryType, services } from "./services";
+import { serviceForInquiryType, services, type ServicePackage } from "./services";
 import { offerContentSchema, type OfferOptions } from "./schema";
 
 const MODEL = "claude-opus-5-5";
@@ -36,6 +36,10 @@ function describeInquiry(formData: StoredFormData, createdAt: string, serviceLab
     .join("\n");
 }
 
+function describePackage(pkg: ServicePackage) {
+  return pkg.parts ? `${pkg.name}: ${pkg.parts.map((part) => part.name).join(" + ")}` : pkg.name;
+}
+
 function addDays(dateString: string, days: number) {
   const [year, month, day] = dateString.split("-").map(Number);
   const date = new Date(Date.UTC(year, month - 1, day + days));
@@ -49,7 +53,7 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
   if (!inquiry) throw new OfferGenerationError("Povpraševanje ne obstaja");
   const service = serviceForInquiryType(inquiry.formData.type);
   if (!service) {
-    throw new OfferGenerationError("Ponudbo je mogoče generirati samo za Photo Booth in 360° Booth");
+    throw new OfferGenerationError("Ponudbo je mogoče generirati samo za Photo Booth, 360° Booth ali kombinacijo obeh");
   }
   options = { ...options, service, ...(services[service].hasAlbum ? {} : { albumSize: "", albumColor: "" }) };
 
@@ -80,7 +84,7 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
           validityDays: options.validityDays,
           validUntil: formatNumericSlovenianDate(validUntil),
           items: draftItems,
-          packageName: services[service].packages[options.hours].name,
+          packageName: describePackage(services[service].packages[options.hours]),
           instructions: options.instructions,
         }),
       },

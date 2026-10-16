@@ -38,11 +38,11 @@ export type ItemLabels = {
 export function buildOfferItems(options: PricingOptions, labels: ItemLabels = {}): OfferItem[] {
   const service = services[options.service];
   const pkg = service.packages[options.hours];
-  const items: OfferItem[] = [{ description: pkg.name, amount: pkg.price }];
+  const items: OfferItem[] = (pkg.parts ?? [pkg]).map((part) => ({ description: part.name, amount: part.price }));
 
   if (options.extraHours > 0) {
     items.push({
-      description: `Podaljšanje najema (${options.extraHours} × ${eur(service.extraHourPrice)} na dodatno uro)`,
+      description: `Podaljšanje najema${pkg.parts ? " obeh stojnic" : ""} (${options.extraHours} × ${eur(service.extraHourPrice)} na dodatno uro)`,
       amount: options.extraHours * service.extraHourPrice,
     });
   }
