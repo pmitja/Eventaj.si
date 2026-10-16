@@ -148,6 +148,8 @@ await sql`
 // Potrjeno povpraševanje ima svojo vrstico v Dogodkih.
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS inquiry_id INTEGER UNIQUE REFERENCES inquiries(id) ON DELETE SET NULL`;
 await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS rental_id INTEGER REFERENCES ledger_table_rentals(id) ON DELETE SET NULL`;
+// Plačilo študenta se samodejno zapiše v Stroške; to je povezava na tisti strošek.
+await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS cost_id INTEGER REFERENCES ledger_costs(id) ON DELETE SET NULL`;
 
 await sql`
   CREATE TABLE IF NOT EXISTS ledger_stock (

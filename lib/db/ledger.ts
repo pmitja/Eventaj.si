@@ -2,6 +2,7 @@ import { computeOverview } from "@/lib/ledger/compute";
 import { defaultLists, LIST_KEYS, type LedgerLists, type ListKey } from "@/lib/ledger/lists";
 import { LEDGER_TABLES, type FieldDef, type FieldType, type LedgerTableName, type LedgerYear } from "@/lib/ledger/schema";
 import { sql } from "./index";
+import { dropStudentCost, studentPayState, syncStudentCost } from "./student-costs";
 
 export type LedgerValue = string | number | boolean | null;
 
@@ -108,10 +109,12 @@ export async function updateLedgerField(
   const value = parseValue(def.type, raw);
   const sets = assignments(def, value);
   const n = sets.length;
+  const before = name === "students" ? await studentPayState(id) : null;
   await sql().query(
     `UPDATE ${LEDGER_TABLES[name].table} SET ${sets.map(([col], i) => `${col} = $${i + 1}`).join(", ")}, updated_by = $${n + 1}, updated_at = now() WHERE id = $${n + 2}`,
     [...sets.map(([, v]) => v), userEmail, id],
   );
+  if (name === "students") await syncStudentCost(id, before, userEmail);
   return value;
 }
 
@@ -170,6 +173,7 @@ export async function insertLedgerRow(
     `INSERT INTO ${table} (${columns.join(", ")}) VALUES (${columns.map((_, i) => `$${i + 1}`).join(", ")}) RETURNING id`,
     Object.values(values),
   )) as { id: number }[];
+  if (name === "students") await syncStudentCost(inserted[0].id, null, userEmail);
   const rows = (await sql().query(`SELECT ${selectList(name)} FROM ${table} WHERE id = $1`, [inserted[0].id])) as Record<
     string,
     LedgerValue
@@ -178,6 +182,7 @@ export async function insertLedgerRow(
 }
 
 export async function deleteLedgerRow(name: LedgerTableName, id: number) {
+  if (name === "students") await dropStudentCost(id);
   await sql().query(`DELETE FROM ${LEDGER_TABLES[name].table} WHERE id = $1`, [id]);
 }
 

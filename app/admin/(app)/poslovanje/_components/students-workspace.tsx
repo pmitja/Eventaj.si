@@ -64,7 +64,7 @@ export function StudentsWorkspace({
     { key: "amount", label: "Znesek €", type: "money", width: 110 },
     { key: "payer", label: "Plačal", type: "select", options: lists.payers, width: 140 },
     { key: "pair", label: "Par plačnika", type: "computed", width: 140, value: (row) => payerPair(row.payer) },
-    { key: "paid", label: "Plačano?", type: "bool", width: 96 },
+    { key: "paid", label: "Plačano?", type: "bool", width: 96, hint: "DA z zneskom samodejno zapiše plačilo v Stroške" },
     { key: "refund", label: "Povračilo paru €", type: "computed", numeric: true, strong: true, width: 140, value: studentPairRefund },
     { key: "note", label: "Opomba", type: "text", width: 260 },
   ];
