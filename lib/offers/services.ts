@@ -1,6 +1,8 @@
+import { standingTable } from "@/content/eventaj/equipment";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 
-export type OfferService = "photo" | "360" | "combo";
+export type BoothService = "photo" | "360" | "combo";
+export type OfferService = BoothService | "tables";
 export type PackageHours = "2" | "3" | "4";
 
 export type ServicePackage = {
@@ -105,7 +107,7 @@ function comboPackage(hours: PackageHours, price: number): ServicePackage {
   };
 }
 
-export const services: Record<OfferService, ServiceConfig> = {
+export const services: Record<BoothService, ServiceConfig> = {
   photo: {
     label: "Photo Booth",
     subtitle: "Najem foto stojnice (photobooth)",
@@ -142,9 +144,44 @@ export const services: Record<OfferService, ServiceConfig> = {
   },
 };
 
-export function serviceForInquiryType(type: string): OfferService | null {
-  if (type === "basic") return "photo";
-  if (type === "360") return "360";
-  if (type === "both") return "combo";
+export type TableclothColor = "" | "white" | "black" | "mixed";
+
+export const tableclothLabels: Record<Exclude<TableclothColor, "">, string> = {
+  white: "beli prti",
+  black: "črni prti",
+  mixed: "kombinacija belih in črnih prtov",
+};
+
+export const tableRental = {
+  label: "Stoječe barske mize",
+  subtitle: "Najem stoječih barskih miz",
+  name: "Najem stoječih barskih miz",
+  unitPrice: standingTable.price,
+  maxTables: standingTable.quantity?.max ?? 10,
+  pickupBelow: standingTable.pickupBelowQuantity ?? 0,
+  included: [
+    "najem stoječe barske mize za en dan",
+    "bel ali črn prt po izbiri, ki je že vključen v ceno",
+    "možnost kombiniranja belih in črnih prtov",
+  ],
+};
+
+export function isBoothService(service: OfferService): service is BoothService {
+  return service !== "tables";
+}
+
+export function serviceForInquiry(data: { type: string; equipmentSummary?: string }): OfferService | null {
+  if (data.type === "basic") return "photo";
+  if (data.type === "360") return "360";
+  if (data.type === "both") return "combo";
+  if (data.type === "equipment" && data.equipmentSummary?.includes(standingTable.name)) return "tables";
   return null;
+}
+
+/** Reads "Stoječa barska miza: 6, Črn prt" from the inquiry's equipment summary. */
+export function tableSelectionFromInquiry(equipmentSummary = "") {
+  const line = equipmentSummary.split("\n").find((entry) => entry.startsWith(`${standingTable.name}:`)) ?? "";
+  const count = Number(line.match(/:\s*(\d+)/)?.[1]) || 1;
+  const color: TableclothColor = /bel/i.test(line) && /črn/i.test(line) ? "mixed" : /bel/i.test(line) ? "white" : /črn/i.test(line) ? "black" : "";
+  return { count, color };
 }

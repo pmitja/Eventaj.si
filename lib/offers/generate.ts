@@ -6,7 +6,7 @@ import { getOffer, insertOffer, nextOfferNumber } from "@/lib/db/offers";
 import { formatNumericSlovenianDate, getSlovenianDateString } from "@/lib/slovenian-date";
 import { buildOfferItems, sumItems } from "./pricing";
 import { buildOfferSystemPrompt, buildOfferUserPrompt } from "./prompt";
-import { serviceForInquiryType, services, type ServicePackage } from "./services";
+import { serviceForInquiry, services, tableRental, type OfferService, type ServicePackage } from "./services";
 import { offerContentSchema, type OfferOptions } from "./schema";
 
 const MODEL = "claude-opus-5-5";
@@ -23,17 +23,23 @@ function describeInquiry(formData: StoredFormData, createdAt: string, serviceLab
     `E-pošta: ${formData.email}`,
     `Telefon: ${formData.phone}`,
     `Storitev: ${serviceLabel}`,
-    `Trajanje (izbrano v obrazcu): ${formData.hours} h`,
+    formData.type === "equipment" ? `Trajanje: ${formData.hours}` : `Trajanje (izbrano v obrazcu): ${formData.hours} h`,
     formData.eventType ? `Vrsta dogodka: ${formData.eventType}` : "",
     `Datum dogodka: ${formatNumericSlovenianDate(formData.date)}`,
     `Lokacija: ${formData.location || "ni navedena"}`,
     formData.guests ? `Število gostov: ${formData.guests}` : "",
     album ? `Album: ${album}` : "",
     formData.qrGallery ? "QR galerija: da" : "",
+    formData.equipmentSummary ? `Izbrana oprema:\n${formData.equipmentSummary}` : "",
+    formData.fulfillment ? `Prevzem/dostava (izbrano v obrazcu): ${formData.fulfillment}` : "",
     formData.message ? `Sporočilo stranke:\n${formData.message}` : "",
   ]
     .filter(Boolean)
     .join("\n");
+}
+
+function serviceLabel(service: OfferService) {
+  return service === "tables" ? tableRental.label : services[service].label;
 }
 
 function describePackage(pkg: ServicePackage) {
@@ -51,11 +57,12 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
 
   const inquiry = await getInquiry(inquiryId);
   if (!inquiry) throw new OfferGenerationError("Povpraševanje ne obstaja");
-  const service = serviceForInquiryType(inquiry.formData.type);
+  const service = serviceForInquiry(inquiry.formData);
   if (!service) {
-    throw new OfferGenerationError("Ponudbo je mogoče generirati samo za Photo Booth, 360° Booth ali kombinacijo obeh");
+    throw new OfferGenerationError("Ponudbo je mogoče generirati samo za Photo Booth, 360° Booth, kombinacijo obeh ali stoječe mize");
   }
-  options = { ...options, service, ...(services[service].hasAlbum ? {} : { albumSize: "", albumColor: "" }) };
+  const hasAlbum = service !== "tables" && services[service].hasAlbum;
+  options = { ...options, service, ...(hasAlbum ? {} : { albumSize: "", albumColor: "" }) };
 
   const draftItems = buildOfferItems(options);
   const total = sumItems(draftItems);
@@ -79,12 +86,14 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
       {
         role: "user",
         content: buildOfferUserPrompt({
-          inquiryText: describeInquiry(inquiry.formData, inquiry.createdAt, services[service].label),
+          inquiryText: describeInquiry(inquiry.formData, inquiry.createdAt, serviceLabel(service)),
           date: formatNumericSlovenianDate(date),
           validityDays: options.validityDays,
           validUntil: formatNumericSlovenianDate(validUntil),
           items: draftItems,
-          packageName: describePackage(services[service].packages[options.hours]),
+          packageName: service === "tables"
+            ? `${tableRental.name}: ${options.tableCount} × ${tableRental.unitPrice} €`
+            : describePackage(services[service].packages[options.hours]),
           instructions: options.instructions,
         }),
       },

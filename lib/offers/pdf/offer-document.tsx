@@ -2,19 +2,20 @@ import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import type { Offer } from "@/lib/db/offers";
 import { formatNumericSlovenianDate } from "@/lib/slovenian-date";
 import { cancellationPolicy, company } from "../company";
-import { services } from "../services";
+import { formatEur } from "../pricing";
+import { isBoothService, services, tableRental } from "../services";
 import { Bullets, MetaCell, Party, PriceTable, Section } from "./offer-parts";
 import { RichText } from "./rich-text";
 import { logoPath, styles } from "./styles";
 
 export function OfferDocument({ offer }: { offer: Offer }) {
   const { content, items, options } = offer;
-  const service = services[options.service];
-  const pkg = service.packages[options.hours];
+  const service = isBoothService(options.service) ? services[options.service] : null;
+  const pkg = service?.packages[options.hours] ?? { name: tableRental.name, included: tableRental.included };
   const event = content.dogodek;
   const validUntil = formatNumericSlovenianDate(options.validUntil);
   const theme = content.tema.trim();
-  const descriptions = (pkg.parts ?? [pkg]).map((part, index) => {
+  const descriptions = ("parts" in pkg && pkg.parts ? pkg.parts : [pkg]).map((part, index) => {
     // Offers created before combo support have no opis_storitve_360.
     const written = index === 0 ? content.opis_storitve : content.opis_storitve_360 ?? [];
     return { name: part.name, items: written.length > 0 ? written : part.included };
@@ -31,7 +32,7 @@ export function OfferDocument({ offer }: { offer: Offer }) {
           <Image src={logoPath} style={styles.logo} />
           <View style={styles.headerRight}>
             <Text style={styles.title}>PONUDBA</Text>
-            <Text style={styles.subtitle}>{service.subtitle}</Text>
+            <Text style={styles.subtitle}>{service?.subtitle ?? tableRental.subtitle}</Text>
           </View>
         </View>
 
@@ -66,9 +67,16 @@ export function OfferDocument({ offer }: { offer: Offer }) {
           </Section>
         )}
 
-        <PriceTable title={numbered("Cena")} items={items} total={offer.total} extraHourPrice={service.extraHourPrice} />
+        <PriceTable
+          title={numbered("Cena")}
+          items={items}
+          total={offer.total}
+          note={service
+            ? `Morebitno podaljšanje najema: ${formatEur(service.extraHourPrice)} za vsako dodatno uro.`
+            : `Cena najema znaša ${formatEur(tableRental.unitPrice)} na mizo za en dan.`}
+        />
 
-        <Section title={numbered("Prostorski in tehnični pogoji")}>
+        <Section title={numbered(!service ? "Prevzem in dostava" : "Prostorski in tehnični pogoji")}>
           <Bullets items={content.tehnicni_pogoji} />
         </Section>
 

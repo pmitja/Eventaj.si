@@ -8,7 +8,7 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import type { InquiryWithOffers } from "@/lib/db/inquiries";
 import { buildOfferItems, defaultPricePerKm, formatEur, sumItems, type PackageHours } from "@/lib/offers/pricing";
 import type { OfferOptions } from "@/lib/offers/schema";
-import { serviceForInquiryType, services } from "@/lib/offers/services";
+import { isBoothService, serviceForInquiry, services, tableRental, tableSelectionFromInquiry } from "@/lib/offers/services";
 import { CustomItemsEditor } from "./custom-items-editor";
 import { OfferFormFields } from "./offer-form-fields";
 import { OfferResult, type GeneratedOffer } from "./offer-result";
@@ -17,8 +17,9 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
   const data = inquiry.formData;
   const hours = Number(data.hours) || 2;
   const packageHours = String(Math.min(Math.max(hours, 2), 4)) as PackageHours;
-  const service = serviceForInquiryType(data.type) ?? "photo";
-  const hasAlbum = services[service].hasAlbum;
+  const service = serviceForInquiry(data) ?? "photo";
+  const hasAlbum = isBoothService(service) && services[service].hasAlbum;
+  const tables = tableSelectionFromInquiry(data.equipmentSummary);
   return {
     service,
     hours: packageHours,
@@ -27,6 +28,9 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
     albumColor: hasAlbum ? data.albumColor ?? "" : "",
     qrGallery: Boolean(data.qrGallery),
     qrGalleryPromo: false,
+    tableCount: tables.count,
+    tableclothColor: tables.color,
+    pickup: service === "tables" && (tables.count < tableRental.pickupBelow || data.fulfillment === "Osebni prevzem"),
     customItems: [],
     locationUnknown: !data.location?.trim(),
     distanceKm: null,
@@ -47,7 +51,7 @@ export function OfferDialog({ inquiry, onClose }: Props) {
 
   const fixedItems = useMemo(() => buildOfferItems({ ...options, customItems: [] }), [options]);
   const total = useMemo(() => sumItems(buildOfferItems(options)), [options]);
-  const needsDistance = !options.locationUnknown && options.distanceKm === null;
+  const needsDistance = !options.pickup && !options.locationUnknown && options.distanceKm === null;
 
   const update = <K extends keyof OfferOptions>(key: K, value: OfferOptions[K]) =>
     setOptions((current) => ({ ...current, [key]: value }));
@@ -118,7 +122,7 @@ export function OfferDialog({ inquiry, onClose }: Props) {
               ))}
               <CustomItemsEditor
                 items={options.customItems}
-                presets={services[options.service].presets}
+                presets={isBoothService(options.service) ? services[options.service].presets : []}
                 onChange={(value) => update("customItems", value)}
               />
               <div className="mt-3 flex justify-between border-t border-adm-ink pt-2 font-semibold">

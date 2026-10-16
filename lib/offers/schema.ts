@@ -1,13 +1,17 @@
 import { z } from "zod";
 
 export const offerOptionsSchema = z.object({
-  service: z.enum(["photo", "360", "combo"]),
+  service: z.enum(["photo", "360", "combo", "tables"]),
   hours: z.enum(["2", "3", "4"]),
   extraHours: z.number().int().min(0).max(12),
   albumSize: z.enum(["", "small", "large"]),
   albumColor: z.enum(["", "black", "white"]),
   qrGallery: z.boolean(),
   qrGalleryPromo: z.boolean().default(false),
+  // Standing bar tables only.
+  tableCount: z.number().int().min(1).max(50).default(1),
+  tableclothColor: z.enum(["", "white", "black", "mixed"]).default(""),
+  pickup: z.boolean().default(false),
   customItems: z
     .array(z.object({ description: z.string().trim().min(1).max(200), amount: z.number().min(-100000).max(100000) }))
     .max(20),

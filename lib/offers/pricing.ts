@@ -1,5 +1,5 @@
 import { albumColorLabels, getAlbumPrice, type AlbumColor, type AlbumSize } from "@/content/eventaj/album-pricing";
-import { services, type OfferService, type PackageHours } from "./services";
+import { services, tableclothLabels, tableRental, type OfferService, type PackageHours, type TableclothColor } from "./services";
 
 export type { OfferService, PackageHours } from "./services";
 
@@ -16,6 +16,9 @@ export type PricingOptions = {
   albumColor: AlbumColor;
   qrGallery: boolean;
   qrGalleryPromo?: boolean;
+  tableCount?: number;
+  tableclothColor?: TableclothColor;
+  pickup?: boolean;
   customItems: CustomItem[];
   locationUnknown: boolean;
   distanceKm: number | null;
@@ -37,7 +40,40 @@ export type ItemLabels = {
   place?: string;
 };
 
+function transportItem(options: PricingOptions, labels: ItemLabels): OfferItem {
+  if (options.locationUnknown || options.distanceKm === null) {
+    return { description: "Prevoz – lokacija dogodka ni znana, zato prevoz ni zaračunan", amount: null, note: "ni zaračunano" };
+  }
+  return {
+    description: `Prevoz (Lenart – ${labels.place?.trim() || "lokacija"} – Lenart)`,
+    amount: Math.round(options.distanceKm * options.pricePerKm * 100) / 100,
+  };
+}
+
+function customItems(options: PricingOptions): OfferItem[] {
+  return options.customItems
+    .filter((item) => item.description.trim())
+    .map((item) => ({ description: item.description.trim(), amount: item.amount }));
+}
+
+function buildTableItems(options: PricingOptions, labels: ItemLabels): OfferItem[] {
+  const count = options.tableCount ?? 1;
+  const color = options.tableclothColor ? tableclothLabels[options.tableclothColor] : "bel ali črn prt po izbiri";
+  return [
+    {
+      description: `Najem stoječe barske mize za en dan (${count} × ${eur(tableRental.unitPrice)})`,
+      amount: count * tableRental.unitPrice,
+    },
+    { description: `Prti (${color})`, amount: null, note: "vključeno" },
+    ...customItems(options),
+    options.pickup
+      ? { description: "Osebni prevzem in vračilo miz po dogovoru", amount: null, note: "brez stroška" }
+      : transportItem(options, labels),
+  ];
+}
+
 export function buildOfferItems(options: PricingOptions, labels: ItemLabels = {}): OfferItem[] {
+  if (options.service === "tables") return buildTableItems(options, labels);
   const service = services[options.service];
   const pkg = service.packages[options.hours];
   const items: OfferItem[] = [{ description: pkg.name, amount: pkg.price }];
@@ -66,18 +102,7 @@ export function buildOfferItems(options: PricingOptions, labels: ItemLabels = {}
       : { description: "QR galerija za goste", amount: service.qrGalleryPrice });
   }
 
-  for (const item of options.customItems) {
-    if (item.description.trim()) items.push({ description: item.description.trim(), amount: item.amount });
-  }
-
-  if (options.locationUnknown || options.distanceKm === null) {
-    items.push({ description: "Prevoz – lokacija dogodka ni znana, zato prevoz ni zaračunan", amount: null, note: "ni zaračunano" });
-  } else {
-    items.push({
-      description: `Prevoz (Lenart – ${labels.place?.trim() || "lokacija"} – Lenart)`,
-      amount: Math.round(options.distanceKm * options.pricePerKm * 100) / 100,
-    });
-  }
+  items.push(...customItems(options), transportItem(options, labels));
 
   items.push(
     { description: "Postavitev in odstranitev opreme", amount: null, note: "vključeno" },

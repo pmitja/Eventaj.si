@@ -47,9 +47,9 @@ export function Party({ label, lines }: { label: string; lines: string[] }) {
   );
 }
 
-type PriceTableProps = { title: string; items: OfferItem[]; total: number; extraHourPrice: number };
+type PriceTableProps = { title: string; items: OfferItem[]; total: number; note: string };
 
-export function PriceTable({ title, items, total, extraHourPrice }: PriceTableProps) {
+export function PriceTable({ title, items, total, note }: PriceTableProps) {
   return (
     <View wrap={false}>
       <Text style={styles.heading}>{title}</Text>
@@ -69,7 +69,7 @@ export function PriceTable({ title, items, total, extraHourPrice }: PriceTablePr
       </View>
       <Text style={styles.tableNote}>
         {vatNote}
-        {"\n"}Morebitno podaljšanje najema: {formatEur(extraHourPrice)} za vsako dodatno uro.
+        {"\n"}{note}
       </Text>
     </View>
   );

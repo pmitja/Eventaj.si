@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import { qrGalleryPromoPrice } from "@/lib/offers/pricing";
-import { services } from "@/lib/offers/services";
+import { isBoothService, services, tableRental, type ServiceConfig } from "@/lib/offers/services";
 import type { OfferOptions } from "@/lib/offers/schema";
 
 type Props = {
@@ -56,45 +56,38 @@ function Check({ checked, onChange, children }: { checked: boolean; onChange: (v
   );
 }
 
-export function OfferFormFields({ options, update }: Props) {
-  const service = services[options.service];
+function TableFields({ options, update }: Props) {
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      <Field label={`Število miz (${tableRental.unitPrice} €/mizo)`}>
+        <input
+          type="number"
+          min={1}
+          max={50}
+          value={options.tableCount}
+          onChange={(event) => update("tableCount", Math.max(1, Number(event.target.value) || 1))}
+          className={inputClass}
+        />
+      </Field>
+      <Field label="Prti">
+        <Segmented
+          value={options.tableclothColor}
+          onChange={(value) => update("tableclothColor", value)}
+          options={[
+            { value: "", label: "Ni izbrano" },
+            { value: "white", label: "Beli" },
+            { value: "black", label: "Črni" },
+            { value: "mixed", label: "Kombinacija" },
+          ]}
+        />
+      </Field>
+    </div>
+  );
+}
+
+function BoothFields({ options, update, service }: Props & { service: ServiceConfig }) {
   return (
     <>
-      <div className="rounded-xl border border-adm-accent/40 bg-adm-card p-4">
-        <p className="text-sm font-medium">Koliko km je do kraja dogodka (v eno smer, iz Lenarta)?</p>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2">
-          <Field label="Razdalja (km)">
-            <input
-              type="number"
-              min={0}
-              step={1}
-              inputMode="numeric"
-              disabled={options.locationUnknown}
-              value={options.distanceKm ?? ""}
-              onChange={(event) => update("distanceKm", event.target.value === "" ? null : Number(event.target.value))}
-              className={inputClass}
-              autoFocus
-            />
-          </Field>
-          <Field label="Cena na km (€)">
-            <input
-              type="number"
-              min={0}
-              step={0.01}
-              disabled={options.locationUnknown}
-              value={options.pricePerKm}
-              onChange={(event) => update("pricePerKm", Number(event.target.value))}
-              className={inputClass}
-            />
-          </Field>
-        </div>
-        <div className="mt-3">
-          <Check checked={options.locationUnknown} onChange={(value) => update("locationUnknown", value)}>
-            Ne vemo lokacije (prevoz ne bo zaračunan)
-          </Check>
-        </div>
-      </div>
-
       <div className="grid gap-4 sm:grid-cols-2">
         <Field label="Paket">
           <Segmented
@@ -155,6 +148,59 @@ export function OfferFormFields({ options, update }: Props) {
         )}
       </div>
 
+    </>
+  );
+}
+
+export function OfferFormFields({ options, update }: Props) {
+  const isTables = !isBoothService(options.service);
+  const noDistance = options.locationUnknown || options.pickup;
+  return (
+    <>
+      <div className="rounded-xl border border-adm-accent/40 bg-adm-card p-4">
+        <p className="text-sm font-medium">Koliko km je do kraja dogodka (v eno smer, iz Lenarta)?</p>
+        <div className="mt-3 grid gap-3 sm:grid-cols-2">
+          <Field label="Razdalja (km)">
+            <input
+              type="number"
+              min={0}
+              step={1}
+              inputMode="numeric"
+              disabled={noDistance}
+              value={options.distanceKm ?? ""}
+              onChange={(event) => update("distanceKm", event.target.value === "" ? null : Number(event.target.value))}
+              className={inputClass}
+              autoFocus
+            />
+          </Field>
+          <Field label="Cena na km (€)">
+            <input
+              type="number"
+              min={0}
+              step={0.01}
+              disabled={noDistance}
+              value={options.pricePerKm}
+              onChange={(event) => update("pricePerKm", Number(event.target.value))}
+              className={inputClass}
+            />
+          </Field>
+        </div>
+        <div className="mt-3 flex flex-wrap gap-x-6 gap-y-2">
+          {isTables && (
+            <Check checked={options.pickup} onChange={(value) => update("pickup", value)}>
+              Osebni prevzem (brez prevoza)
+            </Check>
+          )}
+          <Check checked={options.locationUnknown} onChange={(value) => update("locationUnknown", value)}>
+            Ne vemo lokacije (prevoz ne bo zaračunan)
+          </Check>
+        </div>
+      </div>
+
+      {isBoothService(options.service)
+        ? <BoothFields options={options} update={update} service={services[options.service]} />
+        : <TableFields options={options} update={update} />}
+
       <div className="grid gap-4 sm:grid-cols-[140px_1fr]">
         <Field label="Veljavnost (dni)">
           <input
@@ -171,7 +217,7 @@ export function OfferFormFields({ options, update }: Props) {
             rows={3}
             value={options.instructions}
             onChange={(event) => update("instructions", event.target.value)}
-            placeholder="npr. naročnik je OŠ Lenart, dogodek 17.00–21.00, tema noč čarovnic"
+            placeholder={isTables ? "npr. 25. 10. je tudi prost, opozori, da sta oba datuma nedelja" : "npr. naročnik je OŠ Lenart, dogodek 17.00–21.00, tema noč čarovnic"}
             className={inputClass}
           />
         </Field>
