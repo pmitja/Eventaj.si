@@ -2,7 +2,7 @@ import Link from "next/link";
 import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
 import { cn } from "@/lib/utils";
-import { crewText, doneFacts, plannedFacts, whoText, type Entry } from "./calendar-entries";
+import { bookedFacts, crewText, doneFacts, plannedFacts, whoText, type Entry } from "./calendar-entries";
 
 function dayLabel(date: string) {
   return `${Number(date.slice(8))}. ${Number(date.slice(5, 7))}.`;
@@ -41,13 +41,15 @@ export function MonthList({ entries }: { entries: Entry[] }) {
               {entry.kind === "planned" && entry.event.startTime ? ` · ${entry.event.startTime}` : ""}
             </span>
 
-            {entry.kind === "done" ? (
+            {entry.kind !== "planned" ? (
               <>
                 <span className="min-w-0">
                   <span className="font-semibold">{entry.title}</span>
                   <span className="text-adm-muted"> · {whoText(entry.event)}</span>
                 </span>
-                <span className="text-adm-muted sm:max-w-[300px] sm:text-right">{doneFacts(entry.event).join(" · ")}</span>
+                <span className="text-adm-muted sm:max-w-[300px] sm:text-right">
+                  {entry.kind === "booked" ? ["Potrjeno", ...bookedFacts(entry.event)].join(" · ") : doneFacts(entry.event).join(" · ")}
+                </span>
               </>
             ) : (
               <>

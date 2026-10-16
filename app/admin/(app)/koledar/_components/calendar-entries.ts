@@ -2,10 +2,11 @@ import type { CalendarEvent } from "@/lib/db/inquiries";
 import type { DoneEvent } from "@/lib/db/ledger";
 import { formatPlain } from "@/lib/ledger/compute";
 
-// "planned" = a confirmed inquiry still ahead of us, "done" = a row in Poslovanje → Dogodki.
+// "planned" = a confirmed inquiry still ahead of us, "done" = a row in Poslovanje → Dogodki,
+// "booked" = a Dogodki row entered by hand for a day still ahead of us.
 export type Entry =
   | { kind: "planned"; key: string; date: string; title: string; href: string; event: CalendarEvent }
-  | { kind: "done"; key: string; date: string; title: string; href: string; event: DoneEvent };
+  | { kind: "done" | "booked"; key: string; date: string; title: string; href: string; event: DoneEvent };
 
 export const typeLabels: Record<string, string> = {
   basic: "Photo Booth",
@@ -21,7 +22,7 @@ export function toEntries(planned: CalendarEvent[], done: DoneEvent[], today: st
   const doneInquiries = new Set(done.flatMap((event) => (event.inquiryId === null ? [] : [event.inquiryId])));
   return [
     ...done.filter((event) => !(event.inquiryId !== null && plannedIds.has(event.inquiryId) && event.date >= today)).map((event): Entry => ({
-      kind: "done",
+      kind: event.date >= today ? "booked" : "done",
       key: `d${event.id}`,
       date: event.date,
       title: event.client || event.code || "Dogodek",
@@ -66,6 +67,10 @@ export function plannedFacts(event: CalendarEvent) {
     !booth ? null : event.album === "Ne" ? "brez albuma" : event.album ? `album: ${event.album.replace(/ album/i, "").toLowerCase()}` : null,
     booth && !event.detailsSubmitted ? "čaka na obrazec" : null,
   ].filter(Boolean) as string[];
+}
+
+export function bookedFacts(event: DoneEvent) {
+  return [event.service, event.hours !== null ? `${formatPlain(event.hours)} h` : null].filter(Boolean) as string[];
 }
 
 export function doneFacts(event: DoneEvent) {

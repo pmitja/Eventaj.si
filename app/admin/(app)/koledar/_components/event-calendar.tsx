@@ -33,7 +33,7 @@ function chipTitle(entry: Entry) {
       plannedFacts(entry.event).join(" · "),
     ].filter(Boolean).join("\n");
   }
-  return `${entry.title} · ${whoText(entry.event)}`;
+  return `${entry.kind === "booked" ? "Potrjeno: " : ""}${entry.title} · ${whoText(entry.event)}`;
 }
 
 export function EventCalendar({ planned, done, today }: Props) {
