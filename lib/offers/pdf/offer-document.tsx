@@ -1,7 +1,7 @@
 import { Document, Image, Page, Text, View } from "@react-pdf/renderer";
 import type { Offer } from "@/lib/db/offers";
 import { formatNumericSlovenianDate } from "@/lib/slovenian-date";
-import { company } from "../company";
+import { cancellationPolicy, company } from "../company";
 import { services } from "../services";
 import { Bullets, MetaCell, Party, PriceTable, Section } from "./offer-parts";
 import { RichText } from "./rich-text";
@@ -79,6 +79,10 @@ export function OfferDocument({ offer }: { offer: Offer }) {
               ...content.placilni_pogoji,
             ]}
           />
+        </Section>
+
+        <Section title={numbered("Odpoved in sprememba termina")}>
+          <Bullets items={cancellationPolicy} />
         </Section>
 
         <View style={styles.callout} wrap={false}>

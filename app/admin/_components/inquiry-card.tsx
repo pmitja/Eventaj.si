@@ -8,6 +8,7 @@ import { markOfferSent, removeInquiry } from "../(app)/actions";
 import { albumColorLabels, albumSizeLabels } from "@/content/eventaj/album-pricing";
 import type { InquiryWithOffers, OfferSummary } from "@/lib/db/inquiries";
 import { formatEur } from "@/lib/offers/pricing";
+import { serviceForInquiryType } from "@/lib/offers/services";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import { EventDetailsPanel } from "./event-details-panel";
 import { formatReceived } from "./format-received";
@@ -125,7 +126,7 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
           </span>
         </div>
         <div className="flex items-center gap-2">
-          {(data.type === "basic" || data.type === "360") && (
+          {serviceForInquiryType(data.type) && (
             <motion.button
               type="button"
               onClick={onGenerate}

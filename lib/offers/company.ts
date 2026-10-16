@@ -17,3 +17,11 @@ export const vatNote =
 
 export const defaultPaymentTerms =
   "Predplačilo v višini 30 % ob potrditvi rezervacije, preostali znesek najkasneje 72 ur pred začetkom dogodka. Plačilo z bančnim nakazilom.";
+
+// Keep in sync with app/pogoji-uporabe (3. Odpoved ali sprememba rezervacije).
+export const cancellationPolicy = [
+  "Odpoved več kot 14 dni pred dogodkom: vračilo celotnega predplačila.",
+  "Odpoved 7–14 dni pred dogodkom: vračilo 50 % predplačila.",
+  "Odpoved manj kot 7 dni pred dogodkom: predplačilo se ne vrača.",
+  "Sprememba termina je možna brez dodatnih stroškov najmanj 14 dni pred dogodkom, če je novi termin prost. Kasnejše spremembe termina se obravnavajo kot odpoved rezervacije.",
+];
