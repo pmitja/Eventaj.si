@@ -26,6 +26,7 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
     albumSize: hasAlbum ? data.albumSize ?? (hours >= 3 ? "small" : "") : "",
     albumColor: hasAlbum ? data.albumColor ?? "" : "",
     qrGallery: Boolean(data.qrGallery),
+    qrGalleryPromo: false,
     customItems: [],
     locationUnknown: !data.location?.trim(),
     distanceKm: null,

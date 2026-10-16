@@ -4,6 +4,7 @@ import { services, type OfferService, type PackageHours } from "./services";
 export type { OfferService, PackageHours } from "./services";
 
 export const defaultPricePerKm = 0.4;
+export const qrGalleryPromoPrice = 25;
 
 export type CustomItem = { description: string; amount: number };
 
@@ -14,6 +15,7 @@ export type PricingOptions = {
   albumSize: AlbumSize;
   albumColor: AlbumColor;
   qrGallery: boolean;
+  qrGalleryPromo?: boolean;
   customItems: CustomItem[];
   locationUnknown: boolean;
   distanceKm: number | null;
@@ -38,7 +40,7 @@ export type ItemLabels = {
 export function buildOfferItems(options: PricingOptions, labels: ItemLabels = {}): OfferItem[] {
   const service = services[options.service];
   const pkg = service.packages[options.hours];
-  const items: OfferItem[] = (pkg.parts ?? [pkg]).map((part) => ({ description: part.name, amount: part.price }));
+  const items: OfferItem[] = [{ description: pkg.name, amount: pkg.price }];
 
   if (options.extraHours > 0) {
     items.push({
@@ -58,7 +60,10 @@ export function buildOfferItems(options: PricingOptions, labels: ItemLabels = {}
   }
 
   if (options.qrGallery) {
-    items.push({ description: "QR galerija za goste", amount: service.qrGalleryPrice });
+    const promo = options.qrGalleryPromo && service.qrGalleryPrice > qrGalleryPromoPrice;
+    items.push(promo
+      ? { description: `QR galerija za goste – promocijska cena (redno ${eur(service.qrGalleryPrice)})`, amount: qrGalleryPromoPrice }
+      : { description: "QR galerija za goste", amount: service.qrGalleryPrice });
   }
 
   for (const item of options.customItems) {

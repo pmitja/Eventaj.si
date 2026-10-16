@@ -7,6 +7,7 @@ export const offerOptionsSchema = z.object({
   albumSize: z.enum(["", "small", "large"]),
   albumColor: z.enum(["", "black", "white"]),
   qrGallery: z.boolean(),
+  qrGalleryPromo: z.boolean().default(false),
   customItems: z
     .array(z.object({ description: z.string().trim().min(1).max(200), amount: z.number().min(-100000).max(100000) }))
     .max(20),

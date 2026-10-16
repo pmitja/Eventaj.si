@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { qrGalleryPromoPrice } from "@/lib/offers/pricing";
 import { services } from "@/lib/offers/services";
 import type { OfferOptions } from "@/lib/offers/schema";
 
@@ -147,6 +148,11 @@ export function OfferFormFields({ options, update }: Props) {
         <Check checked={options.qrGallery} onChange={(value) => update("qrGallery", value)}>
           QR galerija (+{service.qrGalleryPrice} €)
         </Check>
+        {options.qrGallery && service.qrGalleryPrice > qrGalleryPromoPrice && (
+          <Check checked={options.qrGalleryPromo} onChange={(value) => update("qrGalleryPromo", value)}>
+            Promocija QR galerije ({qrGalleryPromoPrice} € namesto {service.qrGalleryPrice} €)
+          </Check>
+        )}
       </div>
 
       <div className="grid gap-4 sm:grid-cols-[140px_1fr]">

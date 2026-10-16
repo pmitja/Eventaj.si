@@ -36,9 +36,9 @@ const serviceText = {
     rental: "najem Photo Bootha",
     staff: "vodenje fotografiranja in tehnik na mestu",
     media: "fotografij in videoposnetkov",
-    cenik: `- Kombinacija obsega oba paketa z enakim trajanjem; cena je vsota obeh paketov (brez popusta, razen če je popust med POSTAVKAMI).
+    cenik: `- Combo paket obsega oba paketa z enakim trajanjem po skupni ceni combo paketa; posameznih cen paketov ne navajaj.
 - Spominski album (40 listov, za Photo Booth): pri Basic paketu doplačilo 20,00 €, veliki album 30,00 €. Pri Standard in Premium paketu je album vključen, nadgradnja na veliki album 15,00 €.
-- QR galerija za goste (ena galerija za fotografije in videoposnetke): ${formatEur(services.combo.qrGalleryPrice)}
+- QR galerija za goste (ena galerija za fotografije in videoposnetke): ${formatEur(services.combo.qrGalleryPrice)} (ali promocijska cena, če je tako med POSTAVKAMI)
 - Tematski napisi in rekviziti na lesenih tablicah: 20,00 €
 - Personalizirane animacije za 360° Booth, izdelane po meri: 59,00 € (samo če so med POSTAVKAMI)
 - Grafični okvir fotografij in digitalni okvir videoposnetkov po meri: vključeno
@@ -54,8 +54,9 @@ export function buildOfferSystemPrompt(serviceKey: OfferService) {
   const service = services[serviceKey];
   const text = serviceText[serviceKey];
   const cenik = Object.values(service.packages)
-    .flatMap((pkg) => pkg.parts ?? [pkg])
-    .map((pkg) => `- ${pkg.name}: ${formatEur(pkg.price)}\n  Vključeno: ${pkg.included.join("; ")}.`)
+    .map((pkg) => pkg.parts
+      ? `- ${pkg.name}: ${formatEur(pkg.price)}\n${pkg.parts.map((part) => `  ${part.name} – vključeno: ${part.included.join("; ")}.`).join("\n")}`
+      : `- ${pkg.name}: ${formatEur(pkg.price)}\n  Vključeno: ${pkg.included.join("; ")}.`)
     .join("\n");
   const isCombo = serviceKey === "combo";
 

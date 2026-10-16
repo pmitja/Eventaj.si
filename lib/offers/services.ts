@@ -8,7 +8,7 @@ export type ServicePackage = {
   shortName: string;
   price: number;
   included: string[];
-  /** Combo packages are priced and described as their booth packages side by side. */
+  /** Combo packages have their own price but are described as their booth packages side by side. */
   parts?: ServicePackage[];
 };
 
@@ -94,12 +94,12 @@ const booth360Packages = {
   "4": booth360Package("4", "Maxi", 399),
 } satisfies Record<PackageHours, ServicePackage>;
 
-function comboPackage(hours: PackageHours): ServicePackage {
+function comboPackage(hours: PackageHours, price: number): ServicePackage {
   const parts = [photoPackages[hours], booth360Packages[hours]];
   return {
     name: `Combo paket Photo Booth + 360° Booth (${hours} ${hours === "2" ? "uri" : "ure"})`,
     shortName: parts.map((part) => part.shortName).join(" + "),
-    price: parts.reduce((sum, part) => sum + part.price, 0),
+    price,
     included: parts.flatMap((part) => part.included),
     parts,
   };
@@ -138,7 +138,7 @@ export const services: Record<OfferService, ServiceConfig> = {
       { description: "Tematski napisi in rekviziti", amount: 20 },
       { description: "Personalizirane animacije za 360° Booth", amount: 59 },
     ],
-    packages: { "2": comboPackage("2"), "3": comboPackage("3"), "4": comboPackage("4") },
+    packages: { "2": comboPackage("2", 438), "3": comboPackage("3", 558), "4": comboPackage("4", 678) },
   },
 };
 
