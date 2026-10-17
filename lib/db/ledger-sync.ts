@@ -1,4 +1,7 @@
 import type { EventDetails } from "@/lib/event-details/schema";
+import { NO_DELIVERY } from "@/lib/ledger/lists";
+import type { OfferOptions } from "@/lib/offers/schema";
+import { serviceForInquiry, tableSelectionFromInquiry } from "@/lib/offers/services";
 import { toDateKey } from "@/lib/slovenian-date";
 import type { StoredFormData } from "./inquiries";
 import { sql } from "./index";
@@ -35,6 +38,7 @@ export async function syncInquiryToLedger(inquiryId: number) {
     SELECT id, year, transfer::float8 AS transfer, cash::float8 AS cash FROM ledger_events WHERE inquiry_id = ${inquiryId}
   `) as Linked[];
   const row = rows[0];
+  if (row && serviceForInquiry(row.form_data) === "tables") return syncTableRental(inquiryId, row);
   const service = row ? SERVICES[row.form_data.type] : undefined;
   const date = row ? toDateKey(row.form_data.date) : null;
 
@@ -81,12 +85,70 @@ export async function syncInquiryToLedger(inquiryId: number) {
   await sql()`UPDATE ledger_students SET year = ${year} WHERE event_id = ${eventId} AND year <> ${year}`;
 }
 
-// Before an inquiry is deleted: its Dogodki row goes too, unless it already holds bookkeeping.
+type LinkedRental = { id: number; updatedBy: string | null };
+
+// A confirmed standing-table inquiry keeps one row in Poslovanje → Najem miz with what the offer
+// knows: date, client, location, number of tables, amount and who delivers (the inquiry's crew).
+// The amount goes to Nakazilo, since offers ask for a bank transfer. Km and pickup stay manual.
+async function syncTableRental(inquiryId: number, row: { status: string; form_data: StoredFormData; crew: string | null }) {
+  const linked = (await sql()`
+    SELECT id, updated_by AS "updatedBy" FROM ledger_table_rentals WHERE inquiry_id = ${inquiryId}
+  `) as LinkedRental[];
+  const date = toDateKey(row.form_data.date);
+  const by = `Povpraševanje #${inquiryId}`;
+
+  if (row.status !== "confirmed" || !date) {
+    // Only a row nobody has edited since it was written goes away again.
+    if (linked[0] && linked[0].updatedBy === by) await sql()`DELETE FROM ledger_table_rentals WHERE id = ${linked[0].id}`;
+    return;
+  }
+
+  // The offer the customer accepted: the last one sent, else the last one made.
+  const offers = (await sql()`
+    SELECT options, content, total::float8 AS total FROM offers WHERE inquiry_id = ${inquiryId}
+    ORDER BY sent_at IS NULL, sent_at DESC, created_at DESC LIMIT 1
+  `) as { options: OfferOptions; content: { dogodek?: { lokacija?: string } }; total: number }[];
+  const offer = offers[0];
+
+  const year = Number(date.slice(0, 4));
+  const years = (await sql()`SELECT 1 FROM ledger_years WHERE year = ${year}`) as unknown[];
+  if (years.length === 0) await createYear(year);
+
+  const tableCount = offer?.options.tableCount ?? tableSelectionFromInquiry(row.form_data.equipmentSummary).count;
+  const location = offer?.content.dogodek?.lokacija || row.form_data.location || null;
+  const deliveredBy = row.crew ?? (offer?.options.pickup ? NO_DELIVERY : null);
+  const transfer = offer ? offer.total : null;
+
+  if (linked[0]) {
+    // Money already in the row (typed in or from an earlier sync) is never overwritten. updated_by is
+    // left alone so a row someone has edited is not mistaken for an untouched one.
+    await sql()`
+      UPDATE ledger_table_rentals SET year = ${year}, date = ${date}, client = ${row.form_data.name}, location = ${location},
+        table_count = ${tableCount}, delivered_by = ${deliveredBy}, transfer = COALESCE(transfer, ${transfer})
+      WHERE id = ${linked[0].id}
+    `;
+    return;
+  }
+  const inserted = await insertLedgerRow("tables", year, by, {
+    date,
+    client: row.form_data.name,
+    location,
+    tableCount,
+    transfer,
+    deliveredBy,
+  });
+  await sql()`UPDATE ledger_table_rentals SET inquiry_id = ${inquiryId} WHERE id = ${Number(inserted.id)}`;
+}
+
+// Before an inquiry is deleted: its Dogodki or Najem miz row goes too, unless it already holds bookkeeping.
 export async function dropInquiryFromLedger(inquiryId: number) {
   const linked = (await sql()`
     SELECT id, year, transfer::float8 AS transfer, cash::float8 AS cash FROM ledger_events WHERE inquiry_id = ${inquiryId}
   `) as Linked[];
   if (linked[0]) await removeUntouched(linked[0]);
+  await sql()`
+    DELETE FROM ledger_table_rentals WHERE inquiry_id = ${inquiryId} AND updated_by = ${`Povpraševanje #${inquiryId}`}
+  `;
 }
 
 // Once money is entered (or a student is paid) the row is real bookkeeping and stays.

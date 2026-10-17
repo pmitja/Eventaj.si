@@ -30,7 +30,7 @@ export default async function AdminPage({ searchParams }: Props) {
         inquiries={shown}
         empty={view.empty}
         viewLabel={view.label}
-        crewLists={{ executions: lists.executions, students: lists.students }}
+        crewLists={{ executions: lists.executions, students: lists.students, tableDrivers: lists.tableDrivers }}
       />
     </div>
   );

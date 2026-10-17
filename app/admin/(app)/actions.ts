@@ -9,6 +9,8 @@ import { deleteInquiry, getInquiry, inquiryStatuses, setInquiryCrew, setInquiryS
 import { getLists } from "@/lib/db/ledger";
 import { dropInquiryFromLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
+import { NO_DELIVERY } from "@/lib/ledger/lists";
+import { serviceForInquiry } from "@/lib/offers/services";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 
 type Result<T> = { ok: true; value: T } | { ok: false; error: string };
@@ -54,7 +56,10 @@ export async function changeInquiryCrew(id: number, crew: string | null, student
   await requireAdminAction();
   const result = await attempt(async () => {
     const lists = await getLists();
-    if (crew !== null && !lists.executions.includes(crew)) throw new Error("Neznana izvedba");
+    const inquiry = await getInquiry(id);
+    if (!inquiry) throw new Error("Povpraševanje ne obstaja");
+    const crewOptions = serviceForInquiry(inquiry.formData) === "tables" ? [...lists.tableDrivers, NO_DELIVERY] : lists.executions;
+    if (crew !== null && !crewOptions.includes(crew)) throw new Error("Neznana izvedba");
     const unknown = students.find((student) => !lists.students.includes(student));
     if (unknown) throw new Error(`Neznan študent: ${unknown}`);
     await setInquiryCrew(id, crew, [...new Set(students)]);

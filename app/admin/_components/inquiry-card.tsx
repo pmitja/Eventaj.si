@@ -182,7 +182,13 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
       <div className="flex flex-col gap-3.5 border-t border-adm-ink pt-3.5 text-sm">
         <InquiryStatusControl id={inquiry.id} status={inquiry.status} />
         {inquiry.status === "confirmed" && (
-          <InquiryCrewControl id={inquiry.id} crew={inquiry.crew} students={inquiry.crewStudents} lists={crewLists} />
+          <InquiryCrewControl
+            id={inquiry.id}
+            crew={inquiry.crew}
+            students={inquiry.crewStudents}
+            lists={crewLists}
+            tables={serviceForInquiry(data) === "tables"}
+          />
         )}
         {inquiry.status === "confirmed" && (data.type === "basic" || data.type === "both") && (
           <EventDetailsPanel inquiryId={inquiry.id} request={inquiry.eventDetails} />
