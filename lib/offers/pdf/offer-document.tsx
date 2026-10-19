@@ -89,7 +89,7 @@ export function OfferDocument({ offer }: { offer: Offer }) {
           />
         </Section>
 
-        <Section title={numbered("Odpoved in sprememba termina")}>
+        <Section title={numbered("Sprememba termina")}>
           <Bullets items={cancellationPolicy} />
         </Section>
 
