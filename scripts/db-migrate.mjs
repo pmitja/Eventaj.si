@@ -31,6 +31,8 @@ await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS status TEXT NOT NULL DE
 // Kdo gre na potrjen dogodek: izvedba (kot "Izvedba dogodka" v Dogodkih) in študenti.
 await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS crew TEXT`;
 await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS crew_students JSONB NOT NULL DEFAULT '[]'::jsonb`;
+// Naša interna opomba k povpraševanju; ob potrditvi se prepiše v Opombe v Dogodkih / Najemu miz.
+await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS note TEXT`;
 
 // Podatki za dogodek, ki jih stranka izpolni po potrditvi (okvir, album, ura pričetka ...).
 await sql`
@@ -148,6 +150,8 @@ await sql`
 // Potrjeno povpraševanje ima svojo vrstico v Dogodkih.
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS inquiry_id INTEGER UNIQUE REFERENCES inquiries(id) ON DELETE SET NULL`;
 // Potrjeno povpraševanje za mize ima svojo vrstico v Najemu miz.
+// Kje smo se dogovarjali: e-naslov povpraševanja, Instagram, telefon …
+await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS contact TEXT`;
 await sql`ALTER TABLE ledger_table_rentals ADD COLUMN IF NOT EXISTS inquiry_id INTEGER UNIQUE REFERENCES inquiries(id) ON DELETE SET NULL`;
 await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS rental_id INTEGER REFERENCES ledger_table_rentals(id) ON DELETE SET NULL`;
 // Plačilo študenta se samodejno zapiše v Stroške; to je povezava na tisti strošek.

@@ -13,6 +13,7 @@ import { formatSlovenianDate } from "@/lib/slovenian-date";
 import { EventDetailsPanel } from "./event-details-panel";
 import { formatReceived } from "./format-received";
 import { InquiryCrewControl, type CrewLists } from "./inquiry-crew";
+import { InquiryNote } from "./inquiry-note";
 import { InquiryStatusControl } from "./inquiry-status";
 import { StaggerItem } from "./motion";
 
@@ -180,7 +181,8 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
       )}
 
       <div className="flex flex-col gap-3.5 border-t border-adm-ink pt-3.5 text-sm">
-        <InquiryStatusControl id={inquiry.id} status={inquiry.status} />
+        <InquiryStatusControl id={inquiry.id} status={inquiry.status} note={inquiry.note} />
+        <InquiryNote id={inquiry.id} note={inquiry.note} />
         {inquiry.status === "confirmed" && (
           <InquiryCrewControl
             id={inquiry.id}

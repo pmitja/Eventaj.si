@@ -225,6 +225,8 @@ export type DoneEvent = {
   initialHelp: string | null;
   students: string[];
   inquiryId: number | null;
+  notes: string | null;
+  contact: string | null;
 };
 
 // Completed events from every ledger year, with the students who worked them, for the calendar.
@@ -232,12 +234,13 @@ export async function listDoneEvents(): Promise<DoneEvent[]> {
   return (await sql()`
     SELECT e.id, e.year, e.code, to_char(e.date, 'YYYY-MM-DD') AS date, e.client, e.service,
       e.hours::float8 AS hours, e.km::float8 AS km, e.album_used AS "albumUsed", e.album,
-      e.execution, e.initial_help AS "initialHelp", e.inquiry_id AS "inquiryId",
+      e.execution, e.initial_help AS "initialHelp", e.inquiry_id AS "inquiryId", e.notes, COALESCE(e.contact, i.form_data->>'email') AS contact,
       COALESCE(array_agg(s.student ORDER BY s.id) FILTER (WHERE s.student IS NOT NULL), '{}') AS students
     FROM ledger_events e
     LEFT JOIN ledger_students s ON s.event_id = e.id
+    LEFT JOIN inquiries i ON i.id = e.inquiry_id
     WHERE e.date IS NOT NULL
-    GROUP BY e.id
+    GROUP BY e.id, i.id
     ORDER BY e.date, e.code
   `) as DoneEvent[];
 }

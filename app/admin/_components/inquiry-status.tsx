@@ -1,10 +1,11 @@
 "use client";
 
-import { useOptimistic, useTransition } from "react";
+import { useOptimistic, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { changeInquiryStatus } from "../(app)/actions";
 import type { InquiryStatus } from "@/lib/db/inquiries";
 import { cn } from "@/lib/utils";
+import { InquiryNoteDialog } from "./inquiry-note";
 
 const options: { value: InquiryStatus; label: string; active: string }[] = [
   { value: "new", label: "Novo", active: "border-adm-ink bg-adm-ink text-adm-bg" },
@@ -14,9 +15,10 @@ const options: { value: InquiryStatus; label: string; active: string }[] = [
 
 const moved: Record<InquiryStatus, string> = { new: "Aktivna", confirmed: "Potrjena", declined: "Zavrnjena" };
 
-export function InquiryStatusControl({ id, status }: { id: number; status: InquiryStatus }) {
+export function InquiryStatusControl({ id, status, note }: { id: number; status: InquiryStatus; note: string | null }) {
   const [pending, startTransition] = useTransition();
   const [current, setCurrent] = useOptimistic(status);
+  const [askNote, setAskNote] = useState(false);
 
   function select(value: InquiryStatus) {
     if (value === current) return;
@@ -24,7 +26,10 @@ export function InquiryStatusControl({ id, status }: { id: number; status: Inqui
       setCurrent(value);
       const result = await changeInquiryStatus(id, value);
       if (!result.ok) toast.error(result.error);
-      else toast.success(`Povpraševanje #${id} je zdaj med »${moved[value]}«`);
+      else {
+        toast.success(`Povpraševanje #${id} je zdaj med »${moved[value]}«`);
+        if (value === "confirmed") setAskNote(true);
+      }
     });
   }
 
@@ -51,6 +56,7 @@ export function InquiryStatusControl({ id, status }: { id: number; status: Inqui
           </button>
         ))}
       </div>
+      <InquiryNoteDialog id={id} note={note} open={askNote} onOpenChange={setAskNote} afterConfirm />
     </div>
   );
 }

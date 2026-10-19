@@ -25,15 +25,19 @@ function shift(month: string, by: number) {
 
 function chipTitle(entry: Entry) {
   if (entry.kind === "planned") {
-    const { startTime, location, crew, crewStudents } = entry.event;
+    const { startTime, location, crew, crewStudents, note, contact } = entry.event;
     return [
       `Potrjeno: ${entry.title}`,
       [startTime, location].filter(Boolean).join(" · "),
       `Kdo gre: ${crewText(crew, crewStudents) ?? "ni določeno"}`,
       plannedFacts(entry.event).join(" · "),
+      contact ? `Kontakt: ${contact}` : null,
+      note ? `Opomba: ${note}` : null,
     ].filter(Boolean).join("\n");
   }
-  return `${entry.kind === "booked" ? "Potrjeno: " : ""}${entry.title} · ${whoText(entry.event)}`;
+  const title = `${entry.kind === "booked" ? "Potrjeno: " : ""}${entry.title} · ${whoText(entry.event)}`;
+  const { contact, notes } = entry.event;
+  return [title, contact ? `Kontakt: ${contact}` : null, notes ? `Opomba: ${notes}` : null].filter(Boolean).join("\n");
 }
 
 export function EventCalendar({ planned, done, today }: Props) {

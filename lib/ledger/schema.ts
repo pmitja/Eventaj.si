@@ -12,6 +12,7 @@ export type EventRow = {
   code: string | null; // A  ID
   date: string | null; // B  Datum (YYYY-MM-DD)
   client: string | null; // C  Naročnik
+  contact: string | null; //    Kontakt (kje smo se dogovarjali)
   km: number | null; // D  Km
   hours: number | null; // E  Ure
   transfer: number | null; // F  Nakazilo €
@@ -82,6 +83,7 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       code: { col: "code", type: "text" },
       date: { col: "date", type: "date" },
       client: { col: "client", type: "text" },
+      contact: { col: "contact", type: "text" },
       km: { col: "km", type: "number" },
       hours: { col: "hours", type: "number" },
       transfer: { col: "transfer", type: "number" },

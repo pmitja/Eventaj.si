@@ -26,14 +26,14 @@ type Linked = { id: number; year: number; transfer: number | null; cash: number 
 
 // A confirmed booth inquiry keeps one row in Poslovanje → Dogodki, plus a Študenti row per student
 // going. Only what the inquiry knows is written (date, client, hours, service, album, execution);
-// money, km, cartridge and notes stay manual. Rows nobody has touched are removed again when the
+// money, km and cartridge stay manual. Kontakt gets the inquiry's e-mail unless someone typed another. The inquiry's note fills Opombe when the row is first made. Rows nobody has touched are removed again when the
 // inquiry stops being confirmed.
 export async function syncInquiryToLedger(inquiryId: number) {
   const rows = (await sql()`
-    SELECT i.status, i.form_data, i.crew, i.crew_students, e.data AS details
+    SELECT i.status, i.form_data, i.crew, i.crew_students, i.note, e.data AS details
     FROM inquiries i LEFT JOIN event_details e ON e.inquiry_id = i.id
     WHERE i.id = ${inquiryId}
-  `) as { status: string; form_data: StoredFormData; crew: string | null; crew_students: string[]; details: EventDetails | null }[];
+  `) as { status: string; form_data: StoredFormData; crew: string | null; crew_students: string[]; note: string | null; details: EventDetails | null }[];
   const linked = (await sql()`
     SELECT id, year, transfer::float8 AS transfer, cash::float8 AS cash FROM ledger_events WHERE inquiry_id = ${inquiryId}
   `) as Linked[];
@@ -60,12 +60,13 @@ export async function syncInquiryToLedger(inquiryId: number) {
   if (linked[0]) {
     eventId = linked[0].id;
     await sql()`
-      UPDATE ledger_events SET year = ${year}, date = ${date}, client = ${fields.client}, hours = ${hours}, service = ${service},
+      UPDATE ledger_events SET year = ${year}, date = ${date}, client = ${fields.client}, contact = COALESCE(contact, ${row.form_data.email || null}),
+        hours = ${hours}, service = ${service},
         album_used = ${fields.albumUsed}, album = ${albumName}, execution = ${row.crew}, updated_by = ${by}, updated_at = now()
       WHERE id = ${eventId}
     `;
   } else {
-    const inserted = await insertLedgerRow("events", year, by, fields);
+    const inserted = await insertLedgerRow("events", year, by, { ...fields, contact: row.form_data.email || null, notes: row.note });
     eventId = Number(inserted.id);
     await sql()`UPDATE ledger_events SET inquiry_id = ${inquiryId} WHERE id = ${eventId}`;
   }
@@ -90,7 +91,7 @@ type LinkedRental = { id: number; updatedBy: string | null };
 // A confirmed standing-table inquiry keeps one row in Poslovanje → Najem miz with what the offer
 // knows: date, client, location, number of tables, amount and who delivers (the inquiry's crew).
 // The amount goes to Nakazilo, since offers ask for a bank transfer. Km and pickup stay manual.
-async function syncTableRental(inquiryId: number, row: { status: string; form_data: StoredFormData; crew: string | null }) {
+async function syncTableRental(inquiryId: number, row: { status: string; form_data: StoredFormData; crew: string | null; note: string | null }) {
   const linked = (await sql()`
     SELECT id, updated_by AS "updatedBy" FROM ledger_table_rentals WHERE inquiry_id = ${inquiryId}
   `) as LinkedRental[];
@@ -136,8 +137,15 @@ async function syncTableRental(inquiryId: number, row: { status: string; form_da
     tableCount,
     transfer,
     deliveredBy,
+    notes: row.note,
   });
   await sql()`UPDATE ledger_table_rentals SET inquiry_id = ${inquiryId} WHERE id = ${Number(inserted.id)}`;
+}
+
+// A note written on the inquiry later replaces Opombe on its Dogodki / Najem miz row.
+export async function syncInquiryNoteToLedger(inquiryId: number, note: string | null) {
+  await sql()`UPDATE ledger_events SET notes = ${note} WHERE inquiry_id = ${inquiryId}`;
+  await sql()`UPDATE ledger_table_rentals SET notes = ${note} WHERE inquiry_id = ${inquiryId}`;
 }
 
 // Before an inquiry is deleted: its Dogodki or Najem miz row goes too, unless it already holds bookkeeping.

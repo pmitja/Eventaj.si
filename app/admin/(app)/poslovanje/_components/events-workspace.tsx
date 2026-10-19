@@ -37,6 +37,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: 
     { key: "code", label: "ID", type: "text", width: 100 },
     { key: "date", label: "Datum", type: "date", width: 150 },
     { key: "client", label: "Naročnik", type: "text", width: 230 },
+    { key: "contact", label: "Kontakt", type: "text", width: 220, hint: "Kje smo se dogovarjali: e-naslov, Instagram, telefon …" },
     { key: "km", label: "Km", type: "number", width: 72 },
     { key: "hours", label: "Ure", type: "number", width: 64 },
     { key: "transfer", label: "Nakazilo €", type: "money", width: 110 },
@@ -58,6 +59,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: 
   const fields: FieldSpec[] = [
     { key: "date", label: "Datum", kind: "date", required: true },
     { key: "client", label: "Naročnik", kind: "text", required: true, placeholder: "Ime ali podjetje" },
+    { key: "contact", label: "Kontakt", kind: "text", wide: true, placeholder: "E-naslov, Instagram, telefon …" },
     { key: "km", label: "Km", kind: "number", placeholder: "0" },
     { key: "hours", label: "Ure", kind: "number", required: true, placeholder: "0" },
     { key: "service", label: "Storitev", kind: "select", options: lists.services, wide: true, initial: lists.services[0] ?? "" },
@@ -67,6 +69,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: 
     { key: "cartridgeChanged", label: "Kartuša", kind: "seg", options: ["NE", "DA"] },
     { key: "execution", label: "Izvedba dogodka", kind: "select", options: lists.executions, required: true },
     { key: "initialHelp", label: "Začetna pomoč", kind: "seg", options: lists.initialHelp },
+    { key: "notes", label: "Opombe", kind: "area", wide: true },
     { key: "executionNotes", label: "Opombe izvedbe", kind: "area", wide: true, placeholder: "Kdo je bil prisoten, posebnosti …" },
   ];
 

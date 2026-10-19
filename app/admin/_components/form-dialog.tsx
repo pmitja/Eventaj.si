@@ -37,6 +37,7 @@ type Props = {
   // Resolves to an error message, or null when saved.
   onSubmit: (values: FormValues) => Promise<string | null>;
   submitLabel?: string;
+  cancelLabel?: string;
 };
 
 const optionValue = (o: FieldOption) => (typeof o === "string" ? o : o.value);
@@ -57,7 +58,7 @@ export function FormDialog(props: Props) {
   );
 }
 
-function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitLabel = "Shrani" }: Props) {
+function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitLabel = "Shrani", cancelLabel = "Prekliči" }: Props) {
   const [values, setValues] = useState(() => initialValues(fields));
   const [tried, setTried] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -142,7 +143,7 @@ function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitL
       <div className="flex flex-wrap items-center justify-between gap-3 px-6 pb-6 pt-5 sm:px-7">
         <span className="text-[13px] text-adm-accent">{error}</span>
         <motion.div animate={shake} className="ml-auto flex gap-2">
-          <DialogClose className="rounded-full border border-adm-ink px-[18px] py-2.5 text-sm transition-colors hover:bg-adm-sand">Prekliči</DialogClose>
+          <DialogClose className="rounded-full border border-adm-ink px-[18px] py-2.5 text-sm transition-colors hover:bg-adm-sand">{cancelLabel}</DialogClose>
           <motion.button
             type="submit"
             disabled={pending}

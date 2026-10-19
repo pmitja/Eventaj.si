@@ -5,9 +5,9 @@ import { Resend } from "resend";
 import EventDetailsRequestEmail from "@/emails/event-details-request";
 import { requireAdminAction } from "@/lib/admin-auth";
 import { ensureEventDetailsRequest, markEventDetailsEmailed } from "@/lib/db/event-details";
-import { deleteInquiry, getInquiry, inquiryStatuses, setInquiryCrew, setInquiryStatus, type InquiryStatus } from "@/lib/db/inquiries";
+import { deleteInquiry, getInquiry, inquiryStatuses, setInquiryCrew, setInquiryNote, setInquiryStatus, type InquiryStatus } from "@/lib/db/inquiries";
 import { getLists } from "@/lib/db/ledger";
-import { dropInquiryFromLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
+import { dropInquiryFromLedger, syncInquiryNoteToLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
 import { NO_DELIVERY } from "@/lib/ledger/lists";
 import { serviceForInquiry } from "@/lib/offers/services";
@@ -64,6 +64,18 @@ export async function changeInquiryCrew(id: number, crew: string | null, student
     if (unknown) throw new Error(`Neznan študent: ${unknown}`);
     await setInquiryCrew(id, crew, [...new Set(students)]);
     await syncInquiryToLedger(id);
+  });
+  if (result.ok) revalidatePath("/admin", "layout");
+  return result;
+}
+
+export async function changeInquiryNote(id: number, note: string) {
+  await requireAdminAction();
+  const text = note.trim() || null;
+  const result = await attempt(async () => {
+    if (text && text.length > 2000) throw new Error("Opomba je predolga");
+    await setInquiryNote(id, text);
+    await syncInquiryNoteToLedger(id, text);
   });
   if (result.ok) revalidatePath("/admin", "layout");
   return result;

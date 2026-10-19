@@ -19,6 +19,8 @@ export type Inquiry = {
   // Who works the event: execution as in Dogodki ("Jan", "Študenti" …) plus the students going.
   crew: string | null;
   crewStudents: string[];
+  // Our own note, never shown to the customer.
+  note: string | null;
 };
 
 export type OfferSummary = {
@@ -39,6 +41,7 @@ type InquiryRow = {
   status: InquiryStatus;
   crew: string | null;
   crew_students: string[] | null;
+  note: string | null;
 };
 
 function toInquiry(row: InquiryRow): Inquiry {
@@ -50,6 +53,7 @@ function toInquiry(row: InquiryRow): Inquiry {
     status: row.status ?? "new",
     crew: row.crew,
     crewStudents: row.crew_students ?? [],
+    note: row.note ?? null,
   };
 }
 
@@ -107,6 +111,11 @@ export async function setInquiryCrew(id: number, crew: string | null, students: 
   if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
 }
 
+export async function setInquiryNote(id: number, note: string | null) {
+  const rows = (await sql()`UPDATE inquiries SET note = ${note} WHERE id = ${id} RETURNING id`) as { id: number }[];
+  if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
+}
+
 export async function deleteInquiry(id: number) {
   await sql()`DELETE FROM inquiries WHERE id = ${id}`;
 }
@@ -127,6 +136,9 @@ export type CalendarEvent = {
   startTime: string | null;
   crew: string | null;
   crewStudents: string[];
+  note: string | null;
+  // The e-mail the inquiry came from, where we arranged everything.
+  contact: string;
   // "Ne", an album name, or null when nobody has said yet.
   album: string | null;
   detailsSubmitted: boolean;
@@ -142,11 +154,11 @@ function calendarAlbum(form: StoredFormData, details: EventDetails | null) {
 
 export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
   const rows = (await sql()`
-    SELECT i.id, i.form_data, i.crew, i.crew_students, e.data AS details
+    SELECT i.id, i.form_data, i.crew, i.crew_students, i.note, e.data AS details
     FROM inquiries i
     LEFT JOIN event_details e ON e.inquiry_id = i.id
     WHERE i.status = 'confirmed'
-  `) as { id: number; form_data: StoredFormData; crew: string | null; crew_students: string[]; details: EventDetails | null }[];
+  `) as { id: number; form_data: StoredFormData; crew: string | null; crew_students: string[]; note: string | null; details: EventDetails | null }[];
 
   return rows.flatMap((row) => {
     const date = toDateKey(row.form_data.date);
@@ -163,6 +175,8 @@ export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
       startTime: details?.startTime || null,
       crew: row.crew,
       crewStudents: row.crew_students,
+      note: row.note,
+      contact: row.form_data.email,
       album: calendarAlbum(row.form_data, details),
       detailsSubmitted: Boolean(details),
     }];

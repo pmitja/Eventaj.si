@@ -24,6 +24,16 @@ export function MonthSummary({ entries }: { entries: Entry[] }) {
   return <p className="m-0 text-sm text-adm-muted">{facts.join(" · ")}</p>;
 }
 
+function ContactLine({ contact }: { contact: string | null }) {
+  if (!contact) return null;
+  return <span className="break-all text-adm-muted">Kontakt: {contact}</span>;
+}
+
+function NoteLine({ note }: { note: string | null }) {
+  if (!note) return null;
+  return <span className="whitespace-pre-line text-adm-muted [text-wrap:pretty]">Opomba: {note}</span>;
+}
+
 export function MonthList({ entries }: { entries: Entry[] }) {
   if (entries.length === 0) return <p className="m-0 text-sm text-adm-muted">Ta mesec ni dogodkov.</p>;
 
@@ -43,9 +53,13 @@ export function MonthList({ entries }: { entries: Entry[] }) {
 
             {entry.kind !== "planned" ? (
               <>
-                <span className="min-w-0">
-                  <span className="font-semibold">{entry.title}</span>
-                  <span className="text-adm-muted"> · {whoText(entry.event)}</span>
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <span>
+                    <span className="font-semibold">{entry.title}</span>
+                    <span className="text-adm-muted"> · {whoText(entry.event)}</span>
+                  </span>
+                  <ContactLine contact={entry.event.contact} />
+                  <NoteLine note={entry.event.notes} />
                 </span>
                 <span className="text-adm-muted sm:max-w-[300px] sm:text-right">
                   {entry.kind === "booked" ? ["Potrjeno", ...bookedFacts(entry.event)].join(" · ") : doneFacts(entry.event).join(" · ")}
@@ -61,6 +75,8 @@ export function MonthList({ entries }: { entries: Entry[] }) {
                   <span className={entry.event.crew || entry.event.crewStudents.length ? "text-adm-muted" : "text-adm-faint"}>
                     Kdo gre: {crewText(entry.event.crew, entry.event.crewStudents) ?? "ni določeno"}
                   </span>
+                  <ContactLine contact={entry.event.contact} />
+                  <NoteLine note={entry.event.note} />
                 </span>
                 <span className="text-adm-muted sm:max-w-[300px] sm:text-right">Potrjeno · {plannedFacts(entry.event).join(" · ")}</span>
               </>
