@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
 import { cn } from "@/lib/utils";
@@ -34,14 +33,14 @@ function NoteLine({ note }: { note: string | null }) {
   return <span className="whitespace-pre-line text-adm-muted [text-wrap:pretty]">Opomba: {note}</span>;
 }
 
-export function MonthList({ entries }: { entries: Entry[] }) {
+export function MonthList({ entries, onOpen }: { entries: Entry[]; onOpen: (entry: Entry) => void }) {
   if (entries.length === 0) return <p className="m-0 text-sm text-adm-muted">Ta mesec ni dogodkov.</p>;
 
   return (
     <ul className="m-0 flex list-none flex-col divide-y divide-adm-rule p-0 text-sm">
       {entries.map((entry) => (
         <li key={entry.key}>
-          <Link href={entry.href} className="grid gap-x-4 gap-y-1 py-3 hover:!text-adm-ink sm:grid-cols-[112px_minmax(0,1fr)_auto]">
+          <button type="button" onClick={() => onOpen(entry)} className="grid w-full text-left gap-x-4 gap-y-1 py-3 hover:!text-adm-ink sm:grid-cols-[112px_minmax(0,1fr)_auto]">
             <span className="flex items-center gap-2 tabular font-semibold">
               <span
                 className={cn("size-2.5 shrink-0 rounded-full", entry.kind === "done" ? "bg-adm-ink" : "bg-adm-ok-fg")}
@@ -81,7 +80,7 @@ export function MonthList({ entries }: { entries: Entry[] }) {
                 <span className="text-adm-muted sm:max-w-[300px] sm:text-right">Potrjeno · {plannedFacts(entry.event).join(" · ")}</span>
               </>
             )}
-          </Link>
+          </button>
         </li>
       ))}
     </ul>

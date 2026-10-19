@@ -1,15 +1,15 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import Link from "next/link";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { MONTHS_FULL } from "@/app/admin/_components/charts";
 import { LegendDot, Panel } from "@/app/admin/_components/panel";
 import type { CalendarEvent } from "@/lib/db/inquiries";
 import type { DoneEvent } from "@/lib/db/ledger";
 import { cn } from "@/lib/utils";
 import { crewText, plannedFacts, toEntries, whoText, type Entry } from "./calendar-entries";
+import { EventDialog } from "./event-dialog";
 import { MonthList, MonthSummary } from "./month-list";
 
 const WEEKDAYS = ["Po", "To", "Sr", "Če", "Pe", "So", "Ne"];
@@ -42,6 +42,7 @@ function chipTitle(entry: Entry) {
 
 export function EventCalendar({ planned, done, today }: Props) {
   const entries = useMemo(() => toEntries(planned, done, today), [planned, done, today]);
+  const [open, setOpen] = useState<Entry | null>(null);
   const pathname = usePathname();
   const param = useSearchParams().get("mesec");
 
@@ -133,13 +134,14 @@ export function EventCalendar({ planned, done, today }: Props) {
               </span>
             )}
             {(date ? byDay.get(date) ?? [] : []).map((entry) => (
-              <Link
+              <button
                 key={entry.key}
-                href={entry.href}
+                type="button"
+                onClick={() => setOpen(entry)}
                 title={chipTitle(entry)}
                 aria-label={entry.title}
                 className={cn(
-                  "block rounded-md transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5",
+                  "block w-full rounded-md text-left transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5",
                   entry.kind === "done" ? "bg-adm-ink !text-adm-bg" : "bg-adm-ok !text-adm-ok-fg",
                 )}
               >
@@ -149,13 +151,14 @@ export function EventCalendar({ planned, done, today }: Props) {
                   {entry.kind === "planned" && entry.event.startTime ? `${entry.event.startTime} ` : ""}
                   {entry.title}
                 </span>
-              </Link>
+              </button>
             ))}
           </div>
         ))}
       </div>
 
-      <MonthList entries={inMonth} />
+      <MonthList entries={inMonth} onOpen={setOpen} />
+      {open && <EventDialog entry={open} onClose={() => setOpen(null)} />}
     </Panel>
   );
 }
