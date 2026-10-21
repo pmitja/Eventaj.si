@@ -4,6 +4,7 @@ import { getLists } from "@/lib/db/ledger";
 import { findView } from "../_components/inquiry-groups";
 import { InquiryList } from "../_components/inquiry-list";
 import { InquiryTabs } from "../_components/inquiry-tabs";
+import { ManualInquiryButton } from "../_components/manual-inquiry";
 import { PageHeader } from "../_components/page-header";
 
 type Props = { searchParams: Promise<{ prikaz?: string | string[] }> };
@@ -23,7 +24,12 @@ export default async function AdminPage({ searchParams }: Props) {
       <PageHeader
         title="Povpraševanja"
         subtitle={`${inquiries.length} prejetih${view.status === "new" && withoutOffer ? ` · ${withoutOffer} aktivnih brez ponudbe` : ""}`}
-        action={<InquiryTabs active={view} counts={counts} />}
+        action={
+          <div className="flex flex-wrap items-center gap-3">
+            <InquiryTabs active={view} counts={counts} />
+            <ManualInquiryButton onActiveView={view.status === "new"} />
+          </div>
+        }
       />
       <InquiryList
         key={view.slug}

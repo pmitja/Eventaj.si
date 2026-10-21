@@ -5,10 +5,11 @@ import { Resend } from "resend";
 import EventDetailsRequestEmail from "@/emails/event-details-request";
 import { requireAdminAction } from "@/lib/admin-auth";
 import { ensureEventDetailsRequest, markEventDetailsEmailed } from "@/lib/db/event-details";
-import { deleteInquiry, getInquiry, inquiryStatuses, setInquiryCrew, setInquiryNote, setInquiryStatus, type InquiryStatus } from "@/lib/db/inquiries";
+import { deleteInquiry, getInquiry, inquiryStatuses, saveInquiry, setInquiryCrew, setInquiryNote, setInquiryStatus, type InquiryStatus, type InquiryWithOffers, type StoredFormData } from "@/lib/db/inquiries";
 import { getLists } from "@/lib/db/ledger";
 import { dropInquiryFromLedger, syncInquiryNoteToLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
+import { standingTable } from "@/content/eventaj/equipment";
 import { NO_DELIVERY } from "@/lib/ledger/lists";
 import { serviceForInquiry } from "@/lib/offers/services";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
@@ -28,6 +29,62 @@ export async function removeInquiry(id: number) {
   const result = await attempt(async () => {
     await dropInquiryFromLedger(id);
     await deleteInquiry(id);
+  });
+  if (result.ok) revalidatePath("/admin", "layout");
+  return result;
+}
+
+export type ManualInquiryInput = {
+  type: "basic" | "360" | "both" | "tables";
+  name: string;
+  email: string;
+  phone: string;
+  date: string;
+  location: string;
+  hours: string;
+  eventType: string;
+  tableCount: string;
+  tablecloth: string;
+  pickup: boolean;
+  message: string;
+};
+
+// An inquiry that came by e-mail or phone, typed in so it gets a card and an offer like a form one.
+export async function addManualInquiry(input: ManualInquiryInput) {
+  await requireAdminAction();
+  const result = await attempt<InquiryWithOffers>(async () => {
+    const name = input.name.trim();
+    const email = input.email.trim();
+    if (!name) throw new Error("Manjka ime stranke");
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) throw new Error("E-naslov ni veljaven");
+    if (input.date && !/^\d{4}-\d{2}-\d{2}$/.test(input.date)) throw new Error("Datum ni veljaven");
+    if (!["basic", "360", "both", "tables"].includes(input.type)) throw new Error("Neznana storitev");
+
+    const tables = input.type === "tables";
+    const tableCount = Math.round(Number(input.tableCount));
+    if (tables && !(tableCount >= 1 && tableCount <= (standingTable.quantity?.max ?? 10))) {
+      throw new Error(`Število miz mora biti med 1 in ${standingTable.quantity?.max ?? 10}`);
+    }
+    const hours = Math.round(Number(input.hours));
+    if (!tables && !(hours >= 1 && hours <= 12)) throw new Error("Trajanje mora biti med 1 in 12 ur");
+
+    const formData: StoredFormData = {
+      source: "manual",
+      type: input.type === "tables" ? "equipment" : input.type,
+      hours: tables ? "1 dan" : String(hours),
+      name,
+      email,
+      phone: input.phone.trim(),
+      date: input.date,
+      location: input.location.trim(),
+      eventType: input.eventType.trim() || undefined,
+      message: input.message.trim() || undefined,
+      equipmentSummary: tables ? `${standingTable.name}: ${tableCount}${input.tablecloth ? `, ${input.tablecloth}` : ""}` : undefined,
+      fulfillment: tables ? (input.pickup ? "Osebni prevzem" : "Prevoz na lokacijo") : undefined,
+    };
+    const inquiry = await getInquiry(await saveInquiry(formData, null));
+    if (!inquiry) throw new Error("Povpraševanje ni bilo shranjeno");
+    return { ...inquiry, offers: [], eventDetails: null };
   });
   if (result.ok) revalidatePath("/admin", "layout");
   return result;

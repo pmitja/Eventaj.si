@@ -91,6 +91,10 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
     });
   }
 
+  const contacts = [
+    data.email && { href: `mailto:${data.email}`, label: data.email },
+    data.phone && { href: `tel:${data.phone}`, label: data.phone },
+  ].filter((contact) => Boolean(contact)) as { href: string; label: string }[];
   const album = data.albumSize ? `${albumSizeLabels[data.albumSize]}${data.albumColor ? `, ${albumColorLabels[data.albumColor]}` : ""}` : null;
   const details = [
     ["Datum dogodka", formatSlovenianDate(data.date)],
@@ -114,16 +118,18 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
         <div className="flex min-w-0 flex-col gap-1.5">
           <span className="text-xs uppercase tracking-[.06em] text-adm-muted">
             #{inquiry.id} · {formatReceived(inquiry.createdAt)} · {typeLabels[data.type] ?? data.type}
+            {data.source === "manual" && " · ročni vnos"}
           </span>
           <span className="text-xl font-semibold">{data.name}</span>
           <span className="text-sm text-adm-muted">
-            <a href={`mailto:${data.email}`} className="transition-colors hover:!text-adm-accent">
-              {data.email}
-            </a>{" "}
-            ·{" "}
-            <a href={`tel:${data.phone}`} className="transition-colors hover:!text-adm-accent">
-              {data.phone}
-            </a>
+            {contacts.map((contact, index) => (
+              <span key={contact.href}>
+                {index > 0 && " · "}
+                <a href={contact.href} className="transition-colors hover:!text-adm-accent">
+                  {contact.label}
+                </a>
+              </span>
+            ))}
           </span>
         </div>
         <div className="flex items-center gap-2">

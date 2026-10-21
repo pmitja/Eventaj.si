@@ -8,7 +8,8 @@ import { toDateKey } from "@/lib/slovenian-date";
 export const inquiryStatuses = ["new", "confirmed", "declined"] as const;
 export type InquiryStatus = (typeof inquiryStatuses)[number];
 
-export type StoredFormData = Omit<FormField, "date"> & { date: string };
+// "manual" marks inquiries we typed in ourselves (e.g. from an e-mail), not sent through the form.
+export type StoredFormData = Omit<FormField, "date"> & { date: string; source?: "manual" };
 
 export type Inquiry = {
   id: number;
