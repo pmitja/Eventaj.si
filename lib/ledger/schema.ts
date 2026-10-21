@@ -83,7 +83,16 @@ export type WorkRow = {
   description: string | null; // Opis
 };
 
-export type LedgerTableName = "events" | "costs" | "students" | "tables" | "stock" | "work";
+// Prispevki: posts on social media per person; the month's social points are split by posts.
+export type SocialRow = {
+  id: number;
+  date: string | null; // Datum (šteje mesec)
+  person: string | null; // Oseba
+  posts: number | null; // Objave
+  note: string | null; // Opomba
+};
+
+export type LedgerTableName = "events" | "costs" | "students" | "tables" | "stock" | "work" | "social";
 
 export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: string; fields: Record<string, FieldDef> }> = {
   events: {
@@ -173,6 +182,16 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       description: { col: "description", type: "text" },
     },
   },
+  social: {
+    table: "ledger_social",
+    order: "date NULLS LAST, id",
+    fields: {
+      date: { col: "date", type: "date" },
+      person: { col: "person", type: "text" },
+      posts: { col: "posts", type: "number" },
+      note: { col: "note", type: "text" },
+    },
+  },
 };
 
 export type LedgerYear = {
@@ -185,4 +204,5 @@ export type LedgerYear = {
   tables: TableRentalRow[];
   stock: StockRow[];
   work: WorkRow[];
+  social: SocialRow[];
 };

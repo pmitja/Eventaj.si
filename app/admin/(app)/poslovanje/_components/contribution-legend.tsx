@@ -1,6 +1,7 @@
 import { Panel } from "@/app/admin/_components/panel";
 import { formatEur, formatNumber } from "@/lib/ledger/compute";
-import { RULES, type Contributions } from "@/lib/ledger/contributions";
+import { RULES, SPLIT_TIERS, type Contributions } from "@/lib/ledger/contributions";
+import { cn } from "@/lib/utils";
 
 // 5 → "5", 1.5 → "1,5", 0.25 → "0,25"
 const n = (value: number) => (Number.isInteger(value) ? formatNumber(value, 0) : formatNumber(value, 2).replace(/0$/, ""));
@@ -14,7 +15,7 @@ const POINTS: [string, string, string][] = [
   ["Priprava s stranko", n(RULES.clientPrep), "Maja, za vsak izveden dogodek: okvir, ozadje, ura, kontaktna oseba, povzetek."],
   ["Povpraševanje → ponudba", n(RULES.inquiry), `Julija. Ko postane dogodek, še +${n(RULES.confirmed)}. Poslane ponudbe brez dogodka se štejejo iz Povpraševanj.`],
   ["Študenti, organizacija, pregled, opombe", n(RULES.organisation), "Julija, za vsak izveden dogodek."],
-  ["Socialna omrežja", `${n(RULES.socialPerMonth)} na mesec`, `${n(RULES.socialJulija * 100)} % Julija, ${n(100 - RULES.socialJulija * 100)} % Maja.`],
+  ["Socialna omrežja", `${n(RULES.socialPerMonth)} na mesec`, `Razdeli se po vpisanih objavah tistega meseca. Mesec brez vnosa: ${n(RULES.socialJulija * 100)} % Julija, ${n(100 - RULES.socialJulija * 100)} % Maja.`],
   ["Klici", `${n(RULES.callsPerMonth)} na mesec`, "Mitja."],
   ["Dostava ali prevzem miz", n(RULES.tableTrip), "Na pot, iz Najema miz."],
   ["Naročilo potrošnega materiala", n(RULES.material), "Na vnos v Stroških (Potrošni material). Jan, razen če je osebno plačal kdo drug."],
@@ -22,7 +23,8 @@ const POINTS: [string, string, string][] = [
 ];
 
 export function ContributionLegend({ c }: { c: Contributions }) {
-  const work = RULES.workShare * 100;
+  const work = c.workShare * 100;
+  const top = `${formatNumber(c.topPairShare * 100, 1)} %`;
   const steps: [string, string][] = [
     [
       "Dobiček",
@@ -32,6 +34,7 @@ export function ContributionLegend({ c }: { c: Contributions }) {
     ],
     ["Kilometrina", `Km / 100 × ${RULES.litresPer100} l × cena litra. Izplača se tistemu, ki je vozil; Jan + Mitja si km delita na pol. Prevoz, že vpisan v Stroških, šteje kot že izplačan del. Skupaj ${formatEur(c.fuelTotal)}.`],
     ["Za delitev", `Dobiček − kilometrina = ${formatEur(c.distributable)}.`],
+    ["Razmerje", `Par z več dela ima ${top} točk, zato velja ${work}/${100 - work} (tabela spodaj).`],
     [`${work} % po točkah`, `${formatEur(c.workPool)} se razdeli po deležu točk vsake osebe.`],
     [`${100 - work} % lastništvo`, `${formatEur(c.ownerPool)} se razdeli 50/50 med paroma.`],
     ["Par dobi", "Delo obeh + polovico lastništva + kilometrino obeh."],
@@ -61,6 +64,20 @@ export function ContributionLegend({ c }: { c: Contributions }) {
             </li>
           ))}
         </ol>
+      </div>
+      <div className="flex flex-col gap-2 text-sm">
+        <strong>Razmerje delo / lastništvo</strong>
+        <div className="flex flex-col">
+          {SPLIT_TIERS.map((t) => (
+            <div key={t.label} className={cn("flex justify-between gap-3 border-t border-adm-rule py-2 tabular", t.workShare === c.workShare && "font-semibold")}>
+              <span>Par z več dela ima {t.label} točk</span>
+              <span>
+                {t.workShare * 100}/{100 - t.workShare * 100}
+                {t.workShare === c.workShare && " · velja zdaj"}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
     </Panel>
   );

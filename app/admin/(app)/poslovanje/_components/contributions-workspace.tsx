@@ -8,6 +8,7 @@ import { computeContributions, PEOPLE, RULES, WORK_KINDS } from "@/lib/ledger/co
 import type { LedgerYear, WorkRow } from "@/lib/ledger/schema";
 import { ContributionLegend } from "./contribution-legend";
 import { FuelPanel, PairSplit, PeoplePoints } from "./contribution-panels";
+import { SocialPostsLog, type SocialGridRow } from "./social-posts-log";
 import { LedgerGrid, type GridColumn, type GridRow } from "./ledger-grid";
 import { ChartRow, Strip, useLedgerRows, WorkspaceHeader } from "./workspace";
 
@@ -17,7 +18,8 @@ type Props = { ledger: LedgerYear; today: string; unconfirmedOffers: number };
 
 export function ContributionsWorkspace({ ledger, today, unconfirmedOffers }: Props) {
   const { rows, setRows, highlight, adding, setAdding, create } = useLedgerRows("work", ledger.year, ledger.work as Row[]);
-  const c = computeContributions({ ...ledger, work: rows }, today, unconfirmedOffers);
+  const social = useLedgerRows("social", ledger.year, ledger.social as SocialGridRow[]);
+  const c = computeContributions({ ...ledger, work: rows, social: social.rows }, today, unconfirmedOffers);
   const km = c.people.reduce((s, p) => s + p.km, 0);
   const people = [...PEOPLE];
 
@@ -44,7 +46,7 @@ export function ContributionsWorkspace({ ledger, today, unconfirmedOffers }: Pro
       <Strip>
         <KpiCard size="md" label="Dobiček" value={c.profit} format="eur" sub={c.claimedTotal ? "Prihodki − stroški brez Prevoza" : "Prihodki − vsi stroški"} />
         <KpiCard size="md" label="Kilometrina" value={c.fuelTotal} format="eur" sub={`${formatPlain(Math.round(km))} km · ${formatEur(c.fuelRate)}/km`} />
-        <KpiCard size="md" label="Za delitev" value={c.distributable} format="eur" sub={`${RULES.workShare * 100} % po točkah · ${100 - RULES.workShare * 100} % 50/50`} dark />
+        <KpiCard size="md" label="Za delitev" value={c.distributable} format="eur" sub={`${c.workShare * 100} % po točkah · ${100 - c.workShare * 100} % 50/50`} dark />
         <KpiCard size="md" label="Točke skupaj" value={c.totalPoints} sub={`${c.eventsDone} izvedenih dogodkov · ${c.weekendEvents} ob vikendih`} />
       </Strip>
 
@@ -65,6 +67,16 @@ export function ContributionsWorkspace({ ledger, today, unconfirmedOffers }: Pro
         </div>
         <LedgerGrid table="work" rows={rows} setRows={setRows} columns={columns} addLabel="Vpiši ure" onAdd={() => setAdding(true)} highlight={highlight} />
       </div>
+
+      <SocialPostsLog
+        rows={social.rows}
+        setRows={social.setRows}
+        highlight={social.highlight}
+        adding={social.adding}
+        setAdding={social.setAdding}
+        create={social.create}
+        today={today}
+      />
 
       <ContributionLegend c={c} />
 

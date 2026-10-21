@@ -186,9 +186,22 @@ await sql`
     updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
   )
 `;
+// Prispevki: število objav na socialnih omrežjih po osebah; točke meseca se razdelijo po objavah.
+await sql`
+  CREATE TABLE IF NOT EXISTS ledger_social (
+    id SERIAL PRIMARY KEY,
+    year INTEGER NOT NULL REFERENCES ledger_years(year) ON DELETE CASCADE,
+    date DATE,
+    person TEXT,
+    posts NUMERIC(6, 2),
+    note TEXT,
+    updated_by TEXT,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  )
+`;
 await sql`ALTER TABLE ledger_years ADD COLUMN IF NOT EXISTS fuel_price NUMERIC(6, 3) NOT NULL DEFAULT 1.9`;
 
-for (const table of ["ledger_events", "ledger_costs", "ledger_students", "ledger_table_rentals", "ledger_stock", "ledger_work"]) {
+for (const table of ["ledger_events", "ledger_costs", "ledger_students", "ledger_table_rentals", "ledger_stock", "ledger_work", "ledger_social"]) {
   await sql.query(`CREATE INDEX IF NOT EXISTS ${table}_year_idx ON ${table} (year)`);
 }
 

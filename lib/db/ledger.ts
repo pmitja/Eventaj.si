@@ -35,15 +35,16 @@ export async function getLedgerYear(year: number): Promise<LedgerYear | null> {
     SELECT fund_opening::float8 AS "fundOpening", fuel_price::float8 AS "fuelPrice" FROM ledger_years WHERE year = ${year}
   `) as { fundOpening: number; fuelPrice: number }[];
   if (!years[0]) return null;
-  const [events, costs, students, tables, stock, work] = await Promise.all([
+  const [events, costs, students, tables, stock, work, social] = await Promise.all([
     selectRows<LedgerYear["events"][number]>("events", year),
     selectRows<LedgerYear["costs"][number]>("costs", year),
     selectRows<LedgerYear["students"][number]>("students", year),
     selectRows<LedgerYear["tables"][number]>("tables", year),
     selectRows<LedgerYear["stock"][number]>("stock", year),
     selectRows<LedgerYear["work"][number]>("work", year),
+    selectRows<LedgerYear["social"][number]>("social", year),
   ]);
-  return { year, ...years[0], events, costs, students, tables, stock, work };
+  return { year, ...years[0], events, costs, students, tables, stock, work, social };
 }
 
 export async function getLists(): Promise<LedgerLists> {
@@ -138,7 +139,8 @@ export async function getLedgerCounts(): Promise<Record<number, LedgerCounts>> {
       (SELECT count(*) FROM ledger_students s WHERE s.year = y.year)::int AS students,
       (SELECT count(*) FROM ledger_table_rentals t WHERE t.year = y.year)::int AS tables,
       (SELECT count(*) FROM ledger_stock k WHERE k.year = y.year)::int AS stock,
-      (SELECT count(*) FROM ledger_work w WHERE w.year = y.year)::int AS work
+      (SELECT count(*) FROM ledger_work w WHERE w.year = y.year)::int AS work,
+      (SELECT count(*) FROM ledger_social m WHERE m.year = y.year)::int AS social
     FROM ledger_years y
   `) as ({ year: number } & LedgerCounts)[];
   return Object.fromEntries(rows.map(({ year, ...counts }) => [year, counts]));

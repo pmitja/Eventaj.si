@@ -1,5 +1,6 @@
 // Prispevki: who did how much work in a year, and how the profit is split from it.
-// 1 point ≈ 1 hour of work. Profit minus fuel money is split 60 % by points, 40 % 50/50 by pair.
+// 1 point ≈ 1 hour of work. Profit minus fuel money is split by points and 50/50 by pair; the
+// share that goes by points depends on how much of the work the busier pair did (SPLIT_TIERS).
 import { computeOverview, DUO, PAIRS } from "./compute";
 import type { EventRow, LedgerYear } from "./schema";
 
@@ -11,8 +12,20 @@ export const PAIR_OF: Record<Person, Pair> = { Jan: PAIRS[0], Maja: PAIRS[0], Mi
 
 export const WORK_KINDS = ["Spletna stran", "Nove storitve / izboljšave", "Drugo"];
 
+// Busier pair's share of points → share of the money that goes by points (rest 50/50 by pair).
+// Checked top-down: the first tier whose `from` the share reaches wins.
+export const SPLIT_TIERS = [
+  { from: 0.8, workShare: 0.8, label: "80 % ali več" },
+  { from: 0.7, workShare: 0.7, label: "nad 70 %", strict: true },
+  { from: 0.55, workShare: 0.6, label: "55–70 %" },
+  { from: 0, workShare: 0.5, label: "pod 55 %" },
+] as const;
+
+export function splitTier(topPairShare: number) {
+  return SPLIT_TIERS.find((t) => ("strict" in t ? topPairShare > t.from : topPairShare >= t.from))!;
+}
+
 export const RULES = {
-  workShare: 0.6, // del dobička, ki se deli po točkah; ostanek 50/50 med paroma
   run: 5, // izvedba dogodka na osebo
   kmStep: 50, // +1 točka na vsakih 50 km v eno smer
   weekend: 1.25, // sobota ali nedelja
@@ -25,7 +38,7 @@ export const RULES = {
   tableTrip: 1, // dostava ali prevzem miz
   material: 0.25, // naročilo potrošnega materiala
   callsPerMonth: 8, // klici (Mitja)
-  socialPerMonth: 6, // socialna omrežja: Julija 75 %, Maja 25 %
+  socialPerMonth: 6, // socialna omrežja: po vpisanih objavah meseca, sicer Julija 75 %, Maja 25 %
   socialJulija: 0.75,
   workCapPerMonth: 20, // največ ur ročnega vnosa na osebo na mesec
   litresPer100: 7, // poraba za kilometrino
@@ -115,8 +128,27 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
 
   const months = elapsedMonths(ledger.year, today);
   add("Mitja", "Klici", RULES.callsPerMonth * months);
-  add("Julija", "Socialna omrežja", RULES.socialPerMonth * months * RULES.socialJulija);
-  add("Maja", "Socialna omrežja", RULES.socialPerMonth * months * (1 - RULES.socialJulija));
+
+  // Social: each month's points go by that month's logged posts; months without posts 75/25.
+  const posts = Array.from({ length: 12 }, () => new Map<Person, number>());
+  for (const row of ledger.social) {
+    if (!isPerson(row.person) || !row.posts || !row.date) continue;
+    const month = posts[Number(row.date.slice(5, 7)) - 1];
+    month.set(asPerson(row.person), (month.get(asPerson(row.person)) ?? 0) + row.posts);
+  }
+  let socialMonthsByPosts = 0;
+  posts.forEach((month, i) => {
+    const weight = Math.min(Math.max(months - i, 0), 1);
+    const total = [...month.values()].reduce((s, n) => s + n, 0);
+    if (total > 0) socialMonthsByPosts++;
+    if (!weight) return;
+    const pointsThisMonth = RULES.socialPerMonth * weight;
+    if (total > 0) for (const [person, n] of month) add(person, "Socialna omrežja", (pointsThisMonth * n) / total);
+    else {
+      add("Julija", "Socialna omrežja", pointsThisMonth * RULES.socialJulija);
+      add("Maja", "Socialna omrežja", pointsThisMonth * (1 - RULES.socialJulija));
+    }
+  });
 
   // Logged hours count up to the monthly cap per person.
   const logged = new Map<string, number>();
@@ -143,9 +175,12 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
   const profit = computeOverview(ledger).profit + claimedTotal;
   const fuelTotal = PEOPLE.reduce((s, p) => s + fuel[p], 0);
   const distributable = profit - fuelTotal;
-  const workPool = distributable * RULES.workShare;
-  const ownerPool = distributable - workPool;
   const totalPoints = PEOPLE.reduce((s, p) => s + sumPoints(points[p]), 0);
+  const pairShare = (pair: Pair) => (totalPoints ? PEOPLE.filter((p) => PAIR_OF[p] === pair).reduce((s, p) => s + sumPoints(points[p]), 0) / totalPoints : 0.5);
+  const topPairShare = Math.max(...PAIRS.map(pairShare));
+  const tier = splitTier(topPairShare);
+  const workPool = distributable * tier.workShare;
+  const ownerPool = distributable - workPool;
 
   const people = PEOPLE.map((person) => {
     const own = sumPoints(points[person]);
@@ -177,11 +212,14 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
     fuelRate,
     fuelTotal,
     distributable,
+    topPairShare,
+    workShare: tier.workShare,
     workPool,
     ownerPool,
     totalPoints,
     months,
     overCap,
+    socialMonthsByPosts,
     unconfirmedOffers,
     eventsDone: done.length,
     weekendEvents: done.filter((e) => isWeekend(e.date!)).length,
