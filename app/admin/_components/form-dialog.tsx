@@ -54,7 +54,7 @@ export function FormDialog(props: Props) {
   // Remount the body each time the dialog opens so it starts from fresh defaults.
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent className="admin-root flex max-h-[calc(100vh-32px)] w-[calc(100vw-24px)] max-w-[640px] flex-col gap-0 overflow-hidden rounded-[20px] border border-adm-ink bg-adm-bg p-0 shadow-[0_24px_60px_rgba(28,24,20,.25)] sm:rounded-[20px] [&>button:last-child]:hidden">
+      <DialogContent className="admin-root flex max-h-[calc(100dvh-24px)] w-[calc(100vw-24px)] max-w-[640px] flex-col gap-0 overflow-hidden rounded-[20px] border border-adm-ink bg-adm-bg p-0 shadow-[0_24px_60px_rgba(28,24,20,.25)] sm:rounded-[20px] [&>button:last-child]:hidden">
         {props.open && <FormBody {...props} />}
       </DialogContent>
     </Dialog>
@@ -92,7 +92,7 @@ function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitL
         event.preventDefault();
         submit();
       }}
-      className="flex min-h-0 flex-col"
+      className="flex min-h-0 flex-1 flex-col"
     >
       <div className="flex items-start justify-between gap-4 border-b border-adm-line px-6 pb-[18px] pt-6 sm:px-7">
         <div className="flex flex-col gap-1.5">
@@ -105,7 +105,7 @@ function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitL
         </DialogClose>
       </div>
 
-      <div className="min-h-0 overflow-y-auto">
+      <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
         <motion.div
           className="grid grid-cols-1 gap-x-[18px] gap-y-4 px-6 py-[22px] sm:grid-cols-2 sm:px-7"
           initial="hidden"
