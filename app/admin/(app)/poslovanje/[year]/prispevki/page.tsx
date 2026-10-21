@@ -1,8 +1,13 @@
+import { notFound } from "next/navigation";
+import { requireAdminPage } from "@/lib/admin-auth";
+import { canSeeContributions } from "@/lib/contributions-access";
 import { countUnconfirmedOffers } from "@/lib/db/ledger";
 import { ContributionsWorkspace } from "../../_components/contributions-workspace";
 import { loadYear } from "../../_components/load";
 
 export default async function ContributionsPage({ params }: { params: Promise<{ year: string }> }) {
+  const user = await requireAdminPage();
+  if (!canSeeContributions(user.email)) notFound();
   const { ledger } = await loadYear(params);
   const offers = await countUnconfirmedOffers(ledger.year);
   const today = new Date().toLocaleDateString("sv-SE", { timeZone: "Europe/Ljubljana" });

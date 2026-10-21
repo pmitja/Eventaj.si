@@ -8,6 +8,7 @@ import { useEffect, useState, type ReactNode } from "react";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
 import { Sheet, SheetContent, SheetTitle } from "@/components/ui/sheet";
 import type { LedgerCounts } from "@/lib/db/ledger";
+import { canSeeContributions } from "@/lib/contributions-access";
 import { cn } from "@/lib/utils";
 import { logout } from "../actions";
 import { LEDGER_TABS } from "./ledger-tabs";
@@ -117,7 +118,7 @@ function SidebarNav({ user, inquiryCount, years, counts, pathname }: Omit<Props,
           {year && <YearPicker year={year} years={years} tab={here.section === "ledger" ? here.tab : ""} />}
         </div>
         {year ? (
-          LEDGER_TABS.map((tab) => (
+          LEDGER_TABS.filter((tab) => tab.slug !== "prispevki" || canSeeContributions(user.email)).map((tab) => (
             <NavItem
               key={tab.slug}
               href={`/admin/poslovanje/${year}${tab.slug ? `/${tab.slug}` : ""}`}
