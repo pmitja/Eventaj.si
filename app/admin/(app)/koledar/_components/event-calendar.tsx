@@ -10,6 +10,7 @@ import type { DoneEvent, TableRentalEvent } from "@/lib/db/ledger";
 import { cn } from "@/lib/utils";
 import { crewText, isDone, plannedFacts, rentalFacts, rentalWho, toEntries, whoShort, whoText, type Entry } from "./calendar-entries";
 import { AddEventDialog, type CalendarLists } from "./add-event-dialog";
+import { EntryFlags, CrewMark, TimeMark } from "./entry-flags";
 import { EventDialog } from "./event-dialog";
 import { MonthList, MonthSummary } from "./month-list";
 
@@ -81,9 +82,15 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
     <Panel
       title="Dogodki po mesecih"
       note={
-        <span className="flex gap-4">
+        <span className="flex flex-wrap gap-x-4 gap-y-1">
           <LegendDot color="#3E4A22" label="Potrjeno" />
           <LegendDot color="#1C1814" label="Opravljeno" />
+          <span className="flex items-center gap-1.5">
+            <CrewMark /> Brez izvedbe
+          </span>
+          <span className="flex items-center gap-1.5">
+            <TimeMark /> Brez ure
+          </span>
         </span>
       }
     >
@@ -179,6 +186,7 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
                 {/* Phones only get a marker; the list below the grid carries the details. */}
                 <span className="block h-1.5 sm:hidden" aria-hidden />
                 <span className="hidden truncate text-xs leading-tight sm:block">
+                  <EntryFlags entry={entry} today={today} className="mr-1" />
                   {entry.kind === "planned" && entry.event.startTime ? `${entry.event.startTime} ` : ""}
                   {entry.kind === "rental" ? "Mize · " : ""}
                   {entry.title}

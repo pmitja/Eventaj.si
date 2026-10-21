@@ -78,6 +78,12 @@ export function whoShort(entry: Entry) {
   return execution === "Študenti" ? "Študenti: kdo?" : execution;
 }
 
+// Nobody is set to work the event yet (no execution, no students, no table driver).
+export const missingCrew = (entry: Entry) => !whoShort(entry);
+
+// An upcoming event without a start time. Table rentals have no start time to fill in.
+export const missingTime = (entry: Entry, today: string) => entry.kind !== "rental" && !isDone(entry, today) && !entry.event.startTime;
+
 // Who drives a table rental there and back, plus any students linked to it in Študenti.
 export function rentalWho(event: TableRentalEvent) {
   const parts = [

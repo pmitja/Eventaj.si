@@ -1,6 +1,7 @@
 import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
 import { cn } from "@/lib/utils";
+import { EntryFlags } from "./entry-flags";
 import { bookedFacts, crewText, doneFacts, isDone, plannedFacts, rentalFacts, rentalWho, whoText, type Entry } from "./calendar-entries";
 
 function dayLabel(date: string) {
@@ -50,6 +51,7 @@ export function MonthList({ entries, today, onOpen }: { entries: Entry[]; today:
               />
               {dayLabel(entry.date)}
               {entry.kind === "planned" && entry.event.startTime ? ` · ${entry.event.startTime}` : ""}
+              <EntryFlags entry={entry} today={today} />
             </span>
 
             {entry.kind === "rental" ? (
