@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireAdminAction } from "@/lib/admin-auth";
+import { createStudentAccount, deleteStudentAccount, requireAdminAction, resetStudentPassword } from "@/lib/admin-auth";
 import {
   createYear,
   deleteLedgerRow,
@@ -93,4 +93,42 @@ export async function saveLists(_: string | null, formData: FormData) {
   }
   revalidatePath("/admin/poslovanje", "layout");
   return `Shranjeno ${Date.now()}`;
+}
+
+const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+// Student logins: they see only their own schedule at /admin/razpored.
+export async function addStudentAccount(values: { student?: string; email?: string; password?: string }) {
+  await requireAdminAction();
+  const student = values.student?.trim() ?? "";
+  const email = values.email?.trim() ?? "";
+  const password = values.password ?? "";
+  if (!student) return "Izberite študenta";
+  if (!EMAIL.test(email)) return "Neveljaven e-naslov";
+  if (password.length < 8) return "Geslo mora imeti vsaj 8 znakov";
+  try {
+    await createStudentAccount(student, email, password);
+  } catch (error) {
+    return error instanceof Error ? error.message : "Shranjevanje ni uspelo";
+  }
+  revalidatePath("/admin/poslovanje/nastavitve");
+  return null;
+}
+
+export async function setStudentAccountPassword(id: number, values: { password?: string }) {
+  await requireAdminAction();
+  const password = values.password ?? "";
+  if (password.length < 8) return "Geslo mora imeti vsaj 8 znakov";
+  try {
+    await resetStudentPassword(id, password);
+  } catch (error) {
+    return error instanceof Error ? error.message : "Shranjevanje ni uspelo";
+  }
+  return null;
+}
+
+export async function removeStudentAccount(id: number) {
+  await requireAdminAction();
+  await deleteStudentAccount(id);
+  revalidatePath("/admin/poslovanje/nastavitve");
 }

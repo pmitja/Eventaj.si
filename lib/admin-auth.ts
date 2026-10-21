@@ -7,7 +7,11 @@ import { sql } from "@/lib/db";
 const COOKIE_NAME = "eventaj_admin";
 const SESSION_DAYS = 30;
 
-export type AdminUser = { id: number; email: string; name: string };
+// "admin" sees the whole dashboard, "student" only their own schedule at /admin/razpored.
+export type UserRole = "admin" | "student";
+export type AdminUser = { id: number; email: string; name: string; role: UserRole; student: string | null };
+
+export const STUDENT_HOME = "/admin/razpored";
 
 function secret() {
   // ADMIN_PASSWORD was the single shared login before per-user accounts; it still signs sessions
@@ -49,11 +53,11 @@ async function verifyPassword(password: string, stored: string) {
 
 export async function authenticate(email: string, password: string): Promise<AdminUser | null> {
   const rows = (await sql()`
-    SELECT id, email, name, password_hash FROM admin_users WHERE lower(email) = lower(${email.trim()})
+    SELECT id, email, name, role, student, password_hash FROM admin_users WHERE lower(email) = lower(${email.trim()})
   `) as (AdminUser & { password_hash: string })[];
   const row = rows[0];
   if (!row || !(await verifyPassword(password, row.password_hash))) return null;
-  return { id: row.id, email: row.email, name: row.name };
+  return { id: row.id, email: row.email, name: row.name, role: row.role, student: row.student };
 }
 
 export async function createSession(userId: number) {
@@ -80,28 +84,38 @@ export const getAdminUser = cache(async (): Promise<AdminUser | null> => {
   if (!userId || !expires || !signature || Number(expires) < Date.now()) return null;
   if (!safeEqual(signature, sign(`${userId}.${expires}`))) return null;
   // Looked up on every request so removing a user revokes their session.
-  const rows = (await sql()`SELECT id, email, name FROM admin_users WHERE id = ${Number(userId)}`) as AdminUser[];
+  const rows = (await sql()`SELECT id, email, name, role, student FROM admin_users WHERE id = ${Number(userId)}`) as AdminUser[];
   return rows[0] ?? null;
 });
 
-export async function isAdmin() {
-  return (await getAdminUser()) !== null;
+// Where a signed-in user lands after login.
+export function homeFor(user: AdminUser) {
+  return user.role === "student" ? STUDENT_HOME : "/admin";
 }
 
+// Everything outside the student schedule is for admins only; students are sent to their schedule.
 export async function requireAdminPage() {
   const user = await getAdminUser();
   if (!user) redirect("/admin/login");
+  if (user.role !== "admin") redirect(STUDENT_HOME);
   return user;
 }
 
 export async function requireAdminAction() {
   const user = await getAdminUser();
-  if (!user) throw new Error("Ni dostopa");
+  if (!user || user.role !== "admin") throw new Error("Ni dostopa");
   return user;
 }
 
 export async function requireAdminApi() {
-  return (await isAdmin()) ? null : Response.json({ error: "Ni dostopa" }, { status: 401 });
+  const user = await getAdminUser();
+  return user?.role === "admin" ? null : Response.json({ error: "Ni dostopa" }, { status: 401 });
+}
+
+export async function requireUserAction() {
+  const user = await getAdminUser();
+  if (!user) throw new Error("Ni dostopa");
+  return user;
 }
 
 export async function updateAdminUser(id: number, changes: { name: string; email: string; password?: string }) {
@@ -114,4 +128,39 @@ export async function updateAdminUser(id: number, changes: { name: string; email
   } else {
     await sql()`UPDATE admin_users SET name = ${changes.name.trim()}, email = ${email} WHERE id = ${id}`;
   }
+}
+
+export async function setPassword(id: number, password: string) {
+  await sql()`UPDATE admin_users SET password_hash = ${await hashPassword(password)} WHERE id = ${id}`;
+}
+
+export type StudentAccount = { id: number; email: string; student: string };
+
+export async function listStudentAccounts() {
+  return (await sql()`
+    SELECT id, email, student FROM admin_users WHERE role = 'student' ORDER BY lower(student), id
+  `) as StudentAccount[];
+}
+
+export async function createStudentAccount(student: string, email: string, password: string) {
+  const address = email.trim().toLowerCase();
+  const taken = (await sql()`SELECT id FROM admin_users WHERE lower(email) = ${address}`) as { id: number }[];
+  if (taken.length > 0) throw new Error("Ta e-naslov že uporablja drug račun");
+  await sql()`
+    INSERT INTO admin_users (email, name, password_hash, role, student)
+    VALUES (${address}, ${student.trim()}, ${await hashPassword(password)}, 'student', ${student.trim()})
+  `;
+}
+
+// Only student accounts can be changed or removed from the dashboard; admins stay script-managed.
+export async function resetStudentPassword(id: number, password: string) {
+  const hash = await hashPassword(password);
+  const rows = (await sql()`
+    UPDATE admin_users SET password_hash = ${hash} WHERE id = ${id} AND role = 'student' RETURNING id
+  `) as { id: number }[];
+  if (!rows[0]) throw new Error("Račun ne obstaja");
+}
+
+export async function deleteStudentAccount(id: number) {
+  await sql()`DELETE FROM admin_users WHERE id = ${id} AND role = 'student'`;
 }

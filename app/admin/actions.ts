@@ -1,7 +1,7 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { authenticate, createSession, destroySession } from "@/lib/admin-auth";
+import { authenticate, createSession, destroySession, homeFor } from "@/lib/admin-auth";
 
 export async function login(_: string | null, formData: FormData) {
   const email = String(formData.get("email") ?? "");
@@ -12,7 +12,7 @@ export async function login(_: string | null, formData: FormData) {
     return "Napačen e-naslov ali geslo";
   }
   await createSession(user.id);
-  redirect("/admin");
+  redirect(homeFor(user));
 }
 
 export async function logout() {

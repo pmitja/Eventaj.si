@@ -1,9 +1,10 @@
 import { redirect } from "next/navigation";
-import { isAdmin } from "@/lib/admin-auth";
+import { getAdminUser, homeFor } from "@/lib/admin-auth";
 import { LoginForm } from "./login-form";
 
 export default async function AdminLoginPage() {
-  if (await isAdmin()) redirect("/admin");
+  const user = await getAdminUser();
+  if (user) redirect(homeFor(user));
 
   return (
     <main className="mx-auto max-w-sm px-4 pt-24">

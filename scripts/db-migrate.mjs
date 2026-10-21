@@ -201,6 +201,10 @@ await sql`
 `;
 await sql`ALTER TABLE ledger_years ADD COLUMN IF NOT EXISTS fuel_price NUMERIC(6, 3) NOT NULL DEFAULT 1.9`;
 
+// Vloga računa: "admin" vidi vse, "student" samo svoj razpored. student = ime iz seznama Študenti.
+await sql`ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS role TEXT NOT NULL DEFAULT 'admin'`;
+await sql`ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS student TEXT`;
+
 for (const table of ["ledger_events", "ledger_costs", "ledger_students", "ledger_table_rentals", "ledger_stock", "ledger_work", "ledger_social"]) {
   await sql.query(`CREATE INDEX IF NOT EXISTS ${table}_year_idx ON ${table} (year)`);
 }
