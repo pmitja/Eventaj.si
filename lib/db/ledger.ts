@@ -31,18 +31,19 @@ export async function listYears() {
 }
 
 export async function getLedgerYear(year: number): Promise<LedgerYear | null> {
-  const years = (await sql()`SELECT fund_opening::float8 AS "fundOpening" FROM ledger_years WHERE year = ${year}`) as {
-    fundOpening: number;
-  }[];
+  const years = (await sql()`
+    SELECT fund_opening::float8 AS "fundOpening", fuel_price::float8 AS "fuelPrice" FROM ledger_years WHERE year = ${year}
+  `) as { fundOpening: number; fuelPrice: number }[];
   if (!years[0]) return null;
-  const [events, costs, students, tables, stock] = await Promise.all([
+  const [events, costs, students, tables, stock, work] = await Promise.all([
     selectRows<LedgerYear["events"][number]>("events", year),
     selectRows<LedgerYear["costs"][number]>("costs", year),
     selectRows<LedgerYear["students"][number]>("students", year),
     selectRows<LedgerYear["tables"][number]>("tables", year),
     selectRows<LedgerYear["stock"][number]>("stock", year),
+    selectRows<LedgerYear["work"][number]>("work", year),
   ]);
-  return { year, fundOpening: years[0].fundOpening, events, costs, students, tables, stock };
+  return { year, ...years[0], events, costs, students, tables, stock, work };
 }
 
 export async function getLists(): Promise<LedgerLists> {
@@ -136,7 +137,8 @@ export async function getLedgerCounts(): Promise<Record<number, LedgerCounts>> {
       (SELECT count(*) FROM ledger_costs c WHERE c.year = y.year)::int AS costs,
       (SELECT count(*) FROM ledger_students s WHERE s.year = y.year)::int AS students,
       (SELECT count(*) FROM ledger_table_rentals t WHERE t.year = y.year)::int AS tables,
-      (SELECT count(*) FROM ledger_stock k WHERE k.year = y.year)::int AS stock
+      (SELECT count(*) FROM ledger_stock k WHERE k.year = y.year)::int AS stock,
+      (SELECT count(*) FROM ledger_work w WHERE w.year = y.year)::int AS work
     FROM ledger_years y
   `) as ({ year: number } & LedgerCounts)[];
   return Object.fromEntries(rows.map(({ year, ...counts }) => [year, counts]));
@@ -188,6 +190,20 @@ export async function deleteLedgerRow(name: LedgerTableName, id: number) {
 
 export async function setFundOpening(year: number, amount: number) {
   await sql()`UPDATE ledger_years SET fund_opening = ${amount} WHERE year = ${year}`;
+}
+
+export async function setFuelPrice(year: number, price: number) {
+  await sql()`UPDATE ledger_years SET fuel_price = ${price} WHERE year = ${year}`;
+}
+
+// Offers sent this year for inquiries that did not become an event: work without a Dogodki row.
+export async function countUnconfirmedOffers(year: number) {
+  const rows = (await sql()`
+    SELECT count(DISTINCT o.inquiry_id)::int AS n
+    FROM offers o JOIN inquiries i ON i.id = o.inquiry_id
+    WHERE o.sent_at IS NOT NULL AND extract(year FROM o.sent_at) = ${year} AND i.status <> 'confirmed'
+  `) as { n: number }[];
+  return rows[0]?.n ?? 0;
 }
 
 // A new year starts from where the previous one ended: same stock items with the current stock as

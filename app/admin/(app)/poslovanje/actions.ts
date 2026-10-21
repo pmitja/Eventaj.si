@@ -9,6 +9,7 @@ import {
   insertLedgerRow,
   parseValue,
   saveList,
+  setFuelPrice,
   setFundOpening,
   updateLedgerField,
   type LedgerValue,
@@ -60,6 +61,17 @@ export async function updateFundOpening(year: number, value: string) {
     await setFundOpening(year, typeof amount === "number" ? amount : 0);
     revalidatePath(`/admin/poslovanje/${year}`);
     return amount;
+  });
+}
+
+export async function updateFuelPrice(year: number, value: string) {
+  await requireAdminAction();
+  return attempt(async () => {
+    const price = parseValue("number", value);
+    if (typeof price !== "number" || price <= 0) throw new Error("Vpišite ceno litra, npr. 1,90");
+    await setFuelPrice(year, price);
+    revalidatePath(`/admin/poslovanje/${year}/prispevki`);
+    return price;
   });
 }
 

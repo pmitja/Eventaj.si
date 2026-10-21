@@ -73,7 +73,17 @@ export type StockRow = {
   minimum: number | null; // G  Minimalna zaloga
 };
 
-export type LedgerTableName = "events" | "costs" | "students" | "tables" | "stock";
+// Prispevki: hours someone logs by hand (website, new services …). 1 hour = 1 point.
+export type WorkRow = {
+  id: number;
+  date: string | null; // Datum
+  person: string | null; // Oseba
+  kind: string | null; // Vrsta dela
+  hours: number | null; // Ure
+  description: string | null; // Opis
+};
+
+export type LedgerTableName = "events" | "costs" | "students" | "tables" | "stock" | "work";
 
 export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: string; fields: Record<string, FieldDef> }> = {
   events: {
@@ -152,14 +162,27 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       minimum: { col: "minimum", type: "number" },
     },
   },
+  work: {
+    table: "ledger_work",
+    order: "date NULLS LAST, id",
+    fields: {
+      date: { col: "date", type: "date" },
+      person: { col: "person", type: "text" },
+      kind: { col: "kind", type: "text" },
+      hours: { col: "hours", type: "number" },
+      description: { col: "description", type: "text" },
+    },
+  },
 };
 
 export type LedgerYear = {
   year: number;
   fundOpening: number; // Pregled!E22  Začetno stanje fonda
+  fuelPrice: number; // Prispevki: cena litra goriva za kilometrino
   events: EventRow[];
   costs: CostRow[];
   students: StudentRow[];
   tables: TableRentalRow[];
   stock: StockRow[];
+  work: WorkRow[];
 };

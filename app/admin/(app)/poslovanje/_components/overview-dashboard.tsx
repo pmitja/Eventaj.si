@@ -11,8 +11,9 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 import { computeOverview, DUO, formatEur, formatNumber, formatPlain } from "@/lib/ledger/compute";
 import type { LedgerYear } from "@/lib/ledger/schema";
 import { cn } from "@/lib/utils";
-import { FundOpeningInput } from "./fund-opening-input";
+import { updateFundOpening } from "../actions";
 import { StockStatus } from "./stock-status";
+import { YearAmountInput } from "./year-amount-input";
 
 const [C0, C1, C2, C3, , C5] = PALETTE;
 
@@ -256,7 +257,16 @@ function FundPanel({ o, year, className }: { o: Overview; year: number; classNam
   const y = (v: number) => ((v - lo) / span) * 100;
 
   const lines: [string, React.ReactNode, boolean?][] = [
-    ["Začetno stanje fonda", <FundOpeningInput key="opening" year={year} value={o.fundOpening} />],
+    [
+      "Začetno stanje fonda",
+      <YearAmountInput
+        key="opening"
+        value={o.fundOpening}
+        onSave={(draft) => updateFundOpening(year, draft)}
+        label="Začetno stanje fonda"
+        saved="Začetno stanje fonda je posodobljeno"
+      />,
+    ],
     ["+ Nakazila v fond", formatEur(o.transfers)],
     ["− Stroški plačani neposredno iz fonda", formatEur(o.fundCosts)],
     ["− Že izvedena povračila paroma", formatEur(o.refunded)],

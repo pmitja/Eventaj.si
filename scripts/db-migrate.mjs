@@ -172,7 +172,23 @@ await sql`
   )
 `;
 
-for (const table of ["ledger_events", "ledger_costs", "ledger_students", "ledger_table_rentals", "ledger_stock"]) {
+// Prispevki: ročno vpisane ure (spletna stran, nove storitve …) in cena goriva za kilometrino.
+await sql`
+  CREATE TABLE IF NOT EXISTS ledger_work (
+    id SERIAL PRIMARY KEY,
+    year INTEGER NOT NULL REFERENCES ledger_years(year) ON DELETE CASCADE,
+    date DATE,
+    person TEXT,
+    kind TEXT,
+    hours NUMERIC(6, 2),
+    description TEXT,
+    updated_by TEXT,
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
+  )
+`;
+await sql`ALTER TABLE ledger_years ADD COLUMN IF NOT EXISTS fuel_price NUMERIC(6, 3) NOT NULL DEFAULT 1.9`;
+
+for (const table of ["ledger_events", "ledger_costs", "ledger_students", "ledger_table_rentals", "ledger_stock", "ledger_work"]) {
   await sql.query(`CREATE INDEX IF NOT EXISTS ${table}_year_idx ON ${table} (year)`);
 }
 
