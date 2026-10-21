@@ -28,13 +28,12 @@ export function splitTier(topPairShare: number) {
 export const RULES = {
   run: 5, // izvedba dogodka na osebo
   kmStep: 50, // +1 točka na vsakih 50 km v eno smer
-  weekend: 1.25, // sobota ali nedelja
   help: 2, // začetna pomoč študentom
   equipment: 1.5, // priprava opreme pred in po dogodku (Mitja)
   clientPrep: 1.5, // priprava s stranko (Maja)
   inquiry: 0.5, // povpraševanje → poslana ponudba (Julija)
   confirmed: 0.5, // povpraševanje postane dogodek (Julija)
-  organisation: 0.5, // študenti, organizacija, pregled, opombe (Julija)
+  organisation: 0.15, // študenti, organizacija, pregled, opombe, na poslano ponudbo (Julija)
   tableTrip: 1, // dostava ali prevzem miz
   material: 0.25, // naročilo potrošnega materiala
   callsPerMonth: 8, // klici (Mitja)
@@ -94,13 +93,12 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
 
   const done = ledger.events.filter((e) => e.date && e.date <= today && e.execution);
   for (const event of done) {
-    const factor = isWeekend(event.date!) ? RULES.weekend : 1;
     const bonus = Math.floor((event.km ?? 0) / 2 / RULES.kmStep); // km v Dogodkih = tja in nazaj
     const team = crew(event);
     const shared = same(event.execution, DUO) || same(event.initialHelp, DUO);
     for (const { person, role } of team) {
-      if (role === "run") add(person, "Izvedba dogodkov", (RULES.run + bonus) * factor);
-      else add(person, "Začetna pomoč", (RULES.help + bonus) * factor);
+      if (role === "run") add(person, "Izvedba dogodkov", RULES.run + bonus);
+      else add(person, "Začetna pomoč", RULES.help + bonus);
       km[person] += (event.km ?? 0) / (shared && team.length > 1 ? team.length : 1);
     }
     add("Mitja", "Priprava opreme", RULES.equipment);
@@ -109,6 +107,7 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
     add("Julija", "Študenti in organizacija", RULES.organisation);
   }
   add("Julija", "Povpraševanja in ponudbe", unconfirmedOffers * RULES.inquiry);
+  add("Julija", "Študenti in organizacija", unconfirmedOffers * RULES.organisation);
 
   for (const rental of ledger.tables.filter((t) => t.date && t.date <= today)) {
     for (const [who, distance] of [
@@ -129,25 +128,27 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
   const months = elapsedMonths(ledger.year, today);
   add("Mitja", "Klici", RULES.callsPerMonth * months);
 
-  // Social: each month's points go by that month's logged posts; months without posts 75/25.
+  // Social: each month's points go by that month's logged posts; a month logged with 0 posts gives
+  // no points. Months without entries go by the year's logged posts, and only if nothing is logged
+  // all year by the default 75/25.
   const posts = Array.from({ length: 12 }, () => new Map<Person, number>());
   for (const row of ledger.social) {
-    if (!isPerson(row.person) || !row.posts || !row.date) continue;
+    if (!isPerson(row.person) || row.posts === null || !row.date) continue;
     const month = posts[Number(row.date.slice(5, 7)) - 1];
     month.set(asPerson(row.person), (month.get(asPerson(row.person)) ?? 0) + row.posts);
   }
+  const yearPosts = new Map<Person, number>();
+  for (const month of posts) for (const [person, n] of month) if (n > 0) yearPosts.set(person, (yearPosts.get(person) ?? 0) + n);
+  const fallback = yearPosts.size ? yearPosts : new Map<Person, number>([["Julija", RULES.socialJulija], ["Maja", 1 - RULES.socialJulija]]);
   let socialMonthsByPosts = 0;
   posts.forEach((month, i) => {
     const weight = Math.min(Math.max(months - i, 0), 1);
-    const total = [...month.values()].reduce((s, n) => s + n, 0);
-    if (total > 0) socialMonthsByPosts++;
+    if (month.size) socialMonthsByPosts++;
     if (!weight) return;
-    const pointsThisMonth = RULES.socialPerMonth * weight;
-    if (total > 0) for (const [person, n] of month) add(person, "Socialna omrežja", (pointsThisMonth * n) / total);
-    else {
-      add("Julija", "Socialna omrežja", pointsThisMonth * RULES.socialJulija);
-      add("Maja", "Socialna omrežja", pointsThisMonth * (1 - RULES.socialJulija));
-    }
+    const split = month.size ? month : fallback;
+    const total = [...split.values()].reduce((s, n) => s + n, 0);
+    if (!total) return;
+    for (const [person, n] of split) add(person, "Socialna omrežja", (RULES.socialPerMonth * weight * n) / total);
   });
 
   // Logged hours count up to the monthly cap per person.

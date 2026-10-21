@@ -43,8 +43,7 @@ export function SocialPostsLog({ rows, setRows, highlight, adding, setAdding, cr
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <Eyebrow>Objave na socialnih omrežjih</Eyebrow>
         <span className="text-[13px] text-adm-muted">
-          {RULES.socialPerMonth} točk na mesec se razdeli po objavah tistega meseca · mesec brez vnosa: Julija {RULES.socialJulija * 100} %, Maja{" "}
-          {100 - RULES.socialJulija * 100} %
+          {RULES.socialPerMonth} točk na mesec se razdeli po objavah tistega meseca · 0 objav = brez točk · mesec brez vnosa po vseh objavah leta
         </span>
       </div>
       <LedgerGrid table="social" rows={rows} setRows={setRows} columns={columns} addLabel="Vpiši objave" onAdd={() => setAdding(true)} highlight={highlight} />
