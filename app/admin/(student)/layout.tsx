@@ -34,7 +34,7 @@ export default async function StudentLayout({ children }: { children: ReactNode 
           </div>
         </div>
       </header>
-      <main className="mx-auto box-border flex w-full max-w-[880px] flex-col gap-7 px-4 pb-16 pt-6 sm:px-6 sm:pt-9">{children}</main>
+      <main className="mx-auto box-border flex w-full min-w-0 max-w-[880px] flex-col overflow-x-clip gap-7 px-4 pb-16 pt-6 sm:px-6 sm:pt-9">{children}</main>
     </>
   );
 }

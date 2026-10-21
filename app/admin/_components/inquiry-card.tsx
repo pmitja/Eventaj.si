@@ -115,7 +115,7 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
       className="flex scroll-mt-6 flex-col gap-[18px] rounded-2xl border border-adm-ink bg-adm-card px-5 py-6 sm:px-[26px]"
     >
       <div className="flex flex-wrap items-start justify-between gap-4">
-        <div className="flex min-w-0 flex-col gap-1.5">
+        <div className="flex min-w-0 flex-col gap-1.5 [overflow-wrap:anywhere]">
           <span className="text-xs uppercase tracking-[.06em] text-adm-muted">
             #{inquiry.id} · {formatReceived(inquiry.createdAt)} · {typeLabels[data.type] ?? data.type}
             {data.source === "manual" && " · ročni vnos"}
@@ -158,11 +158,11 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
         </div>
       </div>
 
-      <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-8 gap-y-2.5 text-sm">
+      <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-x-8 gap-y-2.5 text-sm">
         {details.map(([label, value]) => (
-          <div key={label} className="flex gap-2">
+          <div key={label} className="flex min-w-0 gap-2">
             <dt className="shrink-0 text-adm-muted">{label}:</dt>
-            <dd className="m-0 whitespace-pre-line">{value}</dd>
+            <dd className="m-0 min-w-0 whitespace-pre-line [overflow-wrap:anywhere]">{value}</dd>
           </div>
         ))}
         {inquiry.totalPrice ? (
@@ -173,7 +173,7 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
         ) : null}
       </dl>
 
-      {data.message && <p className="m-0 whitespace-pre-line rounded-xl bg-adm-side px-4 py-3.5 text-sm leading-relaxed [text-wrap:pretty]">{data.message}</p>}
+      {data.message && <p className="m-0 whitespace-pre-line rounded-xl bg-adm-side px-4 py-3.5 text-sm leading-relaxed [overflow-wrap:anywhere] [text-wrap:pretty]">{data.message}</p>}
 
       {inquiry.offers.length > 0 && (
         <div className="flex flex-wrap items-start gap-2.5 border-t border-adm-ink pt-3.5 text-sm">

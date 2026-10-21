@@ -117,11 +117,11 @@ export function EventDetailsPanel({ inquiryId, request }: Props) {
       </div>
 
       {data && (
-        <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(260px,1fr))] gap-x-8 gap-y-2 border-t border-adm-line pt-3">
+        <dl className="m-0 grid grid-cols-[repeat(auto-fit,minmax(min(260px,100%),1fr))] gap-x-8 gap-y-2 border-t border-adm-line pt-3">
           {rows.map(([label, value]) => (
-            <div key={label} className="flex gap-2">
+            <div key={label} className="flex min-w-0 gap-2">
               <dt className="shrink-0 text-adm-muted">{label}:</dt>
-              <dd className="m-0 whitespace-pre-line [overflow-wrap:anywhere]">{value}</dd>
+              <dd className="m-0 min-w-0 whitespace-pre-line [overflow-wrap:anywhere]">{value}</dd>
             </div>
           ))}
         </dl>

@@ -451,6 +451,8 @@ body:has(.admin-root) {
   color: #1C1814;
   background: #FAF6EE;
   -webkit-font-smoothing: antialiased;
+  /* Long e-mails and URLs wrap instead of pushing the layout wider than a phone screen. */
+  overflow-wrap: break-word;
 }
 
 .admin-root .tabular {

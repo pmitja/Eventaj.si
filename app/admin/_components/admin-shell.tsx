@@ -48,7 +48,8 @@ export function AdminShell({ user, inquiryCount, years, counts, children }: Prop
   );
 
   return (
-    <div className="lg:grid lg:min-h-screen lg:grid-cols-[252px_minmax(0,1fr)]">
+    // overflow-x-clip: a too-wide table or long e-mail must never let the whole page pan sideways on mobile.
+    <div className="overflow-x-clip lg:grid lg:min-h-screen lg:grid-cols-[252px_minmax(0,1fr)]">
       <aside className="sticky top-0 hidden h-screen flex-col gap-7 overflow-y-auto border-r border-adm-line bg-adm-side px-3.5 pb-4 pt-7 lg:flex">
         {nav("desktop")}
       </aside>
