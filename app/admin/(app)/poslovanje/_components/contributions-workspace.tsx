@@ -42,7 +42,7 @@ export function ContributionsWorkspace({ ledger, today, unconfirmedOffers }: Pro
       <WorkspaceHeader year={ledger.year} title="Prispevki" addLabel="Vpiši ure" onAdd={() => setAdding(true)} />
 
       <Strip>
-        <KpiCard size="md" label="Dobiček" value={c.profit} format="eur" sub="Prihodki − vsi stroški" />
+        <KpiCard size="md" label="Dobiček" value={c.profit} format="eur" sub={c.claimedTotal ? "Prihodki − stroški brez Prevoza" : "Prihodki − vsi stroški"} />
         <KpiCard size="md" label="Kilometrina" value={c.fuelTotal} format="eur" sub={`${formatPlain(Math.round(km))} km · ${formatEur(c.fuelRate)}/km`} />
         <KpiCard size="md" label="Za delitev" value={c.distributable} format="eur" sub={`${RULES.workShare * 100} % po točkah · ${100 - RULES.workShare * 100} % 50/50`} dark />
         <KpiCard size="md" label="Točke skupaj" value={c.totalPoints} sub={`${c.eventsDone} izvedenih dogodkov · ${c.weekendEvents} ob vikendih`} />

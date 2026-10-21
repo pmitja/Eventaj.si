@@ -24,8 +24,13 @@ const POINTS: [string, string, string][] = [
 export function ContributionLegend({ c }: { c: Contributions }) {
   const work = RULES.workShare * 100;
   const steps: [string, string][] = [
-    ["Dobiček", `Prihodki − vsi stroški, enako kot na Pregledu: ${formatEur(c.profit)}.`],
-    ["Kilometrina", `Km / 100 × ${RULES.litresPer100} l × cena litra. Izplača se tistemu, ki je vozil; Jan + Mitja si km delita na pol. Prevoz, že vpisan v Stroških, se odšteje. Skupaj ${formatEur(c.fuelTotal)}.`],
+    [
+      "Dobiček",
+      c.claimedTotal
+        ? `Prihodki − stroški, brez Prevoza (${formatEur(c.claimedTotal)}), ki je že del kilometrine: ${formatEur(c.profit)}.`
+        : `Prihodki − vsi stroški, enako kot na Pregledu: ${formatEur(c.profit)}.`,
+    ],
+    ["Kilometrina", `Km / 100 × ${RULES.litresPer100} l × cena litra. Izplača se tistemu, ki je vozil; Jan + Mitja si km delita na pol. Prevoz, že vpisan v Stroških, šteje kot že izplačan del. Skupaj ${formatEur(c.fuelTotal)}.`],
     ["Za delitev", `Dobiček − kilometrina = ${formatEur(c.distributable)}.`],
     [`${work} % po točkah`, `${formatEur(c.workPool)} se razdeli po deležu točk vsake osebe.`],
     [`${100 - work} % lastništvo`, `${formatEur(c.ownerPool)} se razdeli 50/50 med paroma.`],

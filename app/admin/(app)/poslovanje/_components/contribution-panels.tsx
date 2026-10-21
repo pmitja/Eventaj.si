@@ -90,27 +90,37 @@ export function FuelPanel({ c, year, fuelPrice, className }: { c: Contributions;
           decimals={3}
         />
       </div>
-      <div className="flex flex-col text-sm tabular">
-        <div className="grid grid-cols-[1fr_auto_auto] gap-x-4 border-b border-adm-ink pb-2 text-xs uppercase tracking-[.06em] text-adm-muted">
-          <span>Oseba</span>
-          <span className="text-right">Km</span>
-          <span className="w-24 text-right">Za izplačilo</span>
-        </div>
-        {c.people
-          .filter((p) => p.km > 0)
-          .map((p) => (
-            <div key={p.person} className="grid grid-cols-[1fr_auto_auto] items-baseline gap-x-4 border-b border-adm-rule py-2">
-              <span className="flex flex-col">
-                <LegendDot color={PERSON_COLOR[p.person]} label={p.person} />
-                {p.claimed > 0 && <span className="pl-4 text-xs text-adm-muted">že v Stroških (Prevoz): −{formatEur(p.claimed)}</span>}
-              </span>
-              <span className="text-right">{formatPlain(Math.round(p.km))}</span>
-              <span className="w-24 text-right font-semibold">{formatEur(p.fuel)}</span>
-            </div>
-          ))}
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[340px] border-collapse text-sm tabular">
+          <thead>
+            <tr className="border-b border-adm-ink text-xs uppercase tracking-[.06em] text-adm-muted">
+              <th className="py-2 pr-2 text-left font-normal">Oseba</th>
+              <th className="px-2 py-2 text-right font-normal">Km</th>
+              <th className="px-2 py-2 text-right font-normal">Kilometrina</th>
+              <th className="px-2 py-2 text-right font-normal">Že izplačano</th>
+              <th className="py-2 pl-2 text-right font-normal">Še za izplačilo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {c.people
+              .filter((p) => p.fuel > 0)
+              .map((p) => (
+                <tr key={p.person} className="border-b border-adm-rule">
+                  <td className="py-2 pr-2">
+                    <LegendDot color={PERSON_COLOR[p.person]} label={p.person} />
+                  </td>
+                  <td className="px-2 py-2 text-right">{formatPlain(Math.round(p.km))}</td>
+                  <td className="px-2 py-2 text-right font-semibold">{formatEur(p.fuel)}</td>
+                  <td className="px-2 py-2 text-right">{p.claimed ? formatEur(p.claimed) : "—"}</td>
+                  <td className="py-2 pl-2 text-right">{formatEur(p.fuel - p.claimed)}</td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
       <p className="m-0 text-xs leading-relaxed text-adm-muted [text-wrap:pretty]">
-        Kilometrina se izplača voznikom pred delitvijo. Šteje km iz Dogodkov (izvedba in začetna pomoč) in Najema miz.
+        Kilometrina se izplača voznikom pred delitvijo. Šteje km iz Dogodkov (izvedba in začetna pomoč) in Najema miz. Že izplačano = Prevoz, ki ga je oseba
+        vpisala v Stroške.
       </p>
     </Panel>
   );

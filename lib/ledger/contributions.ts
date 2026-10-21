@@ -131,14 +131,17 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
     overCap += Math.max(hours - RULES.workCapPerMonth, 0);
   }
 
-  // Fuel: km/100 × 7 l × price. Transport already claimed under Stroški → Prevoz is subtracted.
+  // Fuel: km/100 × 7 l × price. Transport already claimed under Stroški → Prevoz is part of the same
+  // money, so it is added back to the profit and counted as already paid.
   const fuelRate = (RULES.litresPer100 / 100) * ledger.fuelPrice;
-  const claimed = (p: Person) => ledger.costs.filter((c) => same(c.category, "Prevoz") && same(c.payer, p)).reduce((s, c) => s + (c.amount ?? 0), 0);
+  const claimed = Object.fromEntries(
+    PEOPLE.map((p) => [p, ledger.costs.filter((c) => same(c.category, "Prevoz") && same(c.payer, p)).reduce((s, c) => s + (c.amount ?? 0), 0)]),
+  ) as Record<Person, number>;
+  const fuel = Object.fromEntries(PEOPLE.map((p) => [p, Math.max(km[p] * fuelRate, claimed[p])])) as Record<Person, number>;
+  const claimedTotal = PEOPLE.reduce((s, p) => s + claimed[p], 0);
 
-  const profit = computeOverview(ledger).profit;
-  const fuelGross = PEOPLE.reduce((s, p) => s + km[p] * fuelRate, 0);
-  const fuelOwed = Object.fromEntries(PEOPLE.map((p) => [p, Math.max(km[p] * fuelRate - claimed(p), 0)])) as Record<Person, number>;
-  const fuelTotal = PEOPLE.reduce((s, p) => s + fuelOwed[p], 0);
+  const profit = computeOverview(ledger).profit + claimedTotal;
+  const fuelTotal = PEOPLE.reduce((s, p) => s + fuel[p], 0);
   const distributable = profit - fuelTotal;
   const workPool = distributable * RULES.workShare;
   const ownerPool = distributable - workPool;
@@ -147,7 +150,7 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
   const people = PEOPLE.map((person) => {
     const own = sumPoints(points[person]);
     const share = totalPoints ? own / totalPoints : 0;
-    return { person, pair: PAIR_OF[person], points: own, share, byCategory: points[person], work: workPool * share, km: km[person], fuel: fuelOwed[person], claimed: claimed(person) };
+    return { person, pair: PAIR_OF[person], points: own, share, byCategory: points[person], work: workPool * share, km: km[person], fuel: fuel[person], claimed: claimed[person] };
   });
 
   const pairs = PAIRS.map((pair) => {
@@ -170,8 +173,8 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
 
   return {
     profit,
+    claimedTotal,
     fuelRate,
-    fuelGross,
     fuelTotal,
     distributable,
     workPool,
