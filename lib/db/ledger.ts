@@ -244,3 +244,35 @@ export async function listDoneEvents(): Promise<DoneEvent[]> {
     ORDER BY e.date, e.code
   `) as DoneEvent[];
 }
+
+export type TableRentalEvent = {
+  id: number;
+  year: number;
+  code: string | null;
+  date: string;
+  client: string | null;
+  location: string | null;
+  tableCount: number | null;
+  deliveredBy: string | null;
+  pickedBy: string | null;
+  students: string[];
+  inquiryId: number | null;
+  notes: string | null;
+  contact: string | null;
+};
+
+// Rows from Najem miz in every year, with the students linked to them, for the calendar.
+export async function listTableRentalEvents(): Promise<TableRentalEvent[]> {
+  return (await sql()`
+    SELECT t.id, t.year, t.code, to_char(t.date, 'YYYY-MM-DD') AS date, t.client, t.location,
+      t.table_count::float8 AS "tableCount", t.delivered_by AS "deliveredBy", t.picked_by AS "pickedBy",
+      t.inquiry_id AS "inquiryId", t.notes, i.form_data->>'email' AS contact,
+      COALESCE(array_agg(s.student ORDER BY s.id) FILTER (WHERE s.student IS NOT NULL), '{}') AS students
+    FROM ledger_table_rentals t
+    LEFT JOIN ledger_students s ON s.rental_id = t.id
+    LEFT JOIN inquiries i ON i.id = t.inquiry_id
+    WHERE t.date IS NOT NULL
+    GROUP BY t.id, i.id
+    ORDER BY t.date, t.code
+  `) as TableRentalEvent[];
+}

@@ -1,12 +1,18 @@
 import type { CalendarEvent } from "@/lib/db/inquiries";
-import type { DoneEvent } from "@/lib/db/ledger";
+import type { DoneEvent, TableRentalEvent } from "@/lib/db/ledger";
+import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
+import { NO_DELIVERY } from "@/lib/ledger/lists";
 
 // "planned" = a confirmed inquiry still ahead of us, "done" = a row in Poslovanje → Dogodki,
-// "booked" = a Dogodki row entered by hand for a day still ahead of us.
+// "booked" = a Dogodki row entered by hand for a day still ahead of us, "rental" = a row in Najem miz.
 export type Entry =
   | { kind: "planned"; key: string; date: string; title: string; href: string; event: CalendarEvent }
-  | { kind: "done" | "booked"; key: string; date: string; title: string; href: string; event: DoneEvent };
+  | { kind: "done" | "booked"; key: string; date: string; title: string; href: string; event: DoneEvent }
+  | { kind: "rental"; key: string; date: string; title: string; href: string; event: TableRentalEvent };
+
+// Done = shown dark. A table rental counts as done once its day has passed.
+export const isDone = (entry: Entry, today: string) => entry.kind === "done" || (entry.kind === "rental" && entry.date < today);
 
 export const typeLabels: Record<string, string> = {
   basic: "Photo Booth",
@@ -17,10 +23,20 @@ export const typeLabels: Record<string, string> = {
 
 // A confirmed inquiry also has its row in Dogodki: until the day it shows as planned (start time,
 // location), afterwards as done (the ledger row then carries the real hours and money).
-export function toEntries(planned: CalendarEvent[], done: DoneEvent[], today: string): Entry[] {
+// A confirmed table inquiry shows as its Najem miz row, which knows the tables and who drives them.
+export function toEntries(planned: CalendarEvent[], done: DoneEvent[], rentals: TableRentalEvent[], today: string): Entry[] {
   const plannedIds = new Set(planned.map((event) => event.id));
   const doneInquiries = new Set(done.flatMap((event) => (event.inquiryId === null ? [] : [event.inquiryId])));
+  const rentalInquiries = new Set(rentals.flatMap((event) => (event.inquiryId === null ? [] : [event.inquiryId])));
   return [
+    ...rentals.map((event): Entry => ({
+      kind: "rental",
+      key: `t${event.id}`,
+      date: event.date,
+      title: event.client || event.code || "Najem miz",
+      href: `/admin/poslovanje/${event.year}/najem-miz`,
+      event,
+    })),
     ...done.filter((event) => !(event.inquiryId !== null && plannedIds.has(event.inquiryId) && event.date >= today)).map((event): Entry => ({
       kind: event.date >= today ? "booked" : "done",
       key: `d${event.id}`,
@@ -29,7 +45,7 @@ export function toEntries(planned: CalendarEvent[], done: DoneEvent[], today: st
       href: `/admin/poslovanje/${event.year}/dogodki`,
       event,
     })),
-    ...planned.filter((event) => !(doneInquiries.has(event.id) && event.date < today)).map((event): Entry => ({
+    ...planned.filter((event) => !rentalInquiries.has(event.id) && !(doneInquiries.has(event.id) && event.date < today)).map((event): Entry => ({
       kind: "planned",
       key: `p${event.id}`,
       date: event.date,
@@ -44,9 +60,41 @@ export function toEntries(planned: CalendarEvent[], done: DoneEvent[], today: st
 export function crewText(execution: string | null, students: string[]) {
   if (!execution && students.length === 0) return null;
   const names = students.join(", ");
-  if (!names) return execution;
+  if (!names) return execution === "Študenti" ? "Študenti (še ni določeno, kateri)" : execution;
   if (!execution || execution === "Študenti") return `Študenti: ${names}`;
   return `${execution}, študenti: ${names}`;
+}
+
+// Short "who goes" for a calendar chip: the student names when students go, else the execution.
+// "Študenti" with nobody picked yet is flagged so it gets filled in.
+export function whoShort(entry: Entry) {
+  if (entry.kind === "rental") {
+    const { deliveredBy, pickedBy, students } = entry.event;
+    const names = [...new Set([deliveredBy, pickedBy, ...students].filter((name): name is string => Boolean(name) && name !== NO_DELIVERY))];
+    return names.length ? names.join(", ") : deliveredBy === NO_DELIVERY ? "brez dostave" : null;
+  }
+  const [execution, students] = entry.kind === "planned" ? [entry.event.crew, entry.event.crewStudents] : [entry.event.execution, entry.event.students];
+  if (students.length) return [execution && execution !== "Študenti" ? execution : null, ...students].filter(Boolean).join(", ");
+  return execution === "Študenti" ? "Študenti: kdo?" : execution;
+}
+
+// Who drives a table rental there and back, plus any students linked to it in Študenti.
+export function rentalWho(event: TableRentalEvent) {
+  const parts = [
+    event.deliveredBy === NO_DELIVERY ? "brez dostave" : event.deliveredBy ? `dostava: ${event.deliveredBy}` : null,
+    event.pickedBy && event.pickedBy !== NO_DELIVERY ? `prevzem: ${event.pickedBy}` : null,
+    event.students.length ? `študenti: ${event.students.join(", ")}` : null,
+  ].filter(Boolean) as string[];
+  if (parts.length === 0) return null;
+  const text = parts.join(" · ");
+  return text[0].toUpperCase() + text.slice(1);
+}
+
+export function rentalFacts(event: TableRentalEvent) {
+  return [
+    "Mize",
+    event.tableCount !== null ? plural(event.tableCount, "miza", "mizi", "mize", "miz") : null,
+  ].filter(Boolean) as string[];
 }
 
 // Who worked the event: the execution column, the students linked to it and any initial help.

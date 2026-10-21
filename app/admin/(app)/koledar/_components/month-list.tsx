@@ -1,19 +1,21 @@
 import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
 import { cn } from "@/lib/utils";
-import { bookedFacts, crewText, doneFacts, plannedFacts, whoText, type Entry } from "./calendar-entries";
+import { bookedFacts, crewText, doneFacts, isDone, plannedFacts, rentalFacts, rentalWho, whoText, type Entry } from "./calendar-entries";
 
 function dayLabel(date: string) {
   return `${Number(date.slice(8))}. ${Number(date.slice(5, 7))}.`;
 }
 
-export function MonthSummary({ entries }: { entries: Entry[] }) {
+export function MonthSummary({ entries, today }: { entries: Entry[]; today: string }) {
+  // Hours, km and albums are booth facts, so they only count Dogodki rows.
   const done = entries.flatMap((entry) => (entry.kind === "done" ? [entry.event] : []));
-  const planned = entries.length - done.length;
+  const doneCount = entries.filter((entry) => isDone(entry, today)).length;
+  const planned = entries.length - doneCount;
   if (entries.length === 0) return null;
 
   const facts = [
-    done.length ? plural(done.length, "opravljen dogodek", "opravljena dogodka", "opravljeni dogodki", "opravljenih dogodkov") : null,
+    doneCount ? plural(doneCount, "opravljen dogodek", "opravljena dogodka", "opravljeni dogodki", "opravljenih dogodkov") : null,
     planned ? plural(planned, "potrjen dogodek", "potrjena dogodka", "potrjeni dogodki", "potrjenih dogodkov") : null,
     done.length ? `${formatPlain(done.reduce((sum, e) => sum + (e.hours ?? 0), 0))} h` : null,
     done.length ? `${formatPlain(done.reduce((sum, e) => sum + (e.km ?? 0), 0))} km` : null,
@@ -33,7 +35,7 @@ function NoteLine({ note }: { note: string | null }) {
   return <span className="whitespace-pre-line text-adm-muted [text-wrap:pretty]">Opomba: {note}</span>;
 }
 
-export function MonthList({ entries, onOpen }: { entries: Entry[]; onOpen: (entry: Entry) => void }) {
+export function MonthList({ entries, today, onOpen }: { entries: Entry[]; today: string; onOpen: (entry: Entry) => void }) {
   if (entries.length === 0) return <p className="m-0 text-sm text-adm-muted">Ta mesec ni dogodkov.</p>;
 
   return (
@@ -43,14 +45,31 @@ export function MonthList({ entries, onOpen }: { entries: Entry[]; onOpen: (entr
           <button type="button" onClick={() => onOpen(entry)} className="grid w-full text-left gap-x-4 gap-y-1 py-3 hover:!text-adm-ink sm:grid-cols-[112px_minmax(0,1fr)_auto]">
             <span className="flex items-center gap-2 tabular font-semibold">
               <span
-                className={cn("size-2.5 shrink-0 rounded-full", entry.kind === "done" ? "bg-adm-ink" : "bg-adm-ok-fg")}
+                className={cn("size-2.5 shrink-0 rounded-full", isDone(entry, today) ? "bg-adm-ink" : "bg-adm-ok-fg")}
                 aria-hidden
               />
               {dayLabel(entry.date)}
               {entry.kind === "planned" && entry.event.startTime ? ` · ${entry.event.startTime}` : ""}
             </span>
 
-            {entry.kind !== "planned" ? (
+            {entry.kind === "rental" ? (
+              <>
+                <span className="flex min-w-0 flex-col gap-0.5">
+                  <span>
+                    <span className="font-semibold">{entry.title}</span>
+                    <span className="text-adm-muted"> · {entry.event.location || "lokacija ni znana"}</span>
+                  </span>
+                  <span className={rentalWho(entry.event) ? "text-adm-muted" : "text-adm-faint"}>
+                    Kdo gre: {rentalWho(entry.event) ?? "ni določeno"}
+                  </span>
+                  <ContactLine contact={entry.event.contact} />
+                  <NoteLine note={entry.event.notes} />
+                </span>
+                <span className="text-adm-muted sm:max-w-[300px] sm:text-right">
+                  {[isDone(entry, today) ? "Opravljeno" : "Potrjeno", ...rentalFacts(entry.event)].join(" · ")}
+                </span>
+              </>
+            ) : entry.kind !== "planned" ? (
               <>
                 <span className="flex min-w-0 flex-col gap-0.5">
                   <span>

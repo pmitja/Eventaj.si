@@ -1,20 +1,21 @@
 "use client";
 
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { MONTHS_FULL } from "@/app/admin/_components/charts";
 import { LegendDot, Panel } from "@/app/admin/_components/panel";
 import type { CalendarEvent } from "@/lib/db/inquiries";
-import type { DoneEvent } from "@/lib/db/ledger";
+import type { DoneEvent, TableRentalEvent } from "@/lib/db/ledger";
 import { cn } from "@/lib/utils";
-import { crewText, plannedFacts, toEntries, whoText, type Entry } from "./calendar-entries";
+import { crewText, isDone, plannedFacts, rentalFacts, rentalWho, toEntries, whoShort, whoText, type Entry } from "./calendar-entries";
+import { AddEventDialog, type CalendarLists } from "./add-event-dialog";
 import { EventDialog } from "./event-dialog";
 import { MonthList, MonthSummary } from "./month-list";
 
 const WEEKDAYS = ["Po", "To", "Sr", "Če", "Pe", "So", "Ne"];
 
-type Props = { planned: CalendarEvent[]; done: DoneEvent[]; today: string };
+type Props = { planned: CalendarEvent[]; done: DoneEvent[]; rentals: TableRentalEvent[]; lists: CalendarLists; today: string };
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -24,6 +25,16 @@ function shift(month: string, by: number) {
 }
 
 function chipTitle(entry: Entry) {
+  if (entry.kind === "rental") {
+    const { location, contact, notes } = entry.event;
+    return [
+      `Najem miz: ${entry.title}`,
+      [rentalFacts(entry.event).join(" · "), location].filter(Boolean).join(" · "),
+      `Kdo gre: ${rentalWho(entry.event) ?? "ni določeno"}`,
+      contact ? `Kontakt: ${contact}` : null,
+      notes ? `Opomba: ${notes}` : null,
+    ].filter(Boolean).join("\n");
+  }
   if (entry.kind === "planned") {
     const { startTime, location, crew, crewStudents, note, contact } = entry.event;
     return [
@@ -40,9 +51,11 @@ function chipTitle(entry: Entry) {
   return [title, contact ? `Kontakt: ${contact}` : null, notes ? `Opomba: ${notes}` : null].filter(Boolean).join("\n");
 }
 
-export function EventCalendar({ planned, done, today }: Props) {
-  const entries = useMemo(() => toEntries(planned, done, today), [planned, done, today]);
+export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
+  const entries = useMemo(() => toEntries(planned, done, rentals, today), [planned, done, rentals, today]);
   const [open, setOpen] = useState<Entry | null>(null);
+  // The day clicked to add a new event on.
+  const [adding, setAdding] = useState<string | null>(null);
   const pathname = usePathname();
   const param = useSearchParams().get("mesec");
 
@@ -79,7 +92,7 @@ export function EventCalendar({ planned, done, today }: Props) {
           <h2 className="m-0 font-display text-[32px] font-normal leading-none">
             {MONTHS_FULL[monthIndex]} <span className="text-adm-muted">{year}</span>
           </h2>
-          <MonthSummary entries={inMonth} />
+          <MonthSummary entries={inMonth} today={today} />
         </div>
         <div className="flex items-center gap-1.5">
           <button
@@ -115,50 +128,71 @@ export function EventCalendar({ planned, done, today }: Props) {
         {cells.map((date, i) => (
           <div
             key={date ?? `empty-${i}`}
+            onClick={date ? () => setAdding(date) : undefined}
             className={cn(
-              "flex min-h-[58px] min-w-0 flex-col gap-1 border-adm-line p-1 sm:min-h-[96px] sm:p-1.5",
+              "group flex min-h-[58px] min-w-0 flex-col gap-1 border-adm-line p-1 sm:min-h-[96px] sm:p-1.5",
+              date && "cursor-pointer transition-colors hover:bg-adm-hover/60",
               i % 7 !== 6 && "border-r",
               i < cells.length - 7 && "border-b",
               !date && "bg-adm-hover/60",
             )}
           >
             {date && (
-              <span
-                className={cn(
-                  "grid size-6 place-items-center rounded-full text-xs tabular",
-                  date === today && "bg-adm-accent font-semibold text-adm-bg",
-                  date !== today && date < today && "text-adm-faint",
-                )}
-              >
-                {Number(date.slice(8))}
+              <span className="flex items-center justify-between">
+                <span
+                  className={cn(
+                    "grid size-6 place-items-center rounded-full text-xs tabular",
+                    date === today && "bg-adm-accent font-semibold text-adm-bg",
+                    date !== today && date < today && "text-adm-faint",
+                  )}
+                >
+                  {Number(date.slice(8))}
+                </span>
+                <button
+                  type="button"
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setAdding(date);
+                  }}
+                  aria-label={`Dodaj dogodek ${Number(date.slice(8))}. ${Number(date.slice(5, 7))}.`}
+                  className="hidden size-6 place-items-center rounded-full text-adm-muted opacity-0 transition-opacity hover:bg-adm-ink hover:text-adm-bg focus-visible:opacity-100 group-hover:opacity-100 sm:grid"
+                >
+                  <Plus className="size-3.5" />
+                </button>
               </span>
             )}
             {(date ? byDay.get(date) ?? [] : []).map((entry) => (
               <button
                 key={entry.key}
                 type="button"
-                onClick={() => setOpen(entry)}
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setOpen(entry);
+                }}
                 title={chipTitle(entry)}
                 aria-label={entry.title}
                 className={cn(
                   "block w-full rounded-md text-left transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5",
-                  entry.kind === "done" ? "bg-adm-ink !text-adm-bg" : "bg-adm-ok !text-adm-ok-fg",
+                  isDone(entry, today) ? "bg-adm-ink !text-adm-bg" : "bg-adm-ok !text-adm-ok-fg",
                 )}
               >
                 {/* Phones only get a marker; the list below the grid carries the details. */}
                 <span className="block h-1.5 sm:hidden" aria-hidden />
                 <span className="hidden truncate text-xs leading-tight sm:block">
                   {entry.kind === "planned" && entry.event.startTime ? `${entry.event.startTime} ` : ""}
+                  {entry.kind === "rental" ? "Mize · " : ""}
                   {entry.title}
                 </span>
+                {whoShort(entry) && <span className="hidden truncate text-[11px] leading-tight opacity-75 sm:block">{whoShort(entry)}</span>}
               </button>
             ))}
           </div>
         ))}
       </div>
 
-      <MonthList entries={inMonth} onOpen={setOpen} />
-      {open && <EventDialog entry={open} onClose={() => setOpen(null)} />}
+      <MonthList entries={inMonth} today={today} onOpen={setOpen} />
+      {open && <EventDialog entry={open} today={today} onClose={() => setOpen(null)} />}
+      <AddEventDialog date={adding} lists={lists} onClose={() => setAdding(null)} />
     </Panel>
   );
 }

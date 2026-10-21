@@ -16,12 +16,15 @@ export type FieldOption = string | { value: string; label: string };
 export type FieldSpec = {
   key: string;
   label: string;
-  kind: "text" | "number" | "money" | "date" | "password" | "email" | "select" | "seg" | "area";
+  // "multi" = toggle chips; the value holds the picked options separated by new lines.
+  kind: "text" | "number" | "money" | "date" | "password" | "email" | "select" | "seg" | "area" | "multi";
   wide?: boolean;
   required?: boolean;
   placeholder?: string;
   options?: FieldOption[];
   initial?: string;
+  // Shown (and checked) only while this returns true, e.g. fields that depend on a "seg" choice.
+  when?: (values: FormValues) => boolean;
 };
 
 export type FormValues = Record<string, string>;
@@ -66,7 +69,8 @@ function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitL
   const shake = useAnimationControls();
 
   const set = (key: string, value: string) => setValues((current) => ({ ...current, [key]: value }));
-  const missing = fields.filter((f) => f.required && !values[f.key]?.trim());
+  const visible = fields.filter((f) => !f.when || f.when(values));
+  const missing = visible.filter((f) => f.required && !values[f.key]?.trim());
   const rows = summary?.(values) ?? [];
 
   const submit = async () => {
@@ -108,19 +112,23 @@ function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitL
           animate="show"
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03, delayChildren: 0.08 } } }}
         >
-          {fields.map((field) => (
-            <motion.label
-              key={field.key}
-              variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0, transition: { duration: 0.35, ease } } }}
-              className={cn("flex min-w-0 flex-col gap-1.5", field.wide && "sm:col-span-2")}
-            >
-              <span className="text-[11px] font-semibold uppercase tracking-[.06em] text-adm-sub">
-                {field.label}
-                {field.required && " *"}
-              </span>
-              <Field field={field} value={values[field.key] ?? ""} invalid={tried && Boolean(field.required) && !values[field.key]?.trim()} onChange={(v) => set(field.key, v)} />
-            </motion.label>
-          ))}
+          {visible.map((field) => {
+            // A label around chip buttons would forward clicks on its text to the first chip.
+            const Wrap = field.kind === "multi" ? motion.div : motion.label;
+            return (
+              <Wrap
+                key={field.key}
+                variants={{ hidden: { opacity: 0, y: 8 }, show: { opacity: 1, y: 0, transition: { duration: 0.35, ease } } }}
+                className={cn("flex min-w-0 flex-col gap-1.5", field.wide && "sm:col-span-2")}
+              >
+                <span className="text-[11px] font-semibold uppercase tracking-[.06em] text-adm-sub">
+                  {field.label}
+                  {field.required && " *"}
+                </span>
+                <Field field={field} value={values[field.key] ?? ""} invalid={tried && Boolean(field.required) && !values[field.key]?.trim()} onChange={(v) => set(field.key, v)} />
+              </Wrap>
+            );
+          })}
         </motion.div>
 
         {rows.length > 0 && (
@@ -166,6 +174,32 @@ function Field({ field, value, invalid, onChange }: { field: FieldSpec; value: s
 
   if (field.kind === "area") {
     return <Textarea rows={3} value={value} placeholder={field.placeholder} onChange={(e) => onChange(e.target.value)} className={cn(control, "h-auto min-h-[84px] resize-y py-2.5", border)} />;
+  }
+
+  if (field.kind === "multi") {
+    const picked = value ? value.split("\n") : [];
+    const listed = (field.options ?? []).map(optionValue);
+    return (
+      <div role="group" aria-label={field.label} className="flex flex-wrap gap-1.5">
+        {[...listed, ...picked.filter((p) => !listed.includes(p))].map((option) => {
+          const on = picked.includes(option);
+          return (
+            <button
+              key={option}
+              type="button"
+              aria-pressed={on}
+              onClick={() => onChange((on ? picked.filter((p) => p !== option) : [...picked, option]).join("\n"))}
+              className={cn(
+                "rounded-full border px-3 py-1 text-sm transition-colors",
+                on ? "border-adm-ink bg-adm-ink text-adm-bg" : "border-dashed border-adm-soft text-adm-muted hover:border-adm-ink hover:text-adm-ink",
+              )}
+            >
+              {option}
+            </button>
+          );
+        })}
+      </div>
+    );
   }
 
   if (field.kind === "select") {
