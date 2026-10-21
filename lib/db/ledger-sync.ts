@@ -169,3 +169,44 @@ async function removeUntouched(event: Linked) {
   await sql()`DELETE FROM ledger_students WHERE event_id = ${event.id}`;
   await sql()`DELETE FROM ledger_events WHERE id = ${event.id}`;
 }
+
+// Picks who works a Dogodki or Najem miz row: a Študenti row per student. Rows of students taken off
+// go away, unless they already hold an amount or payment. A row made from an inquiry keeps the
+// inquiry's crew in step, so the next sync does not undo the choice.
+export async function setRowStudents(kind: "event" | "rental", id: number, students: string[], by: string) {
+  const rows = (kind === "event"
+    ? await sql()`SELECT year, inquiry_id FROM ledger_events WHERE id = ${id}`
+    : await sql()`SELECT year, inquiry_id FROM ledger_table_rentals WHERE id = ${id}`) as { year: number; inquiry_id: number | null }[];
+  const row = rows[0];
+  if (!row) throw new Error(kind === "event" ? "Dogodek ne obstaja" : "Najem miz ne obstaja");
+
+  const wanted = [...new Set(students.map((s) => s.trim()).filter(Boolean))];
+  const current = (kind === "event"
+    ? await sql()`SELECT id, student, amount, paid FROM ledger_students WHERE event_id = ${id}`
+    : await sql()`SELECT id, student, amount, paid FROM ledger_students WHERE rental_id = ${id}`) as {
+    id: number;
+    student: string | null;
+    amount: string | null;
+    paid: boolean;
+  }[];
+
+  const locked = current.filter((s) => s.student && !wanted.includes(s.student) && (s.amount !== null || s.paid));
+  if (locked.length) {
+    throw new Error(`${locked.map((s) => s.student).join(", ")} ima že vpisan znesek ali plačilo – odstrani v zavihku Študenti`);
+  }
+  for (const s of current) {
+    if (s.student && !wanted.includes(s.student)) await sql()`DELETE FROM ledger_students WHERE id = ${s.id}`;
+  }
+  for (const student of wanted) {
+    if (current.some((s) => s.student === student)) continue;
+    if (kind === "event") {
+      await sql()`INSERT INTO ledger_students (year, event_id, student, updated_by) VALUES (${row.year}, ${id}, ${student}, ${by})`;
+    } else {
+      await sql()`INSERT INTO ledger_students (year, rental_id, student, updated_by) VALUES (${row.year}, ${id}, ${student}, ${by})`;
+    }
+  }
+  if (row.inquiry_id !== null) {
+    await sql()`UPDATE inquiries SET crew_students = ${JSON.stringify(wanted)}::jsonb WHERE id = ${row.inquiry_id}`;
+  }
+  return wanted;
+}

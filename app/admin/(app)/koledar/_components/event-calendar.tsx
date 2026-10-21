@@ -191,7 +191,7 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
       </div>
 
       <MonthList entries={inMonth} today={today} onOpen={setOpen} />
-      {open && <EventDialog entry={open} today={today} onClose={() => setOpen(null)} />}
+      {open && <EventDialog key={open.key} entry={open} today={today} students={lists.students} onClose={() => setOpen(null)} />}
       <AddEventDialog date={adding} lists={lists} onClose={() => setAdding(null)} />
     </Panel>
   );

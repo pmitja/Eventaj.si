@@ -6,6 +6,7 @@ import { createStudentAccount, deleteStudentAccount, requireAdminAction, resetSt
 import {
   createYear,
   deleteLedgerRow,
+  getLists,
   insertLedgerRow,
   parseValue,
   saveList,
@@ -14,6 +15,7 @@ import {
   updateLedgerField,
   type LedgerValue,
 } from "@/lib/db/ledger";
+import { setRowStudents } from "@/lib/db/ledger-sync";
 import { LIST_KEYS, type ListKey } from "@/lib/ledger/lists";
 import { LEDGER_TABLES, type LedgerTableName } from "@/lib/ledger/schema";
 
@@ -50,6 +52,21 @@ export async function removeRow(table: string, id: number) {
   await requireAdminAction();
   assertTable(table);
   const result = await attempt(() => deleteLedgerRow(table, id));
+  if (result.ok) revalidatePath("/admin", "layout");
+  return result;
+}
+
+// kind: a Dogodki row ("event") or a Najem miz row ("rental").
+export async function updateRowStudents(kind: "event" | "rental", id: number, students: string[]) {
+  const user = await requireAdminAction();
+  const result = await attempt(async () => {
+    const { students: known } = await getLists();
+    const unknown = students.find((student) => !known.includes(student));
+    if (unknown) throw new Error(`Neznan študent: ${unknown}`);
+    if (kind !== "event" && kind !== "rental") throw new Error("Neznana vrsta vnosa");
+    return setRowStudents(kind, id, students, user.email);
+  });
+  // Študenti, Koledar, the inquiry card and the students' own schedule all show it.
   if (result.ok) revalidatePath("/admin", "layout");
   return result;
 }

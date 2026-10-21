@@ -2,11 +2,11 @@
 
 import { ArrowUpRight, X } from "lucide-react";
 import Link from "next/link";
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { formatPlain } from "@/lib/ledger/compute";
 import { crewText, isDone, rentalWho, typeLabels, whoText, type Entry } from "./calendar-entries";
-
+import { StudentsPicker } from "./students-picker";
 
 function dateLabel(date: string) {
   return new Date(`${date}T12:00:00Z`).toLocaleDateString("sl-SI", {
@@ -18,7 +18,8 @@ function dateLabel(date: string) {
   });
 }
 
-function rows(entry: Entry): [string, ReactNode][] {
+// students: the current pick, which may be newer than the entry the calendar handed in.
+function rows(entry: Entry, students: string[]): [string, ReactNode][] {
   if (entry.kind === "rental") {
     const event = entry.event;
     return [
@@ -26,7 +27,7 @@ function rows(entry: Entry): [string, ReactNode][] {
       ["Storitev", "Najem miz"],
       ["Št. miz", event.tableCount !== null ? formatPlain(event.tableCount) : null],
       ["Lokacija", event.location],
-      ["Kdo gre", rentalWho(event) ?? "ni določeno"],
+      ["Kdo gre", rentalWho({ ...event, students }) ?? "ni določeno"],
       ["Kontakt", event.contact],
       ["Opomba", event.notes],
     ];
@@ -41,7 +42,7 @@ function rows(entry: Entry): [string, ReactNode][] {
       ["Trajanje", event.type !== "equipment" && event.hours ? `${event.hours} h` : null],
       ["Album", !booth ? null : event.album === "Ne" ? "brez albuma" : event.album ?? "še ni znano"],
       ["Obrazec", booth ? (event.detailsSubmitted ? "oddan" : "čaka na obrazec") : null],
-      ["Kdo gre", crewText(event.crew, event.crewStudents) ?? "ni določeno"],
+      ["Kdo gre", crewText(event.crew, students) ?? "ni določeno"],
       ["Kontakt", event.contact],
       ["Opomba", event.note],
     ];
@@ -53,13 +54,16 @@ function rows(entry: Entry): [string, ReactNode][] {
     ["Trajanje", event.hours !== null ? `${formatPlain(event.hours)} h` : null],
     ["Kilometri", entry.kind === "done" && event.km !== null ? `${formatPlain(event.km)} km` : null],
     ["Album", entry.kind === "done" ? (event.albumUsed ? `da${event.album ? ` (${event.album})` : ""}` : "ne") : event.album],
-    ["Izvedba", whoText(event)],
+    ["Izvedba", whoText({ ...event, students })],
     ["Kontakt", event.contact],
     ["Opomba", event.notes],
   ];
 }
 
-export function EventDialog({ entry, today, onClose }: { entry: Entry; today: string; onClose: () => void }) {
+type Props = { entry: Entry; today: string; students: string[]; onClose: () => void };
+
+export function EventDialog({ entry, today, students: studentOptions, onClose }: Props) {
+  const [students, setStudents] = useState(entry.kind === "planned" ? entry.event.crewStudents : entry.event.students);
   const linkLabel = entry.kind === "planned" ? "Odpri povpraševanje" : entry.kind === "rental" ? "Odpri v Najemu miz" : "Odpri v Dogodkih";
   const done = isDone(entry, today);
 
@@ -87,7 +91,7 @@ export function EventDialog({ entry, today, onClose }: { entry: Entry; today: st
         </div>
 
         <dl className="m-0 mt-5 grid grid-cols-[96px_minmax(0,1fr)] gap-x-4 gap-y-2.5 text-sm">
-          {rows(entry)
+          {rows(entry, students)
             .filter(([, value]) => value)
             .map(([label, value]) => (
               <div key={label} className="contents">
@@ -96,6 +100,11 @@ export function EventDialog({ entry, today, onClose }: { entry: Entry; today: st
               </div>
             ))}
         </dl>
+
+        <div className="mt-5 flex flex-col gap-2 border-t border-adm-line pt-4 text-sm">
+          <span className="text-[11px] font-semibold uppercase tracking-[.06em] text-adm-sub">Študenti</span>
+          <StudentsPicker entry={entry} value={students} options={studentOptions} onChange={setStudents} />
+        </div>
 
         <Link
           href={entry.href}

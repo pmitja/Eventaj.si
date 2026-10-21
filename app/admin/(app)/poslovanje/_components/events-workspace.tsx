@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
 import { ColumnBars, Donut, monthOf, MONTHS, PALETTE } from "@/app/admin/_components/charts";
 import { FormDialog, type FieldSpec } from "@/app/admin/_components/form-dialog";
 import { KpiCard } from "@/app/admin/_components/kpi-card";
@@ -8,6 +9,8 @@ import { Panel } from "@/app/admin/_components/panel";
 import { formatEur, paymentMethod, rowTotal } from "@/lib/ledger/compute";
 import type { LedgerLists } from "@/lib/ledger/lists";
 import type { EventRow } from "@/lib/ledger/schema";
+import { updateRowStudents } from "../actions";
+import { EventStudentsCell } from "./event-students-cell";
 import { FilterChips, LedgerGrid, type GridColumn, type GridRow } from "./ledger-grid";
 import { ChartRow, nextCode, parseAmount, SheetHint, Strip, useLedgerRows, WorkspaceHeader } from "./workspace";
 
@@ -16,8 +19,12 @@ type Row = EventRow & GridRow;
 const NO_ALBUM = "Brez albuma";
 const FILTERS = ["Vsi", "Nakazilo", "Gotovina", "Nakazilo + gotovina"] as const;
 
-export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: number; rows: EventRow[]; lists: LedgerLists; albums: string[] }) {
+type Props = { year: number; rows: EventRow[]; lists: LedgerLists; albums: string[]; studentsByEvent: Record<number, string[]> };
+
+export function EventsWorkspace({ year, rows: initial, lists, albums, studentsByEvent }: Props) {
   const { rows, setRows, highlight, adding, setAdding, create } = useLedgerRows("events", year, initial as Row[]);
+  const [crew, setCrew] = useState(studentsByEvent);
+  const setStudents = (id: number, students: string[]) => setCrew((current) => ({ ...current, [id]: students }));
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("Vsi");
 
   const dated = rows.filter((e) => e.date);
@@ -52,6 +59,16 @@ export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: 
     { key: "notes", label: "Opombe", type: "text", width: 210 },
     { key: "execution", label: "Izvedba dogodka", type: "select", options: lists.executions, width: 150, hint: "Kdo je izvedel celoten dogodek" },
     { key: "initialHelp", label: "Začetna pomoč", type: "select", options: lists.initialHelp, width: 140, hint: "Kdo je prišel samo na začetno pomoč/postavitev" },
+    {
+      key: "students",
+      label: "Študenti",
+      type: "computed",
+      width: 200,
+      hint: "Kateri študenti gredo na dogodek – vsak dobi vrstico v Študenti",
+      value: (row) => (
+        <EventStudentsCell eventId={row.id} value={crew[row.id] ?? []} options={lists.students} onChange={(students) => setStudents(row.id, students)} />
+      ),
+    },
     { key: "executionNotes", label: "Opombe izvedbe", type: "text", width: 260 },
   ];
 
@@ -69,6 +86,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: 
     { key: "cartridgeChanged", label: "Kartuša", kind: "seg", options: ["NE", "DA"] },
     { key: "execution", label: "Izvedba dogodka", kind: "select", options: lists.executions, required: true },
     { key: "initialHelp", label: "Začetna pomoč", kind: "seg", options: lists.initialHelp },
+    { key: "students", label: "Študenti", kind: "multi", wide: true, options: lists.students },
     { key: "notes", label: "Opombe", kind: "area", wide: true },
     { key: "executionNotes", label: "Opombe izvedbe", kind: "area", wide: true, placeholder: "Kdo je bil prisoten, posebnosti …" },
   ];
@@ -128,10 +146,16 @@ export function EventsWorkspace({ year, rows: initial, lists, albums }: { year: 
             ["Iz zaloge", stock.join(", ") || "—"],
           ];
         }}
-        onSubmit={({ album, ...values }) =>
+        onSubmit={({ album, students, ...values }) =>
           create(
             { ...values, code, album: album && album !== NO_ALBUM ? album : null, albumUsed: album && album !== NO_ALBUM ? "DA" : "NE" },
             (row) => `Dogodek ${row.code} je dodan`,
+            async (row) => {
+              if (!students) return;
+              const result = await updateRowStudents("event", row.id, students.split("\n"));
+              if (result.ok) setStudents(row.id, result.value);
+              else toast.error(`Študentov ni bilo mogoče shraniti: ${result.error}`);
+            },
           )
         }
       />

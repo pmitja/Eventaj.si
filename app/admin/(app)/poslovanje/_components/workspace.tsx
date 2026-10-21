@@ -33,7 +33,8 @@ export function useLedgerRows<R extends GridRow>(table: LedgerTableName, year: n
   const [highlight, setHighlight] = useState<number | null>(null);
   const [adding, setAdding] = useState(false);
 
-  const create = async (fields: Record<string, string | null>, message: (row: R) => string) => {
+  // onCreated runs once the row exists, for things saved next to it (e.g. the event's students).
+  const create = async (fields: Record<string, string | null>, message: (row: R) => string, onCreated?: (row: R) => Promise<void>) => {
     const result = await addRow(table, year, fields);
     if (!result.ok) return result.error;
     const row = result.value as R;
@@ -41,6 +42,7 @@ export function useLedgerRows<R extends GridRow>(table: LedgerTableName, year: n
     setHighlight(row.id);
     setAdding(false);
     toast.success(message(row));
+    await onCreated?.(row);
     return null;
   };
 
