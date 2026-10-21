@@ -37,8 +37,7 @@ export const RULES = {
   tableTrip: 1, // dostava ali prevzem miz
   material: 0.25, // naročilo potrošnega materiala
   callsPerMonth: 8, // klici (Mitja)
-  socialPerMonth: 6, // socialna omrežja: po vpisanih objavah meseca, sicer Julija 75 %, Maja 25 %
-  socialJulija: 0.75,
+  socialPerMonth: 6, // socialna omrežja: po vpisanih objavah meseca; mesec brez objav 0
   workCapPerMonth: 20, // največ ur ročnega vnosa na osebo na mesec
   litresPer100: 7, // poraba za kilometrino
 } as const;
@@ -128,27 +127,20 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
   const months = elapsedMonths(ledger.year, today);
   add("Mitja", "Klici", RULES.callsPerMonth * months);
 
-  // Social: each month's points go by that month's logged posts; a month logged with 0 posts gives
-  // no points. Months without entries go by the year's logged posts, and only if nothing is logged
-  // all year by the default 75/25.
+  // Social: a month with logged posts gives its full points, split by those posts. A month without
+  // posts (no entry or 0) gives no points to anyone.
   const posts = Array.from({ length: 12 }, () => new Map<Person, number>());
   for (const row of ledger.social) {
     if (!isPerson(row.person) || row.posts === null || !row.date) continue;
     const month = posts[Number(row.date.slice(5, 7)) - 1];
     month.set(asPerson(row.person), (month.get(asPerson(row.person)) ?? 0) + row.posts);
   }
-  const yearPosts = new Map<Person, number>();
-  for (const month of posts) for (const [person, n] of month) if (n > 0) yearPosts.set(person, (yearPosts.get(person) ?? 0) + n);
-  const fallback = yearPosts.size ? yearPosts : new Map<Person, number>([["Julija", RULES.socialJulija], ["Maja", 1 - RULES.socialJulija]]);
   let socialMonthsByPosts = 0;
   posts.forEach((month, i) => {
-    const weight = Math.min(Math.max(months - i, 0), 1);
-    if (month.size) socialMonthsByPosts++;
-    if (!weight) return;
-    const split = month.size ? month : fallback;
-    const total = [...split.values()].reduce((s, n) => s + n, 0);
-    if (!total) return;
-    for (const [person, n] of split) add(person, "Socialna omrežja", (RULES.socialPerMonth * weight * n) / total);
+    const total = [...month.values()].reduce((s, n) => s + n, 0);
+    if (!total || i >= months) return; // brez objav ali mesec se še ni začel
+    socialMonthsByPosts++;
+    for (const [person, n] of month) add(person, "Socialna omrežja", (RULES.socialPerMonth * n) / total);
   });
 
   // Logged hours count up to the monthly cap per person.

@@ -14,7 +14,7 @@ const POINTS: [string, string, string][] = [
   ["Priprava s stranko", n(RULES.clientPrep), "Maja, za vsak izveden dogodek: okvir, ozadje, ura, kontaktna oseba, povzetek."],
   ["Povpraševanje → ponudba", n(RULES.inquiry), `Julija. Ko postane dogodek, še +${n(RULES.confirmed)}. Poslane ponudbe brez dogodka se štejejo iz Povpraševanj.`],
   ["Študenti, organizacija, pregled, opombe", n(RULES.organisation), "Julija, na vsako poslano ponudbo (izvedeni dogodki in ponudbe brez dogodka)."],
-  ["Socialna omrežja", `${n(RULES.socialPerMonth)} na mesec`, `Razdeli se po vpisanih objavah tistega meseca. Mesec, vpisan z 0 objavami, ne prinese točk nikomur. Mesec brez vnosa se razdeli po vseh objavah leta. Če v letu ni vpisanih objav: ${n(RULES.socialJulija * 100)} % Julija, ${n(100 - RULES.socialJulija * 100)} % Maja.`],
+  ["Socialna omrežja", `${n(RULES.socialPerMonth)} na mesec`, "Na mesec z vpisanimi objavami, razdeljeno po objavah tistega meseca. Mesec brez objav ne prinese točk nikomur."],
   ["Klici", `${n(RULES.callsPerMonth)} na mesec`, "Mitja."],
   ["Dostava ali prevzem miz", n(RULES.tableTrip), "Na pot, iz Najema miz."],
   ["Naročilo potrošnega materiala", n(RULES.material), "Na vnos v Stroških (Potrošni material). Jan, razen če je osebno plačal kdo drug."],
@@ -51,7 +51,7 @@ export function ContributionLegend({ c }: { c: Contributions }) {
         ))}
       </div>
       <p className="m-0 text-xs leading-relaxed text-adm-muted [text-wrap:pretty]">
-        Štejejo dogodki do danes z vpisano izvedbo. Mesečne postavke (klici, socialna omrežja) se štejejo za pretečeni del leta: {formatNumber(c.months, 1)} meseca.
+        Štejejo dogodki do danes z vpisano izvedbo. Klici se štejejo za pretečeni del leta: {formatNumber(c.months, 1)} meseca.
         {c.unconfirmedOffers > 0 && ` Poslanih ponudb brez dogodka: ${c.unconfirmedOffers}.`}
       </p>
       <div className="flex flex-col gap-2 text-sm">
