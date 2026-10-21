@@ -2,6 +2,7 @@ import type { EventDetails } from "@/lib/event-details/schema";
 import { eventTypeText } from "@/lib/event-details/schema";
 import { cleanTime, toDateKey } from "@/lib/slovenian-date";
 import type { StoredFormData } from "./inquiries";
+import { NO_DELIVERY, splitPeople } from "@/lib/ledger/lists";
 import { sql } from "./index";
 
 // One event or table rental a student works, with everything they need on the day and what they earn.
@@ -120,8 +121,8 @@ function fromEvent(row: EventRow, name: string): StudentShift {
 }
 
 function rentalTask(row: RentalRow, name: string) {
-  const delivers = same(row.deliveredBy, name);
-  const picks = same(row.pickedBy, name);
+  const delivers = splitPeople(row.deliveredBy).some((p) => same(p, name));
+  const picks = splitPeople(row.pickedBy).some((p) => same(p, name));
   if (delivers && picks) return "Dostava in prevzem miz";
   if (delivers) return "Dostava miz";
   if (picks) return "Prevzem miz";
@@ -129,7 +130,7 @@ function rentalTask(row: RentalRow, name: string) {
 }
 
 function fromRental(row: RentalRow, name: string): StudentShift {
-  const drivers = [row.deliveredBy, row.pickedBy].filter((p) => p && !same(p, name) && p !== "BREZ DOSTAVE") as string[];
+  const drivers = [...new Set([...splitPeople(row.deliveredBy), ...splitPeople(row.pickedBy)])].filter((p) => !same(p, name) && p !== NO_DELIVERY);
   return {
     key: `t${row.id}`,
     date: row.date,
@@ -202,7 +203,10 @@ export async function getStudentSchedule(student: string): Promise<StudentShift[
       LEFT JOIN ledger_students s ON s.rental_id = t.id AND lower(trim(s.student)) = ${name}
       LEFT JOIN inquiries i ON i.id = t.inquiry_id
       WHERE t.date IS NOT NULL
-        AND (s.id IS NOT NULL OR lower(trim(t.delivered_by)) = ${name} OR lower(trim(t.picked_by)) = ${name})
+        AND (s.id IS NOT NULL OR EXISTS (
+          SELECT 1 FROM unnest(string_to_array(coalesce(t.delivered_by, '') || '+' || coalesce(t.picked_by, ''), '+')) p
+          WHERE lower(trim(p)) = ${name}
+        ))
     `,
     sql()`
       SELECT i.id, i.form_data AS form, i.crew, i.crew_students AS "crewStudents", i.note, d.data AS details

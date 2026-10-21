@@ -1,6 +1,7 @@
 // Every derived value from the spreadsheet, one function per formula. The Excel formula is quoted
 // above each so changes can be checked against the original. Text criteria in COUNTIF/SUMIF are
 // case-insensitive in Excel, hence `same()`. Blank cells ("") are null here.
+import { splitPeople } from "./lists";
 import type { CostRow, EventRow, LedgerYear, StockRow, StudentRow, TableRentalRow } from "./schema";
 
 export const FUND = "Skupni fond";
@@ -64,14 +65,17 @@ export function rentalKm(row: Pick<TableRentalRow, "date" | "kmDelivery" | "kmPi
 
 // 'Najem miz'!R:U for one person
 export function transportSummary(rentals: TableRentalRow[], person: string) {
+  // A trip with more people ("Jan + Mitja") counts for each of them; its km are split between them.
+  const drives = (cell: string | null) => splitPeople(cell).some((name) => same(name, person));
+  const share = (cell: string | null, km: number | null) => num(km) / Math.max(1, splitPeople(cell).length);
   // R  =COUNTIF($J$5:$J$300,Q)
-  const deliveries = rentals.filter((r) => same(r.deliveredBy, person)).length;
+  const deliveries = rentals.filter((r) => drives(r.deliveredBy)).length;
   // S  =COUNTIF($L$5:$L$300,Q)
-  const pickups = rentals.filter((r) => same(r.pickedBy, person)).length;
+  const pickups = rentals.filter((r) => drives(r.pickedBy)).length;
   // U  =SUMIF($J$5:$J$300,Q,$K$5:$K$300)+SUMIF($L$5:$L$300,Q,$M$5:$M$300)
   const km =
-    sum(rentals.filter((r) => same(r.deliveredBy, person)), (r) => r.kmDelivery) +
-    sum(rentals.filter((r) => same(r.pickedBy, person)), (r) => r.kmPickup);
+    sum(rentals.filter((r) => drives(r.deliveredBy)), (r) => share(r.deliveredBy, r.kmDelivery)) +
+    sum(rentals.filter((r) => drives(r.pickedBy)), (r) => share(r.pickedBy, r.kmPickup));
   // T  =R+S
   return { person, deliveries, pickups, trips: deliveries + pickups, km };
 }

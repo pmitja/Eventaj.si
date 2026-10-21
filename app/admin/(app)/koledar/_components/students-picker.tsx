@@ -8,18 +8,18 @@ import { changeInquiryCrew } from "../../actions";
 import { updateRowStudents } from "../../poslovanje/actions";
 import type { Entry } from "./calendar-entries";
 
-type Props = { entry: Entry; value: string[]; options: string[]; onChange: (students: string[]) => void };
+type Props = { entry: Entry; execution: string | null; value: string[]; options: string[]; onChange: (students: string[]) => void };
 
 // Ticks which students go, straight from the calendar. A confirmed inquiry saves on the inquiry
 // (which syncs Dogodki); a Dogodki or Najem miz row saves its Študenti rows.
-export function StudentsPicker({ entry, value, options, onChange }: Props) {
+export function StudentsPicker({ entry, execution, value, options, onChange }: Props) {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
   const listed = [...options, ...value.filter((student) => !options.includes(student))];
 
   async function save(next: string[]) {
     if (entry.kind === "planned") {
-      const result = await changeInquiryCrew(entry.event.id, entry.event.crew, next);
+      const result = await changeInquiryCrew(entry.event.id, execution, next);
       return result.ok ? { ok: true as const, value: next } : result;
     }
     return updateRowStudents(entry.kind === "rental" ? "rental" : "event", entry.event.id, next);

@@ -2,6 +2,7 @@
 // 1 point ≈ 1 hour of work. Profit minus fuel money is split by points and 50/50 by pair; the
 // share that goes by points depends on how much of the work the busier pair did (SPLIT_TIERS).
 import { computeOverview, DUO, PAIRS } from "./compute";
+import { splitPeople } from "./lists";
 import type { EventRow, LedgerYear } from "./schema";
 
 export const PEOPLE = ["Mitja", "Julija", "Jan", "Maja"] as const;
@@ -113,9 +114,12 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
       [rental.deliveredBy, rental.kmDelivery],
       [rental.pickedBy, rental.kmPickup],
     ] as const) {
-      if (!isPerson(who)) continue;
-      add(asPerson(who), "Dostava in prevzem miz", RULES.tableTrip);
-      km[asPerson(who)] += distance ?? 0;
+      // "Jan + Mitja": each gets the trip, the km are split between them.
+      const drivers = splitPeople(who);
+      for (const name of drivers.filter(isPerson)) {
+        add(asPerson(name), "Dostava in prevzem miz", RULES.tableTrip);
+        km[asPerson(name)] += (distance ?? 0) / drivers.length;
+      }
     }
   }
 

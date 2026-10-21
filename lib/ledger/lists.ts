@@ -46,3 +46,12 @@ export const STUDENTS_NEEDED = 2;
 
 // Used on "Najem miz" for rentals the customer collects themselves (not part of the person list).
 export const NO_DELIVERY = "BREZ DOSTAVE";
+
+// More than one person in one cell (Izvedba, Dostavil / peljal) is written "Jan + Mitja".
+export function splitPeople(value: string | null | undefined) {
+  return (value ?? "").split("+").map((name) => name.trim()).filter(Boolean);
+}
+
+export function joinPeople(names: string[]) {
+  return names.length ? names.join(" + ") : null;
+}

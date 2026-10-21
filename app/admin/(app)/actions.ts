@@ -10,7 +10,7 @@ import { getLists } from "@/lib/db/ledger";
 import { dropInquiryFromLedger, syncInquiryNoteToLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
 import { standingTable } from "@/content/eventaj/equipment";
-import { NO_DELIVERY } from "@/lib/ledger/lists";
+import { NO_DELIVERY, splitPeople } from "@/lib/ledger/lists";
 import { serviceForInquiry } from "@/lib/offers/services";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 
@@ -116,7 +116,9 @@ export async function changeInquiryCrew(id: number, crew: string | null, student
     const inquiry = await getInquiry(id);
     if (!inquiry) throw new Error("Povpraševanje ne obstaja");
     const crewOptions = serviceForInquiry(inquiry.formData) === "tables" ? [...lists.tableDrivers, NO_DELIVERY] : lists.executions;
-    if (crew !== null && !crewOptions.includes(crew)) throw new Error("Neznana izvedba");
+    // "Jan + Mitja" is fine as long as each name is on the list.
+    if (crew !== null && !crewOptions.includes(crew) && !splitPeople(crew).every((name) => crewOptions.flatMap(splitPeople).includes(name)))
+      throw new Error("Neznana izvedba");
     const unknown = students.find((student) => !lists.students.includes(student));
     if (unknown) throw new Error(`Neznan študent: ${unknown}`);
     await setInquiryCrew(id, crew, [...new Set(students)]);

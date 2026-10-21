@@ -179,14 +179,14 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
                 title={chipTitle(entry)}
                 aria-label={entry.title}
                 className={cn(
-                  "block w-full rounded-md text-left transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5",
+                  "relative block w-full rounded-md text-left transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5",
                   isDone(entry, today) ? "bg-adm-ink !text-adm-bg" : "bg-adm-ok !text-adm-ok-fg",
                 )}
               >
+                <EntryFlags entry={entry} today={today} />
                 {/* Phones only get a marker; the list below the grid carries the details. */}
                 <span className="block h-1.5 sm:hidden" aria-hidden />
                 <span className="hidden truncate text-xs leading-tight sm:block">
-                  <EntryFlags entry={entry} today={today} className="mr-1" />
                   {entry.kind === "planned" && entry.event.startTime ? `${entry.event.startTime} ` : ""}
                   {entry.kind === "rental" ? "Mize · " : ""}
                   {entry.title}
@@ -199,7 +199,7 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
       </div>
 
       <MonthList entries={inMonth} today={today} onOpen={setOpen} />
-      {open && <EventDialog key={open.key} entry={open} today={today} students={lists.students} onClose={() => setOpen(null)} />}
+      {open && <EventDialog key={open.key} entry={open} today={today} students={lists.students} executions={lists.executions} tableDrivers={lists.tableDrivers} onClose={() => setOpen(null)} />}
       <AddEventDialog date={adding} lists={lists} onClose={() => setAdding(null)} />
     </Panel>
   );
