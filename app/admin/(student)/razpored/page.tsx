@@ -3,9 +3,11 @@ import { KpiCard } from "@/app/admin/_components/kpi-card";
 import { Stagger } from "@/app/admin/_components/motion";
 import { PageHeader } from "@/app/admin/_components/page-header";
 import { getAdminUser } from "@/lib/admin-auth";
+import { listOpenEvents } from "@/lib/db/open-events";
 import { getStudentSchedule } from "@/lib/db/student-schedule";
 import { formatEur } from "@/lib/ledger/compute";
 import { getSlovenianDateString } from "@/lib/slovenian-date";
+import { OpenEvents } from "./_components/open-events";
 import { NextShift, PastShifts, UpcomingShifts } from "./_components/shift-lists";
 
 type Props = { searchParams: Promise<{ student?: string | string[] }> };
@@ -22,8 +24,8 @@ export default async function StudentSchedulePage({ searchParams }: Props) {
     return <PageHeader eyebrow="Moj razpored" title={`Živijo, ${user.name}`} subtitle="Račun še ni povezan s študentom. Javi se Mitji ali Janu." />;
   }
 
-  const shifts = await getStudentSchedule(student);
   const today = getSlovenianDateString();
+  const [shifts, open] = await Promise.all([getStudentSchedule(student), listOpenEvents(student, today)]);
   const year = today.slice(0, 4);
   const upcoming = shifts.filter((s) => s.date >= today);
   const past = shifts.filter((s) => s.date < today).reverse();
@@ -45,6 +47,8 @@ export default async function StudentSchedulePage({ searchParams }: Props) {
       />
 
       {next && <NextShift shift={next} today={today} />}
+
+      {open.length > 0 && <OpenEvents events={open} today={today} canClaim={user.role === "student"} />}
 
       <Stagger className="grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-4">
         <KpiCard label={`Zaslužek ${year}`} value={sum(thisYear)} format="eur" size="md" dark />
