@@ -32,7 +32,8 @@ export type OfferSummary = {
   sentAt: string | null;
 };
 
-export type InquiryWithOffers = Inquiry & { offers: OfferSummary[]; eventDetails: EventDetailsRequest | null };
+// studentsNeeded lives on the inquiry's Dogodki row; null = the default of two.
+export type InquiryWithOffers = Inquiry & { offers: OfferSummary[]; eventDetails: EventDetailsRequest | null; studentsNeeded: number | null };
 
 type InquiryRow = {
   id: number;
@@ -84,19 +85,26 @@ export async function listInquiries(): Promise<InquiryWithOffers[]> {
     ) AS offers,
     CASE WHEN e.token IS NULL THEN NULL ELSE
       json_build_object('token', e.token, 'sent_at', e.sent_at, 'emailed_at', e.emailed_at, 'submitted_at', e.submitted_at, 'data', e.data)
-    END AS event_details
+    END AS event_details,
+    le.students_needed::float8 AS students_needed
     FROM inquiries i
     LEFT JOIN offers o ON o.inquiry_id = i.id
     LEFT JOIN event_details e ON e.inquiry_id = i.id
-    GROUP BY i.id, e.inquiry_id
+    LEFT JOIN ledger_events le ON le.inquiry_id = i.id
+    GROUP BY i.id, e.inquiry_id, le.id
     ORDER BY i.created_at DESC
     LIMIT 300
-  `) as (InquiryRow & { offers: OfferSummary[]; event_details: Parameters<typeof toEventDetailsRequest>[0] | null })[];
+  `) as (InquiryRow & {
+    offers: OfferSummary[];
+    event_details: Parameters<typeof toEventDetailsRequest>[0] | null;
+    students_needed: number | null;
+  })[];
 
   return rows.map((row) => ({
     ...toInquiry(row),
     offers: row.offers.map((offer) => ({ ...offer, total: Number(offer.total) })),
     eventDetails: row.event_details ? toEventDetailsRequest(row.event_details) : null,
+    studentsNeeded: row.students_needed,
   }));
 }
 
@@ -110,6 +118,11 @@ export async function setInquiryCrew(id: number, crew: string | null, students: 
     UPDATE inquiries SET crew = ${crew}, crew_students = ${JSON.stringify(students)}::jsonb WHERE id = ${id} RETURNING id
   `) as { id: number }[];
   if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
+}
+
+export async function setInquiryStudentsNeeded(id: number, needed: number) {
+  const rows = (await sql()`UPDATE ledger_events SET students_needed = ${needed} WHERE inquiry_id = ${id} RETURNING id`) as { id: number }[];
+  if (!rows[0]) throw new Error("Dogodek še ni v Poslovanju; ali ima povpraševanje datum?");
 }
 
 export async function setInquiryNote(id: number, note: string | null) {

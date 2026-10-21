@@ -41,5 +41,8 @@ export function defaultLists(): LedgerLists {
   return Object.fromEntries(LIST_KEYS.map((key) => [key, [...LIST_DEFS[key].items]])) as LedgerLists;
 }
 
+// Students an event needs when its Dogodki row does not say (Št. študentov empty).
+export const STUDENTS_NEEDED = 2;
+
 // Used on "Najem miz" for rentals the customer collects themselves (not part of the person list).
 export const NO_DELIVERY = "BREZ DOSTAVE";

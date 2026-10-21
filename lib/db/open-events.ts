@@ -1,12 +1,13 @@
 import type { EventDetails } from "@/lib/event-details/schema";
 import { eventTypeText } from "@/lib/event-details/schema";
-import { toDateKey } from "@/lib/slovenian-date";
+import { STUDENTS_NEEDED } from "@/lib/ledger/lists";
+import { cleanTime, toDateKey } from "@/lib/slovenian-date";
 import type { StoredFormData } from "./inquiries";
 import { sql } from "./index";
 import { syncInquiryToLedger } from "./ledger-sync";
 
-// An event goes out to students when its execution is "Študenti" and fewer than this many are on it.
-export const STUDENTS_NEEDED = 2;
+// An event goes out to students when its execution is "Študenti" and fewer students are on it than it
+// needs. How many it needs is set on its Dogodki row (Št. študentov); empty means STUDENTS_NEEDED.
 
 const STUDENTS = "Študenti";
 
@@ -28,30 +29,37 @@ const SERVICES: Partial<Record<StoredFormData["type"], string>> = { basic: "Phot
 
 const same = (a: string, b: string) => a.trim().toLowerCase() === b.trim().toLowerCase();
 
-type InquiryRow = { id: number; form: StoredFormData; students: string[]; details: EventDetails | null };
-type EventRow = { id: number; date: string; service: string | null; hours: number | null; students: string[] };
+type Ledger = { needed: number | null; startTime: string | null; location: string | null };
+type InquiryRow = Ledger & { id: number; form: StoredFormData; students: string[]; details: EventDetails | null };
+type EventRow = Ledger & { id: number; date: string; service: string | null; hours: number | null; students: string[] };
+
+const neededOf = (row: Ledger) => (row.needed && row.needed > 0 ? row.needed : STUDENTS_NEEDED);
 
 async function openInquiries(today: string) {
   const rows = (await sql()`
-    SELECT i.id, i.form_data AS form, i.crew_students AS students, d.data AS details
-    FROM inquiries i LEFT JOIN event_details d ON d.inquiry_id = i.id
-    WHERE i.status = 'confirmed' AND i.crew = ${STUDENTS} AND jsonb_array_length(i.crew_students) < ${STUDENTS_NEEDED}
+    SELECT i.id, i.form_data AS form, i.crew_students AS students, d.data AS details,
+      e.students_needed::float8 AS needed, e.start_time AS "startTime", e.location
+    FROM inquiries i
+    LEFT JOIN event_details d ON d.inquiry_id = i.id
+    LEFT JOIN ledger_events e ON e.inquiry_id = i.id
+    WHERE i.status = 'confirmed' AND i.crew = ${STUDENTS}
   `) as InquiryRow[];
   return rows.flatMap((row): OpenEvent[] => {
     const date = toDateKey(row.form.date);
     const service = SERVICES[row.form.type];
-    if (!date || date < today || !service) return [];
+    const free = neededOf(row) - row.students.length;
+    if (!date || date < today || !service || free <= 0) return [];
     const { details, form } = row;
     return [{
       key: `i${row.id}`,
       date,
       service,
       eventType: details ? eventTypeText(details) : form.eventType || null,
-      startTime: details?.startTime || null,
+      startTime: cleanTime(row.startTime || details?.startTime),
       hours: Number(details?.hours || form.hours) || null,
-      location: details?.location || form.location || null,
+      location: row.location || details?.location || form.location || null,
       going: row.students,
-      free: STUDENTS_NEEDED - row.students.length,
+      free,
     }];
   });
 }
@@ -59,22 +67,23 @@ async function openInquiries(today: string) {
 async function openLedgerEvents(today: string) {
   const rows = (await sql()`
     SELECT e.id, to_char(e.date, 'YYYY-MM-DD') AS date, e.service, e.hours::float8 AS hours,
+      e.students_needed::float8 AS needed, e.start_time AS "startTime", e.location,
       ARRAY(SELECT s.student FROM ledger_students s WHERE s.event_id = e.id AND s.student IS NOT NULL ORDER BY s.id) AS students
     FROM ledger_events e
     WHERE e.inquiry_id IS NULL AND e.execution = ${STUDENTS} AND e.date >= ${today}::date
   `) as EventRow[];
   return rows
-    .filter((row) => row.students.length < STUDENTS_NEEDED)
+    .filter((row) => row.students.length < neededOf(row))
     .map((row): OpenEvent => ({
       key: `e${row.id}`,
       date: row.date,
       service: row.service || "Dogodek",
       eventType: null,
-      startTime: null,
+      startTime: cleanTime(row.startTime),
       hours: row.hours,
-      location: null,
+      location: row.location,
       going: row.students,
-      free: STUDENTS_NEEDED - row.students.length,
+      free: neededOf(row) - row.students.length,
     }));
 }
 
@@ -98,7 +107,9 @@ export async function claimOpenEvent(key: string, student: string, today: string
     const rows = (await sql()`
       UPDATE inquiries SET crew_students = crew_students || to_jsonb(${student}::text)
       WHERE id = ${id} AND status = 'confirmed' AND crew = ${STUDENTS}
-        AND jsonb_array_length(crew_students) < ${STUDENTS_NEEDED} AND NOT crew_students ? ${student}
+        AND jsonb_array_length(crew_students) < COALESCE(
+          (SELECT NULLIF(students_needed, 0) FROM ledger_events WHERE inquiry_id = ${id}), ${STUDENTS_NEEDED})
+        AND NOT crew_students ? ${student}
       RETURNING id
     `) as { id: number }[];
     if (!rows[0]) throw new Error("Mesta so že zapolnjena");
@@ -109,13 +120,13 @@ export async function claimOpenEvent(key: string, student: string, today: string
   if (key.startsWith("e")) {
     const rows = (await sql()`
       WITH event AS (
-        SELECT id, year FROM ledger_events
+        SELECT id, year, COALESCE(NULLIF(students_needed, 0), ${STUDENTS_NEEDED}) AS needed FROM ledger_events
         WHERE id = ${id} AND inquiry_id IS NULL AND execution = ${STUDENTS} AND date >= ${today}::date
         FOR UPDATE
       )
       INSERT INTO ledger_students (year, event_id, student, updated_by)
       SELECT event.year, event.id, ${student}, ${`Prijava: ${student}`} FROM event
-      WHERE (SELECT count(*) FROM ledger_students s WHERE s.event_id = event.id AND s.student IS NOT NULL) < ${STUDENTS_NEEDED}
+      WHERE (SELECT count(*) FROM ledger_students s WHERE s.event_id = event.id AND s.student IS NOT NULL) < event.needed
         AND NOT EXISTS (SELECT 1 FROM ledger_students s WHERE s.event_id = event.id AND lower(trim(s.student)) = lower(${student}))
       RETURNING id
     `) as { id: number }[];

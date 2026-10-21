@@ -5,7 +5,7 @@ import { Resend } from "resend";
 import EventDetailsRequestEmail from "@/emails/event-details-request";
 import { requireAdminAction } from "@/lib/admin-auth";
 import { ensureEventDetailsRequest, markEventDetailsEmailed } from "@/lib/db/event-details";
-import { deleteInquiry, getInquiry, inquiryStatuses, saveInquiry, setInquiryCrew, setInquiryNote, setInquiryStatus, type InquiryStatus, type InquiryWithOffers, type StoredFormData } from "@/lib/db/inquiries";
+import { deleteInquiry, getInquiry, inquiryStatuses, saveInquiry, setInquiryCrew, setInquiryNote, setInquiryStatus, setInquiryStudentsNeeded, type InquiryStatus, type InquiryWithOffers, type StoredFormData } from "@/lib/db/inquiries";
 import { getLists } from "@/lib/db/ledger";
 import { dropInquiryFromLedger, syncInquiryNoteToLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
@@ -84,7 +84,7 @@ export async function addManualInquiry(input: ManualInquiryInput) {
     };
     const inquiry = await getInquiry(await saveInquiry(formData, null));
     if (!inquiry) throw new Error("Povpraševanje ni bilo shranjeno");
-    return { ...inquiry, offers: [], eventDetails: null };
+    return { ...inquiry, offers: [], eventDetails: null, studentsNeeded: null };
   });
   if (result.ok) revalidatePath("/admin", "layout");
   return result;
@@ -121,6 +121,17 @@ export async function changeInquiryCrew(id: number, crew: string | null, student
     if (unknown) throw new Error(`Neznan študent: ${unknown}`);
     await setInquiryCrew(id, crew, [...new Set(students)]);
     await syncInquiryToLedger(id);
+  });
+  if (result.ok) revalidatePath("/admin", "layout");
+  return result;
+}
+
+// How many students a confirmed event needs; while fewer are on it, students can sign up themselves.
+export async function changeInquiryStudentsNeeded(id: number, needed: number) {
+  await requireAdminAction();
+  const result = await attempt(async () => {
+    if (!Number.isInteger(needed) || needed < 1 || needed > 10) throw new Error("Neveljavno število študentov");
+    await setInquiryStudentsNeeded(id, needed);
   });
   if (result.ok) revalidatePath("/admin", "layout");
   return result;

@@ -50,6 +50,8 @@ function rows(entry: Entry, students: string[]): [string, ReactNode][] {
   const event = entry.event;
   return [
     ["Šifra", event.code],
+    ["Začetek", entry.kind === "booked" ? event.startTime : null],
+    ["Lokacija", event.location],
     ["Storitev", event.service],
     ["Trajanje", event.hours !== null ? `${formatPlain(event.hours)} h` : null],
     ["Kilometri", entry.kind === "done" && event.km !== null ? `${formatPlain(event.km)} km` : null],

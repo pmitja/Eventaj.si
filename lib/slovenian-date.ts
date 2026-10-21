@@ -54,6 +54,14 @@ export function formatNumericSlovenianDate(value: string) {
   return `${date.getDate()}. ${date.getMonth() + 1}. ${date.getFullYear()}`;
 }
 
+// "19.00", "19:00 h" or "7:30" typed by hand → "19:00" / "07:30"; anything else stays as written.
+export function cleanTime(value: string | null | undefined) {
+  const text = value?.trim();
+  if (!text) return null;
+  const match = /^(\d{1,2})[:.](\d{2})(\s*h)?$/.exec(text);
+  return match && Number(match[1]) < 24 ? `${match[1].padStart(2, "0")}:${match[2]}` : text;
+}
+
 // Normalises a stored event date ("YYYY-MM-DD" or an older ISO timestamp) to "YYYY-MM-DD" in Slovenian time.
 export function toDateKey(value: string | null | undefined) {
   if (!value) return null;

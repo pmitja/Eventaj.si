@@ -1,7 +1,6 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { LoaderCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -9,26 +8,29 @@ import { Reveal } from "@/app/admin/_components/motion";
 import { Eyebrow } from "@/app/admin/_components/panel";
 import type { OpenEvent } from "@/lib/db/open-events";
 import { claimEvent } from "../actions";
-import { dayParts, longDate, timeText, untilText } from "./shift-format";
+import { ClaimDialog } from "./claim-dialog";
+import { dayParts, timeText, untilText } from "./shift-format";
 
-const freeText = (free: number) => (free === 1 ? "še 1 prosto mesto" : `še ${free} prosti mesti`);
+function freeText(free: number) {
+  if (free === 1) return "še 1 prosto mesto";
+  if (free === 2) return "še 2 prosti mesti";
+  return free < 5 ? `še ${free} prosta mesta` : `še ${free} prostih mest`;
+}
 
 // Events still looking for students. Signing up puts the student on the crew straight away.
 export function OpenEvents({ events, today, canClaim }: { events: OpenEvent[]; today: string; canClaim: boolean }) {
   const router = useRouter();
-  const [pending, setPending] = useState<string | null>(null);
+  const [selected, setSelected] = useState<OpenEvent | null>(null);
+  const [pending, setPending] = useState(false);
 
-  const claim = async (event: OpenEvent) => {
-    const where = event.location ? `, ${event.location}` : "";
-    if (!window.confirm(`Prijavim te na ${longDate(event.date)}${where}? Prijava velja takoj. Če potem ne moreš, javi Mitji ali Janu.`)) return;
-    setPending(event.key);
-    const error = await claimEvent(event.key);
-    setPending(null);
-    if (error) {
-      toast.error(error);
-    } else {
-      toast.success("Prijavljen si! Dogodek je zdaj v tvojem razporedu.");
-    }
+  const claim = async () => {
+    if (!selected) return;
+    setPending(true);
+    const error = await claimEvent(selected.key);
+    setPending(false);
+    setSelected(null);
+    if (error) toast.error(error);
+    else toast.success("Prijavljen si! Dogodek je zdaj v tvojem razporedu.");
     router.refresh();
   };
 
@@ -67,18 +69,17 @@ export function OpenEvents({ events, today, canClaim }: { events: OpenEvent[]; t
             {canClaim && (
               <motion.button
                 type="button"
-                disabled={pending !== null}
-                onClick={() => claim(event)}
+                onClick={() => setSelected(event)}
                 whileTap={{ scale: 0.96 }}
                 className="flex items-center justify-center gap-2 self-stretch rounded-full bg-adm-ink px-5 py-2.5 text-sm text-adm-bg transition-opacity hover:opacity-85 disabled:opacity-60 sm:self-center"
               >
-                {pending === event.key && <LoaderCircle className="size-4 animate-spin" />}
                 Prijavim se
               </motion.button>
             )}
           </Reveal>
         );
       })}
+      <ClaimDialog event={selected} pending={pending} onConfirm={claim} onClose={() => setSelected(null)} />
     </section>
   );
 }

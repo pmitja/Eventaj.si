@@ -13,6 +13,8 @@ export type EventRow = {
   date: string | null; // B  Datum (YYYY-MM-DD)
   client: string | null; // C  Naročnik
   contact: string | null; //    Kontakt (kje smo se dogovarjali)
+  startTime: string | null; //    Ura pričetka (za študente)
+  location: string | null; //    Lokacija (za študente)
   km: number | null; // D  Km
   hours: number | null; // E  Ure
   transfer: number | null; // F  Nakazilo €
@@ -26,6 +28,7 @@ export type EventRow = {
   execution: string | null; // P  Izvedba dogodka
   initialHelp: string | null; // Q  Začetna pomoč
   executionNotes: string | null; // R  Opombe izvedbe
+  studentsNeeded: number | null; //    Koliko študentov potrebujemo (prazno = 2)
 };
 
 export type CostRow = {
@@ -103,6 +106,8 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       date: { col: "date", type: "date" },
       client: { col: "client", type: "text" },
       contact: { col: "contact", type: "text" },
+      startTime: { col: "start_time", type: "text" },
+      location: { col: "location", type: "text" },
       km: { col: "km", type: "number" },
       hours: { col: "hours", type: "number" },
       transfer: { col: "transfer", type: "number" },
@@ -116,6 +121,7 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       execution: { col: "execution", type: "text" },
       initialHelp: { col: "initial_help", type: "text" },
       executionNotes: { col: "execution_notes", type: "text" },
+      studentsNeeded: { col: "students_needed", type: "number" },
     },
   },
   costs: {

@@ -1,6 +1,6 @@
 import type { EventDetails } from "@/lib/event-details/schema";
 import { eventTypeText } from "@/lib/event-details/schema";
-import { toDateKey } from "@/lib/slovenian-date";
+import { cleanTime, toDateKey } from "@/lib/slovenian-date";
 import type { StoredFormData } from "./inquiries";
 import { sql } from "./index";
 
@@ -35,6 +35,8 @@ type EventRow = {
   client: string | null;
   service: string | null;
   hours: number | null;
+  startTime: string | null;
+  location: string | null;
   albumUsed: boolean;
   album: string | null;
   notes: string | null;
@@ -101,9 +103,9 @@ function fromEvent(row: EventRow, name: string): StudentShift {
     title: row.client || row.form?.name || "Dogodek",
     service: row.service,
     eventType: details ? eventTypeText(details) : row.form?.eventType || null,
-    startTime: details?.startTime || null,
+    startTime: cleanTime(row.startTime || details?.startTime),
     hours: row.hours ?? (Number(details?.hours || row.form?.hours) || null),
-    location: details?.location || row.form?.location || null,
+    location: row.location || details?.location || row.form?.location || null,
     contactName: details?.contactName || row.form?.name || null,
     contactPhone: details?.contactPhone || row.form?.phone || null,
     album: row.albumUsed ? row.album || "Da" : null,
@@ -180,6 +182,7 @@ export async function getStudentSchedule(student: string): Promise<StudentShift[
   const [events, rentals, inquiries] = (await Promise.all([
     sql()`
       SELECT e.id, to_char(e.date, 'YYYY-MM-DD') AS date, e.client, e.service, e.hours::float8 AS hours,
+        e.start_time AS "startTime", e.location,
         e.album_used AS "albumUsed", e.album, e.notes, e.execution, e.inquiry_id AS "inquiryId",
         i.form_data AS form, d.data AS details, s.amount::float8 AS amount, s.paid,
         ARRAY(SELECT o.student FROM ledger_students o WHERE o.event_id = e.id AND o.student IS NOT NULL ORDER BY o.id) AS others

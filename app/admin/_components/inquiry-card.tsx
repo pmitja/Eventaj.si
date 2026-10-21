@@ -194,6 +194,7 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
             id={inquiry.id}
             crew={inquiry.crew}
             students={inquiry.crewStudents}
+            needed={inquiry.studentsNeeded}
             lists={crewLists}
             tables={serviceForInquiry(data) === "tables"}
           />

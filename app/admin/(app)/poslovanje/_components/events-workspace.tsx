@@ -45,6 +45,8 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     { key: "date", label: "Datum", type: "date", width: 150 },
     { key: "client", label: "Naročnik", type: "text", width: 230 },
     { key: "contact", label: "Kontakt", type: "text", width: 220, hint: "Kje smo se dogovarjali: e-naslov, Instagram, telefon …" },
+    { key: "startTime", label: "Ura pričetka", type: "text", width: 110, hint: "npr. 19:00 – študenti jo vidijo v svojem razporedu" },
+    { key: "location", label: "Lokacija", type: "text", width: 230, hint: "Naslov za študente; klik pri njih odpre zemljevid" },
     { key: "km", label: "Km", type: "number", width: 72 },
     { key: "hours", label: "Ure", type: "number", width: 64 },
     { key: "transfer", label: "Nakazilo €", type: "money", width: 110 },
@@ -59,6 +61,13 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     { key: "notes", label: "Opombe", type: "text", width: 210 },
     { key: "execution", label: "Izvedba dogodka", type: "select", options: lists.executions, width: 150, hint: "Kdo je izvedel celoten dogodek" },
     { key: "initialHelp", label: "Začetna pomoč", type: "select", options: lists.initialHelp, width: 140, hint: "Kdo je prišel samo na začetno pomoč/postavitev" },
+    {
+      key: "studentsNeeded",
+      label: "Št. študentov",
+      type: "number",
+      width: 104,
+      hint: "Koliko študentov potrebujemo (prazno = 2). Če je izvedba Študenti in jih je manj, se dogodek pokaže študentom za prijavo.",
+    },
     {
       key: "students",
       label: "Študenti",
@@ -79,6 +88,8 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     { key: "contact", label: "Kontakt", kind: "text", wide: true, placeholder: "E-naslov, Instagram, telefon …" },
     { key: "km", label: "Km", kind: "number", placeholder: "0" },
     { key: "hours", label: "Ure", kind: "number", required: true, placeholder: "0" },
+    { key: "startTime", label: "Ura pričetka", kind: "text", placeholder: "npr. 19:00" },
+    { key: "location", label: "Lokacija", kind: "text", placeholder: "Naslov dogodka" },
     { key: "service", label: "Storitev", kind: "select", options: lists.services, wide: true, initial: lists.services[0] ?? "" },
     { key: "transfer", label: "Nakazilo €", kind: "money", placeholder: "0,00" },
     { key: "cash", label: "Gotovina €", kind: "money", placeholder: "0,00" },
@@ -86,6 +97,15 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     { key: "cartridgeChanged", label: "Kartuša", kind: "seg", options: ["NE", "DA"] },
     { key: "execution", label: "Izvedba dogodka", kind: "select", options: lists.executions, required: true },
     { key: "initialHelp", label: "Začetna pomoč", kind: "seg", options: lists.initialHelp },
+    {
+      key: "studentsNeeded",
+      label: "Št. potrebnih študentov",
+      kind: "seg",
+      options: ["1", "2", "3", "4"],
+      initial: "2",
+      wide: true,
+      when: (v) => v.execution === "Študenti",
+    },
     { key: "students", label: "Študenti", kind: "multi", wide: true, options: lists.students },
     { key: "notes", label: "Opombe", kind: "area", wide: true },
     { key: "executionNotes", label: "Opombe izvedbe", kind: "area", wide: true, placeholder: "Kdo je bil prisoten, posebnosti …" },
@@ -146,9 +166,15 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
             ["Iz zaloge", stock.join(", ") || "—"],
           ];
         }}
-        onSubmit={({ album, students, ...values }) =>
+        onSubmit={({ album, students, studentsNeeded, ...values }) =>
           create(
-            { ...values, code, album: album && album !== NO_ALBUM ? album : null, albumUsed: album && album !== NO_ALBUM ? "DA" : "NE" },
+            {
+              ...values,
+              code,
+              album: album && album !== NO_ALBUM ? album : null,
+              albumUsed: album && album !== NO_ALBUM ? "DA" : "NE",
+              studentsNeeded: values.execution === "Študenti" ? studentsNeeded : null,
+            },
             (row) => `Dogodek ${row.code} je dodan`,
             async (row) => {
               if (!students) return;

@@ -32,6 +32,7 @@ export function untilText(date: string, today: string) {
 export function timeText(shift: Pick<StudentShift, "startTime" | "hours">) {
   const duration = shift.hours ? `${formatPlain(shift.hours)} h` : null;
   if (!shift.startTime) return duration ? `ura pričetka še ni znana · ${duration}` : null;
+  if (!/^\d{2}:\d{2}$/.test(shift.startTime)) return [shift.startTime, duration].filter(Boolean).join(" · ");
   if (!shift.hours) return `od ${shift.startTime}`;
   const [h, m] = shift.startTime.split(":").map(Number);
   const end = (h * 60 + m + Math.round(shift.hours * 60)) % (24 * 60);

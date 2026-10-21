@@ -11,7 +11,9 @@ export type NewCalendarEvent = {
   client: string;
   contact: string;
   location: string;
+  startTime: string;
   hours: string;
+  studentsNeeded: string;
   tableCount: string;
   execution: string;
   students: string[];
@@ -49,8 +51,11 @@ export async function addCalendarEvent(input: NewCalendarEvent): Promise<Result>
           client: input.client,
           contact: input.contact,
           hours: input.hours,
+          startTime: input.startTime,
+          location: input.location,
           service: input.service,
           execution: input.execution,
+          studentsNeeded: input.execution === "Študenti" ? input.studentsNeeded : "",
           notes: input.notes,
         });
 
