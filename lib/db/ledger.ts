@@ -117,6 +117,14 @@ export async function updateLedgerField(
     [...sets.map(([, v]) => v), userEmail, id],
   );
   if (name === "students") await syncStudentCost(id, before, userEmail);
+  // A row made from an inquiry keeps the inquiry's crew in step: Koledar reads it, and the next
+  // sync would otherwise put the old name back.
+  if (name === "events" && field === "execution") {
+    await sql()`UPDATE inquiries SET crew = ${value as string | null} WHERE id = (SELECT inquiry_id FROM ledger_events WHERE id = ${id})`;
+  }
+  if (name === "tables" && field === "deliveredBy") {
+    await sql()`UPDATE inquiries SET crew = ${value as string | null} WHERE id = (SELECT inquiry_id FROM ledger_table_rentals WHERE id = ${id})`;
+  }
   return value;
 }
 
