@@ -64,7 +64,7 @@ export function StudentsWorkspace({
     { key: "amount", label: "Znesek €", type: "money", width: 110 },
     { key: "payer", label: "Plačal", type: "select", options: lists.payers, width: 140 },
     { key: "pair", label: "Par plačnika", type: "computed", width: 140, value: (row) => payerPair(row.payer) },
-    { key: "paid", label: "Plačano?", type: "bool", width: 96, hint: "DA z zneskom samodejno zapiše plačilo v Stroške" },
+    { key: "paid", label: "Plačano?", type: "bool", width: 96, hint: "DA z zneskom samodejno zapiše plačilo v Stroške (razen če je plačal Skupni fond)" },
     { key: "refund", label: "Povračilo paru €", type: "computed", numeric: true, strong: true, width: 140, value: studentPairRefund },
     { key: "note", label: "Opomba", type: "text", width: 260 },
   ];
@@ -96,6 +96,12 @@ export function StudentsWorkspace({
         <KpiCard size="md" label="Povračilo paru" value={rows.reduce((s, r) => s + (studentPairRefund(r) ?? 0), 0)} format="eur" />
         <KpiCard size="md" label="Neplačani vnosi" value={rows.length - paidCount} format="int" />
       </Strip>
+
+      <p className="m-0 rounded-lg border border-adm-line px-4 py-3 text-sm text-adm-muted">
+        Ko je študent plačan (<b>Plačano? = DA</b> z zneskom) iz <b>osebnih sredstev ali s kartice</b>, se plačilo samodejno
+        zapiše v Stroške, zato ga tam ne vpisuj še enkrat. Plačilo iz <b>Skupnega fonda</b> se v Stroške ne zapiše, ker se od
+        fonda ne sme odšteti.
+      </p>
 
       <ChartRow>
         <Panel title="Ure po študentih" className="flex-[3_1_520px]">

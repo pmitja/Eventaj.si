@@ -1,3 +1,4 @@
+import { FUND } from "@/lib/ledger/compute";
 import { getSlovenianDateString } from "@/lib/slovenian-date";
 import { sql } from "./index";
 
@@ -15,16 +16,17 @@ type Student = {
   client: string | null;
 };
 
-export type StudentPayState = { paid: boolean; amount: number | null };
+export type StudentPayState = { paid: boolean; amount: number | null; payer: string | null };
 
-const payable = (row: StudentPayState) => row.paid && row.amount !== null;
+// A payment from Skupni fond is not a cost: it never goes to Stroški, so the fund is not lowered.
+const payable = (row: StudentPayState) => row.paid && row.amount !== null && (row.payer ?? "").trim().toLowerCase() !== FUND.toLowerCase();
 
 export async function studentPayState(id: number): Promise<StudentPayState | null> {
-  const rows = (await sql()`SELECT paid, amount::float8 AS amount FROM ledger_students WHERE id = ${id}`) as StudentPayState[];
+  const rows = (await sql()`SELECT paid, amount::float8 AS amount, payer FROM ledger_students WHERE id = ${id}`) as StudentPayState[];
   return rows[0] ?? null;
 }
 
-// Paying a student (Plačano? = DA with an amount) books the payment in Stroški. The linked cost then
+// Paying a student (Plačano? = DA with an amount, paid personally) books the payment in Stroški. The linked cost then
 // follows the student row: amount, payer and description update, and it goes away when the
 // payment is undone. Rows that were already paid before this existed have their costs entered by
 // hand, so only a change into "paid" creates one.
