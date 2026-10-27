@@ -1,5 +1,5 @@
 import { company, defaultPaymentTerms } from "./company";
-import { formatEur, type OfferItem } from "./pricing";
+import { formatEur, type OfferItem, type OfferVariant } from "./pricing";
 import { services, tableRental, type BoothService, type OfferService } from "./services";
 
 const serviceText = {
@@ -192,6 +192,18 @@ Ti pripraviš besedilne dele po shemi.
 - opombe_za_pregled: vse, česar ne moreš odgovoriti s podatki iz cenika ali povpraševanja (npr. dogodek traja dlje od
   paketa, podaljšanje pa ni med POSTAVKAMI; manjkajoč naslov naročnika; posebne zahteve). Ne ugibaj.
 
+# VEČDNEVNI DOGODEK IN MOŽNOSTI ZA PRIMERJAVO (imata prednost pred pravili zgoraj)
+- Če dogodek traja več dni ("Število dni" v PODATKIH PONUDBE), so paket, podaljšanje in prevoz v POSTAVKAH že
+  zaračunani za vsak dan; QR galerija, album in ročno dodane postavke so enkratne. V uvodu in razpoložljivosti navedi
+  vse dni; prihod 1 uro pred začetkom ter postavitev in odstranitev opreme veljata za vsak dan.
+- Če so POSTAVKE razdeljene na več MOŽNOSTI, ponudba primerja pakete z različnim trajanjem. V uvodu povej, da
+  pošiljamo ponudbo v teh možnostih, da jih lahko primerjajo. opis_storitve${isCombo ? " in opis_storitve_360 sta splošna" : " je splošen"}
+  za vse možnosti: ne navajaj imena paketa; prva alineja je najem za X ali Y ur (na dan, če je dni več),
+  kar je vključeno samo v nekaterih paketih, označi (npr. "pri možnosti s 4 urami"). Cen v besedilu ne ponavljaj, ker
+  so v tabelah.
+- Popust, ki je med POSTAVKAMI, lahko v placilni_pogoji omeniš z odstotkom, brez zneska. Ne dodajaj popusta, ki ga ni
+  med POSTAVKAMI.
+
 # PRAVILA
 1. Odgovori na VSAKO zahtevo iz povpraševanja (opis storitve, število ${text.media}, osebje, stroški, DDV, veljavnost,
    plačilni pogoji, razpoložljivost, prostorski pogoji) v ustreznem polju.
@@ -203,15 +215,19 @@ type PromptInput = {
   date: string;
   validityDays: number;
   validUntil: string;
-  items: OfferItem[];
+  days: number;
+  variants: OfferVariant[];
   packageName: string;
   instructions: string;
 };
 
+const listItems = (items: OfferItem[]) =>
+  items.map((item) => `- ${item.description}: ${item.amount === null ? item.note ?? "" : formatEur(item.amount)}`).join("\n");
+
 export function buildOfferUserPrompt(input: PromptInput) {
-  const items = input.items
-    .map((item) => `- ${item.description}: ${item.amount === null ? item.note ?? "" : formatEur(item.amount)}`)
-    .join("\n");
+  const items = input.variants.length > 1
+    ? input.variants.map((variant) => `## ${variant.label}\n${listItems(variant.items)}`).join("\n\n")
+    : listItems(input.variants[0].items);
 
   return `# POVPRAŠEVANJE STRANKE
 """
@@ -221,7 +237,7 @@ ${input.inquiryText}
 # PODATKI PONUDBE
 Datum ponudbe: ${input.date}
 Veljavnost: ${input.validityDays} dni (do ${input.validUntil})
-Izbrani paket: ${input.packageName}
+Izbrani paket: ${input.packageName}${input.days > 1 ? `\nŠtevilo dni: ${input.days}` : ""}
 
 # POSTAVKE (izbral ponudnik)
 ${items}

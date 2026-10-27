@@ -5,6 +5,12 @@ export const offerOptionsSchema = z.object({
   service: z.enum(["photo", "360", "combo", "tables"]),
   hours: z.enum(["2", "3", "4"]),
   extraHours: z.number().int().min(0).max(12),
+  // Booths only: the package, extra hours and transport are charged for each day.
+  days: z.number().int().min(1).max(7).default(1),
+  // Booths only: a second package priced side by side so the client can compare.
+  compareHours: z.enum(["", "2", "3", "4"]).default(""),
+  // Off everything except transport.
+  discountPercent: z.number().min(0).max(50).default(0),
   albumSize: z.enum(["", "small", "large"]),
   albumColor: z.enum(["", "black", "white"]),
   qrGallery: z.boolean(),

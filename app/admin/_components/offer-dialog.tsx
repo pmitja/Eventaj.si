@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { FormEvent, useMemo, useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import type { InquiryWithOffers } from "@/lib/db/inquiries";
-import { buildOfferItems, defaultPricePerKm, formatEur, sumItems, type PackageHours } from "@/lib/offers/pricing";
+import { buildOfferVariants, defaultPricePerKm, formatEur, type PackageHours } from "@/lib/offers/pricing";
 import type { OfferOptions } from "@/lib/offers/schema";
 import { isBoothService, serviceForInquiry, services, tableRental, tableSelectionFromInquiry } from "@/lib/offers/services";
 import { CustomItemsEditor } from "./custom-items-editor";
@@ -24,6 +24,9 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
     service,
     hours: packageHours,
     extraHours: Math.max(hours - 4, 0),
+    days: 1,
+    compareHours: "",
+    discountPercent: 0,
     albumSize: hasAlbum ? data.albumSize ?? (hours >= 3 ? "small" : "") : "",
     albumColor: hasAlbum ? data.albumColor ?? "" : "",
     qrGallery: Boolean(data.qrGallery),
@@ -48,13 +51,36 @@ export function OfferDialog({ inquiry, onClose }: Props) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [result, setResult] = useState<GeneratedOffer | null>(null);
+  const [prefillLoading, setPrefillLoading] = useState(false);
+  const [prefillNotes, setPrefillNotes] = useState<string[]>([]);
 
-  const fixedItems = useMemo(() => buildOfferItems({ ...options, customItems: [] }), [options]);
-  const total = useMemo(() => sumItems(buildOfferItems(options)), [options]);
+  const variants = useMemo(() => buildOfferVariants(options), [options]);
+  // Custom items are edited below the first variant, so they are not listed there twice.
+  const customDescriptions = new Set(options.customItems.map((item) => item.description.trim()));
   const needsDistance = !options.pickup && !options.locationUnknown && options.distanceKm === null;
 
   const update = <K extends keyof OfferOptions>(key: K, value: OfferOptions[K]) =>
     setOptions((current) => ({ ...current, [key]: value }));
+
+  const runPrefill = async () => {
+    setPrefillLoading(true);
+    setError("");
+    try {
+      const response = await fetch(`/api/admin/inquiries/${inquiry.id}/offers/prefill`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(options),
+      });
+      const body = await response.json();
+      if (!response.ok) throw new Error(body.error ?? "Izpolnjevanje ni uspelo");
+      setOptions((current) => ({ ...current, ...body.prefill }));
+      setPrefillNotes(body.notes);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Izpolnjevanje ni uspelo");
+    } finally {
+      setPrefillLoading(false);
+    }
+  };
 
   const submit = async (event: FormEvent) => {
     event.preventDefault();
@@ -111,31 +137,44 @@ export function OfferDialog({ inquiry, onClose }: Props) {
           <OfferResult offer={result} onAnother={() => setResult(null)} />
         ) : (
           <form onSubmit={submit} className="mt-5 space-y-5">
-            <OfferFormFields options={options} update={update} />
+            <OfferFormFields
+              options={options}
+              update={update}
+              prefill={{ run: runPrefill, loading: prefillLoading, notes: prefillNotes }}
+            />
 
-            <div className="rounded-[14px] border border-adm-line bg-adm-card p-4 text-sm">
-              {fixedItems.map((item, index) => (
-                <div key={index} className="flex justify-between gap-4 py-1">
-                  <span>{item.description}</span>
-                  <span className="shrink-0 tabular-nums">{item.amount === null ? item.note : formatEur(item.amount)}</span>
+            {variants.map((variant, variantIndex) => (
+              <div key={variantIndex} className="rounded-[14px] border border-adm-line bg-adm-card p-4 text-sm">
+                {variant.label && (
+                  <p className="pb-1 text-xs font-medium uppercase tracking-wider text-adm-muted">{variant.label}</p>
+                )}
+                {variant.items
+                  .filter((item) => variantIndex > 0 || !customDescriptions.has(item.description))
+                  .map((item, index) => (
+                    <div key={index} className="flex justify-between gap-4 py-1">
+                      <span>{item.description}</span>
+                      <span className="shrink-0 tabular-nums">{item.amount === null ? item.note : formatEur(item.amount)}</span>
+                    </div>
+                  ))}
+                {variantIndex === 0 && (
+                  <CustomItemsEditor
+                    items={options.customItems}
+                    presets={isBoothService(options.service) ? services[options.service].presets : []}
+                    onChange={(value) => update("customItems", value)}
+                  />
+                )}
+                <div className="mt-3 flex justify-between border-t border-adm-ink pt-2 font-semibold">
+                  <span>Skupaj</span>
+                  <span className="tabular-nums">{formatEur(variant.total)}</span>
                 </div>
-              ))}
-              <CustomItemsEditor
-                items={options.customItems}
-                presets={isBoothService(options.service) ? services[options.service].presets : []}
-                onChange={(value) => update("customItems", value)}
-              />
-              <div className="mt-3 flex justify-between border-t border-adm-ink pt-2 font-semibold">
-                <span>Skupaj</span>
-                <span className="tabular-nums">{formatEur(total)}</span>
               </div>
-            </div>
+            ))}
 
             {error && <p className="text-sm text-adm-accent">{error}</p>}
 
             <button
               type="submit"
-              disabled={loading || needsDistance}
+              disabled={loading || prefillLoading || needsDistance}
               className="w-full rounded-full bg-adm-ink px-5 py-3 text-sm font-medium text-adm-bg disabled:opacity-50"
             >
               {loading

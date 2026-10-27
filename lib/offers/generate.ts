@@ -1,19 +1,15 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { albumColorLabels, albumSizeLabels } from "@/content/eventaj/album-pricing";
 import { getInquiry, type StoredFormData } from "@/lib/db/inquiries";
 import { getOffer, insertOffer, nextOfferNumber } from "@/lib/db/offers";
 import { formatNumericSlovenianDate, getSlovenianDateString } from "@/lib/slovenian-date";
-import { buildOfferItems, sumItems } from "./pricing";
+import { buildOfferVariants, daysLabel, type PackageHours } from "./pricing";
 import { buildOfferSystemPrompt, buildOfferUserPrompt } from "./prompt";
-import { serviceForInquiry, services, tableRental, type OfferService, type ServicePackage } from "./services";
+import { serviceForInquiry, services, tableRental, type BoothService, type OfferService, type ServicePackage } from "./services";
+import { claudeClient, MODEL, OfferGenerationError } from "./claude";
 import { offerContentSchema, type OfferOptions } from "./schema";
 
-const MODEL = "claude-opus-5-5";
-
-export class OfferGenerationError extends Error {}
-
-function describeInquiry(formData: StoredFormData, createdAt: string, serviceLabel: string) {
+export function describeInquiry(formData: StoredFormData, createdAt: string, serviceLabel: string) {
   const album = formData.albumSize
     ? `${albumSizeLabels[formData.albumSize]}${formData.albumColor ? `, ${albumColorLabels[formData.albumColor]}` : ""}`
     : "";
@@ -38,12 +34,21 @@ function describeInquiry(formData: StoredFormData, createdAt: string, serviceLab
     .join("\n");
 }
 
-function serviceLabel(service: OfferService) {
+export function serviceLabel(service: OfferService) {
   return service === "tables" ? tableRental.label : services[service].label;
 }
 
 function describePackage(pkg: ServicePackage) {
   return pkg.parts ? `${pkg.name}: ${pkg.parts.map((part) => part.name).join(" + ")}` : pkg.name;
+}
+
+function describePackages(service: BoothService, options: OfferOptions) {
+  const hours: PackageHours[] = options.compareHours && options.compareHours !== options.hours
+    ? [options.hours, options.compareHours]
+    : [options.hours];
+  const names = hours.map((h) => describePackage(services[service].packages[h]));
+  const days = options.days > 1 ? `, za vsak dan (${daysLabel(options.days)})` : "";
+  return names.length > 1 ? `dve možnosti za primerjavo: ${names.join(" ALI ")}${days}` : `${names[0]}${days}`;
 }
 
 function addDays(dateString: string, days: number) {
@@ -53,8 +58,7 @@ function addDays(dateString: string, days: number) {
 }
 
 export async function generateOffer(inquiryId: number, options: OfferOptions) {
-  if (!process.env.ANTHROPIC_API_KEY) throw new OfferGenerationError("ANTHROPIC_API_KEY ni nastavljen v .env");
-
+  const client = claudeClient();
   const inquiry = await getInquiry(inquiryId);
   if (!inquiry) throw new OfferGenerationError("Povpraševanje ne obstaja");
   const service = serviceForInquiry(inquiry.formData);
@@ -64,17 +68,12 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
   const hasAlbum = service !== "tables" && services[service].hasAlbum;
   options = { ...options, service, ...(hasAlbum ? {} : { albumSize: "", albumColor: "" }) };
 
-  const draftItems = buildOfferItems(options);
-  const total = sumItems(draftItems);
+  if (service === "tables") options = { ...options, days: 1, compareHours: "" };
+  const draftVariants = buildOfferVariants(options);
   const date = getSlovenianDateString();
   const validUntil = addDays(date, options.validityDays);
   const year = Number(date.slice(0, 4));
 
-  // Organization-scoped API keys must name the workspace on every request.
-  const workspaceId = process.env.ANTHROPIC_WORKSPACE_ID;
-  const client = new Anthropic({
-    defaultHeaders: workspaceId ? { "anthropic-workspace-id": workspaceId } : undefined,
-  });
   const response = await client.beta.messages.parse({
     model: MODEL,
     max_tokens: 16000,
@@ -90,10 +89,11 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
           date: formatNumericSlovenianDate(date),
           validityDays: options.validityDays,
           validUntil: formatNumericSlovenianDate(validUntil),
-          items: draftItems,
+          days: options.days,
+          variants: draftVariants,
           packageName: service === "tables"
             ? `${tableRental.name}: ${options.tableCount} × ${tableRental.unitPrice} €`
-            : describePackage(services[service].packages[options.hours]),
+            : describePackages(service, options),
           instructions: options.instructions,
         }),
       },
@@ -108,7 +108,7 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
   }
 
   const content = response.parsed_output;
-  const items = buildOfferItems(options, { place: content.dogodek.kraj });
+  const variants = buildOfferVariants(options, { place: content.dogodek.kraj });
 
   // Number is assigned at insert time so parallel generations cannot collide.
   for (let attempt = 0; attempt < 3; attempt++) {
@@ -119,8 +119,7 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
         number,
         options: { ...options, date, validUntil },
         content,
-        items,
-        total,
+        variants,
       });
       return (await getOffer(id))!;
     } catch (error) {

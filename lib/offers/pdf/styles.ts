@@ -57,6 +57,7 @@ export const styles = StyleSheet.create({
   partyName: { fontWeight: 700, color: colors.ink, lineHeight: LH },
   paragraph: { marginBottom: 4, lineHeight: LH },
   heading: { fontSize: 12.5, fontWeight: 700, color: colors.ink, marginTop: 12, marginBottom: 4 },
+  subheading: { fontSize: 10.5, fontWeight: 600, color: colors.label, marginTop: 8, marginBottom: 2 },
   bulletRow: { flexDirection: "row", marginBottom: 1.5 },
   bullet: { width: 11, lineHeight: LH },
   bulletText: { flex: 1, lineHeight: LH },

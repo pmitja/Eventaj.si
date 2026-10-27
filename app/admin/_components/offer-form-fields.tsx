@@ -10,6 +10,8 @@ type Props = {
   update: <K extends keyof OfferOptions>(key: K, value: OfferOptions[K]) => void;
 };
 
+export type PrefillState = { run: () => void; loading: boolean; notes: string[] };
+
 const inputClass =
   "w-full rounded-lg border border-adm-ink/20 bg-adm-card px-3 py-2 text-sm outline-none focus:border-adm-accent disabled:opacity-50";
 
@@ -99,7 +101,29 @@ function BoothFields({ options, update, service }: Props & { service: ServiceCon
             }))}
           />
         </Field>
-        <Field label={`Dodatne ure (${service.extraHourPrice} €/h)`}>
+        <Field label="Primerjaj s paketom">
+          <Segmented
+            value={options.compareHours === options.hours ? "" : options.compareHours}
+            onChange={(value) => update("compareHours", value)}
+            options={[
+              { value: "" as const, label: "Brez" },
+              ...(["2", "3", "4"] as const)
+                .filter((hours) => hours !== options.hours)
+                .map((hours) => ({ value: hours, label: `${service.packages[hours].shortName} ${hours} h` })),
+            ]}
+          />
+        </Field>
+        <Field label="Število dni (paket in prevoz za vsak dan)">
+          <input
+            type="number"
+            min={1}
+            max={7}
+            value={options.days}
+            onChange={(event) => update("days", Math.min(7, Math.max(1, Number(event.target.value) || 1)))}
+            className={inputClass}
+          />
+        </Field>
+        <Field label={`Dodatne ure na dan (${service.extraHourPrice} €/h)`}>
           <input
             type="number"
             min={0}
@@ -152,7 +176,7 @@ function BoothFields({ options, update, service }: Props & { service: ServiceCon
   );
 }
 
-export function OfferFormFields({ options, update }: Props) {
+export function OfferFormFields({ options, update, prefill }: Props & { prefill?: PrefillState }) {
   const isTables = !isBoothService(options.service);
   const noDistance = options.locationUnknown || options.pickup;
   return (
@@ -202,16 +226,29 @@ export function OfferFormFields({ options, update }: Props) {
         : <TableFields options={options} update={update} />}
 
       <div className="grid gap-4 sm:grid-cols-[140px_1fr]">
-        <Field label="Veljavnost (dni)">
-          <input
-            type="number"
-            min={1}
-            max={90}
-            value={options.validityDays}
-            onChange={(event) => update("validityDays", Math.max(1, Number(event.target.value) || 1))}
-            className={inputClass}
-          />
-        </Field>
+        <div className="space-y-4">
+          <Field label="Veljavnost (dni)">
+            <input
+              type="number"
+              min={1}
+              max={90}
+              value={options.validityDays}
+              onChange={(event) => update("validityDays", Math.max(1, Number(event.target.value) || 1))}
+              className={inputClass}
+            />
+          </Field>
+          <Field label="Popust brez prevoza (%)">
+            <input
+              type="number"
+              min={0}
+              max={50}
+              step={1}
+              value={options.discountPercent}
+              onChange={(event) => update("discountPercent", Math.min(50, Math.max(0, Number(event.target.value) || 0)))}
+              className={inputClass}
+            />
+          </Field>
+        </div>
         <Field label="Dodatna navodila za Claude">
           <textarea
             rows={3}
@@ -220,6 +257,23 @@ export function OfferFormFields({ options, update }: Props) {
             placeholder={isTables ? "npr. 25. 10. je tudi prost, opozori, da sta oba datuma nedelja" : "npr. naročnik je OŠ Lenart, dogodek 17.00–21.00, tema noč čarovnic"}
             className={inputClass}
           />
+          {prefill && !isTables && (
+            <div className="mt-2 space-y-2">
+              <button
+                type="button"
+                onClick={prefill.run}
+                disabled={prefill.loading}
+                className="rounded-full border border-adm-ink/20 bg-adm-card px-3 py-1.5 text-sm hover:border-adm-accent disabled:opacity-50"
+              >
+                {prefill.loading ? "Claude bere povpraševanje …" : "Izpolni iz povpraševanja in navodil"}
+              </button>
+              {prefill.notes.length > 0 && (
+                <ul className="list-disc space-y-0.5 pl-5 text-xs text-adm-muted">
+                  {prefill.notes.map((note, index) => <li key={index}>{note}</li>)}
+                </ul>
+              )}
+            </div>
+          )}
         </Field>
       </div>
     </>

@@ -47,12 +47,13 @@ export function Party({ label, lines }: { label: string; lines: string[] }) {
   );
 }
 
-type PriceTableProps = { title: string; items: OfferItem[]; total: number; note: string };
+type PriceTableProps = { title?: string; subtitle?: string; items: OfferItem[]; total: number };
 
-export function PriceTable({ title, items, total, note }: PriceTableProps) {
+export function PriceTable({ title, subtitle, items, total }: PriceTableProps) {
   return (
     <View wrap={false}>
-      <Text style={styles.heading}>{title}</Text>
+      {title && <Text style={styles.heading}>{title}</Text>}
+      {subtitle && <Text style={styles.subheading}>{subtitle}</Text>}
       <View style={styles.tableHead}>
         <Text style={[styles.cellMain, styles.headText]}>Postavka</Text>
         <Text style={[styles.cellAmount, styles.headText]}>Znesek</Text>
@@ -64,13 +65,18 @@ export function PriceTable({ title, items, total, note }: PriceTableProps) {
         </View>
       ))}
       <View style={styles.totalRow}>
-        <Text style={styles.totalLabel}>Skupna vrednost ponudbe</Text>
+        <Text style={styles.totalLabel}>{subtitle ? "Skupna vrednost" : "Skupna vrednost ponudbe"}</Text>
         <Text style={styles.totalAmount}>{formatEur(total)}</Text>
       </View>
-      <Text style={styles.tableNote}>
-        {vatNote}
-        {"\n"}{note}
-      </Text>
     </View>
+  );
+}
+
+export function PriceNote({ note }: { note: string }) {
+  return (
+    <Text style={styles.tableNote}>
+      {vatNote}
+      {"\n"}{note}
+    </Text>
   );
 }

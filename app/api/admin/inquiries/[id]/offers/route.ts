@@ -1,6 +1,6 @@
-import Anthropic from "@anthropic-ai/sdk";
 import { requireAdminApi } from "@/lib/admin-auth";
-import { generateOffer, OfferGenerationError } from "@/lib/offers/generate";
+import { offerErrorResponse } from "@/lib/offers/claude";
+import { generateOffer } from "@/lib/offers/generate";
 import { offerOptionsSchema } from "@/lib/offers/schema";
 
 export const runtime = "nodejs";
@@ -28,20 +28,6 @@ export async function POST(request: Request, { params }: { params: Promise<{ id:
       },
     });
   } catch (error) {
-    if (error instanceof OfferGenerationError) {
-      return Response.json({ error: error.message }, { status: 422 });
-    }
-    if (error instanceof Anthropic.AuthenticationError) {
-      return Response.json({ error: "Neveljaven ANTHROPIC_API_KEY" }, { status: 500 });
-    }
-    if (error instanceof Anthropic.RateLimitError) {
-      return Response.json({ error: "Preveč zahtevkov, poskusite čez minuto" }, { status: 429 });
-    }
-    if (error instanceof Anthropic.APIError) {
-      console.error("Claude API error:", error.status, error.message);
-      return Response.json({ error: `Napaka Claude API (${error.status ?? "povezava"})` }, { status: 502 });
-    }
-    console.error("Offer generation failed:", error);
-    return Response.json({ error: "Generiranje ponudbe ni uspelo" }, { status: 500 });
+    return offerErrorResponse(error, "Generiranje ponudbe ni uspelo");
   }
 }

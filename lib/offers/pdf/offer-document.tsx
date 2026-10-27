@@ -4,21 +4,24 @@ import { formatNumericSlovenianDate } from "@/lib/slovenian-date";
 import { cancellationPolicy, company } from "../company";
 import { formatEur } from "../pricing";
 import { isBoothService, services, tableRental } from "../services";
-import { Bullets, MetaCell, Party, PriceTable, Section } from "./offer-parts";
+import { Bullets, MetaCell, Party, PriceNote, PriceTable, Section } from "./offer-parts";
 import { RichText } from "./rich-text";
 import { logoPath, styles } from "./styles";
 
 export function OfferDocument({ offer }: { offer: Offer }) {
-  const { content, items, options } = offer;
+  const { content, variants, options } = offer;
+  const compared = variants.length > 1;
   const service = isBoothService(options.service) ? services[options.service] : null;
   const pkg = service?.packages[options.hours] ?? { name: tableRental.name, included: tableRental.included };
   const event = content.dogodek;
   const validUntil = formatNumericSlovenianDate(options.validUntil);
   const theme = content.tema.trim();
+  // With compared packages the description covers all of them, so it is titled by the booth, not a package.
+  const boothNames = options.service === "combo" ? [services.photo.label, services["360"].label] : [service?.label ?? ""];
   const descriptions = ("parts" in pkg && pkg.parts ? pkg.parts : [pkg]).map((part, index) => {
     // Offers created before combo support have no opis_storitve_360.
     const written = index === 0 ? content.opis_storitve : content.opis_storitve_360 ?? [];
-    return { name: part.name, items: written.length > 0 ? written : part.included };
+    return { name: compared ? boothNames[index] : part.name, items: written.length > 0 ? written : part.included };
   });
 
   let section = 0;
@@ -67,12 +70,18 @@ export function OfferDocument({ offer }: { offer: Offer }) {
           </Section>
         )}
 
-        <PriceTable
-          title={numbered("Cena")}
-          items={items}
-          total={offer.total}
+        {variants.map((variant, index) => (
+          <PriceTable
+            key={index}
+            title={index === 0 ? numbered("Cena") : undefined}
+            subtitle={variant.label || undefined}
+            items={variant.items}
+            total={variant.total}
+          />
+        ))}
+        <PriceNote
           note={service
-            ? `Morebitno podaljšanje najema: ${formatEur(service.extraHourPrice)} za vsako dodatno uro.`
+            ? `Morebitno podaljšanje najema: ${formatEur(service.extraHourPrice)} za vsako dodatno uro${(options.days ?? 1) > 1 ? " na dan" : ""}.`
             : `Cena najema znaša ${formatEur(tableRental.unitPrice)} na mizo za en dan.`}
         />
 
