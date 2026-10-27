@@ -88,7 +88,7 @@ export function InquiryCrewControl({ id, crew, students, needed, lists, tables }
           </div>
         </div>
       )}
-      {!tables && current.execution === "Študenti" && <NeededControl id={id} needed={needed} going={current.students.length} />}
+      {!tables && (current.execution === "Študenti" || (!current.execution && current.students.length > 0)) && <NeededControl id={id} needed={needed} going={current.students.length} />}
     </div>
   );
 }
