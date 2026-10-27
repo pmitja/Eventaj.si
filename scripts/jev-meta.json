@@ -1,0 +1,70 @@
+{
+  "market": "Slovenija, google.si, iskalci, ki želijo najeti storitev za dogodek",
+  "brand": "Eventaj.si",
+  "pages": [
+    {
+      "path": "/photo-booth",
+      "primary": "photo booth najem",
+      "secondary": ["photo booth najem cena", "photobooth najem"],
+      "evidence": "Google Search Console, zadnjih 16 mesecev: 'photo booth najem' je najbolj klikana poizvedba na strani (132 klikov, 1.011 prikazov), sledita 'photo booth najem cena' in 'photobooth najem'.",
+      "offer": "Photo booth najem s takojšnjim tiskom, rekviziti in operaterjem po vsej Sloveniji. Od 279 €/2h, paket s QR galerijo od 304 €.",
+      "fields": {
+        "title": ["Photo booth najem po vsej Sloveniji od 279 € | Eventaj.si"],
+        "description": ["Photo booth najem za poroke, rojstne dneve in poslovne dogodke. Neomejen tisk, rekviziti in operater, od 279 €/2h po vsej Sloveniji."],
+        "h1": ["Photo booth najem s takojšnjim tiskom"]
+      }
+    },
+    {
+      "path": "/photo-booth-za-poroko",
+      "primary": "foto kotiček za poroko",
+      "secondary": ["photo booth za poroko", "foto stojnica za poroko"],
+      "offer": "Foto kotiček za poroke: neomejen tisk z imeni in datumom, spominska knjiga, rekviziti. Od 279 €, po vsej Sloveniji.",
+      "fields": {
+        "title": ["Foto kotiček za poroko z neomejenim tiskom | Eventaj.si"],
+        "description": ["Foto kotiček za poroko z neomejenim tiskom, dizajnom z vajinimi imeni in datumom ter spominsko knjigo za goste. Od 279 €, po vsej Sloveniji."]
+      }
+    },
+    {
+      "path": "/photo-booth-za-rojstni-dan",
+      "primary": "photo booth za rojstni dan",
+      "secondary": ["fotobox za rojstni dan", "fotobox za zabavo"],
+      "offer": "Photo booth za rojstnodnevne zabave: rekviziti, neomejen tisk, dizajn z imenom slavljenca. Od 279 €, po vsej Sloveniji.",
+      "fields": {
+        "title": ["Photo booth za rojstni dan z neomejenim tiskom | Eventaj.si"],
+        "description": ["Photo booth za rojstni dan z rekviziti, neomejenim tiskom in dizajnom z imenom slavljenca. Od 279 €/2h po vsej Sloveniji. Preverite prost termin."]
+      }
+    },
+    {
+      "path": "/photo-booth-za-obletnico",
+      "primary": "photo booth za obletnico",
+      "secondary": ["photo booth abraham", "photo booth zlata poroka"],
+      "offer": "Photo booth za obletnice, abrahame in zlate poroke: neomejen tisk, personaliziran dizajn, spominska knjiga. Od 279 €, po vsej Sloveniji.",
+      "fields": {
+        "title": ["Photo booth za obletnico – od 279 € | Eventaj.si"],
+        "description": ["Photo booth za obletnico z neomejenim tiskom in spominsko knjigo, v katero gostje prilepijo fotografijo in voščilo. Od 279 €, po vsej Sloveniji."]
+      }
+    },
+    {
+      "path": "/photo-booth-za-poslovni-dogodek",
+      "primary": "photo booth za poslovni dogodek",
+      "secondary": ["photo booth z logotipom", "photo booth novoletna zabava"],
+      "offer": "Photo booth za poslovne dogodke z logotipom podjetja na vsakem tisku: novoletne zabave, team buildingi, konference. Od 279 €.",
+      "fields": {
+        "title": ["Photo booth za poslovni dogodek, od 279 € | Eventaj.si"],
+        "description": ["Photo booth za poslovni dogodek: vsak tisk nosi logotip podjetja, fotografije pa dobite tudi v digitalni galeriji. Od 279 €, po vsej Sloveniji."]
+      }
+    },
+    {
+      "path": "/360-photo-booth",
+      "primary": "360 photo booth najem",
+      "secondary": ["360 photo booth", "photo booth 360"],
+      "evidence": "Google Search Console, zadnjih 16 mesecev: '360 photo booth najem' je najbolj klikana 360 poizvedba (63 klikov, 241 prikazov), sledita '360 photo booth' in 'photo booth 360'.",
+      "offer": "Najem 360 photo bootha: slow-motion videi z deljenjem prek QR kode, operater, po vsej Sloveniji. Od 299 €/2h.",
+      "fields": {
+        "title": ["360 photo booth najem po Sloveniji od 299 € | Eventaj.si"],
+        "description": ["360 photo booth najem za poroke, rojstne dneve in poslovne dogodke. Slow-motion videi z deljenjem prek QR kode, od 299 €/2h po vsej Sloveniji."],
+        "h1": ["360 photo booth najem od 299 €"]
+      }
+    }
+  ]
+}

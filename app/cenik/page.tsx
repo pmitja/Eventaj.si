@@ -1,7 +1,10 @@
 import { CenikPageContent } from "@/components/sections/eventaj/cenik/cenik-page-content";
+import { booth360Packages, photoPackages } from "@/content/eventaj/data";
+import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
+import { priceValidUntil } from "@/content/eventaj/structured-data";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
-import type { BreadcrumbList } from "schema-dts";
+import type { BreadcrumbList, Offer, OfferCatalog } from "schema-dts";
 
 const pageTitle = "Cenik Photo Bootha, 360° Bootha in QR galerije | Eventaj.si";
 
@@ -42,9 +45,59 @@ export const metadata: Metadata = {
   },
 };
 
+const offer = (name: string, price: number, description: string, url: string): Offer => ({
+  "@type": "Offer",
+  name,
+  price: String(price),
+  priceCurrency: "EUR",
+  description,
+  url,
+  availability: "https://schema.org/InStock",
+  priceValidUntil,
+});
+
 export default function CenikPage() {
   return (
     <>
+      <JsonLd<OfferCatalog>
+        item={{
+          "@context": "https://schema.org",
+          "@type": "OfferCatalog",
+          name: "Cenik Eventaj.si",
+          url: "https://www.eventaj.si/cenik",
+          itemListElement: [
+            {
+              "@type": "OfferCatalog",
+              name: "Photo booth najem",
+              itemListElement: [
+                ...photoPackages.map((p) =>
+                  offer(`Photo booth ${p.name}`, p.price, `${p.hours} ${p.hours === 2 ? "uri" : "ure"} najema photo bootha`, "https://www.eventaj.si/photo-booth"),
+                ),
+                offer("QR galerija ob najemu photo bootha", photoBoothQrGalleryPrice, "Doplačilo na dogodek", "https://www.eventaj.si/qr-galerija"),
+              ],
+            },
+            {
+              "@type": "OfferCatalog",
+              name: "360 photo booth najem",
+              itemListElement: booth360Packages.map((p) =>
+                offer(`360 photo booth ${p.name}`, p.price, `${p.hours} ${p.hours === 2 ? "uri" : "ure"} najema 360 photo bootha`, "https://www.eventaj.si/360-photo-booth"),
+              ),
+            },
+            {
+              "@type": "OfferCatalog",
+              name: "QR galerija",
+              itemListElement: [
+                offer(
+                  "QR galerija dogodka",
+                  qrGalleryPrice,
+                  "Galerija za fotografije, videe in glasovna voščila gostov, na voljo 180 dni po dogodku",
+                  "https://www.eventaj.si/qr-galerija",
+                ),
+              ],
+            },
+          ],
+        }}
+      />
       <JsonLd<BreadcrumbList>
         item={{
           "@context": "https://schema.org",

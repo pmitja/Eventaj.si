@@ -1,9 +1,11 @@
+import { REVIEW_COUNT, REVIEW_RATING_LABEL } from "@/content/eventaj/proof";
+
 export const qrGalleryOrderUrl = "https://galerija.eventaj.si/naroci";
 export const qrGalleryDemoUrl = "https://galerija.eventaj.si/e/ana-in-marko";
 
 export const qrGalleryGoogleRating = {
-  rating: "4,9",
-  reviewCount: 30,
+  rating: REVIEW_RATING_LABEL,
+  reviewCount: REVIEW_COUNT,
 } as const;
 
 export const qrGalleryGoogleReviews = [

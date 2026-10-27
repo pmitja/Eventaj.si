@@ -1,9 +1,8 @@
 import type { AggregateRating, FAQPage, WithContext } from "schema-dts";
 import { faqItems } from "./data";
+import { REVIEW_COUNT, REVIEW_RATING } from "./proof";
 
-/** Keep these values aligned with the public rating shown on the site. */
-export const REVIEW_COUNT = 30;
-export const REVIEW_RATING = "4.9";
+export { REVIEW_COUNT, REVIEW_RATING };
 
 export const eventajAggregateRating: AggregateRating = {
   "@type": "AggregateRating",

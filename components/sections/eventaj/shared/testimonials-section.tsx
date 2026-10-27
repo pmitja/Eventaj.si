@@ -1,6 +1,7 @@
 "use client";
 
 import { testimonials } from "@/content/eventaj/data";
+import { REVIEW_COUNT, REVIEW_RATING_LABEL } from "@/content/eventaj/proof";
 import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { TrustLogosText } from "./trust-logos";
@@ -31,7 +32,7 @@ export function TestimonialsSection() {
             </span>
           ))}
           <span className="ml-3 text-sm text-[var(--eventaj-muted)]">
-            4.9 / 5 · 30 Google ocen
+            {REVIEW_RATING_LABEL} / 5 · {REVIEW_COUNT} Google ocen
           </span>
         </div>
         <blockquote

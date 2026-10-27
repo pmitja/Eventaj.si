@@ -1,3 +1,5 @@
+import { EVENTS_DONE, REVIEW_RATING_LABEL } from "./proof";
+
 export type ServiceType = "photo" | "360";
 
 export const serviceVisualStories = {
@@ -58,8 +60,8 @@ export const serviceVisualStories = {
 
 export const serviceHeroProof = {
   stats: [
-    { value: "50+", label: "izvedenih dogodkov" },
-    { value: "4.9/5", label: "ocena strank" },
+    { value: EVENTS_DONE, label: "izvedenih dogodkov" },
+    { value: `${REVIEW_RATING_LABEL}/5`, label: "ocena na Googlu" },
   ],
   logos: [
     {

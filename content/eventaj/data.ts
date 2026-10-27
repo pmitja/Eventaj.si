@@ -1,3 +1,4 @@
+import { EVENTS_DONE, REVIEW_RATING_LABEL } from "./proof";
 export const eventajNav = [
   { label: "Photo Booth", href: "/photo-booth" },
   { label: "360° Booth", href: "/360-photo-booth" },
@@ -87,8 +88,8 @@ export const marqueeItems = [
 ] as const;
 
 export const homeStats = [
-  ["50+", "izvedenih dogodkov"],
-  ["4.9★", "ocena strank"],
+  [EVENTS_DONE, "izvedenih dogodkov"],
+  [`${REVIEW_RATING_LABEL}★`, "ocena na Googlu"],
   ["24h", "čas odziva"],
   ["Vsa", "Slovenija"],
 ] as const;
@@ -123,6 +124,7 @@ export const services = [
       },
     ],
     href: "/photo-booth",
+    linkLabel: "Photo booth najem",
   },
   {
     id: "360-booth",
@@ -156,6 +158,7 @@ export const services = [
       },
     ],
     href: "/360-photo-booth",
+    linkLabel: "360 photo booth najem",
     reverse: true,
   },
 ] as const;

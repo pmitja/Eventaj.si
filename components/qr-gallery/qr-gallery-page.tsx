@@ -10,6 +10,7 @@ import {
 import { ArrowRight, Check, ChevronRight, QrCode } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { EVENTS_DONE, REVIEW_COUNT, REVIEW_RATING_LABEL } from "@/content/eventaj/proof";
 
 const shell = "mx-auto w-full max-w-7xl px-5 md:px-10";
 const orderButton =
@@ -117,9 +118,9 @@ function ProofStrip() {
       <div
         className={`${shell} flex flex-wrap items-center justify-center gap-x-4 gap-y-2 py-4 text-center text-sm font-medium text-[var(--eventaj-ink-2)]`}
       >
-        <span>4,9 ★ iz 30+ ocen</span>
+        <span>{REVIEW_RATING_LABEL} ★ iz {REVIEW_COUNT} Google ocen</span>
         <span aria-hidden="true">·</span>
-        <span>50+ izvedenih dogodkov</span>
+        <span>{EVENTS_DONE} izvedenih dogodkov</span>
         <span aria-hidden="true">·</span>
         <span>Photo Booth, 360° Booth in QR galerija</span>
       </div>

@@ -15,6 +15,7 @@ export function ServiceCard({
   accent,
   media,
   href,
+  linkLabel,
   reverse,
 }: (typeof services)[number] & { reverse?: boolean }) {
   return (
@@ -65,7 +66,7 @@ export function ServiceCard({
               href={href}
               className="border-b border-[rgba(20,17,15,0.3)] pb-0.5 text-sm no-underline"
             >
-              Več podrobnosti →
+              {linkLabel} →
             </Link>
             <div className="ml-auto">
               <div className="text-[11px] uppercase tracking-[0.12em] text-[var(--eventaj-muted)]">

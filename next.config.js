@@ -37,6 +37,29 @@ const nextConfig = {
         destination: '/qr-galerija/poslovni-dogodek',
         permanent: true,
       },
+      // Old blog (removed 2026-04) still gets impressions; send each post to
+      // the closest live page, and anything else under /blog to Nasveti.
+      ...[
+        ['kako-izbrati-photo-booth', '/photo-booth'],
+        ['lokacija-photo-booth', '/photo-booth'],
+        ['organizacija-dogodka-photo-booth', '/photo-booth'],
+        ['rekviziti-photo-booth', '/photo-booth'],
+        ['trendi-ozadja-photo-booth', '/photo-booth'],
+        ['trendi-photo-booth-2024', '/photo-booth'],
+        ['photo-boothi-spreminjajo-nacin-kako-praznujemo', '/photo-booth'],
+        ['korporativni-dogodki-photo-booth', '/photo-booth-za-poslovni-dogodek'],
+        ['kreativne-ideje-poroka', '/photo-booth-za-poroko'],
+        ['razlogi-360-photo-booth', '/360-photo-booth'],
+      ].map(([slug, destination]) => ({
+        source: `/blog/${slug}`,
+        destination,
+        permanent: true,
+      })),
+      {
+        source: '/blog/:path*',
+        destination: '/nasveti',
+        permanent: true,
+      },
     ];
   },
   images: {
