@@ -168,11 +168,12 @@ function calendarAlbum(form: StoredFormData, details: EventDetails | null) {
 
 export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
   const rows = (await sql()`
-    SELECT i.id, i.form_data, i.crew, i.crew_students, i.note, e.data AS details
+    SELECT i.id, i.form_data, i.crew, i.crew_students, i.note, e.data AS details, le.hours::float8 AS ledger_hours
     FROM inquiries i
     LEFT JOIN event_details e ON e.inquiry_id = i.id
+    LEFT JOIN ledger_events le ON le.inquiry_id = i.id
     WHERE i.status = 'confirmed'
-  `) as { id: number; form_data: StoredFormData; crew: string | null; crew_students: string[]; note: string | null; details: EventDetails | null }[];
+  `) as { id: number; form_data: StoredFormData; crew: string | null; crew_students: string[]; note: string | null; details: EventDetails | null; ledger_hours: number | null }[];
 
   return rows.flatMap((row) => {
     const date = toDateKey(row.form_data.date);
@@ -184,7 +185,8 @@ export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
       name: row.form_data.name,
       // The customer's own answers are more precise than what they picked in the inquiry.
       location: details?.location || row.form_data.location || "",
-      hours: details?.hours || row.form_data.hours,
+      // Hours typed in Dogodki win over what the customer picked.
+      hours: row.ledger_hours !== null ? String(row.ledger_hours).replace(".", ",") : details?.hours || row.form_data.hours,
       type: row.form_data.type,
       startTime: details?.startTime || null,
       crew: row.crew,

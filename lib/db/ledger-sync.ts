@@ -54,6 +54,8 @@ export async function syncInquiryToLedger(inquiryId: number) {
   const by = `Povpraševanje #${inquiryId}`;
   const albumName = album(row.form_data, row.details);
   const hours = Number(row.details?.hours || row.form_data.hours) || null;
+  // Hours typed in Dogodki are kept; only a row still holding the inquiry's hours follows the customer.
+  const inquiryHours = Number(row.form_data.hours) || null;
   // Start time and location come from what the customer told us. The exact address from the event-details
   // form replaces the town from the inquiry, but a value someone typed in Dogodki is kept.
   const startTime = row.details?.startTime || null;
@@ -65,7 +67,7 @@ export async function syncInquiryToLedger(inquiryId: number) {
     eventId = linked[0].id;
     await sql()`
       UPDATE ledger_events SET year = ${year}, date = ${date}, client = ${fields.client}, contact = COALESCE(contact, ${row.form_data.email || null}),
-        hours = ${hours}, service = ${service}, start_time = COALESCE(start_time, ${startTime}),
+        hours = CASE WHEN hours IS NULL OR hours = ${inquiryHours} THEN ${hours} ELSE hours END, service = ${service}, start_time = COALESCE(start_time, ${startTime}),
         location = CASE WHEN location IS NULL OR location = ${row.form_data.location || null} THEN ${location} ELSE location END,
         album_used = ${fields.albumUsed}, album = ${albumName}, execution = ${row.crew}, updated_by = ${by}, updated_at = now()
       WHERE id = ${eventId}
