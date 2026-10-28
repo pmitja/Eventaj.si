@@ -5,7 +5,7 @@ import { Resend } from "resend";
 import EventDetailsRequestEmail from "@/emails/event-details-request";
 import { requireAdminAction } from "@/lib/admin-auth";
 import { ensureEventDetailsRequest, markEventDetailsEmailed } from "@/lib/db/event-details";
-import { deleteInquiry, getInquiry, inquiryStatuses, saveInquiry, setInquiryCrew, setInquiryNote, setInquiryStatus, setInquiryStudentsNeeded, type InquiryStatus, type InquiryWithOffers, type StoredFormData } from "@/lib/db/inquiries";
+import { deleteInquiry, getInquiry, inquiryStatuses, saveInquiry, setInquiryBackgroundReady, setInquiryCrew, setInquiryNote, setInquiryStatus, setInquiryStudentsNeeded, type InquiryStatus, type InquiryWithOffers, type StoredFormData } from "@/lib/db/inquiries";
 import { getLists } from "@/lib/db/ledger";
 import { dropInquiryFromLedger, syncInquiryNoteToLedger, syncInquiryToLedger } from "@/lib/db/ledger-sync";
 import { setOfferSent } from "@/lib/db/offers";
@@ -93,6 +93,13 @@ export async function addManualInquiry(input: ManualInquiryInput) {
 export async function markOfferSent(id: number, sent: boolean) {
   await requireAdminAction();
   const result = await attempt(() => setOfferSent(id, sent));
+  if (result.ok) revalidatePath("/admin");
+  return result;
+}
+
+export async function markBackgroundReady(id: number, ready: boolean) {
+  await requireAdminAction();
+  const result = await attempt(() => setInquiryBackgroundReady(id, ready));
   if (result.ok) revalidatePath("/admin");
   return result;
 }

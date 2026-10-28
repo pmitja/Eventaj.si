@@ -22,6 +22,8 @@ export type Inquiry = {
   crewStudents: string[];
   // Our own note, never shown to the customer.
   note: string | null;
+  // When the photo background (frame) for the event was made; null = still to do.
+  backgroundReadyAt: string | null;
 };
 
 export type OfferSummary = {
@@ -44,6 +46,7 @@ type InquiryRow = {
   crew: string | null;
   crew_students: string[] | null;
   note: string | null;
+  background_ready_at?: Date | null;
 };
 
 function toInquiry(row: InquiryRow): Inquiry {
@@ -56,6 +59,7 @@ function toInquiry(row: InquiryRow): Inquiry {
     crew: row.crew,
     crewStudents: row.crew_students ?? [],
     note: row.note ?? null,
+    backgroundReadyAt: row.background_ready_at ? new Date(row.background_ready_at).toISOString() : null,
   };
 }
 
@@ -127,6 +131,13 @@ export async function setInquiryStudentsNeeded(id: number, needed: number) {
 
 export async function setInquiryNote(id: number, note: string | null) {
   const rows = (await sql()`UPDATE inquiries SET note = ${note} WHERE id = ${id} RETURNING id`) as { id: number }[];
+  if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
+}
+
+export async function setInquiryBackgroundReady(id: number, ready: boolean) {
+  const rows = (await sql()`
+    UPDATE inquiries SET background_ready_at = ${ready ? new Date() : null} WHERE id = ${id} RETURNING id
+  `) as { id: number }[];
   if (!rows[0]) throw new Error("Povpraševanje ne obstaja");
 }
 

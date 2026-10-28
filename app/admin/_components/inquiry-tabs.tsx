@@ -1,9 +1,8 @@
 import Link from "next/link";
-import type { InquiryStatus } from "@/lib/db/inquiries";
 import { cn } from "@/lib/utils";
 import { INQUIRY_VIEWS, type InquiryView } from "./inquiry-groups";
 
-type Props = { active: InquiryView; counts: Record<InquiryStatus, number> };
+type Props = { active: InquiryView; counts: Record<InquiryView["slug"], number> };
 
 export function InquiryTabs({ active, counts }: Props) {
   return (
@@ -23,7 +22,7 @@ export function InquiryTabs({ active, counts }: Props) {
             )}
           >
             {view.label}
-            <span className={cn("tabular text-xs", current ? "text-adm-soft" : "text-adm-faint")}>{counts[view.status]}</span>
+            <span className={cn("tabular text-xs", current ? "text-adm-soft" : "text-adm-faint")}>{counts[view.slug]}</span>
           </Link>
         );
       })}

@@ -4,7 +4,7 @@ import { Inbox, Search, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import type { InquiryWithOffers } from "@/lib/db/inquiries";
 import { plural } from "./charts";
-import { groupByEventDate, matchesQuery } from "./inquiry-groups";
+import { groupByBackground, groupByEventDate, matchesQuery } from "./inquiry-groups";
 import type { CrewLists } from "./inquiry-crew";
 import { InquiryMonthGroup } from "./inquiry-month-group";
 import { Reveal, Stagger } from "./motion";
@@ -12,9 +12,9 @@ import { OfferDialog } from "./offer-dialog";
 
 const PAGE = 3;
 
-type Props = { inquiries: InquiryWithOffers[]; empty: string; viewLabel: string; crewLists: CrewLists };
+type Props = { inquiries: InquiryWithOffers[]; empty: string; viewLabel: string; crewLists: CrewLists; byBackground?: boolean };
 
-export function InquiryList({ inquiries, empty, viewLabel, crewLists }: Props) {
+export function InquiryList({ inquiries, empty, viewLabel, crewLists, byBackground = false }: Props) {
   const [active, setActive] = useState<InquiryWithOffers | null>(null);
   const [query, setQuery] = useState("");
   const [shown, setShown] = useState(PAGE);
@@ -22,10 +22,10 @@ export function InquiryList({ inquiries, empty, viewLabel, crewLists }: Props) {
   const [toggled, setToggled] = useState<Record<string, boolean>>({});
 
   const searching = query.trim().length > 0;
-  const groups = useMemo(
-    () => groupByEventDate(searching ? inquiries.filter((inquiry) => matchesQuery(inquiry, query)) : inquiries),
-    [inquiries, query, searching],
-  );
+  const groups = useMemo(() => {
+    const found = searching ? inquiries.filter((inquiry) => matchesQuery(inquiry, query)) : inquiries;
+    return byBackground ? groupByBackground(found) : groupByEventDate(found);
+  }, [inquiries, query, searching, byBackground]);
   const visible = searching ? groups : groups.slice(0, shown);
   const hidden = groups.slice(shown);
   const isOpen = (key: string, muted?: boolean) => (searching ? true : toggled[key] ?? !muted);

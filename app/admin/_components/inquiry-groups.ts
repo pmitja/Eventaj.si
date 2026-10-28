@@ -8,12 +8,41 @@ export const INQUIRY_VIEWS = [
   { slug: "aktivna", status: "new", label: "Aktivna", empty: "Ni aktivnih povpraševanj." },
   { slug: "potrjena", status: "confirmed", label: "Potrjena", empty: "Ni še potrjenih dogodkov." },
   { slug: "zavrnjena", status: "declined", label: "Zavrnjena", empty: "Ni zavrnjenih povpraševanj." },
+  { slug: "ozadja", status: "confirmed", label: "Ozadja", empty: "Ni prihajajočih dogodkov s photo boothom." },
 ] as const satisfies readonly { slug: string; status: InquiryStatus; label: string; empty: string }[];
 
 export type InquiryView = (typeof INQUIRY_VIEWS)[number];
 
 export function findView(slug: string | string[] | undefined): InquiryView {
   return INQUIRY_VIEWS.find((view) => view.slug === slug) ?? INQUIRY_VIEWS[0];
+}
+
+// Only photo booth events print photos in a frame, so only they need a background made.
+// Past events are left out: nothing to prepare for them any more.
+export function needsBackground(inquiry: InquiryWithOffers, today = getSlovenianDateString()) {
+  const date = toDateKey(inquiry.formData.date);
+  return (
+    inquiry.status === "confirmed" &&
+    (inquiry.formData.type === "basic" || inquiry.formData.type === "both") &&
+    (!date || date >= today)
+  );
+}
+
+export function inView(view: InquiryView, inquiry: InquiryWithOffers) {
+  return view.slug === "ozadja" ? needsBackground(inquiry) : inquiry.status === view.status;
+}
+
+// The tab badge: for Ozadja only the ones still waiting to be made.
+export function countInView(view: InquiryView, inquiries: InquiryWithOffers[]) {
+  return inquiries.filter((inquiry) => inView(view, inquiry) && (view.slug !== "ozadja" || !inquiry.backgroundReadyAt)).length;
+}
+
+export type BackgroundStage = "no-link" | "waiting" | "to-make" | "ready";
+
+export function backgroundStage(inquiry: InquiryWithOffers): BackgroundStage {
+  if (inquiry.backgroundReadyAt) return "ready";
+  if (inquiry.eventDetails?.submittedAt) return "to-make";
+  return inquiry.eventDetails ? "waiting" : "no-link";
 }
 
 export type InquiryGroup = { key: string; label: string; muted?: boolean; inquiries: InquiryWithOffers[] };
@@ -44,6 +73,17 @@ export function groupByEventDate(inquiries: InquiryWithOffers[]): InquiryGroup[]
     ...groups.values(),
     ...(past.length ? [{ key: "past", label: "Pretekli datumi", muted: true, inquiries: past.reverse() }] : []),
     ...(undated.length ? [{ key: "undated", label: "Brez datuma", muted: true, inquiries: undated }] : []),
+  ];
+}
+
+// Ozadja: what is still to be made by event date, the finished ones last and closed.
+export function groupByBackground(inquiries: InquiryWithOffers[]): InquiryGroup[] {
+  const ready = inquiries
+    .filter((inquiry) => inquiry.backgroundReadyAt)
+    .sort((a, b) => (toDateKey(a.formData.date) ?? "").localeCompare(toDateKey(b.formData.date) ?? ""));
+  return [
+    ...groupByEventDate(inquiries.filter((inquiry) => !inquiry.backgroundReadyAt)),
+    ...(ready.length ? [{ key: "ready", label: "Pripravljena ozadja", muted: true, inquiries: ready }] : []),
   ];
 }
 

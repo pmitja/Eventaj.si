@@ -45,6 +45,8 @@ await sql`
   )
 `;
 await sql`ALTER TABLE event_details ADD COLUMN IF NOT EXISTS emailed_at TIMESTAMPTZ`;
+// Kdaj je bilo ozadje (okvir) za dogodek izdelano; prazno = še čaka na izdelavo.
+await sql`ALTER TABLE inquiries ADD COLUMN IF NOT EXISTS background_ready_at TIMESTAMPTZ`;
 
 await sql`
   CREATE TABLE IF NOT EXISTS admin_users (
