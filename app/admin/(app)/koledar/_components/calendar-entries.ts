@@ -2,7 +2,7 @@ import type { CalendarEvent } from "@/lib/db/inquiries";
 import type { DoneEvent, TableRentalEvent } from "@/lib/db/ledger";
 import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
-import { NO_DELIVERY } from "@/lib/ledger/lists";
+import { NO_DELIVERY, splitPeople } from "@/lib/ledger/lists";
 
 // "planned" = a confirmed inquiry still ahead of us, "done" = a row in Poslovanje → Dogodki,
 // "booked" = a Dogodki row entered by hand for a day still ahead of us, "rental" = a row in Najem miz.
@@ -78,11 +78,21 @@ export function whoShort(entry: Entry) {
   return execution === "Študenti" ? "Študenti: kdo?" : execution;
 }
 
+// Everybody set to work the entry, one name each ("Jan + Mitja" → Jan, Mitja).
+export function crewNames(entry: Entry) {
+  if (entry.kind === "rental") return [...splitPeople(entry.event.deliveredBy), ...splitPeople(entry.event.pickedBy), ...entry.event.students];
+  if (entry.kind === "planned") return [...splitPeople(entry.event.crew), ...entry.event.crewStudents];
+  return [...splitPeople(entry.event.execution), ...entry.event.students];
+}
+
 // Nobody is set to work the event yet (no execution, no students, no table driver).
 export const missingCrew = (entry: Entry) => !whoShort(entry);
 
 // An upcoming event without a start time. Table rentals have no start time to fill in.
 export const missingTime = (entry: Entry, today: string) => entry.kind !== "rental" && !isDone(entry, today) && !entry.event.startTime;
+
+// Start time shown next to an upcoming event (confirmed inquiry or a Dogodki row still ahead).
+export const startTimeOf = (entry: Entry) => (entry.kind === "planned" || entry.kind === "booked" ? entry.event.startTime : null);
 
 // Who drives a table rental there and back, plus any students linked to it in Študenti.
 export function rentalWho(event: TableRentalEvent) {

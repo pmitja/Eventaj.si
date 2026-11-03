@@ -1,18 +1,38 @@
 import { PageHeader } from "@/app/admin/_components/page-header";
 import { requireAdminPage } from "@/lib/admin-auth";
+import { listAbsences } from "@/lib/db/absences";
 import { listConfirmedEvents } from "@/lib/db/inquiries";
 import { getLists, listDoneEvents, listTableRentalEvents } from "@/lib/db/ledger";
+import { splitPeople } from "@/lib/ledger/lists";
 import { getSlovenianDateString } from "@/lib/slovenian-date";
 import { EventCalendar } from "./_components/event-calendar";
 
 export default async function CalendarPage() {
   await requireAdminPage();
-  const [planned, done, rentals, lists] = await Promise.all([listConfirmedEvents(), listDoneEvents(), listTableRentalEvents(), getLists()]);
+  const [planned, done, rentals, absences, lists] = await Promise.all([
+    listConfirmedEvents(),
+    listDoneEvents(),
+    listTableRentalEvents(),
+    listAbsences(),
+    getLists(),
+  ]);
+  // Who can be marked away: the single names in Izvedba dogodka ("Jan + Mitja" → Jan, Mitja), not Študenti.
+  const people = [...new Set(lists.executions.flatMap(splitPeople))].filter((name) => name !== "Študenti");
 
   return (
     <div className="mx-auto flex w-full max-w-[1200px] flex-col gap-5">
-      <PageHeader title="Koledar" subtitle="Potrjena povpraševanja, opravljeni dogodki in najem miz iz poslovanja, čez vsa leta. Klik na dan doda nov dogodek." />
-      <EventCalendar planned={planned} done={done} rentals={rentals} lists={{ executions: lists.executions, students: lists.students, tableDrivers: lists.tableDrivers }} today={getSlovenianDateString()} />
+      <PageHeader
+        title="Koledar"
+        subtitle="Potrjena povpraševanja, opravljeni dogodki, najem miz in odsotnosti, čez vsa leta. Klik na dan doda nov dogodek ali odsotnost."
+      />
+      <EventCalendar
+        planned={planned}
+        done={done}
+        rentals={rentals}
+        absences={absences}
+        lists={{ executions: lists.executions, students: lists.students, tableDrivers: lists.tableDrivers, people }}
+        today={getSlovenianDateString()}
+      />
     </div>
   );
 }

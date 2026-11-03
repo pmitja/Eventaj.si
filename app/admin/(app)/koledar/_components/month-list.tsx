@@ -2,7 +2,7 @@ import { plural } from "@/app/admin/_components/charts";
 import { formatPlain } from "@/lib/ledger/compute";
 import { cn } from "@/lib/utils";
 import { EntryFlags } from "./entry-flags";
-import { bookedFacts, crewText, doneFacts, isDone, plannedFacts, rentalFacts, rentalWho, whoText, type Entry } from "./calendar-entries";
+import { bookedFacts, crewText, doneFacts, isDone, plannedFacts, rentalFacts, rentalWho, startTimeOf, whoText, type Entry } from "./calendar-entries";
 
 function dayLabel(date: string) {
   return `${Number(date.slice(8))}. ${Number(date.slice(5, 7))}.`;
@@ -36,14 +36,16 @@ function NoteLine({ note }: { note: string | null }) {
   return <span className="whitespace-pre-line text-adm-muted [text-wrap:pretty]">Opomba: {note}</span>;
 }
 
-export function MonthList({ entries, today, onOpen }: { entries: Entry[]; today: string; onOpen: (entry: Entry) => void }) {
+type ListProps = { entries: Entry[]; today: string; absentFor: (entry: Entry) => string[]; onOpen: (entry: Entry) => void };
+
+export function MonthList({ entries, today, absentFor, onOpen }: ListProps) {
   if (entries.length === 0) return <p className="m-0 text-sm text-adm-muted">Ta mesec ni dogodkov.</p>;
 
   return (
     <ul className="m-0 flex list-none flex-col divide-y divide-adm-rule p-0 text-sm">
       {entries.map((entry) => (
         <li key={entry.key} className="relative">
-          <EntryFlags entry={entry} today={today} className="-left-2 top-1.5" />
+          <EntryFlags entry={entry} today={today} absent={absentFor(entry)} className="-left-2 top-1.5" />
           <button type="button" onClick={() => onOpen(entry)} className="grid w-full grid-cols-1 text-left gap-x-4 gap-y-1 py-3 [overflow-wrap:anywhere] hover:!text-adm-ink sm:grid-cols-[112px_minmax(0,1fr)_auto]">
             <span className="flex items-center gap-2 tabular font-semibold">
               <span
@@ -51,7 +53,7 @@ export function MonthList({ entries, today, onOpen }: { entries: Entry[]; today:
                 aria-hidden
               />
               {dayLabel(entry.date)}
-              {entry.kind === "planned" && entry.event.startTime ? ` · ${entry.event.startTime}` : ""}
+              {startTimeOf(entry) ? ` · ${startTimeOf(entry)}` : ""}
             </span>
 
             {entry.kind === "rental" ? (

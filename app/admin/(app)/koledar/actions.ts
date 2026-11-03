@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { requireAdminAction } from "@/lib/admin-auth";
 import { createYear, insertLedgerRow, parseValue } from "@/lib/db/ledger";
 import { sql } from "@/lib/db";
+import { deleteAbsence, insertAbsence } from "@/lib/db/absences";
 
 export type NewCalendarEvent = {
   date: string;
@@ -66,5 +67,35 @@ export async function addCalendarEvent(input: NewCalendarEvent): Promise<Result>
     return { ok: false, error: error instanceof Error ? error.message : "Napaka pri shranjevanju" };
   }
   revalidatePath("/admin", "layout");
+  return { ok: true };
+}
+
+export type NewAbsence = { from: string; to: string; people: string[]; note: string };
+
+export async function addAbsence(input: NewAbsence): Promise<Result> {
+  const user = await requireAdminAction();
+  try {
+    const from = parseValue("date", input.from);
+    const to = parseValue("date", input.to || input.from);
+    if (typeof from !== "string" || typeof to !== "string") throw new Error("Manjka datum");
+    if (to < from) throw new Error("Datum »do« je pred začetkom odsotnosti");
+    const people = [...new Set(input.people.map((p) => p.trim()).filter(Boolean))];
+    if (people.length === 0) throw new Error("Izberi, kdo bo odsoten");
+    await insertAbsence({ from, to, people, note: input.note.trim() || null }, user.email);
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : "Napaka pri shranjevanju" };
+  }
+  revalidatePath("/admin/koledar");
+  return { ok: true };
+}
+
+export async function removeAbsence(id: number): Promise<Result> {
+  await requireAdminAction();
+  try {
+    await deleteAbsence(id);
+  } catch (error) {
+    return { ok: false, error: error instanceof Error ? error.message : "Napaka pri brisanju" };
+  }
+  revalidatePath("/admin/koledar");
   return { ok: true };
 }

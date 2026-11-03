@@ -1,4 +1,4 @@
-import { Clock } from "lucide-react";
+import { Clock, UserX } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { missingCrew, missingTime, type Entry } from "./calendar-entries";
 
@@ -16,12 +16,21 @@ export function TimeMark({ className }: { className?: string }) {
   );
 }
 
+export function AbsentMark({ className }: { className?: string }) {
+  return (
+    <span className={cn(badge, "bg-violet-600", className)}>
+      <UserX className="size-2.5" strokeWidth={3} />
+    </span>
+  );
+}
+
 // Notification-style badges pinned to the top-left corner of the parent (which must be `relative`):
-// red "!" when nobody is set to work the event, amber clock when an upcoming event has no start time.
-export function EntryFlags({ entry, today, className }: { entry: Entry; today: string; className?: string }) {
+// red "!" when nobody is set to work the event, amber clock when an upcoming event has no start time,
+// violet when someone set to work it has an absence entered that day (absent = their names).
+export function EntryFlags({ entry, today, absent = [], className }: { entry: Entry; today: string; absent?: string[]; className?: string }) {
   const crew = missingCrew(entry);
   const time = missingTime(entry, today);
-  if (!crew && !time) return null;
+  if (!crew && !time && absent.length === 0) return null;
   return (
     <span className={cn("pointer-events-none absolute -left-1.5 -top-1.5 z-10 flex gap-0.5", className)}>
       {crew && (
@@ -29,6 +38,12 @@ export function EntryFlags({ entry, today, className }: { entry: Entry; today: s
           <span className="absolute inset-0 animate-ping rounded-full bg-red-500/60 motion-reduce:hidden" aria-hidden />
           <CrewMark className="relative" />
           <span className="sr-only">Izvedba ni določena</span>
+        </span>
+      )}
+      {absent.length > 0 && (
+        <span title={`Vpisana odsotnost: ${absent.join(", ")}`}>
+          <AbsentMark />
+          <span className="sr-only">Vpisana odsotnost: {absent.join(", ")}</span>
         </span>
       )}
       {time && (

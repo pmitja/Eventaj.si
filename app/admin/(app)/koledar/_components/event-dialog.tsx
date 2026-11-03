@@ -1,10 +1,13 @@
 "use client";
 
-import { ArrowUpRight, X } from "lucide-react";
+import { ArrowUpRight, UserX, X } from "lucide-react";
 import Link from "next/link";
 import { useState, type ReactNode } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
+import type { Absence } from "@/lib/db/absences";
 import { formatPlain } from "@/lib/ledger/compute";
+import { splitPeople } from "@/lib/ledger/lists";
+import { absenceWarning, absentAmong } from "./absences";
 import { crewText, isDone, rentalWho, typeLabels, whoText, type Entry } from "./calendar-entries";
 import { ExecutionPicker } from "./execution-picker";
 import { StudentsPicker } from "./students-picker";
@@ -63,15 +66,22 @@ function rows(entry: Entry, execution: string | null, students: string[]): [stri
   ];
 }
 
-type Props = { entry: Entry; today: string; students: string[]; executions: string[]; tableDrivers: string[]; onClose: () => void };
+type Props = { entry: Entry; today: string; absences: Absence[]; students: string[]; executions: string[]; tableDrivers: string[]; onClose: () => void };
 
-export function EventDialog({ entry, today, students: studentOptions, executions, tableDrivers, onClose }: Props) {
+export function EventDialog({ entry, today, absences, students: studentOptions, executions, tableDrivers, onClose }: Props) {
   const [execution, setExecution] = useState(
     entry.kind === "planned" ? entry.event.crew : entry.kind === "rental" ? entry.event.deliveredBy : entry.event.execution,
   );
   const [students, setStudents] = useState(entry.kind === "planned" ? entry.event.crewStudents : entry.event.students);
   const linkLabel = entry.kind === "planned" ? "Odpri povpraševanje" : entry.kind === "rental" ? "Odpri v Najemu miz" : "Odpri v Dogodkih";
   const done = isDone(entry, today);
+  // Follows the current pick, so choosing someone who is away warns right away.
+  const pickedNames = [
+    ...splitPeople(execution),
+    ...(entry.kind === "rental" ? splitPeople(entry.event.pickedBy) : []),
+    ...students,
+  ];
+  const warning = done ? null : absenceWarning(absentAmong(absences, entry.date, pickedNames));
 
   return (
     <Dialog open onOpenChange={(open) => !open && onClose()}>
@@ -119,6 +129,12 @@ export function EventDialog({ entry, today, students: studentOptions, executions
             tableDrivers={tableDrivers}
             onChange={setExecution}
           />
+          {warning && (
+            <p role="status" className="m-0 flex items-start gap-2 rounded-xl bg-violet-50 px-3 py-2 text-[13px] text-violet-900">
+              <UserX className="mt-0.5 size-4 shrink-0" />
+              {warning}
+            </p>
+          )}
           <span className="mt-2 text-[11px] font-semibold uppercase tracking-[.06em] text-adm-sub">Študenti</span>
           <StudentsPicker entry={entry} execution={execution} value={students} options={studentOptions} onChange={setStudents} />
         </div>

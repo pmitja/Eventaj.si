@@ -5,18 +5,21 @@ import { usePathname, useSearchParams } from "next/navigation";
 import { useMemo, useState } from "react";
 import { MONTHS_FULL } from "@/app/admin/_components/charts";
 import { LegendDot, Panel } from "@/app/admin/_components/panel";
+import type { Absence } from "@/lib/db/absences";
 import type { CalendarEvent } from "@/lib/db/inquiries";
 import type { DoneEvent, TableRentalEvent } from "@/lib/db/ledger";
 import { cn } from "@/lib/utils";
-import { crewText, isDone, plannedFacts, rentalFacts, rentalWho, toEntries, whoShort, whoText, type Entry } from "./calendar-entries";
-import { AddEventDialog, type CalendarLists } from "./add-event-dialog";
-import { EntryFlags, CrewMark, TimeMark } from "./entry-flags";
+import { AbsenceDialog } from "./absence-dialog";
+import { absenceTitle, absenceWarning, absencesOn, absentAmong, rangeLabel } from "./absences";
+import { crewNames, crewText, isDone, plannedFacts, rentalFacts, rentalWho, startTimeOf, toEntries, whoShort, whoText, type Entry } from "./calendar-entries";
+import { ABSENCE, AddEventDialog, type CalendarLists } from "./add-event-dialog";
+import { AbsentMark, EntryFlags, CrewMark, TimeMark } from "./entry-flags";
 import { EventDialog } from "./event-dialog";
 import { MonthList, MonthSummary } from "./month-list";
 
 const WEEKDAYS = ["Po", "To", "Sr", "Če", "Pe", "So", "Ne"];
 
-type Props = { planned: CalendarEvent[]; done: DoneEvent[]; rentals: TableRentalEvent[]; lists: CalendarLists; today: string };
+type Props = { planned: CalendarEvent[]; done: DoneEvent[]; rentals: TableRentalEvent[]; absences: Absence[]; lists: CalendarLists; today: string };
 
 const pad = (value: number) => String(value).padStart(2, "0");
 
@@ -52,11 +55,14 @@ function chipTitle(entry: Entry) {
   return [title, contact ? `Kontakt: ${contact}` : null, notes ? `Opomba: ${notes}` : null].filter(Boolean).join("\n");
 }
 
-export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
+export function EventCalendar({ planned, done, rentals, absences, lists, today }: Props) {
   const entries = useMemo(() => toEntries(planned, done, rentals, today), [planned, done, rentals, today]);
   const [open, setOpen] = useState<Entry | null>(null);
-  // The day clicked to add a new event on.
-  const [adding, setAdding] = useState<string | null>(null);
+  const [openAbsence, setOpenAbsence] = useState<Absence | null>(null);
+  // The day clicked to add a new event on; service preselects the kind (the "Odsotnost" button).
+  const [adding, setAdding] = useState<{ date: string; service?: string } | null>(null);
+  // Who set to work an upcoming entry has an absence that day.
+  const absentFor = (entry: Entry) => (isDone(entry, today) ? [] : absentAmong(absences, entry.date, crewNames(entry)));
   const pathname = usePathname();
   const param = useSearchParams().get("mesec");
 
@@ -75,6 +81,7 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
   while (cells.length % 7) cells.push(null);
 
   const inMonth = entries.filter((entry) => entry.date.startsWith(month));
+  const monthAbsences = absences.filter((a) => a.from.slice(0, 7) <= month && month <= a.to.slice(0, 7));
   const byDay = new Map<string, Entry[]>();
   for (const entry of inMonth) byDay.set(entry.date, [...(byDay.get(entry.date) ?? []), entry]);
 
@@ -91,6 +98,12 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
           <span className="flex items-center gap-1.5">
             <TimeMark /> Brez ure
           </span>
+          <span className="flex items-center gap-1.5">
+            <span className="size-2.5 rounded-[3px] border border-dashed border-adm-sub bg-adm-sand" /> Odsotnost
+          </span>
+          <span className="flex items-center gap-1.5">
+            <AbsentMark /> Izvajalec odsoten
+          </span>
         </span>
       }
     >
@@ -102,6 +115,13 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
           <MonthSummary entries={inMonth} today={today} />
         </div>
         <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => setAdding({ date: month === today.slice(0, 7) ? today : `${month}-01`, service: ABSENCE })}
+            className="flex items-center gap-1 rounded-full border border-dashed border-adm-sub px-3 py-1.5 text-sm transition-colors hover:border-solid hover:border-adm-ink"
+          >
+            <Plus className="size-3.5" /> Odsotnost
+          </button>
           <button
             type="button"
             onClick={() => setMonth(today.slice(0, 7))}
@@ -135,7 +155,7 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
         {cells.map((date, i) => (
           <div
             key={date ?? `empty-${i}`}
-            onClick={date ? () => setAdding(date) : undefined}
+            onClick={date ? () => setAdding({ date }) : undefined}
             className={cn(
               "group flex min-h-[58px] min-w-0 flex-col gap-1 border-adm-line p-1 sm:min-h-[96px] sm:p-1.5",
               date && "cursor-pointer transition-colors hover:bg-adm-hover/60",
@@ -159,7 +179,7 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
                   type="button"
                   onClick={(event) => {
                     event.stopPropagation();
-                    setAdding(date);
+                    setAdding({ date });
                   }}
                   aria-label={`Dodaj dogodek ${Number(date.slice(8))}. ${Number(date.slice(5, 7))}.`}
                   className="hidden size-6 place-items-center rounded-full text-adm-muted opacity-0 transition-opacity hover:bg-adm-ink hover:text-adm-bg focus-visible:opacity-100 group-hover:opacity-100 sm:grid"
@@ -168,6 +188,22 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
                 </button>
               </span>
             )}
+            {(date ? absencesOn(absences, date) : []).map((absence) => (
+              <button
+                key={`a${absence.id}`}
+                type="button"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  setOpenAbsence(absence);
+                }}
+                title={absenceTitle(absence)}
+                aria-label={`Odsotnost: ${absence.people.join(", ")}`}
+                className="block w-full rounded-md border border-dashed border-adm-sub/60 bg-adm-sand text-left text-adm-sub transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5"
+              >
+                <span className="block h-1 sm:hidden" aria-hidden />
+                <span className="hidden truncate text-[11px] leading-tight sm:block">Odsotnost: {absence.people.join(", ")}</span>
+              </button>
+            ))}
             {(date ? byDay.get(date) ?? [] : []).map((entry) => (
               <button
                 key={entry.key}
@@ -176,18 +212,18 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
                   event.stopPropagation();
                   setOpen(entry);
                 }}
-                title={chipTitle(entry)}
+                title={[chipTitle(entry), absenceWarning(absentFor(entry))].filter(Boolean).join("\n")}
                 aria-label={entry.title}
                 className={cn(
                   "relative block w-full rounded-md text-left transition-opacity hover:opacity-75 sm:px-1.5 sm:py-0.5",
                   isDone(entry, today) ? "bg-adm-ink !text-adm-bg" : "bg-adm-ok !text-adm-ok-fg",
                 )}
               >
-                <EntryFlags entry={entry} today={today} />
+                <EntryFlags entry={entry} today={today} absent={absentFor(entry)} />
                 {/* Phones only get a marker; the list below the grid carries the details. */}
                 <span className="block h-1.5 sm:hidden" aria-hidden />
                 <span className="hidden truncate text-xs leading-tight sm:block">
-                  {entry.kind === "planned" && entry.event.startTime ? `${entry.event.startTime} ` : ""}
+                  {startTimeOf(entry) ? `${startTimeOf(entry)} ` : ""}
                   {entry.kind === "rental" ? "Mize · " : ""}
                   {entry.title}
                 </span>
@@ -198,9 +234,40 @@ export function EventCalendar({ planned, done, rentals, lists, today }: Props) {
         ))}
       </div>
 
-      <MonthList entries={inMonth} today={today} onOpen={setOpen} />
-      {open && <EventDialog key={open.key} entry={open} today={today} students={lists.students} executions={lists.executions} tableDrivers={lists.tableDrivers} onClose={() => setOpen(null)} />}
-      <AddEventDialog date={adding} lists={lists} onClose={() => setAdding(null)} />
+      {monthAbsences.length > 0 && (
+        <ul className="m-0 flex list-none flex-wrap gap-2 p-0 text-sm">
+          {monthAbsences.map((absence) => (
+            <li key={absence.id}>
+              <button
+                type="button"
+                onClick={() => setOpenAbsence(absence)}
+                title={absenceTitle(absence)}
+                className="flex max-w-full items-center gap-2 rounded-full border border-dashed border-adm-sub/60 bg-adm-sand px-3 py-1 text-left transition-colors hover:border-adm-ink"
+              >
+                <span className="font-semibold">{absence.people.join(", ")}</span>
+                <span className="tabular text-adm-muted">{rangeLabel(absence)}</span>
+                {absence.note && <span className="truncate text-adm-muted">· {absence.note}</span>}
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      <MonthList entries={inMonth} today={today} absentFor={absentFor} onOpen={setOpen} />
+      {open && (
+        <EventDialog
+          key={open.key}
+          entry={open}
+          today={today}
+          absences={absences}
+          students={lists.students}
+          executions={lists.executions}
+          tableDrivers={lists.tableDrivers}
+          onClose={() => setOpen(null)}
+        />
+      )}
+      {openAbsence && <AbsenceDialog key={openAbsence.id} absence={openAbsence} onClose={() => setOpenAbsence(null)} />}
+      <AddEventDialog date={adding?.date ?? null} service={adding?.service} lists={lists} absences={absences} onClose={() => setAdding(null)} />
     </Panel>
   );
 }

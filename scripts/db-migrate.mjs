@@ -211,6 +211,20 @@ await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS start_time TEXT`;
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS location TEXT`;
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS students_needed NUMERIC(4, 0)`;
 
+// Koledar: odsotnosti (dopust ipd.) – kdo od nas ta dan ne more na dogodek. Oba datuma sta vključena.
+await sql`
+  CREATE TABLE IF NOT EXISTS absences (
+    id SERIAL PRIMARY KEY,
+    date_from DATE NOT NULL,
+    date_to DATE NOT NULL,
+    people JSONB NOT NULL DEFAULT '[]'::jsonb,
+    note TEXT,
+    created_by TEXT,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    CHECK (date_to >= date_from)
+  )
+`;
+
 for (const table of ["ledger_events", "ledger_costs", "ledger_students", "ledger_table_rentals", "ledger_stock", "ledger_work", "ledger_social"]) {
   await sql.query(`CREATE INDEX IF NOT EXISTS ${table}_year_idx ON ${table} (year)`);
 }
