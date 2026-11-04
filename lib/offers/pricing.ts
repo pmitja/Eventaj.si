@@ -1,5 +1,5 @@
 import { albumColorLabels, getAlbumPrice, type AlbumColor, type AlbumSize } from "@/content/eventaj/album-pricing";
-import { services, tableclothLabels, tableRental, type OfferService, type PackageHours, type TableclothColor } from "./services";
+import { servicesForDate, tableclothLabels, tableRental, type OfferService, type PackageHours, type TableclothColor } from "./services";
 
 export type { OfferService, PackageHours } from "./services";
 
@@ -11,6 +11,7 @@ export type CustomItem = { description: string; amount: number };
 export type PricingOptions = {
   service: OfferService;
   hours: PackageHours;
+  eventDate?: string;
   extraHours: number;
   days?: number;
   compareHours?: PackageHours | "";
@@ -108,7 +109,7 @@ function buildTableItems(options: PricingOptions, labels: ItemLabels): OfferItem
 
 export function buildOfferItems(options: PricingOptions, labels: ItemLabels = {}): OfferItem[] {
   if (options.service === "tables") return buildTableItems(options, labels);
-  const service = services[options.service];
+  const service = servicesForDate(options.eventDate)[options.service];
   const pkg = service.packages[options.hours];
   const days = eventDays(options);
   // Package, extra hours and transport repeat every day; album, QR gallery and custom items are one-off.

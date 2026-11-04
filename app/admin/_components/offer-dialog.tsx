@@ -23,6 +23,7 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
   return {
     service,
     hours: packageHours,
+    eventDate: data.date ?? "",
     extraHours: Math.max(hours - 4, 0),
     days: 1,
     compareHours: "",

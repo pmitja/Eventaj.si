@@ -4,7 +4,7 @@ import { getInquiry } from "@/lib/db/inquiries";
 import { claudeClient, MODEL, OfferGenerationError } from "./claude";
 import { describeInquiry, serviceLabel } from "./generate";
 import { formatEur } from "./pricing";
-import { isBoothService, serviceForInquiry, services, type BoothService } from "./services";
+import { isBoothService, serviceForInquiry, servicesForDate, type BoothService } from "./services";
 import type { OfferOptions } from "./schema";
 
 // Only the pricing fields Claude can read from the inquiry; distance and custom items stay with the admin.
@@ -22,8 +22,8 @@ export type OfferPrefill = Pick<OfferOptions, "hours" | "compareHours" | "extraH
 
 const clamp = (value: number, min: number, max: number) => Math.min(max, Math.max(min, Math.round(value)));
 
-function systemPrompt(service: BoothService) {
-  const config = services[service];
+function systemPrompt(service: BoothService, eventDate: string) {
+  const config = servicesForDate(eventDate)[service];
   const packages = Object.entries(config.packages)
     .map(([hours, pkg]) => `- ${hours} h: ${pkg.name}, ${formatEur(pkg.price)} na dan`)
     .join("\n");
@@ -76,7 +76,7 @@ export async function prefillOffer(inquiryId: number, options: OfferOptions) {
     betas: ["server-side-fallback-2026-07-01"],
     fallbacks: "default",
     output_config: { effort: "low", format: betaZodOutputFormat(prefillSchema) },
-    system: systemPrompt(service),
+    system: systemPrompt(service, inquiry.formData.date ?? ""),
     messages: [{
       role: "user",
       content: `# POVPRAŠEVANJE STRANKE

@@ -66,7 +66,7 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
     throw new OfferGenerationError("Ponudbo je mogoče generirati samo za Photo Booth, 360° Booth, kombinacijo obeh ali stoječe mize");
   }
   const hasAlbum = service !== "tables" && services[service].hasAlbum;
-  options = { ...options, service, ...(hasAlbum ? {} : { albumSize: "", albumColor: "" }) };
+  options = { ...options, service, eventDate: inquiry.formData.date ?? "", ...(hasAlbum ? {} : { albumSize: "", albumColor: "" }) };
 
   if (service === "tables") options = { ...options, days: 1, compareHours: "" };
   const draftVariants = buildOfferVariants(options);
@@ -80,7 +80,7 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
     betas: ["server-side-fallback-2026-07-01"],
     fallbacks: "default",
     output_config: { effort: "medium", format: betaZodOutputFormat(offerContentSchema) },
-    system: buildOfferSystemPrompt(service),
+    system: buildOfferSystemPrompt(service, options.eventDate),
     messages: [
       {
         role: "user",

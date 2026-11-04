@@ -1,6 +1,6 @@
 import { company, defaultPaymentTerms } from "./company";
 import { formatEur, type OfferItem, type OfferVariant } from "./pricing";
-import { services, tableRental, type BoothService, type OfferService } from "./services";
+import { services, servicesForDate, tableRental, type BoothService, type OfferService } from "./services";
 
 const serviceText = {
   photo: {
@@ -118,9 +118,9 @@ Ti pripraviš besedilne dele po shemi.
 2. "Dodatna navodila" ponudnika imajo prednost pred splošnimi pravili (razen cen).`;
 }
 
-export function buildOfferSystemPrompt(serviceKey: OfferService) {
+export function buildOfferSystemPrompt(serviceKey: OfferService, eventDate?: string) {
   if (serviceKey === "tables") return buildTableOfferSystemPrompt();
-  const service = services[serviceKey];
+  const service = servicesForDate(eventDate)[serviceKey];
   const text = serviceText[serviceKey];
   const cenik = Object.values(service.packages)
     .map((pkg) => pkg.parts

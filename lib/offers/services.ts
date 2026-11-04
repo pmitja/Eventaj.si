@@ -1,5 +1,6 @@
 import { standingTable } from "@/content/eventaj/equipment";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
+import { toDateKey } from "@/lib/slovenian-date";
 
 export type BoothService = "photo" | "360" | "combo";
 export type OfferService = BoothService | "tables";
@@ -143,6 +144,31 @@ export const services: Record<BoothService, ServiceConfig> = {
     packages: { "2": comboPackage("2", 438), "3": comboPackage("3", 558), "4": comboPackage("4", 678) },
   },
 };
+
+/** Booth package prices go up for events from 2027 on; extra hours, QR gallery and tables stay the same. */
+export const packagePriceIncrease = { fromYear: 2027, amount: 20 };
+
+export function packageSurcharge(eventDate?: string | null) {
+  const year = Number(toDateKey(eventDate)?.slice(0, 4));
+  return year >= packagePriceIncrease.fromYear ? packagePriceIncrease.amount : 0;
+}
+
+/** Combo packages hold two booths, so each booth adds its own surcharge. */
+function withSurcharge(pkg: ServicePackage, surcharge: number): ServicePackage {
+  return { ...pkg, price: pkg.price + surcharge * (pkg.parts?.length ?? 1) };
+}
+
+/** The booth price list that applies on the event's date. */
+export function servicesForDate(eventDate?: string | null): Record<BoothService, ServiceConfig> {
+  const surcharge = packageSurcharge(eventDate);
+  if (!surcharge) return services;
+  return Object.fromEntries(Object.entries(services).map(([key, config]) => [key, {
+    ...config,
+    packages: Object.fromEntries(
+      Object.entries(config.packages).map(([hours, pkg]) => [hours, withSurcharge(pkg, surcharge)]),
+    ) as Record<PackageHours, ServicePackage>,
+  }])) as Record<BoothService, ServiceConfig>;
+}
 
 export type TableclothColor = "" | "white" | "black" | "mixed";
 

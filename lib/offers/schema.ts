@@ -4,6 +4,8 @@ import { tableRental } from "./services";
 export const offerOptionsSchema = z.object({
   service: z.enum(["photo", "360", "combo", "tables"]),
   hours: z.enum(["2", "3", "4"]),
+  // Picks the price list: booth packages cost more from 2027 on. The server sets it from the inquiry.
+  eventDate: z.string().max(40).default(""),
   extraHours: z.number().int().min(0).max(12),
   // Booths only: the package, extra hours and transport are charged for each day.
   days: z.number().int().min(1).max(7).default(1),
