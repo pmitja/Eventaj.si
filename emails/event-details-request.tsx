@@ -1,19 +1,21 @@
 import { Body, Button, Container, Head, Heading, Html, Preview, Section, Text } from "@react-email/components";
 
-type Props = { name: string; date: string; url: string };
+type Props = { name: string; date: string; url: string; combo?: boolean };
 
-export const EventDetailsRequestEmail = ({ name, date, url }: Props) => (
+export const EventDetailsRequestEmail = ({ name, date, url, combo = false }: Props) => (
   <Html lang="sl">
     <Head />
     <Preview>Podatki za vaš dogodek – izpolnite jih v nekaj minutah</Preview>
     <Body style={main}>
       <Container style={container}>
-        <Text style={brand}>Eventaj.si · photo booth</Text>
+        <Text style={brand}>Eventaj.si · {combo ? "photo booth + 360°" : "photo booth"}</Text>
         <Heading style={heading}>Podatki za vaš dogodek</Heading>
         <Text style={text}>Pozdravljeni{name ? ` ${name}` : ""},</Text>
         <Text style={text}>
           kmalu se vidimo{date ? ` (${date})` : ""}! Ker se vaš dogodek hitro približuje, vas prosimo za nekaj podatkov,
-          da lahko pripravimo photo booth in okvir za vaše fotografije.
+          {combo
+            ? "da lahko pripravimo photo booth, 360° booth ter okvirja za vaše fotografije in videe."
+            : "da lahko pripravimo photo booth in okvir za vaše fotografije."}
         </Text>
         <Text style={text}>
           Kar že vemo iz vašega povpraševanja, smo izpolnili namesto vas. Podatke le preverite in dopolnite manjkajoče.

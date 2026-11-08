@@ -37,6 +37,9 @@ export const eventDetailsSchema = z
     albumColor: z.enum(["", "black", "white"]),
     frameIdea: text(3000),
     background: text(300),
+    // Combo only: the 360° Booth video gets its own frame and music.
+    frame360Idea: text(3000),
+    music: text(1000),
   })
   .superRefine((data, ctx) => {
     if (data.eventType === "Drugo" && !data.eventTypeOther) {

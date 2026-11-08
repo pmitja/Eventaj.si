@@ -200,7 +200,12 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
           />
         )}
         {inquiry.status === "confirmed" && (data.type === "basic" || data.type === "both") && (
-          <EventDetailsPanel inquiryId={inquiry.id} request={inquiry.eventDetails} backgroundReadyAt={inquiry.backgroundReadyAt} />
+          <EventDetailsPanel
+            inquiryId={inquiry.id}
+            request={inquiry.eventDetails}
+            backgroundReadyAt={inquiry.backgroundReadyAt}
+            combo={data.type === "both"}
+          />
         )}
       </div>
     </StaggerItem>

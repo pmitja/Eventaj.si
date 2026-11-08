@@ -13,12 +13,14 @@ type Props = {
   data: EventDetailsDraft;
   errors: Partial<Record<keyof EventDetailsDraft, string>>;
   update: <K extends keyof EventDetailsDraft>(key: K, value: EventDetailsDraft[K]) => void;
+  // Photo Booth + 360° Booth: the texts name both booths and the 360° video gets its own section.
+  combo?: boolean;
 };
 
 const durationLabels: Record<string, string> = { "2": "2 uri", "3": "3 ure", "4": "4 ure" };
 const albumAnswers = { yes: "Da", no: "Ne" } as const;
 
-export function BasicsSection({ data, errors, update }: Props) {
+export function BasicsSection({ data, errors, update, combo }: Props) {
   return (
     <Section title="Osnovne informacije">
       <div>
@@ -55,7 +57,7 @@ export function BasicsSection({ data, errors, update }: Props) {
 
       <div className="grid gap-7 md:grid-cols-2 md:gap-4">
         <div>
-          <Label htmlFor="startTime">Pričetek najema photo booth-a</Label>
+          <Label htmlFor="startTime">{combo ? "Pričetek najema" : "Pričetek najema photo booth-a"}</Label>
           <input
             id="startTime"
             type="time"
@@ -171,9 +173,9 @@ const linkStyle = { color: "var(--eventaj-accent)" };
 const linkClass =
   "text-sm font-medium underline decoration-[rgba(184,85,58,0.35)] underline-offset-4 hover:decoration-[var(--eventaj-accent)]";
 
-export function FrameSection({ data, errors, update }: Props) {
+export function FrameSection({ data, errors, update, combo }: Props) {
   return (
-    <Section title="Priprava okvirja">
+    <Section title={combo ? "Okvir za fotografije (Photo Booth)" : "Priprava okvirja"}>
       <div>
         <Label htmlFor="frameIdea">Ideja za okvir</Label>
         <textarea
@@ -212,6 +214,41 @@ export function FrameSection({ data, errors, update }: Props) {
           info@eventaj.si
         </a>
         .
+      </Hint>
+    </Section>
+  );
+}
+
+// Combo only: the 360° videos get their own digital frame, separate from the photo frame, and a song.
+export function Video360Section({ data, errors, update }: Props) {
+  return (
+    <Section title="Okvir in glasba za 360° video">
+      <div>
+        <Label htmlFor="frame360Idea">Ideja za okvir 360° videa</Label>
+        <textarea
+          id="frame360Idea"
+          rows={4}
+          className="eventaj-input resize-y"
+          value={data.frame360Idea}
+          onChange={(event) => update("frame360Idea", event.target.value)}
+          placeholder="Napisi, imena, datum, barve ..."
+        />
+        <FieldError message={errors.frame360Idea} />
+      </div>
+      <div>
+        <Label htmlFor="music">Glasba za videe</Label>
+        <input
+          id="music"
+          className="eventaj-input"
+          value={data.music}
+          onChange={(event) => update("music", event.target.value)}
+          placeholder="Izvajalec in naslov pesmi ali zvrst glasbe"
+        />
+        <FieldError message={errors.music} />
+      </div>
+      <Hint>
+        360° video ima svoj digitalni okvir, ločen od okvirja za fotografije. Če želite enak stil kot na fotografijah,
+        to le napišite.
       </Hint>
     </Section>
   );

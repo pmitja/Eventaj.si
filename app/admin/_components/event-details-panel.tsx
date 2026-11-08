@@ -9,7 +9,7 @@ import { albumText, eventTypeText } from "@/lib/event-details/schema";
 import { BackgroundReady } from "./background-ready";
 import { formatReceived } from "./format-received";
 
-type Props = { inquiryId: number; request: EventDetailsRequest | null; backgroundReadyAt: string | null };
+type Props = { inquiryId: number; request: EventDetailsRequest | null; backgroundReadyAt: string | null; combo: boolean };
 
 const formUrl = (token: string) => `${window.location.origin}/podatki/${token}`;
 
@@ -20,7 +20,7 @@ const outlineButton =
 const quietButton =
   "flex items-center gap-1.5 rounded-full border border-dashed border-adm-soft px-3 py-1 text-adm-muted transition-colors hover:border-adm-ink hover:text-adm-ink disabled:opacity-50";
 
-export function EventDetailsPanel({ inquiryId, request, backgroundReadyAt }: Props) {
+export function EventDetailsPanel({ inquiryId, request, backgroundReadyAt, combo }: Props) {
   const [sending, startSend] = useTransition();
   const [linking, startLink] = useTransition();
   const data = request?.data;
@@ -62,8 +62,14 @@ export function EventDetailsPanel({ inquiryId, request, backgroundReadyAt }: Pro
         ["Trajanje najema", `${data.hours} h`],
         ["Kontaktna oseba", `${data.contactName}, ${data.contactPhone}`],
         ["Album", albumText(data) || "—"],
-        ["Ideja za okvir", data.frameIdea || "—"],
+        [combo ? "Okvir za fotografije" : "Ideja za okvir", data.frameIdea || "—"],
         ["Izbrano ozadje", data.background || "—"],
+        ...(combo
+          ? [
+              ["Okvir za 360° video", data.frame360Idea || "—"],
+              ["Glasba za 360°", data.music || "—"],
+            ]
+          : []),
       ]
     : [];
 

@@ -193,6 +193,7 @@ export async function sendEventDetailsForm(id: number) {
         name: data.name?.split(" ")[0] ?? "",
         date: data.date ? formatSlovenianDate(data.date) : "",
         url: `${baseUrl.replace(/\/$/, "")}/podatki/${token}`,
+        combo: data.type === "both",
       }),
     });
     if (error) throw new Error(`E-pošta ni bila poslana: ${error.message}`);

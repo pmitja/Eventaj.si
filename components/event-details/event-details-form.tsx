@@ -3,13 +3,13 @@
 import { FormEvent, useState, useTransition } from "react";
 import { eventDetailsSchema, type EventDetailsDraft } from "@/lib/event-details/schema";
 import { submitEventDetails } from "./actions";
-import { AlbumSection, BasicsSection, FrameSection } from "./event-details-sections";
+import { AlbumSection, BasicsSection, FrameSection, Video360Section } from "./event-details-sections";
 
 type Errors = Partial<Record<keyof EventDetailsDraft, string>>;
 
-type Props = { token: string; initialData: EventDetailsDraft; alreadySubmitted: boolean };
+type Props = { token: string; initialData: EventDetailsDraft; alreadySubmitted: boolean; combo: boolean };
 
-export function EventDetailsForm({ token, initialData, alreadySubmitted }: Props) {
+export function EventDetailsForm({ token, initialData, alreadySubmitted, combo }: Props) {
   const [data, setData] = useState(initialData);
   const [errors, setErrors] = useState<Errors>({});
   const [formError, setFormError] = useState("");
@@ -58,7 +58,7 @@ export function EventDetailsForm({ token, initialData, alreadySubmitted }: Props
           Podatke smo <em className="font-serif-italic italic">prejeli</em>.
         </h2>
         <p className="mx-auto mt-5 max-w-md leading-relaxed text-[var(--eventaj-ink-2)]">
-          Okvir pripravimo po vaših željah. Če se kaj spremeni, lahko podatke kadarkoli popravite prek iste povezave.
+          {combo ? "Okvirja pripravimo" : "Okvir pripravimo"} po vaših željah. Če se kaj spremeni, lahko podatke kadarkoli popravite prek iste povezave.
         </p>
         <button
           type="button"
@@ -78,9 +78,10 @@ export function EventDetailsForm({ token, initialData, alreadySubmitted }: Props
           Podatke ste že oddali. Spodaj jih lahko popravite in ponovno shranite.
         </p>
       )}
-      <BasicsSection data={data} errors={errors} update={update} />
+      <BasicsSection data={data} errors={errors} update={update} combo={combo} />
       <AlbumSection data={data} errors={errors} update={update} />
-      <FrameSection data={data} errors={errors} update={update} />
+      <FrameSection data={data} errors={errors} update={update} combo={combo} />
+      {combo && <Video360Section data={data} errors={errors} update={update} />}
 
       <div className="mt-4 flex flex-col items-stretch gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-red-700" role="status">

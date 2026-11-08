@@ -83,5 +83,7 @@ export function prefillEventDetails(inquiry: Inquiry): EventDetailsDraft {
     albumColor: form.albumColor ?? "",
     frameIdea: "",
     background: "",
+    frame360Idea: "",
+    music: "",
   };
 }

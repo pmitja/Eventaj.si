@@ -9,7 +9,7 @@ import { albumText, eventDetailsSchema, eventTypeText, type EventDetails } from 
 
 type Result = { ok: true } | { ok: false; error: string };
 
-function summary(data: EventDetails) {
+function summary(data: EventDetails, combo: boolean) {
   return [
     `Točna lokacija: ${data.location}`,
     `Vrsta dogodka: ${eventTypeText(data)}`,
@@ -17,8 +17,9 @@ function summary(data: EventDetails) {
     `Trajanje najema: ${data.hours} h`,
     `Kontaktna oseba: ${data.contactName}, ${data.contactPhone}`,
     `Album: ${albumText(data) || "—"}`,
-    `Ideja za okvir: ${data.frameIdea || "—"}`,
+    `${combo ? "Okvir za fotografije" : "Ideja za okvir"}: ${data.frameIdea || "—"}`,
     `Izbrano ozadje: ${data.background || "—"}`,
+    ...(combo ? [`Okvir za 360° video: ${data.frame360Idea || "—"}`, `Glasba za 360°: ${data.music || "—"}`] : []),
   ].join("\n");
 }
 
@@ -47,7 +48,7 @@ export async function submitEventDetails(token: string, input: unknown): Promise
       from: "Eventaj.si <info@eventaj.si>",
       to: "eventaj.si@gmail.com",
       subject: `Podatki za dogodek: ${inquiry?.formData.name ?? `#${inquiryId}`}`,
-      text: `Stranka je izpolnila podatke za dogodek (povpraševanje #${inquiryId}).\n\n${summary(parsed.data)}`,
+      text: `Stranka je izpolnila podatke za dogodek (povpraševanje #${inquiryId}).\n\n${summary(parsed.data, inquiry?.formData.type === "both")}`,
     });
   } catch (error) {
     // The data is saved and visible in admin; the notification is a convenience.

@@ -20,6 +20,9 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ t
 
   const form = request.inquiry.formData;
   const eventDate = form.date ? formatSlovenianDate(form.date) : "";
+  const combo = form.type === "both";
+  // Answers saved before a field existed lack it; spreading them over the prefill fills it with an empty value.
+  const prefill = prefillEventDetails(request.inquiry);
 
   return (
     <main className="mx-auto w-full max-w-[760px] px-4 pb-20 pt-8 md:pt-12">
@@ -29,7 +32,8 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ t
 
       <header className="mb-10 mt-12 md:mt-16">
         <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--eventaj-accent)]">
-          Photo booth{eventDate ? ` · ${eventDate}` : ""}
+          {combo ? "Photo booth + 360°" : "Photo booth"}
+          {eventDate ? ` · ${eventDate}` : ""}
         </div>
         <h1 className="mt-3 font-serif-display text-[40px] font-normal leading-[1.05] md:text-[56px]">
           Podatki za vaš <em className="font-serif-italic italic">dogodek</em>
@@ -42,8 +46,9 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ t
 
       <EventDetailsForm
         token={token}
-        initialData={request.data ?? prefillEventDetails(request.inquiry)}
+        initialData={request.data ? { ...prefill, ...request.data } : prefill}
         alreadySubmitted={Boolean(request.submittedAt)}
+        combo={combo}
       />
 
       <footer className="mt-14 border-t border-[rgba(20,17,15,0.1)] pt-6 text-center font-serif-display text-lg">
