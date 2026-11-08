@@ -1,5 +1,5 @@
 import { company, defaultPaymentTerms } from "./company";
-import { formatEur, type OfferItem, type OfferVariant } from "./pricing";
+import { formatEur, freeTransportKm, type OfferItem, type OfferVariant } from "./pricing";
 import { services, servicesForDate, tableRental, type BoothService, type OfferService } from "./services";
 
 const serviceText = {
@@ -138,7 +138,7 @@ v vljudnem poslovnem jeziku in z vikanjem. Ponudnik NI zavezanec za DDV (normira
 ${cenik}
 - Podaljšanje: ${formatEur(service.extraHourPrice)} na dodatno uro
 ${text.cenik}
-- Prevoz: Lenart – lokacija – Lenart
+- Prevoz: Lenart – lokacija – Lenart; do ${freeTransportKm} km iz Lenarta je brezplačen (znesek je že v POSTAVKAH)
 
 # KAKO DELUJE SISTEM
 Tabelo cen, seštevek, DDV opombo, številko, datum in veljavnost ponudbe ter podatke ponudnika na PDF doda sistem.

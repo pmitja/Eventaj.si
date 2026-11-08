@@ -4,6 +4,8 @@ import { servicesForDate, tableclothLabels, tableRental, type OfferService, type
 export type { OfferService, PackageHours } from "./services";
 
 export const defaultPricePerKm = 0.4;
+/** Booths: transport is free up to this many km (one way from Lenart); beyond it the whole distance is charged. */
+export const freeTransportKm = 20;
 export const qrGalleryPromoPrice = 25;
 
 export type CustomItem = { description: string; amount: number };
@@ -67,6 +69,9 @@ function transportItem(options: PricingOptions, labels: ItemLabels, days = 1): O
   }
   const trip = round(options.distanceKm * options.pricePerKm);
   const route = `Prevoz (Lenart – ${labels.place?.trim() || "lokacija"} – Lenart)`;
+  if (options.service !== "tables" && options.distanceKm <= freeTransportKm) {
+    return { description: `${route}, do ${freeTransportKm} km`, amount: null, note: "brezplačno" };
+  }
   return days > 1
     ? { description: `${route}, vsak dan (${days} × ${eur(trip)})`, amount: round(days * trip) }
     : { description: route, amount: trip };
