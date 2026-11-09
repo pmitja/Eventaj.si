@@ -20,7 +20,7 @@ export const guides = [
     teaser:
       "Kaj lahko najamete, kako uskladiti dostavo iz Lenarta in kaj preveriti pred potrditvijo termina.",
     readMinutes: 4,
-    updated: "2026-09-12",
+    updated: "2026-11-09",
     related: ["igre-na-poroki", "koliko-stane-najem-photo-bootha"],
   },
   {
@@ -60,7 +60,7 @@ export const guides = [
     teaser:
       "Od 250 do 500 € za večer. Kaj vpliva na ceno, kaj je običajno vključeno in kje se pojavijo doplačila.",
     readMinutes: 7,
-    updated: "2026-08-30",
+    updated: "2026-11-09",
     related: ["foto-box-photo-booth-foto-stojnica", "photo-booth-ali-qr-galerija"],
   },
   {
@@ -80,7 +80,7 @@ export const guides = [
     teaser:
       "360 booth naredi kratek video, klasični photo booth tiskano fotografijo. Razlike, cene in koliko prostora potrebujeta.",
     readMinutes: 5,
-    updated: "2026-08-30",
+    updated: "2026-11-09",
     related: ["koliko-stane-najem-photo-bootha", "foto-box-photo-booth-foto-stojnica"],
   },
   {
@@ -108,9 +108,9 @@ export const guides = [
     eyebrow: "Primerjava",
     label: "Photo booth ali QR galerija",
     teaser:
-      "Photo booth od 279 €, QR galerija 35 €. Kaj dela vsaka storitev, kdaj zadošča ena sama in zakaj ju pogosto vzamejo skupaj.",
+      "Photo booth od 299 €, QR galerija 35 €. Kaj dela vsaka storitev, kdaj zadošča ena sama in zakaj ju pogosto vzamejo skupaj.",
     readMinutes: 5,
-    updated: "2026-08-30",
+    updated: "2026-11-09",
     related: ["koliko-stane-najem-photo-bootha", "360-booth-ali-photo-booth"],
   },
 ] as const satisfies readonly GuideSummary[];
@@ -308,7 +308,7 @@ export const qrCodeMistakes = [
 export const serviceComparison = {
   head: ["", "Photo booth", "QR galerija"],
   rows: [
-    { label: "Cena", booth: "od 279 €", gallery: "35 €" },
+    { label: "Cena", booth: "od 299 €", gallery: "35 €" },
     { label: "Kaj gost odnese", booth: "Tiskano fotografijo", gallery: "Povezavo do galerije" },
     { label: "Kje nastajajo posnetki", booth: "V kotičku", gallery: "Povsod v prostoru" },
     { label: "Oprema in osebje", booth: "Da, pripeljemo mi", gallery: "Ne, samo natisnjena koda" },
@@ -340,11 +340,11 @@ export const serviceVerdicts = [
 export const guidePricing = {
   head: ["Paket", "Trajanje", "Cena"],
   rows: [
-    { name: "Basic", duration: "2 uri", price: "279 €", muted: false },
-    { name: "Standard", duration: "3 ure", price: "329 €", muted: false },
-    { name: "Premium", duration: "4 ure", price: "379 €", muted: false },
-    { name: "Dodatna ura", duration: "na uro", price: "+50 €", muted: false },
-    { name: "360° Booth", duration: "od 2 uri", price: "od 299 €", muted: true },
+    { name: "Basic", duration: "2 uri", price: "299 €", muted: false },
+    { name: "Standard", duration: "3 ure", price: "349 €", muted: false },
+    { name: "Premium", duration: "4 ure", price: "399 €", muted: false },
+    { name: "Dodatna ura", duration: "na uro", price: "+60 €", muted: false },
+    { name: "360° Booth", duration: "od 2 uri", price: "od 319 €", muted: true },
     { name: "QR galerija", duration: "cel dogodek", price: "35 €", muted: true },
   ],
 } as const;
@@ -357,8 +357,8 @@ export const boothComparison = {
   head: ["", "Photo booth", "360° Booth"],
   rows: [
     { label: "Rezultat", booth: "Tiskana fotografija", booth360: "Kratek video v počasnem posnetku" },
-    { label: "Cena od", booth: "279 € za 2 uri", booth360: "299 € za 2 uri" },
-    { label: "Dodatna ura", booth: "+50 €", booth360: "+80 €" },
+    { label: "Cena od", booth: "299 € za 2 uri", booth360: "319 € za 2 uri" },
+    { label: "Dodatna ura", booth: "+60 €", booth360: "+80 €" },
     { label: "Potreben prostor", booth: "2,5 × 2 m", booth360: "3 × 3 m" },
     { label: "Koliko ljudi hkrati", booth: "Skupina", booth360: "Do 4 na ploščadi" },
     { label: "Kje konča", booth: "V roki in v galeriji", booth360: "Na telefonu in omrežjih" },

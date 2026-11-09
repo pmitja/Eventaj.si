@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Eventaj.si | Photo Booth & 360° Booth po Sloveniji",
     description:
-      "Najem Photo Booth in 360° Booth storitev z brezplačnim prevozom po celotni Sloveniji.",
+      "Najem Photo Booth in 360° Booth z asistenco, rekviziti in takojšnjim tiskom po vsej Sloveniji.",
     siteName: "Eventaj.si",
     url: "https://www.eventaj.si",
     locale: "sl_SI",

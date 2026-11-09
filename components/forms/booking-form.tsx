@@ -39,15 +39,15 @@ const locations = [
 ];
 
 const threeSixtyHours = [
-  { value: 2, price: 299 },
-  { value: 3, price: 349 },
-  { value: 4, price: 399 },
+  { value: 2, price: 319 },
+  { value: 3, price: 369 },
+  { value: 4, price: 419 },
 ];
 
 const basicBoothHours = [
-  { value: 2, price: 279 },
-  { value: 3, price: 329 },
-  { value: 4, price: 379 },
+  { value: 2, price: 299 },
+  { value: 3, price: 349 },
+  { value: 4, price: 399 },
 ];
 
 const formSchema = z.object({

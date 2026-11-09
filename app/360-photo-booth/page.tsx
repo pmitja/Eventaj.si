@@ -1,4 +1,5 @@
 import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import { booth360FaqItems } from "@/content/eventaj/data";
 import {
   buildFaqPageSchema,
   eventajAggregateRating,
@@ -9,18 +10,18 @@ import { JsonLd } from "react-schemaorg";
 import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const pricingPlans = [
-  { name: "Mini paket", price: "299", description: "2 uri 360° Booth najema" },
-  { name: "Osnovni paket", price: "349", description: "3 ure 360° Booth najema" },
-  { name: "Maxi paket", price: "399", description: "4 ure 360° Booth najema" },
+  { name: "Mini paket", price: "319", description: "2 uri 360° Booth najema" },
+  { name: "Osnovni paket", price: "369", description: "3 ure 360° Booth najema" },
+  { name: "Maxi paket", price: "419", description: "4 ure 360° Booth najema" },
   { name: "Mini + QR galerija", price: "334", description: "2 uri 360° Booth najema in QR galerija dogodka" },
 ] as const;
 
-const pageTitle = "360 photo booth najem po Sloveniji od 299 € | Eventaj.si";
+const pageTitle = "360 photo booth najem po Sloveniji od 319 € | Eventaj.si";
 
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "360 photo booth najem za poroke, rojstne dneve in poslovne dogodke. Slow-motion videi z deljenjem prek QR kode, od 299 €/2h po vsej Sloveniji.",
+    "360 photo booth najem za poroke, rojstne dneve in poslovne dogodke. Slow-motion videi z deljenjem prek QR kode, od 319 €/2h po vsej Sloveniji.",
   keywords: [
     "360 booth najem",
     "360 photo booth",
@@ -94,8 +95,8 @@ export default function ThreeSixtyPhotoBooth() {
             "Profesionalni najem 360° Booth naprave za dogodke, poroke in zabave. Vključuje operaterja, rekvizite in takojšnje deljenje posnetkov.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "299",
-            highPrice: "399",
+            lowPrice: "319",
+            highPrice: "419",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             priceValidUntil,
@@ -125,11 +126,11 @@ export default function ThreeSixtyPhotoBooth() {
           ],
         }}
       />
-      <JsonLd<FAQPage> item={buildFaqPageSchema()} />
+      <JsonLd<FAQPage> item={buildFaqPageSchema(booth360FaqItems)} />
       <ServicePageContent
         type="360"
         seoTitle={pageTitle}
-        h1="360 photo booth najem od 299 €"
+        h1="360 photo booth najem od 319 €"
       />
     </>
   );

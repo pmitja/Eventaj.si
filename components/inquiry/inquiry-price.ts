@@ -1,8 +1,8 @@
 export type InquiryServiceType = "360" | "basic" | "both" | "equipment";
 
 const servicePrices = {
-  basic: { "2": 279, "3": 329, "4": 379 },
-  "360": { "2": 299, "3": 349, "4": 399 },
+  basic: { "2": 299, "3": 349, "4": 399 },
+  "360": { "2": 319, "3": 369, "4": 419 },
 } as const;
 
 export function calculateInquiryPrice(

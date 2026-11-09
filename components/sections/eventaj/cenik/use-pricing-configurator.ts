@@ -10,6 +10,11 @@ import { useState } from "react";
 
 type ConfiguratorType = "photo" | "360" | "custom";
 
+const packagePrices = {
+  photo: { 2: 299, 3: 349, 4: 399 },
+  "360": { 2: 319, 3: 369, 4: 419 },
+} as const;
+
 const addonLabels = {
   qrGallery: "QR galerija dogodka",
   woodenSigns: "Personalizirane lesene tablice",
@@ -28,13 +33,14 @@ export function usePricingConfigurator() {
   const [albumColor, setAlbumColor] = useState<AlbumColor>("");
 
   const addonPrices = { qrGallery: type === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice, woodenSigns: 40, animations360: 59 };
-  const baseHours = type === "360" ? 2 : type === "photo" ? 2 : 0;
-  const basePrice = type === "360" ? 299 : type === "photo" ? 279 : 0;
-  const hourPrice = type === "360" ? 80 : 50;
-  const extraHours = type === "custom" ? 0 : Math.max(0, hours - baseHours);
+  // Same rule as the offer generator: 2–4 h use the package price, only hours above 4 are extra.
+  const baseHours = type === "custom" ? 0 : Math.min(hours, 4);
+  const basePrice = type === "custom" ? 0 : packagePrices[type][baseHours as 2 | 3 | 4];
+  const hourPrice = type === "360" ? 80 : 60;
+  const extraHours = type === "custom" ? 0 : Math.max(0, hours - 4);
   const albumPrice = type === "photo" ? getAlbumPrice(hours, albumSize) : 0;
   const animations360Available = type === "360";
-  const rangeMin = baseHours || 2;
+  const rangeMin = 2;
   const rangeProgress = ((hours - rangeMin) / (8 - rangeMin)) * 100;
   const addonsTotal = Object.entries(selectedAddons)
     .filter(

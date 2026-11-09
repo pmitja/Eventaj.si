@@ -6,7 +6,7 @@ import type { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const pageTitle = "Najem stoječih barskih miz – 10 €/dan | Eventaj.si";
 const pageDescription =
-  "Najem stoječih barskih miz za dogodke po 10 € na mizo za en dan. Bel ali črn prt je vključen, na voljo je do 10 miz.";
+  "Najem in izposoja stoječih barskih miz za poroke in dogodke: 10 € na mizo na dan, bel ali črn prt vključen. Do 10 miz, dostava okoli Maribora.";
 const pageUrl = "https://www.eventaj.si/oprema-za-dogodke/najem-stojecih-miz";
 
 export const metadata: Metadata = {

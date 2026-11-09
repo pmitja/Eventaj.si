@@ -25,7 +25,7 @@ const toc: readonly TocItem[] = [
 const services = [
   {
     title: "Photo booth",
-    price: "Od 279 €",
+    price: "Od 299 €",
     href: "/photo-booth",
     linkLabel: "Photo Booth paketi",
     image: "/qr-galerija/utrinki/photo-3.jpg",
@@ -61,7 +61,7 @@ export function BoothOrGalleryGuide() {
           <GuideAside
             eyebrow="Vse cene na enem mestu"
             title="Cenik Eventaj"
-            body="Photo Booth od 279 €, 360° Booth od 299 €, QR galerija 35 € na dogodek."
+            body="Photo Booth od 299 €, 360° Booth od 319 €, QR galerija 35 € na dogodek."
             href="/cenik"
             cta="Odpri cenik"
             secondary={{ href: "/360-photo-booth", label: "360° Booth za videe" }}
@@ -122,7 +122,7 @@ export function BoothOrGalleryGuide() {
             <Link href="/360-photo-booth" className="font-semibold underline underline-offset-4">
               360° Booth
             </Link>
-            , ki od 299 € naprej snema počasne posnetke namesto tiskanih fotografij.
+            , ki od 319 € naprej snema počasne posnetke namesto tiskanih fotografij.
           </P>
         </GuideSection>
 
@@ -144,7 +144,7 @@ export function BoothOrGalleryGuide() {
 
       <GuideClosingCta
         title="Izberite eno ali obe."
-        body="Photo Booth od 279 €, QR galerija ob najemu 25 €. Skupaj 304 €."
+        body="Photo Booth od 299 €, QR galerija ob najemu 25 €. Skupaj 324 €."
         actions={[
           { href: "/photo-booth", label: "Poglej Photo Booth pakete", variant: "primary" },
           { href: "/qr-galerija", label: "Ustvari QR galerijo, 35 €", variant: "secondary" },

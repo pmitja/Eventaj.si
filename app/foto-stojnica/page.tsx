@@ -8,18 +8,18 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
-const pageTitle = "Foto stojnica najem po Sloveniji od 279 € | Eventaj.si";
+const pageTitle = "Foto stojnica najem po Sloveniji od 299 € | Eventaj.si";
 
 const pricingPlans = [
-  { name: "Basic", price: "279", description: "2 uri foto stojnice" },
-  { name: "Standard", price: "329", description: "3 ure foto stojnice" },
-  { name: "Premium", price: "379", description: "4 ure foto stojnice" },
+  { name: "Basic", price: "299", description: "2 uri foto stojnice" },
+  { name: "Standard", price: "349", description: "3 ure foto stojnice" },
+  { name: "Premium", price: "399", description: "4 ure foto stojnice" },
 ] as const;
 
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Foto stojnica najem za poroke, zabave in poslovne dogodke po celotni Sloveniji. Od 279 €/2h z neomejenimi fotografijami, rekviziti, takojšnjim tiskom, spletno galerijo in brezplačnim prevozom do 20 km. Pokličite 031 285 143.",
+    "Foto stojnica najem za poroke, zabave in poslovne dogodke po celotni Sloveniji. Od 299 €/2h z neomejenimi fotografijami, rekviziti, takojšnjim tiskom, spletno galerijo in brezplačnim prevozom do 20 km. Pokličite 031 285 143.",
   keywords: [
     "foto stojnica najem",
     "foto stojnica Slovenija",
@@ -111,8 +111,8 @@ export default function FotoStojnica() {
             "Profesionalni najem foto stojnice za dogodke, poroke, rojstne dneve in zabave po celotni Sloveniji. Vključuje operaterja, rekvizite, personalizirane predloge ter takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "279",
-            highPrice: "379",
+            lowPrice: "299",
+            highPrice: "399",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",

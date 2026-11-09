@@ -66,7 +66,7 @@ export const standingTable: EquipmentProduct = {
     { q: "Za kakšne dogodke so mize primerne?", a: "Za poroke, poslovne dogodke, sprejeme, praznovanja in pogostitve." },
     { q: "Kdaj je rezervacija potrjena?", a: "Rezervacija je potrjena ob prejemu predplačila." },
   ],
-  seoTitle: "Najem stoječih barskih miz – 10 €/dan | Eventaj.si", seoDescription: "Najem stoječih barskih miz po 10 € na mizo za en dan. Bel ali črn prt je vključen, na voljo je do 10 miz.", sku: "EVENTAJ-STOJ-MIZA", availability: "LimitedAvailability",
+  seoTitle: "Najem stoječih barskih miz – 10 €/dan | Eventaj.si", seoDescription: "Najem in izposoja stoječih barskih miz za poroke in dogodke: 10 € na mizo na dan, bel ali črn prt vključen. Do 10 miz, dostava okoli Maribora.", sku: "EVENTAJ-STOJ-MIZA", availability: "LimitedAvailability",
   images: [
     { src: "/application/oprema/stojeca-miza/beli-prt.webp", alt: "Stoječa barska miza za najem z belim prtom" },
     { src: "/application/oprema/stojeca-miza/crni-prt.webp", alt: "Stoječa barska miza za najem s črnim prtom" },

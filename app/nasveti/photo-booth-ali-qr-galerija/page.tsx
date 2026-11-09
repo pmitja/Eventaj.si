@@ -11,7 +11,7 @@ const guide = getGuide("photo-booth-ali-qr-galerija");
 const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "Photo booth ali QR galerija? Primerjava in cene";
 const description =
-  "Photo booth od 279 €, QR galerija 35 €. Kaj dela vsaka storitev, kdaj zadošča ena sama in zakaj ju pogosto vzamejo skupaj.";
+  "Photo booth od 299 €, QR galerija 35 €. Kaj dela vsaka storitev, kdaj zadošča ena sama in zakaj ju pogosto vzamejo skupaj.";
 const heroImage = "/qr-galerija/utrinki/photo-3.jpg";
 
 export const metadata: Metadata = {
@@ -90,7 +90,7 @@ export default function BoothOrGalleryGuidePage() {
                 offers: {
                   "@type": "Offer",
                   url: "https://www.eventaj.si/photo-booth",
-                  price: "279",
+                  price: "299",
                   priceCurrency: "EUR",
                   availability: "https://schema.org/InStock",
                   priceValidUntil,

@@ -75,7 +75,7 @@ export const eventajNav = [
   },
   { label: "Cenik", href: "/cenik" },
   { label: "Nasveti", href: "/nasveti" },
-  { label: "FAQ", href: "/#faq" },
+  { label: "FAQ", href: "/pogosta-vprasanja" },
 ] as const;
 
 export const marqueeItems = [
@@ -109,7 +109,7 @@ export const services = [
       "Prisotnost naše ekipe skozi celoten dogodek",
       "Dostop do vseh fotografij po dogodku",
     ],
-    price: 279,
+    price: 299,
     accent: "var(--eventaj-accent)",
     media: [
       {
@@ -141,7 +141,7 @@ export const services = [
       "Vključena oprema in podpora naše ekipe",
       "Izvedba po vsej Sloveniji",
     ],
-    price: 299,
+    price: 319,
     accent: "var(--eventaj-accent)",
     media: [
       {
@@ -355,7 +355,11 @@ export const faqItems = [
   },
   {
     q: "Ali je prevoz vključen v ceno?",
-    a: "Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v končno ponudbo. Vse stroške poznate vnaprej, brez skritih doplačil.",
+    a: "Prevoz in postavitev sta brezplačna do 20 km od Lenarta v Slovenskih goricah. Za druge lokacije potne stroške navedemo vnaprej v ponudbi, brez skritih doplačil.",
+  },
+  {
+    q: "Ali photo booth pripeljete tudi v Ljubljano, Maribor ali Celje?",
+    a: "Da. Photo booth najem izvajamo po vsej Sloveniji: v Mariboru, Ljubljani, Celju, na Ptuju, v Murski Soboti, na Gorenjskem in Primorskem. Ekipa pride na lokacijo, postavi booth in je prisotna ves čas najema.",
   },
   {
     q: "Koliko časa traja postavitev?",
@@ -368,6 +372,37 @@ export const faqItems = [
   {
     q: "Lahko personaliziramo zasnovo fotografij?",
     a: "Seveda. Okvir fotografij prilagodimo vašemu dogodku z imeni, datumom, logotipom ali izbranim motivom. Predlog zasnove pripravimo in uskladimo pred dogodkom.",
+  },
+] as const;
+
+export const booth360FaqItems = [
+  {
+    q: "Koliko časa pred dogodkom moram rezervirati?",
+    a: "Priporočamo rezervacijo čim prej, zlasti za poletne termine, december in vikende. Največ rezervacij prejmemo 2–4 mesece pred dogodkom, vendar je včasih na voljo tudi kakšen prost termin v zadnjem trenutku.",
+  },
+  {
+    q: "Koliko prostora potrebuje 360° Booth?",
+    a: "Približno 3 × 3 m ravnih in trdih tal ter dostop do električne vtičnice. Postavitev traja 30–45 minut in se ne šteje v čas najema.",
+  },
+  {
+    q: "Koliko oseb gre lahko na platformo?",
+    a: "Platforma ima premer 100 cm in sprejme posameznike, pare ali skupine do 4 osebe hkrati.",
+  },
+  {
+    q: "Kako gostje dobijo svoje videe?",
+    a: "Takoj po snemanju prek QR kode ali AirDropa, zato jih lahko še med dogodkom delijo na družbenih omrežjih. Po dogodku prejmete vse posnetke v polni ločljivosti v zasebni galeriji.",
+  },
+  {
+    q: "Ali 360° Booth tiska fotografije?",
+    a: "Ne. 360° Booth snema kratke slow-motion videe za telefon. Če želite natisnjene fotografije, izberite photo booth ali oba hkrati.",
+  },
+  {
+    q: "Lahko prilagodimo glasbo in videz videov?",
+    a: "Da. Vsak video dobi digitalni okvir z imeni, datumom ali logotipom, glasbo uskladimo pred dogodkom. Personalizirane animacije so na voljo za 59 €.",
+  },
+  {
+    q: "Ali je prevoz vključen v ceno?",
+    a: "Prevoz in postavitev sta brezplačna do 20 km od Lenarta v Slovenskih goricah. Za druge lokacije po Sloveniji potne stroške navedemo vnaprej v ponudbi.",
   },
 ] as const;
 
@@ -406,7 +441,7 @@ export const photoSpecs = [
   { label: "Digitalna galerija", value: "Po dogodku prejmete vse fotografije v polni ločljivosti v zasebni galeriji.", icon: "gallery" },
   { label: "Prevoz", value: "Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v končno ponudbo.", icon: "truck" },
   { label: "Personalizacija", value: "Prilagodimo okvir fotografij, začetni zaslon in vizualne elemente dogodka.", icon: "brush" },
-  { label: "Cena", value: "Paketi od 279 € dalje. Brez skritih stroškov.", icon: "tag" },
+  { label: "Cena", value: "Paketi od 299 € dalje. Brez skritih stroškov.", icon: "tag" },
 ] as const;
 
 export const booth360Features = [
@@ -444,13 +479,13 @@ export const booth360Specs = [
   { label: "Digitalna galerija", value: "Po dogodku prejmete vse videoposnetke v polni ločljivosti v zasebni galeriji.", icon: "share" },
   { label: "Prevoz", value: "Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v končno ponudbo.", icon: "truck" },
   { label: "Personalizacija", value: "Prilagodimo glasbo, animacije, grafične elemente in vizualno podobo posnetkov.", icon: "music" },
-  { label: "Cena", value: "Paketi od 299 € dalje. Brez skritih stroškov.", icon: "tag" },
+  { label: "Cena", value: "Paketi od 319 € dalje. Brez skritih stroškov.", icon: "tag" },
 ] as const;
 
 export const photoPackages = [
   {
     name: "Basic",
-    price: 279,
+    price: 299,
     hours: 2,
     tagline: "Za manjša praznovanja in krajše dogodke.",
     features: [
@@ -463,7 +498,7 @@ export const photoPackages = [
   },
   {
     name: "Standard",
-    price: 329,
+    price: 349,
     hours: 3,
     tagline: "Najbolj priljubljena izbira za večino dogodkov.",
     featured: true,
@@ -478,7 +513,7 @@ export const photoPackages = [
   },
   {
     name: "Premium",
-    price: 379,
+    price: 399,
     hours: 4,
     tagline: "Za večja praznovanja in dogodke, ki trajajo dlje.",
     features: [
@@ -495,7 +530,7 @@ export const photoPackages = [
 export const booth360Packages = [
   {
     name: "Mini paket",
-    price: 299,
+    price: 319,
     hours: 2,
     tagline: "Za manjša praznovanja in krajše dogodke.",
     features: [
@@ -509,7 +544,7 @@ export const booth360Packages = [
   },
   {
     name: "Osnovni paket",
-    price: 349,
+    price: 369,
     hours: 3,
     tagline: "Najbolj priljubljena izbira za večino dogodkov.",
     featured: true,
@@ -524,7 +559,7 @@ export const booth360Packages = [
   },
   {
     name: "Maxi paket",
-    price: 399,
+    price: 419,
     hours: 4,
     tagline: "Za večja praznovanja in dogodke, ki trajajo dlje.",
     features: [
@@ -541,7 +576,7 @@ export const booth360Packages = [
 export const addons = [
   { item: "QR galerija ob najemu Photo Bootha", price: "+25 € / dogodek" },
   { item: "QR galerija ob najemu 360° Bootha", price: "+35 € / dogodek" },
-  { item: "Dodatna ura najema Photo Booth", price: "+50 €" },
+  { item: "Dodatna ura najema Photo Booth", price: "+60 €" },
   { item: "Dodatna ura najema 360° Booth", price: "+80 €" },
   { item: "Personalizirane animacije za 360° Booth", price: "+59 €" },
   { item: "Mali album", price: "+20 € pri 2 h · vključen pri 3 h ali več" },

@@ -108,7 +108,7 @@ export default function GuidePage() {
               cta="Poglej opremo"
               secondary={{
                 href: "/photo-booth",
-                label: "Photo booth od 279 €",
+                label: "Photo booth od 299 €",
               }}
             />
           }
@@ -163,7 +163,7 @@ export default function GuidePage() {
                 <p className="mt-3 text-sm text-[var(--eventaj-muted)]">
                   Fotografiranje in tisk fotografij na dogodku.
                 </p>
-                <p className="mt-4 font-semibold">Od 279 €</p>
+                <p className="mt-4 font-semibold">Od 299 €</p>
               </Link>
               <Link
                 href="/qr-galerija"
@@ -260,7 +260,7 @@ export default function GuidePage() {
         </GuideLayout>
         <GuideClosingCta
           title="Pošljite datum, kraj in seznam opreme."
-          body="Photo booth od 279 €, QR galerija 35 €, stoječa miza 10 € na dan."
+          body="Photo booth od 299 €, QR galerija 35 €, stoječa miza 10 € na dan."
           actions={[
             { label: "Pošlji povpraševanje", variant: "primary" },
             {

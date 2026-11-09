@@ -8,7 +8,7 @@ const pageTitle = "Photo Booth FAQ - Pogosta vprašanja | Eventaj.si";
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Odgovori na pogosta vprašanja o najemu Photo Bootha po celi Sloveniji. Spoznajte cene, logistiko postavitve, dostavo v Ljubljano, Maribor, Celje in ostale regije ter rezervacijo Photo Booth stojnice za vaš dogodek.",
+    "Odgovori o najemu photo bootha: prostor, postavitev, prevoz po Sloveniji, digitalne fotografije, plačilo in rezervacija termina.",
   keywords: [
     "Photo Booth vprašanja",
     "Photo Booth informacije",
@@ -72,7 +72,7 @@ const faqItems = [
   {
     question: "Kakšen prostor potrebujemo za Photo Booth?",
     answer:
-      "Photo Booth potrebuje približno 2x2 metra prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
+      "Photo Booth potrebuje približno 2,5 × 2 m prostora. Poskrbimo za profesionalno osvetlitev in ozadje, ki se ujema z vašo dekoracijo.",
   },
   {
     question: "Kako poteka rezervacija najema?",
@@ -132,7 +132,7 @@ const faqItems = [
   {
     question: "Kako je s plačilom?",
     answer:
-      "Za rezervacijo je potrebno plačati avans, preostali znesek pa poravnate pred dogodkom.",
+      "Avansa ni. Celoten znesek poravnate z bančnim nakazilom najkasneje 72 ur pred začetkom dogodka.",
   },
   {
     question: "Ali ponujate tematske Photo Booth-e?",
@@ -142,7 +142,7 @@ const faqItems = [
   {
     question: "Kako hitro po dogodku dobimo digitalne fotografije?",
     answer:
-      "Digitalne fotografije so na voljo takoj po dogodku in med dogodkom.",
+      "Posamezne fotografije lahko gostje med dogodkom delijo prek QR kode. Vse fotografije prejmete v zasebni digitalni galeriji najkasneje v 48 urah po dogodku.",
   },
 ];
 

@@ -7,7 +7,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 	const baseUrl = 'https://www.eventaj.si'
 	// Release date — bump this when content meaningfully changes (avoids a
 	// fresh lastmod on every build, which Google learns to distrust).
-	const currentDate = '2026-09-03'
+	const currentDate = '2026-11-09'
 
 	return [
 		// Main pages

@@ -11,8 +11,8 @@ import { ConfiguratorBlock, PriceRow } from "./configurator-parts";
 import { usePricingConfigurator } from "./use-pricing-configurator";
 
 const serviceOptions = [
-  { id: "photo", label: "Photo Booth", price: "od 279 €" },
-  { id: "360", label: "360° Booth", price: "od 299 €" },
+  { id: "photo", label: "Photo Booth", price: "od 299 €" },
+  { id: "360", label: "360° Booth", price: "od 319 €" },
   { id: "custom", label: "Oba", price: "po meri" },
 ] as const;
 
@@ -259,7 +259,7 @@ export function PricingConfigurator({ compact = false }: { compact?: boolean }) 
                 />
                 {type !== "custom" && (
                   <PriceRow
-                    label={`${baseHours} uri (izhodiščno)`}
+                    label={`Paket ${baseHours} ${baseHours === 2 ? "uri" : "ure"}`}
                     value="—"
                     muted
                   />

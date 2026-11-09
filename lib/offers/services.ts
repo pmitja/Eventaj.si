@@ -26,6 +26,9 @@ export type ServiceConfig = {
   packages: Record<PackageHours, ServicePackage>;
 };
 
+const photoExtraHourPrice = 60;
+const booth360ExtraHourPrice = 80;
+
 const hourWords: Record<PackageHours, string> = { "2": "dve uri", "3": "tri ure", "4": "štiri ure" };
 
 const photoShared = [
@@ -53,7 +56,7 @@ function photoPackage(hours: PackageHours, shortName: string, price: number): Se
     shortName,
     price,
     included: [
-      `najem Photo Bootha za ${hourWords[hours]} (možnost podaljšanja za 50 € na dodatno uro)`,
+      `najem Photo Bootha za ${hourWords[hours]} (možnost podaljšanja za ${photoExtraHourPrice} € na dodatno uro)`,
       ...photoShared,
       ...(withAlbum ? [album] : []),
       ...photoTail,
@@ -81,7 +84,7 @@ function booth360Package(hours: PackageHours, shortName: string, price: number):
     name: `360° Booth ${shortName} paket (${hours} ${hours === "2" ? "uri" : "ure"})`,
     shortName,
     price,
-    included: [`najem 360° Bootha za ${hourWords[hours]} (možnost podaljšanja za 80 € na dodatno uro)`, ...booth360Included],
+    included: [`najem 360° Bootha za ${hourWords[hours]} (možnost podaljšanja za ${booth360ExtraHourPrice} € na dodatno uro)`, ...booth360Included],
   };
 }
 
@@ -112,7 +115,7 @@ export const services: Record<BoothService, ServiceConfig> = {
   photo: {
     label: "Photo Booth",
     subtitle: "Najem foto stojnice (photobooth)",
-    extraHourPrice: 50,
+    extraHourPrice: photoExtraHourPrice,
     qrGalleryPrice: photoBoothQrGalleryPrice,
     hasAlbum: true,
     staffItem: "Vodenje fotografiranja in tehnik na mestu",
@@ -122,7 +125,7 @@ export const services: Record<BoothService, ServiceConfig> = {
   "360": {
     label: "360° Booth",
     subtitle: "Najem 360° Bootha (360° video stojnica)",
-    extraHourPrice: 80,
+    extraHourPrice: booth360ExtraHourPrice,
     qrGalleryPrice,
     hasAlbum: false,
     staffItem: "Vodenje snemanja in tehnik na mestu",
@@ -132,7 +135,7 @@ export const services: Record<BoothService, ServiceConfig> = {
   combo: {
     label: "Photo Booth + 360° Booth",
     subtitle: "Najem Photo Bootha in 360° Bootha",
-    extraHourPrice: 50 + 80,
+    extraHourPrice: photoExtraHourPrice + booth360ExtraHourPrice,
     // One QR gallery collects photos and 360° videos, so it is priced as the 360° one.
     qrGalleryPrice,
     hasAlbum: true,
@@ -145,7 +148,7 @@ export const services: Record<BoothService, ServiceConfig> = {
   },
 };
 
-/** Booth package prices go up for events from 2027 on; extra hours, QR gallery and tables stay the same. */
+/** Booth package prices go up for events from 2027 on; extra hours, QR gallery and tables are the same in both years. */
 export const packagePriceIncrease = { fromYear: 2027, amount: 20 };
 
 export function packageSurcharge(eventDate?: string | null) {

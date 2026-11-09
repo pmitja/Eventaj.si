@@ -4,8 +4,7 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { BreadcrumbList, FAQPage } from "schema-dts";
 
-const pageTitle =
-  "Pogosta vprašanja | Photo Booth, Foto Kotiček, Foto Stojnica, 360° Booth | Eventaj.si";
+const pageTitle = "Pogosta vprašanja o najemu photo bootha in 360° bootha | Eventaj.si";
 
 export const metadata: Metadata = {
   title: pageTitle,
@@ -51,17 +50,17 @@ const faqItems = [
   },
   {
     question: "Kakšen prostor potrebujemo za najem Photo Bootha?",
-    answer: "Prostor za Photo Booth naj bo velik vsaj 2x2 m.",
+    answer: "Za Photo Booth potrebujemo približno 2,5 × 2 m prostora in električno vtičnico v bližini.",
   },
   {
     question: "Kako rezerviram najem Photo Bootha?",
     answer:
-      "Sledite korakom rezervacije na spletni strani ali nam pišete na email info@eventaj.si ali nas pokličete na tel. št. 031 285 143 ali 031 544 751.",
+      "Sledite korakom rezervacije na spletni strani ali nam pišete na email info@eventaj.si ali nas pokličete na 031 285 143.",
   },
   {
     question: "Kaj je potrebno za najem Photo Bootha?",
     answer:
-      "Najprej je potrebna urejena rezervacija termina. Na samem dogodku pa je potrebno zagotoviti ravno površino velikosti 2x2 m ter dostop do električne napeljave.",
+      "Najprej je potrebna urejena rezervacija termina. Na samem dogodku pa je potrebno zagotoviti ravno površino velikosti približno 2,5 × 2 m ter dostop do električne napeljave.",
   },
   {
     question: "Kaj vključuje najem Photo Bootha?",
@@ -77,17 +76,17 @@ const faqItems = [
     question:
       "Kako dolgo traja postavitev Photo Bootha ali 360° Bootha?",
     answer:
-      "Sama postavitev Photo Bootha traja približno od 30 min do 1 ure, odvisno od same lokacije.",
+      "Postavitev Photo Bootha ali 360° Bootha traja približno 30–45 minut in se ne šteje v čas najema.",
   },
   {
     question: "Kako je s plačilom?",
     answer:
-      "Plačilo je potrebno izvesti 24h pred dogodkom. Plačilo je možno izvesti preko bančnega nakazila.",
+      "Avansa ni. Celoten znesek poravnate z bančnim nakazilom najkasneje 72 ur pred začetkom dogodka.",
   },
   {
     question: "Kako velik prostor potrebujemo za 360° Booth?",
     answer:
-      "Za postavitev 360° Bootha je potrebno zagotoviti ravno površino v velikosti 3x3 m.",
+      "Za postavitev 360° Bootha je potrebno zagotoviti ravno površino v velikosti približno 3 × 3 m.",
   },
   {
     question: "Ali lahko prilagodite ozadje?",
@@ -105,16 +104,6 @@ const faqItems = [
       "Z izbranimi rekviziti stopite na okroglo platformo, kjer ustvarite posnetek s 360° kamero, ki vas večkrat obkroži. Ko se snemanje zaključi, si lahko posnetek ogledate na dodatnem zaslonu in ga prenesete preko QR kode.",
   },
   {
-    question: "Ali prejmemo fotografije tudi v digitalni obliki?",
-    answer:
-      "Da, vse fotografije si lahko prenesete preko QR kode, ki vam je na voljo skozi celoten dogodek.",
-  },
-  {
-    question: "Kako hitro so fotografije natisnjene?",
-    answer:
-      "Izberete fotografijo ter število kopij, ki jih želite natisniti in jih prejmete takoj.",
-  },
-  {
     question: "Ali je med dogodkom ves čas prisoten tehnik?",
     answer:
       "Tako je, tehnik je na voljo celoten čas najema Photo Bootha ali 360° Bootha.",
@@ -128,7 +117,7 @@ const faqItems = [
     question:
       "Ali lahko uporabljamo Photo Booth ali 360° Booth na prostem?",
     answer:
-      "Da, vendar mora biti zaščitena pred direktnim soncem in padavinami, zagotovljena mora biti ravna površina 2x2 m oz. 3x3 m ter dostop do električne napeljave.",
+      "Da, vendar mora biti zaščitena pred direktnim soncem in padavinami, zagotovljena mora biti ravna površina približno 2,5 × 2 m za Photo Booth oz. 3 × 3 m za 360° Booth ter dostop do električne napeljave.",
   },
   {
     question: "Koliko časa lahko najamemo Photo Booth ali 360° Booth?",
@@ -152,7 +141,7 @@ const faqItems = [
   },
   {
     question: "Koliko oseb je lahko največ na platformi?",
-    answer: "Maksimalno število oseb na platformi je 5.",
+    answer: "Na platformo lahko stopijo posamezniki, pari ali skupine do 4 osebe hkrati.",
   },
   {
     question: "Kako dolgo traja snemanje in obdelava videoposnetkov?",

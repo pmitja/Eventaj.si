@@ -203,7 +203,7 @@ export function PackageTiers({ service }: { service: "photo" | "360" }) {
           </div>
         )}
         <div className="mt-12 text-center text-sm text-[var(--eventaj-muted)]">
-          Dodatne ure: +50 €/h (Photo Booth), +80 €/h (360° Booth). Prevoz in
+          Dodatne ure: +60 €/h (Photo Booth), +80 €/h (360° Booth). Prevoz in
           posebne zahteve potrdimo v končni ponudbi.
         </div>
       </div>

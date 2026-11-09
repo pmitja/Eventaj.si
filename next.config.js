@@ -27,6 +27,11 @@ const nextConfig = {
         destination: '/photo-booth',
         permanent: true,
       },
+      // Old URLs that still get impressions in Search Console (checked 2026-11-09).
+      { source: '/foto-box-najem', destination: '/photo-booth', permanent: true },
+      { source: '/photo-booth-za-maturantski-ples', destination: '/photo-booth', permanent: true },
+      // Stale AI context file; /llms.txt is the maintained one.
+      { source: '/llm.txt', destination: '/llms.txt', permanent: true },
       {
         source: '/qr-galerija/za-dogodke/poroke',
         destination: '/qr-galerija/poroka',
@@ -50,6 +55,8 @@ const nextConfig = {
         ['korporativni-dogodki-photo-booth', '/photo-booth-za-poslovni-dogodek'],
         ['kreativne-ideje-poroka', '/photo-booth-za-poroko'],
         ['razlogi-360-photo-booth', '/360-photo-booth'],
+        ['kako-izbrati-pravi-photo-booth-za-vas-dogodek', '/photo-booth'],
+        ['5-vprasanj-pred-rezervacijo-prostora-rojstni-dan', '/photo-booth-za-rojstni-dan'],
       ].map(([slug, destination]) => ({
         source: `/blog/${slug}`,
         destination,

@@ -8,7 +8,7 @@ import type { Article, BreadcrumbList, FAQPage, Service } from "schema-dts";
 
 const guide = getGuide("koliko-stane-najem-photo-bootha");
 const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
-const title = "Koliko stane najem photo bootha v Sloveniji (2026)";
+const title = "Koliko stane najem photo bootha v Sloveniji (2027)";
 const description =
   "Cene najema foto boxa se gibljejo od 250 do 500 € za večer. Kaj vpliva na ceno, kaj je običajno vključeno in kje se pojavijo doplačila.";
 const heroImage = "/og/photo-booth.webp";
@@ -96,8 +96,8 @@ export default function BoothPriceGuidePage() {
           offers: {
             "@type": "AggregateOffer",
             priceCurrency: "EUR",
-            lowPrice: "279",
-            highPrice: "379",
+            lowPrice: "299",
+            highPrice: "399",
             offerCount: 3,
             availability: "https://schema.org/InStock",
             priceValidUntil,

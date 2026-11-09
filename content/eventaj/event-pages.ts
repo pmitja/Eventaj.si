@@ -79,7 +79,7 @@ export const eventLandingIncluded = {
     { label: "Izbrani rekviziti", desc: "Skrbno izbrana kolekcija rekvizitov, prilagojena vašemu dogodku." },
     { label: "Ekipa ves dogodek", desc: "Postavitev, vodenje in pospravljanje — gostje niso nikoli sami." },
     { label: "Spletna galerija", desc: "Vse fotografije v zasebni galeriji v 48 urah po dogodku." },
-    { label: "Cena", desc: "Paketi od 279 € — končna cena, prevoz uskladimo glede na lokacijo." },
+    { label: "Cena", desc: "Paketi od 299 € — končna cena, prevoz uskladimo glede na lokacijo." },
   ],
   "360": [
     { label: "Neomejeni posnetki", desc: "Vsak gost, kolikorkrat želi — slow-motion 360° videoposnetki ves dogodek." },
@@ -87,7 +87,7 @@ export const eventLandingIncluded = {
     { label: "Takojšnje deljenje", desc: "Gostje prejmejo video prek QR kode ali AirDropa v nekaj sekundah." },
     { label: "Ekipa ves dogodek", desc: "Postavitev, vodenje in pomoč gostom — brez skrbi za vas." },
     { label: "Spletna galerija", desc: "Vsi posnetki v polni ločljivosti v zasebni galeriji v 48 urah." },
-    { label: "Cena", desc: "Paketi od 299 € — končna cena, prevoz uskladimo glede na lokacijo." },
+    { label: "Cena", desc: "Paketi od 319 € — končna cena, prevoz uskladimo glede na lokacijo." },
   ],
 } as const;
 
@@ -95,7 +95,7 @@ const photoBase = {
   product: "photo" as const,
   productLabel: "Photo Booth",
   productHref: "/photo-booth",
-  price: 279,
+  price: 299,
   galleryEyebrow: "Z resničnih dogodkov",
 };
 
@@ -103,7 +103,7 @@ const booth360Base = {
   product: "360" as const,
   productLabel: "360° Booth",
   productHref: "/360-photo-booth",
-  price: 299,
+  price: 319,
   galleryEyebrow: "Z resničnih dogodkov",
 };
 
@@ -112,16 +112,16 @@ export const eventLandings: Record<string, EventLanding> = {
     ...photoBase,
     slug: "photo-booth-za-poroko",
     breadcrumbLabel: "Za poroko",
-    eyebrow: "Foto kotiček za poroko",
+    eyebrow: "Foto box za poroko",
     title: "Vajina poroka, ujeta",
-    italicWord: "v fotografijah.",
+    italicWord: "v fotografijah",
     description:
-      "Foto kotiček s personaliziranim tiskom, usklajenim z vajinimi imeni, datumom in stilom poroke. Gostje ustvarjajo spomine, spominska knjiga pa se polni sama.",
+      "Foto box za poroko, ki mu rečemo tudi photo booth, foto stojnica ali selfie box, s tiskom, usklajenim z vajinimi imeni, datumom in stilom poroke. Gostje ustvarjajo spomine, spominska knjiga pa se polni sama.",
     proof: `${REVIEW_RATING_LABEL}/5 · ${EVENTS_DONE} izvedenih dogodkov`,
-    seoTitle: "Foto kotiček za poroko z neomejenim tiskom | Eventaj.si",
+    seoTitle: "Foto box za poroko z neomejenim tiskom | Eventaj.si",
     metaDescription:
-      "Foto kotiček za poroko z neomejenim tiskom, dizajnom z vajinimi imeni in datumom ter spominsko knjigo za goste. Od 279 €, po vsej Sloveniji.",
-    keywords: ["foto box za poroko", "fotobox za poroko", "photo booth za poroko", "foto stojnica za poroko", "spominska knjiga poroka", "foto box najem poroka"],
+      "Foto box (photo booth, foto stojnica, selfie box) za poroko z neomejenim tiskom, dizajnom z vajinimi imeni in spominsko knjigo za goste. Po vsej Sloveniji.",
+    keywords: ["foto box za poroko", "fotobox za poroko", "photo booth za poroko", "foto stojnica za poroko", "selfie box za poroko", "foto kotiček za poroko", "spominska knjiga poroka"],
     heroImages: [
       { src: "/application/wedding-photos/poroka-1.webp", alt: "Gostje z rekviziti na poroki" },
       { src: "/application/wedding-photos/poroka-2.webp", alt: "Mladoporočenca pred Photo Boothom s tiskom v roki" },
@@ -160,7 +160,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { label: "Izbrani rekviziti", desc: "Rekvizite izberemo tako, da se ujemajo s stilom poroke in ustvarijo zabavne fotografije." },
       { label: "Ekipa ves dogodek", desc: "Poskrbimo za postavitev, pomoč gostom in pospravljanje po dogodku. Ob Photo Boothu je ves čas prisotna naša ekipa." },
       { label: "Spletna galerija", desc: "Po poroki prejmeta dostop do zasebne digitalne galerije z vsemi fotografijami." },
-      { label: "Cena", desc: "Paketi se začnejo pri 279 €. Končno ponudbo pripravimo glede na lokacijo poroke." },
+      { label: "Cena", desc: "Paketi se začnejo pri 299 €. Končno ponudbo pripravimo glede na lokacijo poroke." },
     ],
     galleryImages: [
       { src: "/application/wedding-photos/20260619_234714086.webp", alt: "Mladoporočenca z lesenim napisom Ljubezen je v zraku v foto boxu na poroki" },
@@ -208,7 +208,7 @@ export const eventLandings: Record<string, EventLanding> = {
     proof: `${REVIEW_RATING_LABEL}/5 · ${EVENTS_DONE} izvedenih dogodkov`,
     seoTitle: "Photo booth za rojstni dan z neomejenim tiskom | Eventaj.si",
     metaDescription:
-      "Photo booth za rojstni dan z rekviziti, neomejenim tiskom in dizajnom z imenom slavljenca. Od 279 €/2h po vsej Sloveniji. Preverite prost termin.",
+      "Photo booth za rojstni dan z rekviziti, neomejenim tiskom in dizajnom z imenom slavljenca. Od 299 €/2h po vsej Sloveniji. Preverite prost termin.",
     keywords: ["foto box za zabavo", "fotobox za zabavo", "foto box za rojstni dan", "photo booth rojstni dan", "foto stojnica rojstni dan", "fotobox 30. rojstni dan"],
     heroImages: [
       { src: "/application/birthday-parties/birthday-9.webp", alt: "Prijatelji z rekviziti na rojstnodnevni zabavi" },
@@ -248,7 +248,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { label: "Izbrani rekviziti", desc: "Skrbno izbrana kolekcija rekvizitov, prilagojena vašemu dogodku." },
       { label: "Spremljanje skozi ves dogodek", desc: "Naša ekipa je prisotna skozi celoten dogodek in poskrbi za brezhibno izkušnjo gostov." },
       { label: "Spletna galerija", desc: "Vse fotografije v zasebni galeriji v 48 urah po dogodku." },
-      { label: "Cena", desc: "Paketi od 279 €. Končna cena je odvisna od lokacije dogodka." },
+      { label: "Cena", desc: "Paketi od 299 €. Končna cena je odvisna od lokacije dogodka." },
     ],
     galleryImages: [
       { src: "/application/birthday-parties/20260807_230302676.webp", alt: "Oče in hčerka z rekviziti pred zlato bleščečo steno v foto boxu na 70. rojstnem dnevu" },
@@ -298,9 +298,9 @@ export const eventLandings: Record<string, EventLanding> = {
     description:
       "Photo Booth z brandiranim tiskom za novoletne zabave, team buildinge in konference. Vaša znamka na fotografijah, ki jih gostje odnesejo domov.",
     proof: `${REVIEW_RATING_LABEL}/5 · zaupajo nam ŠKSG, AutoDelta, Forvis Mazars`,
-    seoTitle: "Photo booth za poslovni dogodek, od 279 € | Eventaj.si",
+    seoTitle: "Photo booth za poslovni dogodek, od 299 € | Eventaj.si",
     metaDescription:
-      "Photo booth za poslovni dogodek: vsak tisk nosi logotip podjetja, fotografije pa dobite tudi v digitalni galeriji. Od 279 €, po vsej Sloveniji.",
+      "Photo booth za poslovni dogodek: vsak tisk nosi logotip podjetja, fotografije pa dobite tudi v digitalni galeriji. Od 299 €, po vsej Sloveniji.",
     keywords: ["foto box za poslovni dogodek", "fotobox podjetje", "photo booth za poslovni dogodek", "foto box novoletna zabava", "brandiran foto box", "photo booth team building"],
     heroImages: [
       { src: "/application/busniess-booths/poslovna-7.webp", alt: "Ekipa na novoletni zabavi pred Photo Boothom" },
@@ -354,7 +354,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { label: "Izbrani rekviziti", desc: "Rekvizite izberemo glede na tip dogodka in profil udeležencev." },
       { label: "Spremljanje skozi ves dogodek", desc: "Naša ekipa je prisotna skozi celoten dogodek in poskrbi za brezhibno izkušnjo gostov." },
       { label: "Spletna galerija", desc: "Po dogodku prejmete dostop do zasebne spletne galerije z vsemi fotografijami." },
-      { label: "Cena", desc: "Paketi od 279 €. Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v ponudbo." },
+      { label: "Cena", desc: "Paketi od 299 €. Prevoz uskladimo glede na lokacijo dogodka in ga vključimo v ponudbo." },
     ],
     galleryImages: [
       { src: "/application/busniess-booths/poslovna-4.webp", alt: "Photo Booth na poslovnem dogodku" },
@@ -390,13 +390,13 @@ export const eventLandings: Record<string, EventLanding> = {
     breadcrumbLabel: "Za obletnico",
     eyebrow: "Photo Booth za obletnico",
     title: "Trenutki, ki jih je vredno",
-    italicWord: "ohraniti.",
+    italicWord: "ohraniti",
     description:
       "Abraham, zlata poroka ali jubilej podjetja. Photo Booth poveže vse generacije in vsakemu gostu podari fotografijo za spomin.",
     proof: `${REVIEW_RATING_LABEL}/5 · ${EVENTS_DONE} izvedenih dogodkov`,
-    seoTitle: "Photo booth za obletnico – od 279 € | Eventaj.si",
+    seoTitle: "Photo booth za obletnico – od 299 € | Eventaj.si",
     metaDescription:
-      "Photo booth za obletnico z neomejenim tiskom in spominsko knjigo, v katero gostje prilepijo fotografijo in voščilo. Od 279 €, po vsej Sloveniji.",
+      "Photo booth za obletnico z neomejenim tiskom in spominsko knjigo, v katero gostje prilepijo fotografijo in voščilo. Od 299 €, po vsej Sloveniji.",
     keywords: ["foto box za obletnico", "fotobox abraham", "photo booth za obletnico", "foto box zlata poroka", "foto box 50 let"],
     heroImages: [
       { src: "/application/birthday-parties/birthday-10.webp", alt: "Jubilant z družino pred Photo Boothom" },
@@ -436,7 +436,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { label: "Izbrani rekviziti", desc: "Rekvizite izberemo glede na tip praznovanja in starost gostov." },
       { label: "Spremljanje skozi ves dogodek", desc: "Naša ekipa je prisotna skozi celoten dogodek in poskrbi za brezhibno izkušnjo gostov." },
       { label: "Spletna galerija", desc: "Vse fotografije v zasebni galeriji v 48 urah po dogodku." },
-      { label: "Cena", desc: "Paketi od 279 €. Končna cena je odvisna od lokacije dogodka." },
+      { label: "Cena", desc: "Paketi od 299 €. Končna cena je odvisna od lokacije dogodka." },
     ],
     galleryImages: [
       { src: "/application/birthday-parties/birthday-13.webp", alt: "Photo Booth na obletnici" },
@@ -460,7 +460,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { q: "Koliko časa pred praznovanjem naj rezerviramo?", a: "Priporočamo rezervacijo vsaj 2 do 4 mesece vnaprej. Za termine ob koncih tedna in v decembru še prej." },
     ],
     related: [
-      { label: "Foto kotiček za poroko", href: "/photo-booth-za-poroko" },
+      { label: "Foto box za poroko", href: "/photo-booth-za-poroko" },
       { label: "Photo booth za rojstni dan", href: "/photo-booth-za-rojstni-dan" },
       { label: "Photo booth najem", href: "/photo-booth" },
     ],
@@ -476,9 +476,9 @@ export const eventLandings: Record<string, EventLanding> = {
     description:
       "Slow-motion 360° posnetki z vajine poroke — od prvega plesa do zabave do jutra. Video, ki ga delita še leta.",
     proof: `${REVIEW_RATING_LABEL}/5 · ${EVENTS_DONE} izvedenih dogodkov`,
-    seoTitle: "360° Booth za poroko — najem od 299 € | Eventaj.si",
+    seoTitle: "360° Booth za poroko — najem od 319 € | Eventaj.si",
     metaDescription:
-      "360° Booth za poroko s slow-motion videoposnetki, personalizirano glasbo in takojšnjim deljenjem. Od 299 €, po vsej Sloveniji. Preverite prost termin.",
+      "360° Booth za poroko s slow-motion videoposnetki, personalizirano glasbo in takojšnjim deljenjem. Od 319 €, po vsej Sloveniji. Preverite prost termin.",
     keywords: ["360 Booth za poroko", "360 photo booth poroka", "360 video poroka", "360 booth najem poroka", "slow motion video poroka"],
     heroImages: [
       { src: "/application/360-photo-booth-videos/poroka-1_compressed.mp4", alt: "Mladoporočenca na 360° Booth platformi" },
@@ -518,7 +518,7 @@ export const eventLandings: Record<string, EventLanding> = {
       { q: "Koliko oseb gre lahko na platformo?", a: "Stabilna platforma sprejme posameznike, pare ali skupine do 4 osebe hkrati." },
     ],
     related: [
-      { label: "Foto kotiček za poroko", href: "/photo-booth-za-poroko" },
+      { label: "Foto box za poroko", href: "/photo-booth-za-poroko" },
       { label: "360° Booth za rojstni dan", href: "/360-booth-za-rojstni-dan" },
       { label: "360 photo booth najem", href: "/360-photo-booth" },
     ],
@@ -534,9 +534,9 @@ export const eventLandings: Record<string, EventLanding> = {
     description:
       "360° Booth za rojstne dneve, ki jih gostje takoj delijo na Instagramu. Slow-motion, konfeti in zabava, ki se snema sama.",
     proof: `${REVIEW_RATING_LABEL}/5 · ${EVENTS_DONE} izvedenih dogodkov`,
-    seoTitle: "360° Booth za rojstni dan — najem od 299 € | Eventaj.si",
+    seoTitle: "360° Booth za rojstni dan — najem od 319 € | Eventaj.si",
     metaDescription:
-      "360° Booth za rojstnodnevno zabavo s slow-motion videi, rekviziti in takojšnjim deljenjem prek QR kode. Od 299 €, po vsej Sloveniji.",
+      "360° Booth za rojstnodnevno zabavo s slow-motion videi, rekviziti in takojšnjim deljenjem prek QR kode. Od 319 €, po vsej Sloveniji.",
     keywords: ["360 Booth za rojstni dan", "360 photo booth rojstni dan", "360 video zabava", "360 booth najem", "360 booth 30. rojstni dan"],
     heroImages: [
       { src: "/application/360-photo-booth-videos/birthday-1.mp4", alt: "Slavljenec na 360° platformi s konfeti" },
@@ -592,9 +592,9 @@ export const eventLandings: Record<string, EventLanding> = {
     description:
       "Premium 360° izkušnja z logotipom in barvami podjetja v vsakem posnetku. Za novoletne zabave, konference in team buildinge.",
     proof: `${REVIEW_RATING_LABEL}/5 · zaupajo nam ŠKSG, AutoDelta, Forvis Mazars`,
-    seoTitle: "360° Booth za poslovni dogodek — najem od 299 € | Eventaj.si",
+    seoTitle: "360° Booth za poslovni dogodek — najem od 319 € | Eventaj.si",
     metaDescription:
-      "360° Booth za poslovne dogodke z logotipom v vsakem videu. Novoletne zabave, konference in team buildingi po vsej Sloveniji. Od 299 €.",
+      "360° Booth za poslovne dogodke z logotipom v vsakem videu. Novoletne zabave, konference in team buildingi po vsej Sloveniji. Od 319 €.",
     keywords: ["360 Booth za poslovni dogodek", "360 photo booth podjetje", "360 booth novoletna zabava", "360 booth konferenca", "brandiran 360 booth"],
     heroImages: [
       { src: "/application/360-photo-booth-videos/poslovna-1_compressed.mp4", alt: "Ekipa na 360° platformi na poslovnem dogodku" },
@@ -650,9 +650,9 @@ export const eventLandings: Record<string, EventLanding> = {
     description:
       "360° Booth kot magnet aktivacije — obiskovalci ustvarjajo in delijo brandirane videe, vi dobite pristno UGC vsebino z ogromnim dosegom.",
     proof: `${REVIEW_RATING_LABEL}/5 · zaupajo nam ŠKSG, AutoDelta, Forvis Mazars`,
-    seoTitle: "360° Booth za promocijo znamke — najem od 299 € | Eventaj.si",
+    seoTitle: "360° Booth za promocijo znamke — najem od 319 € | Eventaj.si",
     metaDescription:
-      "360° Booth za promocijske dogodke in aktivacije blagovnih znamk. Brandirani videi, UGC vsebina in velik družabni doseg. Od 299 €, po vsej Sloveniji.",
+      "360° Booth za promocijske dogodke in aktivacije blagovnih znamk. Brandirani videi, UGC vsebina in velik družabni doseg. Od 319 €, po vsej Sloveniji.",
     keywords: ["360 Booth za promocijo", "360 booth aktivacija znamke", "360 photo booth promocija", "UGC vsebina dogodek", "brand aktivacija 360 booth"],
     heroImages: [
       { src: "/application/360-photo-booth-videos/poslovna-6.mp4", alt: "Brandiran 360° Booth na aktivaciji" },
@@ -708,9 +708,9 @@ export const eventLandings: Record<string, EventLanding> = {
     description:
       "360° Booth za festivale in koncerte — visoka prepustnost, brandirani videi in družabni doseg, ki traja še dolgo po zadnjem nastopu.",
     proof: `${REVIEW_RATING_LABEL}/5 · ${EVENTS_DONE} izvedenih dogodkov`,
-    seoTitle: "360° Booth za festival — najem od 299 € | Eventaj.si",
+    seoTitle: "360° Booth za festival — najem od 319 € | Eventaj.si",
     metaDescription:
-      "360° Booth za festivale in koncerte z visoko prepustnostjo in ogromnim družabnim dosegom. Brandirani slow-motion videi. Od 299 €, po vsej Sloveniji.",
+      "360° Booth za festivale in koncerte z visoko prepustnostjo in ogromnim družabnim dosegom. Brandirani slow-motion videi. Od 319 €, po vsej Sloveniji.",
     keywords: ["360 Booth za festival", "360 photo booth koncert", "360 booth festival najem", "festival aktivacija", "360 video koncert"],
     heroImages: [
       { src: "/application/360-photo-booth-videos/video-7.mp4", poster: "/application/360-photo-booth-videos/posters/video-7.webp", alt: "Množica pred 360° Boothom na festivalu" },

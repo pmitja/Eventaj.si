@@ -93,7 +93,7 @@ export default function Booth360GuidePage() {
                 offers: {
                   "@type": "Offer",
                   url: "https://www.eventaj.si/photo-booth",
-                  price: "279",
+                  price: "299",
                   priceCurrency: "EUR",
                   availability: "https://schema.org/InStock",
                   priceValidUntil,
@@ -113,7 +113,7 @@ export default function Booth360GuidePage() {
                 offers: {
                   "@type": "Offer",
                   url: "https://www.eventaj.si/360-photo-booth",
-                  price: "299",
+                  price: "319",
                   priceCurrency: "EUR",
                   availability: "https://schema.org/InStock",
                   priceValidUntil,
@@ -141,7 +141,7 @@ export default function Booth360GuidePage() {
               name: "Koliko stane 360 booth?",
               acceptedAnswer: {
                 "@type": "Answer",
-                text: "360° Booth stane od 299 € za dve uri, dodatna ura je 80 €. Photo booth stane od 279 € za dve uri, dodatna ura je 50 €.",
+                text: "360° Booth stane od 319 € za dve uri, dodatna ura je 80 €. Photo booth stane od 299 € za dve uri, dodatna ura je 60 €.",
               },
             },
             {

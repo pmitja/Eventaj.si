@@ -2,6 +2,7 @@
 
 import { FormEvent, useEffect, useState } from "react";
 import { calculateInquiryPrice } from "./inquiry-price";
+import { trackLead } from "@/lib/analytics";
 import { getAlbumPrice } from "@/content/eventaj/album-pricing";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { equipmentProducts, getSelectionsFulfillmentLabel } from "@/content/eventaj/equipment";
@@ -178,6 +179,7 @@ export function useInquiryForm(
 
       if (!response.ok) throw new Error("Pošiljanje ni uspelo");
       setSubmitted(true);
+      trackLead({ service: serviceType, value: totalPrice || undefined });
     } catch {
       setError("Pri pošiljanju je prišlo do napake. Poskusite ponovno ali nas pokličite.");
     } finally {

@@ -8,19 +8,19 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
-const photoBoothPageTitle = "Photo booth najem po vsej Sloveniji od 279 € | Eventaj.si";
+const photoBoothPageTitle = "Photo booth najem po vsej Sloveniji od 299 € | Eventaj.si";
 
 const pricingPlans = [
-  { name: "Basic", price: "279", description: "2 uri najema photo bootha" },
-  { name: "Standard", price: "329", description: "3 ure najema photo bootha" },
-  { name: "Premium", price: "379", description: "4 ure najema photo bootha" },
-  { name: "Basic + QR galerija", price: "304", description: "2 uri Photo Booth najema in QR galerija dogodka" },
+  { name: "Basic", price: "299", description: "2 uri najema photo bootha" },
+  { name: "Standard", price: "349", description: "3 ure najema photo bootha" },
+  { name: "Premium", price: "399", description: "4 ure najema photo bootha" },
+  { name: "Basic + QR galerija", price: "324", description: "2 uri Photo Booth najema in QR galerija dogodka" },
 ] as const;
 
 export const metadata: Metadata = {
   title: photoBoothPageTitle,
   description:
-    "Photo booth najem za poroke, rojstne dneve in poslovne dogodke. Neomejen tisk, rekviziti in operater, od 279 €/2h po vsej Sloveniji.",
+    "Photo booth najem za poroke, rojstne dneve in poslovne dogodke. Neomejen tisk, rekviziti in operater, od 299 €/2h po vsej Sloveniji.",
   keywords: [
     "foto box",
     "fotobox",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: photoBoothPageTitle,
     description:
-      "Photo booth najem za poroke, rojstne dneve in poslovne dogodke. Neomejen tisk, rekviziti in operater, od 279 €/2h po vsej Sloveniji.",
+      "Photo booth najem za poroke, rojstne dneve in poslovne dogodke. Neomejen tisk, rekviziti in operater, od 299 €/2h po vsej Sloveniji.",
     url: "https://www.eventaj.si/photo-booth",
     siteName: "Eventaj.si",
     images: [
@@ -100,8 +100,8 @@ export default function PhotoBooth() {
             "Profesionalni najem photo bootha za poroke, poslovne dogodke, festivale in zabave po vsej Sloveniji. Vključuje operaterja, rekvizite, personalizirane predloge in takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "279",
-            highPrice: "379",
+            lowPrice: "299",
+            highPrice: "399",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             priceValidUntil,

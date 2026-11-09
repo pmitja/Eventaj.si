@@ -65,13 +65,14 @@ export default function Home() {
         item={{
           "@context": "https://schema.org",
           "@type": "Organization",
+          "@id": "https://www.eventaj.si/#organization",
           name: "Eventaj.si",
           url: "https://www.eventaj.si",
           logo: "https://www.eventaj.si/application/logo.svg",
           description:
-            "Vodilni ponudnik Photo Booth in 360° Booth storitev v Sloveniji. Specializirani za poroke, dogodke in zabave.",
+            "Najem photo bootha, 360° bootha in opreme za dogodke ter QR galerija za fotografije gostov. Poroke, poslovni dogodki in praznovanja po vsej Sloveniji, sedež v Lenartu pri Mariboru.",
           sameAs: [
-            "https://www.facebook.com/eventaj.si",
+            "https://www.facebook.com/profile.php?id=61567672817538",
             "https://www.instagram.com/eventaj.si/",
           ],
           contactPoint: {
@@ -89,7 +90,9 @@ export default function Home() {
           "@type": "LocalBusiness",
           name: "Eventaj.si",
           image: "https://www.eventaj.si/application/photo-booth.webp",
-          "@id": "https://www.eventaj.si",
+          "@id": "https://www.eventaj.si/#business",
+          parentOrganization: { "@id": "https://www.eventaj.si/#organization" },
+          areaServed: { "@type": "Country", name: "Slovenija" },
           url: "https://www.eventaj.si",
           telephone: "+386 31 285 143",
           email: "info@eventaj.si",
@@ -108,22 +111,6 @@ export default function Home() {
             latitude: 46.5784,
             longitude: 15.8322,
           },
-          openingHoursSpecification: [
-            {
-              "@type": "OpeningHoursSpecification",
-              dayOfWeek: [
-                "https://schema.org/Monday",
-                "https://schema.org/Tuesday",
-                "https://schema.org/Wednesday",
-                "https://schema.org/Thursday",
-                "https://schema.org/Friday",
-                "https://schema.org/Saturday",
-                "https://schema.org/Sunday",
-              ],
-              opens: "00:00",
-              closes: "23:59",
-            },
-          ],
           sameAs: [
             "https://www.facebook.com/profile.php?id=61567672817538",
             "https://www.instagram.com/eventaj.si/",

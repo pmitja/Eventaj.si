@@ -1,6 +1,8 @@
 import {
+  booth360FaqItems,
   booth360Features,
   booth360Specs,
+  faqItems,
   photoFeatures,
   photoSpecs,
 } from "@/content/eventaj/data";
@@ -54,7 +56,7 @@ export function ServicePageContent({
             ? "Dinamični 360° videoposnetki, ki ujamejo energijo dogodka iz vseh kotov. Za poroke, poslovne dogodke in praznovanja, kjer trenutki postanejo del zgodbe."
             : "Profesionalni Photo Booth s takojšnjim tiskom fotografij. Elegantna popestritev porok, poslovnih dogodkov in zasebnih praznovanj.")
         }
-        price={is360 ? 299 : 279}
+        price={is360 ? 319 : 299}
         accent={accent}
         visuals={serviceHeroVisuals[type]}
       />
@@ -70,7 +72,14 @@ export function ServicePageContent({
       <QrGalleryOffer service={type} />
       <PackageTiers service={type} />
       <TestimonialsSection />
-      <FAQSection />
+      <FAQSection
+        items={is360 ? booth360FaqItems : faqItems}
+        moreLink={
+          is360
+            ? { href: "/360-photo-booth/faq", label: "Vsa vprašanja o 360° Boothu" }
+            : { href: "/photo-booth/faq", label: "Vsa vprašanja o photo boothu" }
+        }
+      />
     </main>
   );
 }

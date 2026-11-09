@@ -34,7 +34,7 @@ export function SiteFooter({ showCta = true }: { showCta?: boolean }) {
             title="Podjetje"
             links={[
               ["Nasveti", "/nasveti"],
-              ["FAQ", "/#faq"],
+              ["Pogosta vprašanja", "/pogosta-vprasanja"],
               ["Zasebnost", "/zasebnost"],
               ["Pogoji uporabe", "/pogoji-uporabe"],
             ]}

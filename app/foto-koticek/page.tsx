@@ -8,18 +8,18 @@ import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
-const pageTitle = "Foto kotiček najem od 279 € | Eventaj.si";
+const pageTitle = "Foto kotiček najem od 299 € | Eventaj.si";
 
 const pricingPlans = [
-  { name: "Basic", price: "279", description: "2 uri foto kotička" },
-  { name: "Standard", price: "329", description: "3 ure foto kotička" },
-  { name: "Premium", price: "379", description: "4 ure foto kotička" },
+  { name: "Basic", price: "299", description: "2 uri foto kotička" },
+  { name: "Standard", price: "349", description: "3 ure foto kotička" },
+  { name: "Premium", price: "399", description: "4 ure foto kotička" },
 ] as const;
 
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 279 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in digitalna galerija.",
+    "Najem foto kotička za poroke, rojstne dneve in dogodke po Sloveniji. Od 299 €/2h. Takojšnji tisk, rekviziti, neomejene fotografije in digitalna galerija.",
   keywords: [
     "Foto kotiček najem",
     "foto zabava",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: pageTitle,
     description:
-      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
+      "Najem foto kotička za poroke in dogodke. Od 299 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
     url: "https://www.eventaj.si/foto-koticek",
     siteName: "Eventaj.si",
     images: [
@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: pageTitle,
     description:
-      "Najem foto kotička za poroke in dogodke. Od 279 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
+      "Najem foto kotička za poroke in dogodke. Od 299 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
     images: ["/og/photo-booth.webp"],
   },
   alternates: {
@@ -94,8 +94,8 @@ export default function FotoKoticek() {
             "Profesionalni najem foto kotička za dogodke, poroke, rojstne dneve in zabave. Vključuje operaterja, rekvizite in takojšnje tiskanje fotografij.",
           offers: {
             "@type": "AggregateOffer",
-            lowPrice: "279",
-            highPrice: "379",
+            lowPrice: "299",
+            highPrice: "399",
             priceCurrency: "EUR",
             availability: "https://schema.org/InStock",
             validFrom: "2024-01-01",

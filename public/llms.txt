@@ -1,21 +1,23 @@
 # Eventaj.si
 
-> Eventaj.si rents photo booths (foto stojnica, fotobox, foto kotiček), 360 photo booths and event equipment across Slovenia, and sells a QR gallery that collects guests' photos, videos and voice messages. Based in Lenart v Slovenskih goricah near Maribor. Photo booth from 279 € for 2 hours, 360 photo booth from 299 € for 2 hours, QR gallery 35 € per event.
+> Eventaj.si rents photo booths (foto stojnica, fotobox, foto kotiček), 360 photo booths and event equipment across Slovenia, and sells a QR gallery that collects guests' photos, videos and voice messages. Based in Lenart v Slovenskih goricah near Maribor. Photo booth from 299 € for 2 hours, 360 photo booth from 319 € for 2 hours, QR gallery 35 € per event.
+
+Last updated: 2026-11-09. Prices apply to events from 2027 on.
 
 ## Services
 
-- [Photo booth najem](https://www.eventaj.si/photo-booth): photo booth with a DSLR camera and instant printing. Unlimited photos and prints during the rental, props, a print frame personalised for the event, our staff on site for the whole rental, and a digital gallery afterwards. Packages: Basic 2 h 279 €, Standard 3 h 329 €, Premium 4 h 379 € (Standard and Premium include a small keepsake album). QR gallery add-on +25 € per event.
-- [360 photo booth najem](https://www.eventaj.si/360-photo-booth): slow-motion 360° videos on a 100 cm platform, personalised animations and sound, sharing by QR code or AirDrop, props and a digital frame. Packages: Mini 2 h 299 €, Osnovni 3 h 349 €, Maxi 4 h 399 €. QR gallery add-on +35 € per event.
+- [Photo booth najem](https://www.eventaj.si/photo-booth): photo booth with a DSLR camera and instant printing. Unlimited photos and prints during the rental, props, a print frame personalised for the event, our staff on site for the whole rental, and a digital gallery afterwards. Packages: Basic 2 h 299 €, Standard 3 h 349 €, Premium 4 h 399 € (Standard and Premium include a small keepsake album). QR gallery add-on +25 € per event.
+- [360 photo booth najem](https://www.eventaj.si/360-photo-booth): slow-motion 360° videos on a 100 cm platform, personalised animations and sound, sharing by QR code or AirDrop, props and a digital frame. Packages: Mini 2 h 319 €, Osnovni 3 h 369 €, Maxi 4 h 419 €. QR gallery add-on +35 € per event.
 - [QR galerija](https://www.eventaj.si/qr-galerija): one QR code on the tables; guests scan it and upload photos, short videos and voice messages from the browser, with no app or registration. 35 € per event, gallery available for 180 days after the event, up to 20 videos of up to 60 seconds in the basic package (+15 € removes the video limit). [Features](https://www.eventaj.si/qr-galerija/funkcije), [for weddings](https://www.eventaj.si/qr-galerija/poroka), [for business events](https://www.eventaj.si/qr-galerija/poslovni-dogodek).
 - [Cenik](https://www.eventaj.si/cenik): all packages and add-ons in one place.
 
-Add-ons: extra hour photo booth +50 €, extra hour 360 photo booth +80 €, personalised 360 animations +59 €, small album +20 € with 2 h (included from 3 h), large album +30 € with 2 h or +15 € from 3 h, 10 personalised wooden signs to keep +40 €.
+Add-ons: extra hour photo booth +60 €, extra hour 360 photo booth +80 €, personalised 360 animations +59 €, small album +20 € with 2 h (included from 3 h), large album +30 € with 2 h or +15 € from 3 h, 10 personalised wooden signs to keep +40 €.
 
 "Photo booth", "foto stojnica", "fotobox", "foto box" and "foto kotiček" are names Slovenian customers use for the same service; Eventaj offers one photo booth service under all of these names.
 
 ## Photo booth by event
 
-- [Foto kotiček za poroko](https://www.eventaj.si/photo-booth-za-poroko): prints personalised with the couple's names and date; every photo is printed twice, one copy goes into a guest book.
+- [Foto box za poroko](https://www.eventaj.si/photo-booth-za-poroko): prints personalised with the couple's names and date; every photo is printed twice, one copy goes into a guest book.
 - [Photo booth za rojstni dan](https://www.eventaj.si/photo-booth-za-rojstni-dan)
 - [Photo booth za obletnico](https://www.eventaj.si/photo-booth-za-obletnico): anniversaries, 50th birthdays (abraham) and golden weddings.
 - [Photo booth za poslovni dogodek](https://www.eventaj.si/photo-booth-za-poslovni-dogodek): company logo on every print; Christmas parties, team buildings, conferences.
@@ -46,10 +48,12 @@ All of Slovenia. Transport and setup are free within 20 km of Lenart v Slovenski
 - Phone: +386 31 285 143
 - Email: info@eventaj.si
 - Languages: Slovenian, English
+- Response time: we answer inquiries and e-mail once a day, within 24 hours.
+- Payment: no deposit; the full amount is paid by bank transfer at least 72 hours before the event. Eventaj is not registered for VAT, so no VAT is charged.
 
 ## Event equipment and personalized products
 
-- [Standing cocktail tables](https://www.eventaj.si/oprema-za-dogodke/najem-stojecih-miz): €10 per table per day, white or black tablecloth included, up to 15 tables.
+- [Standing cocktail tables](https://www.eventaj.si/oprema-za-dogodke/najem-stojecih-miz): €10 per table per day, white or black tablecloth included, up to 10 tables.
 - [Welcome sign](https://www.eventaj.si/oprema-za-dogodke/tabla-dobrodoslice): rental from €29 or personalized purchase from €59, stand included with rental.
 - [Table numbers](https://www.eventaj.si/oprema-za-dogodke/stevilke-miz): acrylic numbers with stands, rental from €1.90 per table.
 - [Place names](https://www.eventaj.si/oprema-za-dogodke/imena-za-na-kroznik): personalized white or natural wood names from €1.90 each, minimum 40.

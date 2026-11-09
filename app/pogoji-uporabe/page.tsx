@@ -57,38 +57,31 @@ export default function TermsPage() {
           <List>
             <li>Preko spletnega obrazca na strani eventaj.si</li>
             <li>Po elektronski pošti: <a href="mailto:info@eventaj.si" className="text-[var(--eventaj-accent)] border-b border-[var(--eventaj-accent)] pb-px">info@eventaj.si</a></li>
-            <li>Po telefonu: <a href="tel:+38631285143" className="text-[var(--eventaj-accent)] border-b border-[var(--eventaj-accent)] pb-px">+386 31 285 143</a> / +386 31 544 751</li>
+            <li>Po telefonu: <a href="tel:+38631285143" className="text-[var(--eventaj-accent)] border-b border-[var(--eventaj-accent)] pb-px">+386 31 285 143</a></li>
           </List>
           <p>
-            Naročilo je potrjeno, ko ponudnik prejme predplačilo v višini 30%
-            celotnega zneska storitve.
+            Naročilo je potrjeno, ko naročnik pisno potrdi ponudbo. Avansa ni.
           </p>
 
           <SubHeading>2.2 Plačilni pogoji</SubHeading>
           <p>
-            Predplačilo v višini 30% celotnega zneska je potrebno poravnati ob
-            potrditvi rezervacije. Preostali znesek mora biti poravnan
-            najkasneje 72 ur pred začetkom dogodka.
+            Celoten znesek se poravna z bančnim nakazilom najkasneje 72 ur pred
+            začetkom dogodka.
           </p>
-          <p>Sprejemamo naslednje načine plačila:</p>
-          <List>
-            <li>Bančno nakazilo</li>
-            <li>Plačilo s kreditno kartico</li>
-          </List>
           <p>
-            Vse cene vključujejo DDV. Po opravljenem plačilu ponudnik izda
-            račun v elektronski obliki.
+            Ponudnik ni zavezanec za DDV, zato DDV ni obračunan (1. odstavek
+            94. člena ZDDV-1). Po opravljenem plačilu ponudnik izda račun v
+            elektronski obliki.
           </p>
         </Section>
 
         <Section title="3. Odpoved ali sprememba rezervacije">
           <SubHeading>3.1 Odpoved rezervacije</SubHeading>
-          <p>V primeru odpovedi rezervacije veljajo naslednji pogoji:</p>
-          <List>
-            <li>Več kot 14 dni pred dogodkom: vračilo celotnega predplačila</li>
-            <li>7–14 dni pred dogodkom: vračilo 50% predplačila</li>
-            <li>Manj kot 7 dni pred dogodkom: predplačilo se ne vrača</li>
-          </List>
+          <p>
+            Rezervacijo lahko odpoveste po e-pošti ali telefonu. Ker avansa ni,
+            odpoved pred rokom za plačilo nima stroškov. Prosimo, da nam
+            odpoved sporočite čim prej, da lahko termin ponudimo drugim.
+          </p>
 
           <SubHeading>3.2 Sprememba termina</SubHeading>
           <p>

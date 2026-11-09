@@ -11,7 +11,7 @@ const pageTitle = "Cenik Photo Bootha, 360° Bootha in QR galerije | Eventaj.si"
 export const metadata: Metadata = {
   title: pageTitle,
   description:
-    "Pregleden cenik za Photo Booth, 360° Booth in QR galerijo. Photo Booth od 279 €, 360° Booth od 299 €, QR galerija 35 € na dogodek.",
+    "Pregleden cenik za Photo Booth, 360° Booth in QR galerijo. Photo Booth od 299 €, 360° Booth od 319 €, QR galerija 35 € na dogodek.",
   alternates: {
     canonical: "https://www.eventaj.si/cenik",
   },

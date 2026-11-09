@@ -30,7 +30,7 @@ export function BoothPriceGuide() {
       <GuideHero
         eyebrow="Cene"
         title="Koliko stane najem photo bootha v Sloveniji"
-        lede="Cena je odvisna od števila ur in od tega, kaj je v paketu že vključeno. Naši paketi stanejo od 279 do 379 evrov. Spodaj je cel cenik in razlaga, zakaj sta dve ponudbi z isto ceno lahko na koncu večera stali zelo različno."
+        lede="Cena je odvisna od števila ur in od tega, kaj je v paketu že vključeno. Naši paketi stanejo od 299 do 399 evrov. Spodaj je cel cenik in razlaga, zakaj sta dve ponudbi z isto ceno lahko na koncu večera stali zelo različno."
         breadcrumb="Cena najema photo bootha"
         readMinutes={guide.readMinutes}
         updated={guide.updated}
@@ -41,7 +41,7 @@ export function BoothPriceGuide() {
         aside={
           <GuideAside
             eyebrow="Naše cene"
-            title="Od 279 € za dve uri"
+            title="Od 299 € za dve uri"
             body="Neomejeno tiskanje, prisotna ekipa in fotografije v 48 urah so vključeni v vsak paket."
             href="/cenik"
             cta="Odpri cenik"
@@ -52,7 +52,7 @@ export function BoothPriceGuide() {
         <GuideSection id="odgovor" title="Odgovor takoj">
           <P>
             Najem photo bootha v Sloveniji stane od 250 do 350 evrov za dve uri in od 350 do 500
-            evrov za cel večer. Naši paketi so v spodnjem delu tega razpona, od 279 do 379 evrov, in
+            evrov za cel večer. Naši paketi so na sredini tega razpona, od 299 do 399 evrov, in
             jih objavljamo javno.
           </P>
           <P>

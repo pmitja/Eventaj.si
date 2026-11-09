@@ -548,6 +548,17 @@ function UseCases() {
             </Link>
           ))}
         </div>
+        <p className="mt-6 text-sm text-[var(--eventaj-muted)]">
+          Tudi za{" "}
+          <Link href="/qr-galerija/za-dogodke/praznovanja" className="underline underline-offset-4">
+            praznovanja in obletnice
+          </Link>{" "}
+          ter{" "}
+          <Link href="/qr-galerija/za-dogodke/konference-in-sejmi" className="underline underline-offset-4">
+            konference in sejme
+          </Link>
+          .
+        </p>
       </div>
     </section>
   );

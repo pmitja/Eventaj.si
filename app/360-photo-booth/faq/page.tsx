@@ -67,7 +67,7 @@ const faqItems = [
   {
     question: "Kako velik prostor potrebujemo za 360° Booth?",
     answer:
-      "Priporočamo vsaj 3x3 metre prostora za optimalno izkušnjo. Poskrbimo za varno postavitev in nemoteno gibanje gostov.",
+      "Priporočamo približno 3 × 3 m prostora za optimalno izkušnjo. Poskrbimo za varno postavitev in nemoteno gibanje gostov.",
   },
   {
     question: "Ali lahko prilagodite ozadje in efekte?",
@@ -82,17 +82,17 @@ const faqItems = [
   {
     question: "Kako se rezerviram?",
     answer:
-      "Rezervacija se izvede preko telefona na +386 31 285 143 / +386 41 688 143. V kolikor želite rezervirati 360° Booth, vas prosimo kontaktirajte.",
+      "Pošljite povpraševanje na spletni strani, pokličite na +386 31 285 143 ali pišite na info@eventaj.si. Sporočite datum, lokacijo in okvirni urnik, mi pa pripravimo ponudbo.",
   },
   {
     question: "Ali potrebujem posebno mesto za 360° Booth?",
     answer:
-      "Da, priporočamo odprt prostor vsaj 3x3 metre, da zagotovimo varno uporabo in dovolj prostora za goste.",
+      "Da, priporočamo odprt prostor približno 3 × 3 m, da zagotovimo varno uporabo in dovolj prostora za goste.",
   },
   {
     question: "Koliko časa potrebujete za postavitev?",
     answer:
-      "Za postavitev 360° Booth potrebujemo približno 60 minut, odvisno od lokacije in zahtev.",
+      "Za postavitev 360° Bootha potrebujemo približno 30–45 minut. Postavitev se ne šteje v čas najema.",
   },
   {
     question: "Ali lahko prilagodim videoposnetke z logotipom ali grafiko?",
@@ -122,7 +122,7 @@ const faqItems = [
   {
     question: "Kakšna je največja teža, ki jo platforma podpira?",
     answer:
-      "Naša 360° Booth platforma podpira do 200 kg, kar omogoča uporabo za več gostov hkrati.",
+      "Platforma ima premer 100 cm in sprejme posameznike, pare ali skupine do 4 osebe hkrati.",
   },
   {
     question: "Kako dolgo traja snemanje in obdelava videoposnetkov?",

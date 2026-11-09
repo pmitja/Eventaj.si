@@ -23,7 +23,7 @@ export function HomePageContent() {
       <GallerySection />
       <TestimonialsSection />
       <PricingConfigurator compact />
-      <FAQSection />
+      <FAQSection moreLink={{ href: "/pogosta-vprasanja", label: "Vsa pogosta vprašanja" }} />
     </main>
   );
 }

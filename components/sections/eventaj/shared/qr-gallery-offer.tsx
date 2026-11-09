@@ -30,7 +30,7 @@ type Service = "photo" | "360";
 export function QrGalleryOffer({ service }: { service?: Service }) {
   const isStandalone = service === undefined;
   const isPhotoPackage = service === "photo";
-  const basePrice = service === "360" ? 299 : 279;
+  const basePrice = service === "360" ? 319 : 299;
   const galleryPrice = isPhotoPackage ? photoBoothQrGalleryPrice : qrGalleryPrice;
   const packagePrice = basePrice + galleryPrice;
   const serviceName = service === "360" ? "360° Booth" : "Photo Booth";
@@ -154,7 +154,7 @@ export function QrGalleryOffer({ service }: { service?: Service }) {
               </div>
               <div className="border border-white/15 p-4">
                 <div className="font-medium">Neomejeno videov</div>
-                <div className="mt-1 text-xs opacity-60">do 1.000 videov</div>
+                <div className="mt-1 text-xs opacity-60">brez omejitve števila</div>
                 <div className="mt-3 font-serif-display text-lg text-[#D7866F]">+15 €</div>
               </div>
             </div>

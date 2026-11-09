@@ -33,7 +33,7 @@ export function FAQSectionClient({
           </div>
           {seoTitle ? (
             <>
-              <h1 className="sr-only">{seoTitle}</h1>
+              <h1 className="sr-only">{seoTitle.replace(/\s*\|\s*Eventaj\.si$/, "")}</h1>
               <p
                 aria-hidden="true"
                 className="font-serif-display text-[clamp(36px,4.5vw,60px)] font-[350] leading-none text-balance text-[var(--eventaj-ink)]"

@@ -19,7 +19,7 @@ export function CenikPageContent({ seoTitle }: { seoTitle: string }) {
             <span className="h-1.5 w-1.5 rounded-full bg-[var(--eventaj-accent)]" />
             Cenik · 2026
           </div>
-          <h1 className="sr-only">{seoTitle}</h1>
+          <h1 className="sr-only">{seoTitle.replace(/\s*\|\s*Eventaj\.si$/, "")}</h1>
           <div
             aria-hidden="true"
             className="font-serif-display text-[clamp(48px,7vw,96px)] font-[350] leading-[0.95] text-balance"

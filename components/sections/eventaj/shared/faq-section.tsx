@@ -7,9 +7,11 @@ import { useState } from "react";
 export function FAQSection({
   items = faqItems,
   eyebrow = "Pogosta vprašanja",
+  moreLink,
 }: {
   items?: ReadonlyArray<{ q: string; a: string }>;
   eyebrow?: string;
+  moreLink?: { href: string; label: string };
 } = {}) {
   const [open, setOpen] = useState(0);
   return (
@@ -39,6 +41,14 @@ export function FAQSection({
           >
             info@eventaj.si
           </a>
+          {moreLink && (
+            <a
+              href={moreLink.href}
+              className="mt-4 block text-sm text-[var(--eventaj-ink-2)] underline-offset-4 hover:underline"
+            >
+              {moreLink.label} →
+            </a>
+          )}
         </div>
         <div>
           {items.map((item, index) => (
