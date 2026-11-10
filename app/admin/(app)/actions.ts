@@ -11,7 +11,7 @@ import { dropInquiryFromLedger, syncInquiryNoteToLedger, syncInquiryToLedger } f
 import { setOfferSent } from "@/lib/db/offers";
 import { standingTable } from "@/content/eventaj/equipment";
 import { NO_DELIVERY, splitPeople } from "@/lib/ledger/lists";
-import { serviceForInquiry } from "@/lib/offers/services";
+import { serviceForInquiry, tableRental } from "@/lib/offers/services";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 
 type Result<T> = { ok: true; value: T } | { ok: false; error: string };
@@ -62,8 +62,8 @@ export async function addManualInquiry(input: ManualInquiryInput) {
 
     const tables = input.type === "tables";
     const tableCount = Math.round(Number(input.tableCount));
-    if (tables && !(tableCount >= 1 && tableCount <= (standingTable.quantity?.max ?? 10))) {
-      throw new Error(`Število miz mora biti med 1 in ${standingTable.quantity?.max ?? 10}`);
+    if (tables && !(tableCount >= 1 && tableCount <= tableRental.maxTables)) {
+      throw new Error(`Število miz mora biti med 1 in ${tableRental.maxTables}`);
     }
     const hours = Math.round(Number(input.hours));
     if (!tables && !(hours >= 1 && hours <= 12)) throw new Error("Trajanje mora biti med 1 in 12 ur");
