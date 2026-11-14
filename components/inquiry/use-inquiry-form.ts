@@ -6,7 +6,11 @@ import { trackLead } from "@/lib/analytics";
 import { getAlbumPrice } from "@/content/eventaj/album-pricing";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { equipmentProducts, getSelectionsFulfillmentLabel } from "@/content/eventaj/equipment";
+import { getPhotographerPrice, photographerHourOptions, photographerInquiryType } from "@/content/eventaj/photographer";
 import { EquipmentSelection, InquiryData, initialInquiryData } from "./inquiry-types";
+
+export const PHOTOGRAPHER_TYPE = photographerInquiryType;
+const boothHourOptions = ["2", "3", "4"];
 
 export function useInquiryForm(
   open: boolean,
@@ -55,7 +59,10 @@ export function useInquiryForm(
         } else if (Number(next.hours) >= 3 && !next.albumSize) {
           next.albumSize = "small";
         }
-        if (value === "Oprema za dogodke") next.qrGallery = false;
+        if (value === "Oprema za dogodke" || value === PHOTOGRAPHER_TYPE) next.qrGallery = false;
+        // Fotograf has its own durations (2, 4, cel dan): drop a choice the new service does not offer.
+        const allowedHours = value === PHOTOGRAPHER_TYPE ? photographerHourOptions : boothHourOptions;
+        if (next.hours && !allowedHours.includes(next.hours)) next.hours = "";
       }
 
       if (key === "hours" && next.type === "Photo Booth") {
@@ -78,18 +85,9 @@ export function useInquiryForm(
   const canNext = () => {
     if (step === 1) {
       if (data.type === "Oprema za dogodke") {
-        return Boolean(
-          data.type &&
-            data.eventType &&
-            data.equipmentSelections.length > 0,
-        );
+        return Boolean(data.type && data.equipmentSelections.length > 0);
       }
-      return Boolean(
-        data.type &&
-          data.hours &&
-          data.eventType &&
-          (!data.albumSize || data.albumColor),
-      );
+      return Boolean(data.type && data.hours);
     }
     if (step === 2) {
       return Boolean(data.date && data.location);
@@ -117,7 +115,9 @@ export function useInquiryForm(
             ? "both"
             : data.type === "Oprema za dogodke"
               ? "equipment"
-              : "basic";
+              : data.type === PHOTOGRAPHER_TYPE
+                ? "photographer"
+                : "basic";
       const equipmentTotal = data.equipmentSelections.reduce((sum, selection) => {
         const product = equipmentProducts.find((item) => item.id === selection.productId);
         if (!product) return sum;
@@ -129,8 +129,10 @@ export function useInquiryForm(
       }, 0);
       const boothPrice = serviceType === "equipment"
         ? 0
-        : calculateInquiryPrice(serviceType, data.hours, 1);
-      const qrGallery = data.qrGallery && serviceType !== "equipment";
+        : serviceType === "photographer"
+          ? getPhotographerPrice(data.hours)
+          : calculateInquiryPrice(serviceType, data.hours, 1);
+      const qrGallery = data.qrGallery && serviceType !== "equipment" && serviceType !== "photographer";
       const qrGalleryAddonPrice = qrGallery
         ? serviceType === "360" ? qrGalleryPrice : photoBoothQrGalleryPrice
         : 0;

@@ -24,7 +24,7 @@ const toc: readonly TocItem[] = [
 
 export function Booth360Guide() {
   return (
-    <main>
+    <div>
       <GuideHero
         eyebrow="Primerjava naših storitev"
         title="360 booth ali klasični photo booth"
@@ -114,6 +114,6 @@ export function Booth360Guide() {
       />
 
       <RelatedGuides currentSlug={guide.slug} />
-    </main>
+    </div>
   );
 }

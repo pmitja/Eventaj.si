@@ -70,7 +70,7 @@ export default function GuidePage() {
       <JsonLd<BreadcrumbList>
         item={guideBreadcrumbSchema({ slug: guide.slug, name: guide.label })}
       />
-      <main>
+      <div>
         <GuideHero
           eyebrow={guide.eyebrow}
           title={guide.label}
@@ -260,7 +260,7 @@ export default function GuidePage() {
         </GuideLayout>
         <GuideClosingCta
           title="Pošljite datum, kraj in seznam opreme."
-          body="Photo booth od 299 €, QR galerija 35 €, stoječa miza 10 € na dan."
+          body="Photo booth od 299 €, QR galerija 35 €, stoječa miza 12,50 € na dan."
           actions={[
             { label: "Pošlji povpraševanje", variant: "primary" },
             {
@@ -271,7 +271,7 @@ export default function GuidePage() {
           ]}
         />
         <RelatedGuides currentSlug={guide.slug} />
-      </main>
+      </div>
     </>
   );
 }

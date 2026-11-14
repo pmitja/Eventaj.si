@@ -71,7 +71,7 @@ export default function GuidePage() {
       <JsonLd<BreadcrumbList>
         item={guideBreadcrumbSchema({ slug: guide.slug, name: guide.label })}
       />
-      <main>
+      <div>
         <GuideHero
           eyebrow={guide.eyebrow}
           title={guide.label}
@@ -251,7 +251,7 @@ export default function GuidePage() {
           ]}
         />
         <RelatedGuides currentSlug={guide.slug} />
-      </main>
+      </div>
     </>
   );
 }

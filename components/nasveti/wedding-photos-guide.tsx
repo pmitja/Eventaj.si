@@ -32,7 +32,7 @@ const toc: readonly TocItem[] = [
 
 export function WeddingPhotosGuide() {
   return (
-    <main>
+    <div>
       <GuideHero
         eyebrow="Vodnik za pare"
         title="Kako zbrati fotografije gostov na poroki"
@@ -148,6 +148,6 @@ export function WeddingPhotosGuide() {
       />
 
       <RelatedGuides currentSlug={guide.slug} />
-    </main>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import { PhotoBoothRedesignPage } from "@/components/sections/eventaj/redesign/photo-booth-page";
 import {
   buildFaqPageSchema,
   eventajAggregateRating,
@@ -128,16 +128,16 @@ export default function FotoKoticek() {
         }}
       />
       <JsonLd<FAQPage> item={buildFaqPageSchema()} />
-      <ServicePageContent
-        type="photo"
-        seoTitle={pageTitle}
-        h1="Najem foto kotička za poroke in dogodke"
-        heroTag="Foto kotiček"
-        heroTitle="Foto kotiček,"
-        heroItalicWord="poln spominov"
-        heroDescription="Foto kotiček z neomejenimi fotografijami in takojšnjim tiskom. Rekviziti, personaliziran okvir in digitalna galerija — za poroke, rojstne dneve in zabave po vsej Sloveniji."
-        featureTitle="Vse vključeno,"
-        featureItalicWord="brez skritih stroškov"
+      <PhotoBoothRedesignPage
+        heroCopy={{
+          h1: "Najem foto kotička za poroke in dogodke",
+          title: (
+            <>
+              Foto kotiček, <em>poln spominov</em>
+            </>
+          ),
+          lede: "Foto kotiček z neomejenimi fotografijami in takojšnjim tiskom. Rekviziti, personaliziran okvir in digitalna galerija za poroke, rojstne dneve in zabave po vsej Sloveniji.",
+        }}
       />
     </>
   );

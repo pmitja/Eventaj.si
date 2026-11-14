@@ -1,4 +1,4 @@
-import { HomePageContent } from "@/components/sections/eventaj/home/home-page-content";
+import { RedesignPage } from "@/components/sections/eventaj/redesign/redesign-page";
 import { eventajAggregateRating } from "@/content/eventaj/structured-data";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
@@ -119,7 +119,7 @@ export default function Home() {
           priceRange: "€€",
         }}
       />
-      <HomePageContent />
+      <RedesignPage />
     </>
   );
 }

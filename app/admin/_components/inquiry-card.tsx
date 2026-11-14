@@ -99,7 +99,7 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
   const details = [
     ["Datum dogodka", formatSlovenianDate(data.date)],
     ["Lokacija", data.location || "—"],
-    ["Trajanje", data.type === "equipment" ? data.hours : `${data.hours} h`],
+    ["Trajanje", data.type === "equipment" || !/^\d+$/.test(data.hours) ? data.hours : `${data.hours} h`],
     ["Vrsta dogodka", data.eventType],
     ["Album", album],
     ["QR galerija", data.qrGallery ? "da" : null],

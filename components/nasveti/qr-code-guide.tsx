@@ -34,7 +34,7 @@ const toc: readonly TocItem[] = [
 
 export function QrCodeGuide() {
   return (
-    <main>
+    <div>
       <GuideHero
         eyebrow="Razlaga"
         title="QR koda za fotografije z dogodka"
@@ -176,6 +176,6 @@ export function QrCodeGuide() {
       />
 
       <RelatedGuides currentSlug={guide.slug} />
-    </main>
+    </div>
   );
 }

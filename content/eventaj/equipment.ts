@@ -45,12 +45,12 @@ export const standingTable: EquipmentProduct = {
   id: "standing-table", slug: "najem-stojecih-miz", name: "Stoječa barska miza", eyebrow: "Oprema za dogodke · Mize", heading: ["Najem stoječih", "barskih miz."],
   shortDescription: "Stoječa miza za sprejem, pogostitev ali zabavo. Bel ali črn prt je vključen.",
   description: "Ustvari prostor za pijačo, prigrizke in pogovor. Vsaki mizi lahko dodaš bel ali črn prt, ki je že vključen v ceno najema.",
-  status: "Na voljo 10", cardNote: "Bel ali črn prt vključen", price: 10, priceLabel: "10 €", priceSubtitle: "na mizo za 1 dan", pricingMode: "per-unit", fulfillmentMode: "transport", pickupBelowQuantity: 5,
+  status: "Na voljo 17", cardNote: "Bel ali črn prt vključen", price: 12.5, priceLabel: "12,50 €", priceSubtitle: "na mizo za 1 dan", pricingMode: "per-unit", fulfillmentMode: "transport", pickupBelowQuantity: 5,
   pickupText: "Za manj kot 5 miz je možen samo osebni prevzem. Dostava je možna od 5 miz naprej v radiju 50 km od Maribora.",
-  quantity: { label: "Količina", min: 1, max: 10, defaultValue: 1, unit: "miz" },
+  quantity: { label: "Količina", min: 1, max: 17, defaultValue: 1, unit: "miz" },
   selectors: [{ label: "Barva prta", options: [{ label: "Bel prt" }, { label: "Črn prt" }], note: "Želiš kombinacijo? Razmerje barv zapiši v opombe." }],
   calculationLabel: "Informativna cena najema", deliveryText: "Dostava od 5 miz naprej je možna v radiju 50 km od Maribora in se obračuna 0,40 €/km.", cta: "Preveri razpoložljivost", finePrint: "Brez obveznosti. Termin in logistiko potrdimo v ponudbi.",
-  includedSubtitle: "Vse bistveno za urejeno postavitev", included: ["Stoječa barska miza", "Najem za en dan", "Bel ali črn prt po izbiri", "Možnost kombiniranja barv", "Do 10 miz za isti termin"],
+  includedSubtitle: "Vse bistveno za urejeno postavitev", included: ["Stoječa barska miza", "Najem za en dan", "Bel ali črn prt po izbiri", "Možnost kombiniranja barv", "Do 17 miz za isti termin"],
   useCasesTitle: "Več prostora za druženje.", useCases: [
     { title: "Sprejemi in pogostitve", text: "Točka za pijačo, prigrizke in sproščen pogovor." },
     { title: "Poroke in praznovanja", text: "Uporabne so pri aperitivu, druženju ali večernem delu dogodka." },
@@ -58,7 +58,7 @@ export const standingTable: EquipmentProduct = {
   ],
   helpTitle: "Potrebuješ pomoč pri količini?", helpText: "Sporoči število gostov in tip dogodka. Pomagali ti bomo oceniti število miz ter uskladiti dostavo.",
   faq: [
-    { q: "Koliko miz je na voljo?", a: "Na voljo je do 10 stoječih miz. Razpoložljivost preverimo po prejemu povpraševanja." },
+    { q: "Koliko miz je na voljo?", a: "Na voljo je do 17 stoječih miz. Razpoložljivost preverimo po prejemu povpraševanja." },
     { q: "Ali je prt vključen v ceno?", a: "Da. Pri vsaki mizi lahko izbereš bel ali črn prt." },
     { q: "Ali lahko kombiniram bele in črne prte?", a: "Da. Želeno razmerje zapiši v opombe povpraševanja." },
     { q: "Kako se obračuna prevoz?", a: "Dostavljamo od 5 miz naprej, v radiju 50 km od Maribora. Prevoz se obračuna posebej po 0,40 €/km." },
@@ -66,7 +66,7 @@ export const standingTable: EquipmentProduct = {
     { q: "Za kakšne dogodke so mize primerne?", a: "Za poroke, poslovne dogodke, sprejeme, praznovanja in pogostitve." },
     { q: "Kdaj je rezervacija potrjena?", a: "Rezervacija je potrjena ob prejemu predplačila." },
   ],
-  seoTitle: "Najem stoječih barskih miz – 10 €/dan | Eventaj.si", seoDescription: "Najem in izposoja stoječih barskih miz za poroke in dogodke: 10 € na mizo na dan, bel ali črn prt vključen. Do 10 miz, dostava okoli Maribora.", sku: "EVENTAJ-STOJ-MIZA", availability: "LimitedAvailability",
+  seoTitle: "Najem stoječih barskih miz – 12,50 €/dan | Eventaj.si", seoDescription: "Najem in izposoja stoječih barskih miz za poroke in dogodke: 12,50 € na mizo na dan, bel ali črn prt vključen. Do 17 miz, dostava okoli Maribora.", sku: "EVENTAJ-STOJ-MIZA", availability: "LimitedAvailability",
   images: [
     { src: "/application/oprema/stojeca-miza/beli-prt.webp", alt: "Stoječa barska miza za najem z belim prtom" },
     { src: "/application/oprema/stojeca-miza/crni-prt.webp", alt: "Stoječa barska miza za najem s črnim prtom" },

@@ -96,6 +96,11 @@ export const serviceHeroVisuals = {
         label: "Jožek 50",
       },
       {
+        src: "/application/wedding-photos/karmen-in-marko.webp",
+        alt: "Nevesta s svati, rekviziti in lesenim napisom Najboljša poroka v foto boxu na poroki Karmen in Marko",
+        label: "Karmen in Marko",
+      },
+      {
         src: "/application/wedding-photos/20260619_234714086.webp",
         alt: "Mladoporočenca z lesenim napisom Ljubezen je v zraku v foto boxu na poroki",
         label: "Elisa in Arpi",
@@ -111,6 +116,16 @@ export const serviceHeroVisuals = {
         label: "Janez 70",
       },
       {
+        src: "/application/wedding-photos/alja-in-rene.webp",
+        alt: "Nevesta s prijateljico v sončnih očalih na poročnem tisku Alja in Rene s cvetličnim okvirjem",
+        label: "Alja in Rene",
+      },
+      {
+        src: "/application/birthday-parties/matej-50.webp",
+        alt: "Skupina prijateljev s klobuki in očali v gozdnem okvirju tiska za 50. rojstni dan Matej 50",
+        label: "Matej 50",
+      },
+      {
         src: "/application/photo-booth-hero/srecko-50.webp",
         alt: "Par z zabavnimi Photo Booth očali na praznovanju Srečko 50 let",
         label: "Srečko 50",
@@ -121,6 +136,11 @@ export const serviceHeroVisuals = {
         label: "Vesna in Antonijo",
       },
       {
+        src: "/application/photo-booth-hero/druzba-z-napisi.webp",
+        alt: "Družba v črnem z lesenimi napisi in očali pred črno bleščečo steno",
+        label: "Zabava",
+      },
+      {
         src: "/application/photo-booth-hero/robis-tomorrowland.webp",
         alt: "Skupina gostov pred bleščečim ozadjem v okvirju Robi's Tomorrowland",
         label: "Tematska zabava",
@@ -129,6 +149,11 @@ export const serviceHeroVisuals = {
         src: "/application/birthday-parties/20260801_204550714.webp",
         alt: "Družba z lesenimi napisi in očali v foto boxu na 50. rojstnem dnevu na vrtu",
         label: "Polonca 50",
+      },
+      {
+        src: "/application/birthday-parties/tone-50.webp",
+        alt: "Nasmejani gostje v zlato-črnem okvirju z baloni na praznovanju Tone 50",
+        label: "Tone 50",
       },
       {
         src: "/application/photo-booth-hero/lets-party-jasna.webp",

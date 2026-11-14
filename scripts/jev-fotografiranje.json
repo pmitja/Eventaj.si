@@ -1,0 +1,38 @@
+{
+  "market": "Slovenija, google.si, iskalci, ki želijo najeti storitev za dogodek",
+  "brand": "Eventaj.si",
+  "pages": [
+    {
+      "path": "/fotografiranje-dogodkov",
+      "primary": "fotografiranje dogodkov",
+      "secondary": [
+        "fotografiranje dogodkov cena",
+        "fotograf za dogodke",
+        "fotografiranje porok",
+        "fotograf za rojstni dan"
+      ],
+      "evidence": "Nova stran, podatkov iz Google Search Console še ni. Poizvedbe so izbrane po imenu storitve, ne po izmerjenih klikih.",
+      "offer": "Fotografiranje dogodkov, porok, rojstnih dni, poslovnih in športnih dogodkov. Fiksne cene: 350 € za 2 uri, 600 € za 4 ure, 1.200 € za cel dan, dodatna ura 150 €. Urejanje fotografij je vključeno. Fotografije z rojstnih dni in poslovnih dogodkov so dostavljene še isti dan, poročne v 5–8 dneh. Fotografije v živo prek QR kode so na voljo za doplačilo 50 €.",
+      "fields": {
+        "title": [
+          "Fotografiranje dogodkov od 350 € za 2 uri | Eventaj.si",
+          "Fotografiranje dogodkov od 350 € | Eventaj.si",
+          "Fotografiranje dogodkov od 350 €, urejanje vključeno | Eventaj.si",
+          "Fotografiranje dogodkov in porok od 350 € | Eventaj.si"
+        ],
+        "description": [
+          "Fotografiranje dogodkov s fiksno ceno: 350 € za 2 uri, 600 € za 4 ure, 1.200 € za cel dan. Urejanje fotografij je vključeno v ceno.",
+          "Fotografiranje dogodkov od 350 € za 2 uri. Urejanje je vključeno, fotografije z rojstnih dni in poslovnih dogodkov prejmete še isti dan.",
+          "Fotografiranje dogodkov od 350 €. Urejanje je vključeno, fotografije z rojstnih dni in poslovnih dogodkov prejmete še isti dan, poročne v 5–8 dneh.",
+          "Fotografiranje dogodkov od 350 € za 2 uri. Urejanje fotografij je vključeno, za rojstne dneve in poslovne dogodke jih prejmete še isti dan."
+        ],
+        "h1": [
+          "Fotografiranje dogodkov od 350 € za 2 uri",
+          "Fotografiranje dogodkov s fiksno ceno od 350 €",
+          "Fotografiranje dogodkov z vključenim urejanjem fotografij",
+          "Fotografiranje dogodkov od 350 €, urejanje vključeno"
+        ]
+      }
+    }
+  ]
+}

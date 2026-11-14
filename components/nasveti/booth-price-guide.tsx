@@ -26,7 +26,7 @@ const toc: readonly TocItem[] = [
 
 export function BoothPriceGuide() {
   return (
-    <main>
+    <div>
       <GuideHero
         eyebrow="Cene"
         title="Koliko stane najem photo bootha v Sloveniji"
@@ -153,6 +153,6 @@ export function BoothPriceGuide() {
       />
 
       <RelatedGuides currentSlug={guide.slug} />
-    </main>
+    </div>
   );
 }

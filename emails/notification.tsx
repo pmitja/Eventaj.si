@@ -94,7 +94,7 @@ export const NotificationEmail = ({
             )}
             {hours && (
               <Text style={detailItem}>
-                <strong>{type === "equipment" ? "Obdobje najema" : "Število ur"}:</strong> {hours}
+                <strong>{type === "equipment" ? "Obdobje najema" : type === "photographer" ? "Trajanje" : "Število ur"}:</strong> {hours}{type === "photographer" && /^\d+$/.test(hours) ? " h" : ""}
               </Text>
             )}
             {type && (
@@ -106,7 +106,9 @@ export const NotificationEmail = ({
                     ? "Photo Booth + 360° Photo Booth"
                     : type === "equipment"
                       ? "Oprema za dogodke"
-                      : "Photo Booth"}
+                      : type === "photographer"
+                        ? "Fotografiranje dogodkov"
+                        : "Photo Booth"}
               </Text>
             )}
             {qrGallery && type !== "equipment" && (

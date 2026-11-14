@@ -186,8 +186,7 @@ export const tableRental = {
   subtitle: "Najem stoječih barskih miz",
   name: "Najem stoječih barskih miz",
   unitPrice: standingTable.price,
-  // The dashboard can book more tables than the public page offers (10).
-  maxTables: 20,
+  maxTables: standingTable.quantity?.max ?? 17,
   pickupBelow: standingTable.pickupBelowQuantity ?? 0,
   included: [
     "najem stoječe barske mize za en dan",

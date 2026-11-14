@@ -1,4 +1,4 @@
-import { CTAContactSection } from "@/components/sections/cta-contact-section";
+import { RedesignClosing } from "@/components/sections/eventaj/redesign/redesign-footer";
 import { FAQSection } from "@/components/sections/faq-section";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
@@ -194,7 +194,7 @@ export default function FAQPage() {
         }}
       />
 
-      <main className="pt-[48px]">
+      <div className="pt-[48px]">
         <FAQSection
           title="Pogosta vprašanja"
           seoTitle={pageTitle}
@@ -202,15 +202,8 @@ export default function FAQPage() {
           items={faqItems}
         />
 
-        <CTAContactSection
-          title="Imaš dodatna vprašanja?"
-          description="Z veseljem pomagamo in svetujemo pri izbiri naših storitev."
-          action={{
-            text: "Kontaktiraj nas",
-            variant: "glow",
-          }}
-        />
-      </main>
+        <RedesignClosing />
+      </div>
     </>
   );
 }

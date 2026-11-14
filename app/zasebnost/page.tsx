@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-[var(--eventaj-paper)] px-5 py-24 md:px-10 md:py-32">
+    <div className="bg-[var(--eventaj-paper)] px-5 py-24 md:px-10 md:py-32">
       <div className="mx-auto max-w-[800px]">
         <div className="mb-5 text-[11px] uppercase tracking-[0.2em] text-[var(--eventaj-muted)]">
           Pravni dokument
@@ -321,7 +321,7 @@ export default function PrivacyPage() {
           </InfoBox>
         </Section>
       </div>
-    </main>
+    </div>
   );
 }
 

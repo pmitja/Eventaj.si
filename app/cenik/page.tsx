@@ -1,4 +1,4 @@
-import { CenikPageContent } from "@/components/sections/eventaj/cenik/cenik-page-content";
+import { CenikRedesignPage } from "@/components/sections/eventaj/redesign/cenik-redesign";
 import { booth360Packages, photoPackages } from "@/content/eventaj/data";
 import { photoBoothQrGalleryPrice, qrGalleryPrice } from "@/content/eventaj/qr-gallery-pricing";
 import { priceValidUntil } from "@/content/eventaj/structured-data";
@@ -108,7 +108,7 @@ export default function CenikPage() {
           ],
         }}
       />
-      <CenikPageContent seoTitle={pageTitle} />
+      <CenikRedesignPage h1={pageTitle.replace(/s*|s*Eventaj.si$/, "")} />
     </>
   );
 }

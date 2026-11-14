@@ -6,10 +6,8 @@ import type { ReactNode } from "react";
 import { GuideToc, GuideTocMobile, type TocItem } from "./guide-toc";
 
 export const guideShell = "mx-auto w-full max-w-7xl px-5 md:px-10";
-export const guidePrimaryButton =
-  "qr-gallery-primary inline-flex items-center justify-center gap-2 rounded-full px-6 py-4 text-sm font-semibold no-underline transition-colors";
-export const guideSecondaryButton =
-  "qr-gallery-secondary inline-flex items-center justify-center gap-2 rounded-full border border-[rgba(20,17,15,0.2)] px-6 py-4 text-sm font-semibold no-underline transition-colors hover:border-[var(--eventaj-ink)]";
+export const guidePrimaryButton = "ev-btn ev-btn-dark";
+export const guideSecondaryButton = "ev-btn ev-btn-ghost";
 
 const rule = "border-[rgba(20,17,15,0.12)]";
 
@@ -290,20 +288,18 @@ export function GuideClosingCta({
   actions: readonly GuideCtaAction[];
 }) {
   return (
-    <section className="px-5 pb-16 pt-4 md:px-10 md:pb-24">
-      <div className="mx-auto max-w-7xl bg-[#E8B584] px-6 py-16 text-center md:px-10 md:py-20">
-        <h2 className="mx-auto max-w-3xl font-serif-display text-[clamp(34px,4.6vw,62px)] font-[350] leading-[1] tracking-[-0.03em] text-balance">
+    <section className="ev-dark ev-wine-bg py-24 md:py-32">
+      <div className="ev-wrap text-center">
+        <h2 className="mx-auto max-w-3xl ev-display text-[clamp(34px,4.6vw,62px)]">
           {title}
         </h2>
-        {body ? <p className="mt-5 text-[var(--eventaj-ink-2)]">{body}</p> : null}
+        {body ? <p className="mx-auto mt-5 max-w-[52ch] text-[var(--ev-mist)]">{body}</p> : null}
         <div className="mt-9 flex flex-col justify-center gap-3 sm:flex-row">
           {actions.map((action) => {
             // Filled, not outlined: on pages that offer two real choices both
             // buttons have to carry the same visual weight.
             const className =
-              action.variant === "primary"
-                ? guidePrimaryButton
-                : "inline-flex items-center justify-center gap-2 rounded-full border border-[var(--eventaj-ink)] bg-[var(--eventaj-paper)] px-6 py-4 text-sm font-semibold text-[var(--eventaj-ink)] no-underline transition-colors hover:bg-[var(--eventaj-ink)] hover:text-[var(--eventaj-paper)]";
+              action.variant === "primary" ? "ev-btn ev-btn-primary" : "ev-btn ev-btn-ghost";
             const arrow =
               action.variant === "primary" ? (
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />

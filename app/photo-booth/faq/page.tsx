@@ -1,3 +1,4 @@
+import { RedesignClosing } from "@/components/sections/eventaj/redesign/redesign-footer";
 import { FAQSection } from "@/components/sections/faq-section";
 import { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
@@ -175,15 +176,16 @@ export default function PhotoBoothFAQPage() {
         }}
       />
 
-      <main>
+      <div>
         <FAQSection
           title="Photo Booth - Pogosta vprašanja"
           seoTitle={pageTitle}
           description="Odgovori na najpogostejša vprašanja o najemu Photo Bootha. Če ne najdete odgovora na vaše vprašanje, nas kontaktirajte."
           items={faqItems}
         />
+        <RedesignClosing />
 
-      </main>
+      </div>
     </>
   );
 }

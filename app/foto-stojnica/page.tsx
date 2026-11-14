@@ -1,4 +1,4 @@
-import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import { PhotoBoothRedesignPage } from "@/components/sections/eventaj/redesign/photo-booth-page";
 import {
   buildFaqPageSchema,
   eventajAggregateRating,
@@ -145,16 +145,16 @@ export default function FotoStojnica() {
         }}
       />
       <JsonLd<FAQPage> item={buildFaqPageSchema()} />
-      <ServicePageContent
-        type="photo"
-        seoTitle={pageTitle}
-        h1="Najem foto stojnice po Sloveniji"
-        heroTag="Foto stojnica"
-        heroTitle="Foto stojnica,"
-        heroItalicWord="ki poveže goste"
-        heroDescription="Foto stojnica s takojšnjim tiskom in neomejenimi fotografijami. Rekviziti, personaliziran dizajn in spletna galerija — popestritev porok, rojstnih dni in poslovnih dogodkov po vsej Sloveniji."
-        featureTitle="Vse vključeno,"
-        featureItalicWord="brez skritih stroškov"
+      <PhotoBoothRedesignPage
+        heroCopy={{
+          h1: "Najem foto stojnice po Sloveniji",
+          title: (
+            <>
+              Foto stojnica, <em>ki poveže goste</em>
+            </>
+          ),
+          lede: "Foto stojnica s takojšnjim tiskom in neomejenimi fotografijami. Rekviziti, personaliziran dizajn in spletna galerija za poroke, rojstne dneve in poslovne dogodke po vsej Sloveniji.",
+        }}
       />
     </>
   );

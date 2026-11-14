@@ -493,7 +493,7 @@ export type FormField = {
   location: string;
   hours: string;
   message?: string;
-  type: "360" | "basic" | "both" | "equipment";
+  type: "360" | "basic" | "both" | "equipment" | "photographer";
   eventType?: string;
   guests?: string;
   product?: string;

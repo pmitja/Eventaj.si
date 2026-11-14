@@ -143,7 +143,7 @@ function Footer() {
         </div>
         <div className="mt-12 flex flex-col items-center justify-between gap-4 border-t border-gray-200 dark:border-[#2F2F2F] pt-8 text-center md:flex-row">
           <p className="text-sm text-gray-500 dark:text-gray-400">
-            © 2025 MIPA Solutions. Vse pravice pridržane.
+            © 2025 Orbtio. Vse pravice pridržane.
           </p>
           <nav className="flex gap-4 text-sm">
             {navigation.legal.map((item) => (

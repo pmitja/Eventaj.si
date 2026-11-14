@@ -45,7 +45,7 @@ const services = [
 
 export function BoothOrGalleryGuide() {
   return (
-    <main>
+    <div>
       <GuideHero
         eyebrow="Primerjava naših storitev"
         title="Photo booth ali QR galerija: kaj izbrati za svoj dogodek"
@@ -152,6 +152,6 @@ export function BoothOrGalleryGuide() {
       />
 
       <RelatedGuides currentSlug={guide.slug} />
-    </main>
+    </div>
   );
 }

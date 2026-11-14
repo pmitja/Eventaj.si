@@ -11,12 +11,14 @@ export function proxy(request: NextRequest) {
   response.headers.set('X-Content-Type-Options', 'nosniff')
   response.headers.set('Referrer-Policy', 'origin-when-cross-origin')
 
-  // Add caching headers for static assets
+  // Add caching headers for static assets. Production only: dev chunk URLs are not content-hashed,
+  // so a year-long immutable cache makes the browser keep stale JavaScript after every edit.
   if (
-    request.nextUrl.pathname.startsWith('/_next/') ||
+    process.env.NODE_ENV === 'production' &&
+    (request.nextUrl.pathname.startsWith('/_next/') ||
     request.nextUrl.pathname.startsWith('/images/') ||
     request.nextUrl.pathname.startsWith('/application/') ||
-    request.nextUrl.pathname.endsWith('.webp')
+    request.nextUrl.pathname.endsWith('.webp'))
   ) {
     response.headers.set('Cache-Control', 'public, max-age=31536000, immutable')
   }

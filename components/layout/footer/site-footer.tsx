@@ -59,7 +59,7 @@ export function SiteFooter({ showCta = true }: { showCta?: boolean }) {
         </div>
 
         <div className="mt-14 flex flex-col justify-between gap-3 border-t border-[rgba(244,239,230,0.12)] pt-6 text-xs text-[var(--eventaj-cream)] opacity-50 md:flex-row">
-          <span>© 2026 MIPA Solutions. Vse pravice pridržane.</span>
+          <span>© 2026 Orbtio. Vse pravice pridržane.</span>
           <span className="font-serif-italic italic">Made with care in Slovenia.</span>
         </div>
       </div>

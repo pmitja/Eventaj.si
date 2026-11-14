@@ -1,12 +1,12 @@
-import { EquipmentProductPage } from "@/components/sections/eventaj/equipment/equipment-product-page";
+import { EquipmentProductRedesign as EquipmentProductPage } from "@/components/sections/eventaj/redesign/equipment-redesign";
 import { standingTable, standingTableFaq } from "@/content/eventaj/equipment";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";
 import type { BreadcrumbList, FAQPage, Service } from "schema-dts";
 
-const pageTitle = "Najem stoječih barskih miz – 10 €/dan | Eventaj.si";
+const pageTitle = "Najem stoječih barskih miz – 12,50 €/dan | Eventaj.si";
 const pageDescription =
-  "Najem in izposoja stoječih barskih miz za poroke in dogodke: 10 € na mizo na dan, bel ali črn prt vključen. Do 10 miz, dostava okoli Maribora.";
+  "Najem in izposoja stoječih barskih miz za poroke in dogodke: 12,50 € na mizo na dan, bel ali črn prt vključen. Do 17 miz, dostava okoli Maribora.";
 const pageUrl = "https://www.eventaj.si/oprema-za-dogodke/najem-stojecih-miz";
 
 export const metadata: Metadata = {

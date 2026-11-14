@@ -80,6 +80,7 @@ const INQUIRY_SERVICES: Record<StoredFormData["type"], string> = {
   "360": "360° Booth",
   both: "Photo Booth + 360°",
   equipment: "Najem opreme",
+  photographer: "Fotografiranje",
 };
 
 const same = (a: string | null | undefined, b: string) => (a ?? "").trim().toLowerCase() === b;

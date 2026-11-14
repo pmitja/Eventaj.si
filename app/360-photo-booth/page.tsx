@@ -1,4 +1,4 @@
-import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import { Booth360RedesignPage } from "@/components/sections/eventaj/redesign/booth-360-page";
 import { booth360FaqItems } from "@/content/eventaj/data";
 import {
   buildFaqPageSchema,
@@ -127,11 +127,7 @@ export default function ThreeSixtyPhotoBooth() {
         }}
       />
       <JsonLd<FAQPage> item={buildFaqPageSchema(booth360FaqItems)} />
-      <ServicePageContent
-        type="360"
-        seoTitle={pageTitle}
-        h1="360 photo booth najem od 319 €"
-      />
+      <Booth360RedesignPage h1="360 photo booth najem od 319 €" />
     </>
   );
 }

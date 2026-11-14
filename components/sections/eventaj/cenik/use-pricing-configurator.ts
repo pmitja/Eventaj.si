@@ -10,7 +10,7 @@ import { useState } from "react";
 
 type ConfiguratorType = "photo" | "360" | "custom";
 
-const packagePrices = {
+export const packagePrices = {
   photo: { 2: 299, 3: 349, 4: 399 },
   "360": { 2: 319, 3: 369, 4: 419 },
 } as const;

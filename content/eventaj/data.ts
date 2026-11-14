@@ -2,6 +2,7 @@ import { EVENTS_DONE, REVIEW_RATING_LABEL } from "./proof";
 export const eventajNav = [
   { label: "Photo Booth", href: "/photo-booth" },
   { label: "360° Booth", href: "/360-photo-booth" },
+  { label: "Fotografiranje", href: "/fotografiranje-dogodkov" },
   {
     label: "QR Galerija",
     href: "/qr-galerija",
@@ -12,70 +13,94 @@ export const eventajNav = [
     href: "/oprema-za-dogodke",
     children: [
       {
-        label: "Igre za dogodke",
-        description: "Paket štirih iger od 149 €",
-        href: "/oprema-za-dogodke/igre-za-dogodke",
-        icon: "games",
-      },
-      {
-        label: "Tabla dobrodošlice",
-        description: "Najem ali izdelava po meri",
-        href: "/oprema-za-dogodke/tabla-dobrodoslice",
-        icon: "sign",
-      },
-      {
-        label: "Številke miz",
-        description: "Akrilne številke s podstavki",
-        href: "/oprema-za-dogodke/stevilke-miz",
-        icon: "numbers",
-      },
-      {
-        label: "Imena za na krožnik",
-        description: "Lesena ali akrilna imena",
-        href: "/oprema-za-dogodke/imena-za-na-kroznik",
-        icon: "names",
-      },
-      {
-        label: "Knjiga gostov v okvirju",
-        description: "Personalizirana, srce ali drevo",
-        href: "/oprema-za-dogodke/knjiga-gostov-v-okvirju",
-        icon: "guest-book",
-      },
-      {
-        label: "Poročni puzzle",
-        description: "Personaliziran, 90 ali 160 koščkov",
-        href: "/oprema-za-dogodke/porocni-puzzle",
-        icon: "puzzle",
+        label: "Stoječe barske mize",
+        description: "12,50 € na mizo za en dan",
+        href: "/oprema-za-dogodke/najem-stojecih-miz",
+        icon: "standing-table",
+        group: "pogostitev",
       },
       {
         label: "Kozarci za šampanjec",
         description: "Komplet 20 kozarcev za 30 €",
         href: "/oprema-za-dogodke/kozarci-za-sampanjec",
         icon: "champagne-glasses",
+        group: "pogostitev",
+      },
+      {
+        label: "Igre za dogodke",
+        description: "Paket štirih iger od 149 €",
+        href: "/oprema-za-dogodke/igre-za-dogodke",
+        icon: "games",
+        group: "zabava",
       },
       {
         label: "Beer pong miza",
         description: "Poročna ali LED izvedba",
         href: "/oprema-za-dogodke/beer-pong-miza",
         icon: "beer-pong",
+        group: "zabava",
+      },
+      {
+        label: "Tabla dobrodošlice",
+        description: "Najem ali izdelava po meri",
+        href: "/oprema-za-dogodke/tabla-dobrodoslice",
+        icon: "sign",
+        group: "poroka",
+      },
+      {
+        label: "Številke miz",
+        description: "Akrilne številke s podstavki",
+        href: "/oprema-za-dogodke/stevilke-miz",
+        icon: "numbers",
+        group: "poroka",
+      },
+      {
+        label: "Imena za na krožnik",
+        description: "Lesena ali akrilna imena",
+        href: "/oprema-za-dogodke/imena-za-na-kroznik",
+        icon: "names",
+        group: "poroka",
+      },
+      {
+        label: "Knjiga gostov v okvirju",
+        description: "Personalizirana, srce ali drevo",
+        href: "/oprema-za-dogodke/knjiga-gostov-v-okvirju",
+        icon: "guest-book",
+        group: "poroka",
+      },
+      {
+        label: "Poročni puzzle",
+        description: "Personaliziran, 90 ali 160 koščkov",
+        href: "/oprema-za-dogodke/porocni-puzzle",
+        icon: "puzzle",
+        group: "poroka",
       },
       {
         label: "Pahljače za goste",
         description: "Obojestranski tisk po meri",
         href: "/oprema-za-dogodke/pahljace-za-goste",
         icon: "fans",
-      },
-      {
-        label: "Stoječe barske mize",
-        description: "10 € na mizo za en dan",
-        href: "/oprema-za-dogodke/najem-stojecih-miz",
-        icon: "standing-table",
+        group: "poroka",
       },
     ],
   },
-  { label: "Cenik", href: "/cenik" },
-  { label: "Nasveti", href: "/nasveti" },
-  { label: "FAQ", href: "/pogosta-vprasanja" },
+] as const;
+
+/** Secondary pages grouped under one header dropdown so the main bar stays short. */
+export const eventajInfoNav = {
+  label: "Informacije",
+  children: [
+    { label: "Cenik", description: "Vse cene in paketi na enem mestu", href: "/cenik" },
+    { label: "Nasveti", description: "Vodiči za poroke in dogodke", href: "/nasveti" },
+    { label: "Pogosta vprašanja", description: "Odgovori pred rezervacijo", href: "/pogosta-vprasanja" },
+  ],
+} as const;
+
+/** Headings for the grouped Oprema menu, in display order. */
+export const equipmentNavGroups = [
+  { id: "pogostitev", label: "Pogostitev" },
+  { id: "zabava", label: "Zabava" },
+  { id: "poroka", label: "Poročni detajli" },
 ] as const;
 
 export const marqueeItems = [
@@ -341,7 +366,14 @@ export const trustedNames = [
   "AutoDelta",
   "Forvis Mazars",
   "Mlada Slovenija",
-  "MIPA Solutions",
+  "KPMG",
+  "Kelag",
+  "Halcom",
+  "Kronoterm",
+  "Vigros",
+  "UM FGPA",
+  "DOBA",
+  "Orbtio",
 ] as const;
 
 export const faqItems = [

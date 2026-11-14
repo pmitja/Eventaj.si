@@ -80,7 +80,7 @@ export default function NasvetiPage() {
           ],
         }}
       />
-      <main>
+      <div>
         <section className="pb-14 pt-32 md:pb-20 md:pt-44">
           <div className={`${shell} max-w-4xl`}>
             <div className="mb-6 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--eventaj-accent)]">
@@ -101,7 +101,7 @@ export default function NasvetiPage() {
             <GuideCards />
           </div>
         </section>
-      </main>
+      </div>
     </>
   );
 }

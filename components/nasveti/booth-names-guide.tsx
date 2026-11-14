@@ -24,7 +24,7 @@ const toc: readonly TocItem[] = [
 
 export function BoothNamesGuide() {
   return (
-    <main>
+    <div>
       <GuideHero
         eyebrow="Razlaga izrazov"
         title="Foto box, photo booth ali foto stojnica: je to isto?"
@@ -123,6 +123,6 @@ export function BoothNamesGuide() {
       />
 
       <RelatedGuides currentSlug={guide.slug} />
-    </main>
+    </div>
   );
 }

@@ -1,4 +1,4 @@
-import { EquipmentProductPage } from "@/components/sections/eventaj/equipment/equipment-product-page";
+import { EquipmentProductRedesign as EquipmentProductPage } from "@/components/sections/eventaj/redesign/equipment-redesign";
 import { equipmentProducts, getEquipmentProduct } from "@/content/eventaj/equipment";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";

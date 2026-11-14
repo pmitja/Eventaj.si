@@ -1,4 +1,4 @@
-import { ServicePageContent } from "@/components/sections/eventaj/service/service-page-content";
+import { PhotoBoothRedesignPage } from "@/components/sections/eventaj/redesign/photo-booth-page";
 import {
   buildFaqPageSchema,
   eventajAggregateRating,
@@ -132,13 +132,7 @@ export default function PhotoBooth() {
         }}
       />
       <JsonLd<FAQPage> item={buildFaqPageSchema()} />
-      <ServicePageContent
-        type="photo"
-        seoTitle={photoBoothPageTitle}
-        h1="Photo booth najem s takojšnjim tiskom"
-        heroTag="Photo Booth"
-        heroDescription="Photo booth, ki mu rečemo tudi foto stojnica, fotobox ali foto kotiček, s takojšnjim tiskom fotografij. Neomejene fotografije, rekviziti in spletna galerija — za poroke, poslovne dogodke in zasebna praznovanja po vsej Sloveniji."
-      />
+      <PhotoBoothRedesignPage />
     </>
   );
 }

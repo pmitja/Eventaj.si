@@ -1,4 +1,4 @@
-import { EquipmentCategoryPage } from "@/components/sections/eventaj/equipment/equipment-category-page";
+import { EquipmentCategoryRedesign as EquipmentCategoryPage } from "@/components/sections/eventaj/redesign/equipment-redesign";
 import { equipmentProducts } from "@/content/eventaj/equipment";
 import type { Metadata } from "next";
 import { JsonLd } from "react-schemaorg";

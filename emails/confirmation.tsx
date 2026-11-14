@@ -91,7 +91,7 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
             )}
             {hours && (
               <Text style={detailItem}>
-                <strong>{type === "equipment" ? "Obdobje najema" : "Število ur"}:</strong> {hours}
+                <strong>{type === "equipment" ? "Obdobje najema" : type === "photographer" ? "Trajanje" : "Število ur"}:</strong> {hours}{type === "photographer" && /^\d+$/.test(hours) ? " h" : ""}
               </Text>
             )}
             {type && (
@@ -103,7 +103,9 @@ export const ConfirmationEmail = ({ formData }: EmailTemplateProps) => {
                     ? "Photo Booth + 360° Photo Booth"
                     : type === "equipment"
                       ? "Oprema za dogodke"
-                      : "Photo Booth"}
+                      : type === "photographer"
+                        ? "Fotografiranje dogodkov"
+                        : "Photo Booth"}
               </Text>
             )}
             {qrGallery && type !== "equipment" && (

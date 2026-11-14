@@ -2,24 +2,18 @@
 
 import { InquiryDialog } from "@/components/inquiry/inquiry-dialog";
 import type { InquiryData } from "@/components/inquiry/inquiry-types";
-import { useScrolled } from "@/hooks/use-scrolled";
+import { RedesignChrome } from "@/components/sections/eventaj/redesign/redesign-chrome";
 import { usePathname } from "next/navigation";
 import { ReactNode, useEffect, useState } from "react";
-import { SiteHeader } from "./header/site-header";
-import { SiteFooter } from "./footer/site-footer";
-import { StickyCTA } from "./sticky-cta";
 
 type SiteShellProps = {
   children: ReactNode;
 };
 
 export default function SiteShell({ children }: SiteShellProps) {
-  const scrolled = useScrolled(60);
-  const [menuOpen, setMenuOpen] = useState(false);
   const [inquiryOpen, setInquiryOpen] = useState(false);
   const [inquiryDefaults, setInquiryDefaults] = useState<Partial<InquiryData>>({});
   const pathname = usePathname();
-  const isQrGallery = pathname.startsWith("/qr-galerija");
   // Admin and the customer's event-details form render without the marketing chrome.
   const isBare = pathname.startsWith("/admin") || pathname.startsWith("/podatki/");
 
@@ -34,38 +28,26 @@ export default function SiteShell({ children }: SiteShellProps) {
   }, []);
 
   useEffect(() => {
-    setMenuOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
-    document.body.style.overflow = menuOpen || inquiryOpen ? "hidden" : "";
+    document.body.style.overflow = inquiryOpen ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
-  }, [menuOpen, inquiryOpen]);
+  }, [inquiryOpen]);
 
   if (isBare) {
     return <div className="eventaj-redesign min-h-screen bg-[var(--eventaj-paper)] text-[var(--eventaj-ink)]">{children}</div>;
   }
 
   return (
-    <div className="eventaj-redesign min-h-screen bg-[var(--eventaj-paper)] text-[var(--eventaj-ink)]">
-      <SiteHeader
-        scrolled={scrolled}
-        menuOpen={menuOpen}
-        onToggleMenu={() => setMenuOpen((value) => !value)}
-        pathname={pathname}
-      />
-
-      {children}
-
-      <SiteFooter showCta={!isQrGallery} />
-      {!isQrGallery && <StickyCTA />}
-      <InquiryDialog
-        open={inquiryOpen}
-        onClose={() => setInquiryOpen(false)}
-        initialData={inquiryDefaults}
-      />
+    <div className="eventaj-redesign min-h-screen">
+      <RedesignChrome>{children}</RedesignChrome>
+      <div className="ev-dialog-tokens">
+        <InquiryDialog
+          open={inquiryOpen}
+          onClose={() => setInquiryOpen(false)}
+          initialData={inquiryDefaults}
+        />
+      </div>
     </div>
   );
 }

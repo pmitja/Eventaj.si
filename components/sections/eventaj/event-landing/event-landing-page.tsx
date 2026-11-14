@@ -2,7 +2,7 @@ import { EventLanding } from "@/content/eventaj/event-pages";
 import { eventajAggregateRating } from "@/content/eventaj/structured-data";
 import { JsonLd } from "react-schemaorg";
 import { BreadcrumbList, FAQPage, Service } from "schema-dts";
-import { EventLandingContent } from "./event-landing-content";
+import { EventLandingRedesign } from "../redesign/event-landing-redesign";
 
 export function EventLandingPage({ landing }: { landing: EventLanding }) {
   const url = `https://www.eventaj.si/${landing.slug}`;
@@ -83,7 +83,7 @@ export function EventLandingPage({ landing }: { landing: EventLanding }) {
           })),
         }}
       />
-      <EventLandingContent landing={landing} />
+      <EventLandingRedesign landing={landing} />
     </>
   );
 }
