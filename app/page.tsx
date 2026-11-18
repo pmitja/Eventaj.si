@@ -20,7 +20,7 @@ export const metadata: Metadata = {
       "Photo Booth in 360° Booth doživetja za poroke, poslovne dogodke in praznovanja po Sloveniji.",
     images: [
       {
-        url: "/og/photo-booth.webp",
+        url: "/og/eventaj-og.jpg",
         width: 1200,
         height: 630,
         alt: "Photo Booth in 360° Booth Eventaj.si",
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     title: "Eventaj.si | Photo Booth in 360° Booth za dogodke",
     description:
       "Photo Booth in 360° Booth doživetja za poroke, poslovne dogodke in praznovanja po Sloveniji.",
-    images: ["/og/photo-booth.webp"],
+    images: ["/og/eventaj-og.jpg"],
   },
   alternates: {
     canonical: "https://www.eventaj.si/",

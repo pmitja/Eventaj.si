@@ -11,7 +11,7 @@ const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "360 booth ali photo booth? Razlike, cene, prostor";
 const description =
   "360 booth naredi kratek video, klasični photo booth tiskano fotografijo. Kaj potrebuje vsak od njiju in kateri se bolj obnese na poroki.";
-const heroImage = "/og/photo-booth.webp";
+const heroImage = "/og/eventaj-og.jpg";
 
 export const metadata: Metadata = {
   // No "| Eventaj.si" suffix: with it these titles run past 60 characters
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1731,
-        height: 909,
+        width: 1200,
+        height: 630,
         alt: "360° Booth in photo booth na dogodku",
       },
     ],

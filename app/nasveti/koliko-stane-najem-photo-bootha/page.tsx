@@ -11,7 +11,7 @@ const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "Koliko stane najem photo bootha v Sloveniji (2027)";
 const description =
   "Cene najema foto boxa se gibljejo od 250 do 500 € za večer. Kaj vpliva na ceno, kaj je običajno vključeno in kje se pojavijo doplačila.";
-const heroImage = "/og/photo-booth.webp";
+const heroImage = "/og/eventaj-og.jpg";
 
 /** Short answers to the six questions, so the FAQ block is ours and verifiable. */
 const faqAnswers = [
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1731,
-        height: 909,
+        width: 1200,
+        height: 630,
         alt: "Photo booth Eventaj na dogodku",
       },
     ],

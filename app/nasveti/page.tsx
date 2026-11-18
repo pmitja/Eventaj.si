@@ -30,9 +30,9 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/og/photo-booth.webp",
-        width: 1731,
-        height: 909,
+        url: "/og/eventaj-og.jpg",
+        width: 1200,
+        height: 630,
         alt: "Nasveti za poroke in dogodke",
       },
     ],
@@ -41,7 +41,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title,
     description,
-    images: ["/og/photo-booth.webp"],
+    images: ["/og/eventaj-og.jpg"],
   },
   robots: { index: true, follow: true },
 };

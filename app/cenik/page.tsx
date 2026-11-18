@@ -23,7 +23,7 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     images: [
       {
-        url: "/og/photo-booth.webp",
+        url: "/og/eventaj-og.jpg",
         width: 1200,
         height: 630,
         alt: "Cenik Photo Bootha, 360° Bootha in QR galerije - Eventaj.si",
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "Paketi za Photo Booth in 360° Booth ter QR galerija za 35 € na dogodek.",
-    images: ["/og/photo-booth.webp"],
+    images: ["/og/eventaj-og.jpg"],
   },
   robots: {
     index: true,

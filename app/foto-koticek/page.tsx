@@ -37,7 +37,7 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     images: [
       {
-        url: "/og/photo-booth.webp",
+        url: "/og/eventaj-og.jpg",
         width: 1200,
         height: 630,
         alt: "Foto kotiček Najem - Eventaj.si",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "Najem foto kotička za poroke in dogodke. Od 299 €/2h. Takojšnji tisk, rekviziti in digitalna galerija.",
-    images: ["/og/photo-booth.webp"],
+    images: ["/og/eventaj-og.jpg"],
   },
   alternates: {
     canonical: "https://www.eventaj.si/foto-koticek",

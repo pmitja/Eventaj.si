@@ -3,7 +3,7 @@ import { Metadata } from "next";
 
 export function buildEventLandingMetadata(landing: EventLanding): Metadata {
   const url = `https://www.eventaj.si/${landing.slug}`;
-  const ogImage = "/og/photo-booth.webp";
+  const ogImage = "/og/eventaj-og.jpg";
   return {
     title: landing.seoTitle,
     description: landing.metaDescription,

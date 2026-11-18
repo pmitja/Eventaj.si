@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     images: [
       {
-        url: "/og/photo-booth.webp",
+        url: "/og/eventaj-og.jpg",
         width: 1200,
         height: 630,
         alt: "Foto Stojnica Najem - Eventaj.si",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "Najem foto stojnice z asistenco in rekviziti po celotni Sloveniji. Rezerviraj termin že danes.",
-    images: ["/og/photo-booth.webp"],
+    images: ["/og/eventaj-og.jpg"],
   },
   alternates: {
     canonical: "https://www.eventaj.si/foto-stojnica",

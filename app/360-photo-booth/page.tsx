@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     siteName: "Eventaj.si",
     images: [
       {
-        url: "/og/photo-booth.webp",
+        url: "/og/eventaj-og.jpg",
         width: 1200,
         height: 630,
         alt: "360° Booth Najem - Eventaj.si",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
     title: pageTitle,
     description:
       "360° Booth za slow-motion posnetke, QR deljenje in nepozabno dogajanje.",
-    images: ["/og/photo-booth.webp"],
+    images: ["/og/eventaj-og.jpg"],
   },
   alternates: {
     canonical: "https://www.eventaj.si/360-photo-booth",

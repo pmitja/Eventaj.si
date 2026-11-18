@@ -10,7 +10,7 @@ const url = `https://www.eventaj.si/nasveti/${guide.slug}`;
 const title = "Foto box, photo booth ali foto stojnica: je to isto?";
 const description =
   "V Sloveniji se za isto stvar uporablja pet imen. Kaj katero pomeni, kje se res razlikujejo in kaj naj iščete, ko rezervirate.";
-const heroImage = "/og/photo-booth.webp";
+const heroImage = "/og/eventaj-og.jpg";
 
 export const metadata: Metadata = {
   // No "| Eventaj.si" suffix: with it these titles run past 60 characters
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: heroImage,
-        width: 1731,
-        height: 909,
+        width: 1200,
+        height: 630,
         alt: "Foto box oziroma photo booth na dogodku",
       },
     ],

@@ -30,6 +30,14 @@ export const metadata: Metadata = {
       "Najem Photo Booth in 360° Booth z asistenco, rekviziti in takojšnjim tiskom po vsej Sloveniji.",
     siteName: "Eventaj.si",
     url: "https://www.eventaj.si",
+    images: [
+      {
+        url: "/og/eventaj-og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "Eventaj.si - Photo Booth & 360° Booth po Sloveniji",
+      },
+    ],
     locale: "sl_SI",
     type: "website",
   },
@@ -38,6 +46,7 @@ export const metadata: Metadata = {
     title: "Eventaj.si | Photo Booth & 360° Booth po Sloveniji",
     description:
       "Photo Booth in 360° Booth najem z asistenco in rekviziti po Sloveniji.",
+    images: ["/og/eventaj-og.jpg"],
   },
   verification: {
     google: "v9KCsI_ie0FgHL5ow8zD3M_gjvPEXc",
