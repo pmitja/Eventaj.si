@@ -13,9 +13,22 @@ const sum = <T>(rows: T[], pick: (row: T) => number | null | undefined) => rows.
 const same = (a: string | null | undefined, b: string) => (a ?? "").toLowerCase() === b.toLowerCase();
 const blank = (value: string | null | undefined) => value === null || value === undefined || value === "";
 
-// Dogodki!H / 'Najem miz'!H  =IF(B="","",SUM(F:G))
-export function rowTotal(row: { date: string | null; transfer: number | null; cash: number | null }) {
-  return blank(row.date) ? null : num(row.transfer) + num(row.cash);
+// A Dogodki / Najem miz row. `paid` is missing in previews (form summary); missing means paid.
+type MoneyRow = { date: string | null; transfer: number | null; cash: number | null; paid?: boolean };
+
+// Not paid yet: the amounts stay on the row but count nowhere (revenue, fund, charts) until it is.
+export const isPaid = (row: Pick<MoneyRow, "paid">) => row.paid !== false;
+export const paidTransfer = (row: MoneyRow) => (isPaid(row) ? num(row.transfer) : 0);
+export const paidCash = (row: MoneyRow) => (isPaid(row) ? num(row.cash) : 0);
+
+// Dogodki!H / 'Najem miz'!H  =IF(B="","",SUM(F:G)), but 0 while the row is not paid.
+export function rowTotal(row: MoneyRow) {
+  return blank(row.date) ? null : paidTransfer(row) + paidCash(row);
+}
+
+// Neplačano €: what the client still owes on a dated, unpaid row.
+export function unpaidAmount(row: MoneyRow) {
+  return blank(row.date) || isPaid(row) ? null : num(row.transfer) + num(row.cash);
 }
 
 // Dogodki!I / 'Najem miz'!I
@@ -128,9 +141,12 @@ export function computeOverview(data: LedgerYear) {
   // C4 / B22  =SUM(Dogodki!H)+SUM('Najem miz'!H)
   const revenue = sum(events, rowTotal) + sum(tables, rowTotal);
   // E4 / C7 / B23 / E23  =SUM(Dogodki!F)+SUM('Najem miz'!F)
-  const transfers = sum(events, (e) => e.transfer) + sum(tables, (t) => t.transfer);
+  const transfers = sum(events, paidTransfer) + sum(tables, paidTransfer);
   // G4 / B24  =SUM(Dogodki!G)+SUM('Najem miz'!G)
-  const cash = sum(events, (e) => e.cash) + sum(tables, (t) => t.cash);
+  const cash = sum(events, paidCash) + sum(tables, paidCash);
+  // Not in the spreadsheet: money from rows marked unpaid, kept out of everything above.
+  const unpaidRows = [...events, ...tables].filter((row) => unpaidAmount(row) !== null);
+  const unpaid = sum(unpaidRows, unpaidAmount);
   // A7 / B25  =SUM('Stroški'!D)
   const allCosts = sum(costs, (c) => c.amount);
   // E24  =SUMIF('Stroški'!E,"Skupni fond",'Stroški'!D)
@@ -167,6 +183,8 @@ export function computeOverview(data: LedgerYear) {
     revenue,
     transfers,
     cash,
+    unpaid,
+    unpaidCount: unpaidRows.length,
     allCosts,
     // B26  =B22-B25
     profit: revenue - allCosts,
@@ -201,6 +219,19 @@ export function formatNumber(value: number, decimals = 2) {
 // Counts, hours and km: no trailing decimals for whole numbers.
 export function formatPlain(value: number) {
   return formatNumber(value, Number.isInteger(value) ? 0 : 1);
+}
+
+// Hours with as many decimals as they need, up to two: 6 → "6", 6,5 → "6,5", 6:40 → "6,67".
+export function formatHours(value: number) {
+  const rounded = roundTo(value, 2);
+  return formatNumber(rounded, Number.isInteger(rounded) ? 0 : Number.isInteger(rounded * 10) ? 1 : 2);
+}
+
+// "6:40" means 6 hours 40 minutes → 6,67 h (two decimals, like the DB column). Null for anything else.
+export function parseClockHours(text: string) {
+  const match = /^(\d{1,3}):([0-5]\d)$/.exec(text.trim());
+  if (!match) return null;
+  return roundTo(Number(match[1]) + Number(match[2]) / 60, 2);
 }
 
 export function formatEur(value: number) {

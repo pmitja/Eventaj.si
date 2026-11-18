@@ -2,22 +2,22 @@
 
 import { useState } from "react";
 import { toast } from "sonner";
-import { ColumnBars, Donut, monthOf, MONTHS, PALETTE } from "@/app/admin/_components/charts";
+import { ColumnBars, Donut, monthOf, MONTHS, PALETTE, plural } from "@/app/admin/_components/charts";
 import { FormDialog, type FieldSpec } from "@/app/admin/_components/form-dialog";
 import { KpiCard } from "@/app/admin/_components/kpi-card";
 import { Panel } from "@/app/admin/_components/panel";
-import { formatEur, paymentMethod, rowTotal } from "@/lib/ledger/compute";
+import { formatEur, isPaid, paymentMethod, rowTotal, unpaidAmount } from "@/lib/ledger/compute";
 import type { LedgerLists } from "@/lib/ledger/lists";
 import type { EventRow } from "@/lib/ledger/schema";
 import { updateRowStudents } from "../actions";
 import { EventStudentsCell } from "./event-students-cell";
 import { FilterChips, LedgerGrid, type GridColumn, type GridRow } from "./ledger-grid";
-import { ChartRow, nextCode, parseAmount, SheetHint, Strip, useLedgerRows, WorkspaceHeader } from "./workspace";
+import { ChartRow, nextCode, parseAmount, SheetHint, Strip, UnpaidAlert, useLedgerRows, WorkspaceHeader } from "./workspace";
 
 type Row = EventRow & GridRow;
 
 const NO_ALBUM = "Brez albuma";
-const FILTERS = ["Vsi", "Nakazilo", "Gotovina", "Nakazilo + gotovina"] as const;
+const FILTERS = ["Vsi", "Nakazilo", "Gotovina", "Nakazilo + gotovina", "Neplačano"] as const;
 
 type Props = { year: number; rows: EventRow[]; lists: LedgerLists; albums: string[]; studentsByEvent: Record<number, string[]> };
 
@@ -28,7 +28,10 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
   const [filter, setFilter] = useState<(typeof FILTERS)[number]>("Vsi");
 
   const dated = rows.filter((e) => e.date);
-  const revenue = dated.reduce((s, e) => s + (rowTotal(e) ?? 0), 0);
+  const paidRows = dated.filter(isPaid);
+  const revenue = paidRows.reduce((s, e) => s + (rowTotal(e) ?? 0), 0);
+  const unpaidRows = dated.filter((e) => !isPaid(e));
+  const unpaid = unpaidRows.reduce((s, e) => s + (unpaidAmount(e) ?? 0), 0);
   const perMonth = MONTHS.map((label, i) => ({ label, value: dated.filter((e) => monthOf(e.date) === i).length }));
   const albumCounts = new Map<string, number>();
   for (const e of dated) {
@@ -41,7 +44,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     .map(([label, value]) => ({ label, value, display: String(value), color: label === NO_ALBUM ? PALETTE[5] : PALETTE[colorIndex++ % 5] }));
 
   const columns: GridColumn<Row>[] = [
-    { key: "code", label: "ID", type: "text", width: 100 },
+    { key: "code", label: "ID", type: "text", width: 100, sort: true },
     { key: "date", label: "Datum", type: "date", width: 150 },
     { key: "client", label: "Naročnik", type: "text", width: 230 },
     { key: "contact", label: "Kontakt", type: "text", width: 220, hint: "Kje smo se dogovarjali: e-naslov, Instagram, telefon …" },
@@ -51,7 +54,9 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     { key: "hours", label: "Ure", type: "number", width: 64 },
     { key: "transfer", label: "Nakazilo €", type: "money", width: 110 },
     { key: "cash", label: "Gotovina €", type: "money", width: 110 },
+    { key: "paid", label: "Plačano?", type: "bool", alertOff: true, width: 92, hint: "NE = naročnik še ni plačal; znesek se ne šteje v prihodke in fond, dokler ne preklopite na DA" },
     { key: "total", label: "Skupaj €", type: "computed", numeric: true, strong: true, width: 104, value: rowTotal },
+    { key: "unpaid", label: "Neplačano €", type: "computed", numeric: true, width: 116, value: unpaidAmount, tone: (row) => (unpaidAmount(row) !== null ? "alert" : null) },
     { key: "method", label: "Način plačila", type: "computed", width: 180, value: paymentMethod, tone: () => "n" },
     { key: "service", label: "Storitev", type: "select", options: lists.services, width: 140 },
     { key: "albumUsed", label: "Album?", type: "bool", width: 84 },
@@ -93,6 +98,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
     { key: "service", label: "Storitev", kind: "select", options: lists.services, wide: true, initial: lists.services[0] ?? "" },
     { key: "transfer", label: "Nakazilo €", kind: "money", placeholder: "0,00" },
     { key: "cash", label: "Gotovina €", kind: "money", placeholder: "0,00" },
+    { key: "paid", label: "Plačano", kind: "seg", options: ["DA", "NE"], wide: true },
     { key: "album", label: "Album", kind: "select", options: [NO_ALBUM, ...albums], initial: NO_ALBUM },
     { key: "cartridgeChanged", label: "Kartuša", kind: "seg", options: ["NE", "DA"] },
     { key: "execution", label: "Izvedba dogodka", kind: "select", options: lists.executions, required: true },
@@ -117,10 +123,17 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
 
       <Strip>
         <KpiCard size="md" label="Dogodki" value={dated.length} format="int" />
-        <KpiCard size="md" label="Povprečno na dogodek" value={dated.length ? revenue / dated.length : 0} format="eur" />
+        <KpiCard size="md" label="Povprečno na plačan dogodek" value={paidRows.length ? revenue / paidRows.length : 0} format="eur" />
         <KpiCard size="md" label="Ure skupaj" value={dated.reduce((s, e) => s + (e.hours ?? 0), 0)} />
         <KpiCard size="md" label="Km skupaj" value={dated.reduce((s, e) => s + (e.km ?? 0), 0)} format="km" />
       </Strip>
+
+      <UnpaidAlert
+        amount={unpaid}
+        what={unpaidRows.length ? plural(unpaidRows.length, "dogodek", "dogodka", "dogodki", "dogodkov") : null}
+        active={filter === "Neplačano"}
+        onShow={() => setFilter(filter === "Neplačano" ? "Vsi" : "Neplačano")}
+      />
 
       <ChartRow>
         <Panel title="Dogodki po mesecih" note="število dogodkov" className="flex-[3_1_520px]">
@@ -139,7 +152,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
         addLabel="Dodaj dogodek"
         onAdd={() => setAdding(true)}
         highlight={highlight}
-        visible={filter === "Vsi" ? undefined : (row) => paymentMethod(row) === filter}
+        visible={filter === "Vsi" ? undefined : filter === "Neplačano" ? (row) => !isPaid(row) : (row) => paymentMethod(row) === filter}
         toolbar={<FilterChips options={[...FILTERS]} value={filter} onChange={setFilter} />}
       />
 
@@ -147,6 +160,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
         <p className="m-0">Izvedba dogodka = kdo je izvedel celoten dogodek.</p>
         <p className="m-0">Začetna pomoč = kdo je prišel samo na začetno pomoč/postavitev.</p>
         <p className="m-0">Če študenti vse izvedejo sami: Izvedba = Študenti, Začetna pomoč = Brez.</p>
+        <p className="m-0">Plačano? = NE: znesek ostane vpisan, a se ne šteje v Skupaj, prihodke in fond – pokaže se v stolpcu Neplačano €. Ko naročnik plača, preklopite na DA.</p>
         <p className="m-0">Skupaj in način plačila se izračunata samo, ko je vnesen datum. Albumi za izbiro so artikli tipa Album na listu Zaloga.</p>
       </SheetHint>
 
@@ -161,7 +175,7 @@ export function EventsWorkspace({ year, rows: initial, lists, albums, studentsBy
           const cash = parseAmount(v.cash);
           const stock = [v.album && v.album !== NO_ALBUM ? `1 × ${v.album.toLowerCase()}` : null, v.cartridgeChanged === "DA" ? "1 × kartuša" : null].filter(Boolean);
           return [
-            ["Skupaj", formatEur(transfer + cash)],
+            [v.paid === "NE" ? "Neplačano" : "Skupaj", formatEur(transfer + cash)],
             ["Način plačila", paymentMethod({ date: "x", transfer, cash }) ?? "—"],
             ["Iz zaloge", stock.join(", ") || "—"],
           ];

@@ -8,27 +8,38 @@ import { KpiCard } from "@/app/admin/_components/kpi-card";
 import { ease, Stagger, useAppear } from "@/app/admin/_components/motion";
 import { Eyebrow, LegendDot, Panel } from "@/app/admin/_components/panel";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
-import { computeOverview, DUO, formatEur, formatNumber, formatPlain } from "@/lib/ledger/compute";
+import { computeOverview, DUO, formatEur, formatNumber, formatPlain, paidCash, paidTransfer, rowTotal, unpaidAmount } from "@/lib/ledger/compute";
 import type { LedgerYear } from "@/lib/ledger/schema";
 import { cn } from "@/lib/utils";
 import { updateFundOpening } from "../actions";
 import { StockStatus } from "./stock-status";
+import { UnpaidAlert } from "./workspace";
 import { YearAmountInput } from "./year-amount-input";
 
 const [C0, C1, C2, C3, , C5] = PALETTE;
 
-export function OverviewDashboard({ ledger }: { ledger: LedgerYear }) {
+export function OverviewDashboard({ ledger, services, equipment }: { ledger: LedgerYear; services: string[]; equipment: string[] }) {
   const o = computeOverview(ledger);
   const dated = <T extends { date: string | null }>(rows: T[]) => rows.filter((r) => r.date);
   const events = dated(ledger.events);
   const rentals = dated(ledger.tables);
+  const unpaidEvents = events.filter((e) => unpaidAmount(e) !== null).length;
+  const unpaidRentals = rentals.filter((t) => unpaidAmount(t) !== null).length;
+  const unpaidWhat =
+    [
+      unpaidEvents ? plural(unpaidEvents, "dogodek", "dogodka", "dogodki", "dogodkov") : null,
+      unpaidRentals ? plural(unpaidRentals, "najem", "najema", "najemi", "najemov") : null,
+    ]
+      .filter(Boolean)
+      .join(" + ") || null;
   const pct = (part: number, whole: number) => (whole ? (part / whole) * 100 : 0);
+  const byService = serviceTotals(events, rentals, services, equipment);
 
   const months = MONTHS.map((label, i) => {
     const es = events.filter((e) => monthOf(e.date) === i);
     const ts = rentals.filter((t) => monthOf(t.date) === i);
-    const transfer = es.reduce((s, e) => s + (e.transfer ?? 0), 0) + ts.reduce((s, t) => s + (t.transfer ?? 0), 0);
-    const cash = es.reduce((s, e) => s + (e.cash ?? 0), 0) + ts.reduce((s, t) => s + (t.cash ?? 0), 0);
+    const transfer = es.reduce((s, e) => s + paidTransfer(e), 0) + ts.reduce((s, t) => s + paidTransfer(t), 0);
+    const cash = es.reduce((s, e) => s + paidCash(e), 0) + ts.reduce((s, t) => s + paidCash(t), 0);
     return { label, transfer, cash, count: es.length };
   });
 
@@ -73,6 +84,8 @@ export function OverviewDashboard({ ledger }: { ledger: LedgerYear }) {
         <KpiCard label="Denar trenutno v fondu" value={o.fundNow} format="eur" sub={`Po vseh povračilih ${formatEur(o.fundAfterRefunds)}`} />
       </Stagger>
 
+      <UnpaidAlert amount={o.unpaid} what={unpaidWhat} />
+
       <Row>
         <MonthRevenue months={months} revenue={o.revenue} className="flex-[2_1_560px]" />
         <Panel title="Način plačila" className="flex-[1_1_340px]">
@@ -86,6 +99,8 @@ export function OverviewDashboard({ ledger }: { ledger: LedgerYear }) {
           />
         </Panel>
       </Row>
+
+      <ServicesPanel groups={byService} />
 
       <Row>
         <Panel title="Stroški po kategorijah" note={`${plural(ledger.costs.length, "vnos", "vnosa", "vnosi", "vnosov")} · ${formatEur(o.allCosts)}`} className="flex-[1_1_480px]">
@@ -145,6 +160,95 @@ export function OverviewDashboard({ ledger }: { ledger: LedgerYear }) {
       <HowToRead />
     </div>
   );
+}
+
+type ServiceTotal = { name: string; revenue: number; count: number };
+type ServiceGroup = { title: string; totals: ServiceTotal[] };
+type Money = Parameters<typeof rowTotal>[0];
+
+// Revenue and bookings split into Dogodki (booths, QR galerija, fotografiranje …) and Oprema (the Oprema
+// sheet, by Artikel; rows without one are standing tables). A Dogodki row whose Storitev is "Mize" or an
+// equipment item counts under Oprema. Items without a sale this year are kept (count 0) so the whole
+// offer stays visible; a Storitev typed outside the list still gets its own line.
+function serviceTotals(events: (Money & { service: string | null })[], rentals: (Money & { item: string | null })[], services: string[], equipment: string[]) {
+  const key = (name: string) => name.trim().toLowerCase();
+  const tablesName = equipment.find((name) => /stoječ/i.test(name)) ?? "Stoječe mize";
+  const equipmentKeys = new Set([...equipment.map(key), "mize"]);
+  const start = (names: string[]) => new Map(names.map((name) => [key(name), { name, revenue: 0, count: 0 }]));
+  const booked = start(services.filter((name) => !equipmentKeys.has(key(name))));
+  const gear = start(equipment);
+  const add = (totals: Map<string, ServiceTotal>, name: string, row: Money) => {
+    const entry = totals.get(key(name)) ?? { name, revenue: 0, count: 0 };
+    entry.revenue += rowTotal(row) ?? 0;
+    entry.count += 1;
+    totals.set(key(name), entry);
+  };
+  for (const e of events) {
+    const name = e.service?.trim() || "Storitev ni vpisana";
+    if (key(name) === "mize") add(gear, tablesName, e);
+    else if (equipmentKeys.has(key(name))) add(gear, name, e);
+    else add(booked, name, e);
+  }
+  for (const t of rentals) add(gear, t.item?.trim() || tablesName, t);
+  const sorted = (totals: Map<string, ServiceTotal>) => [...totals.values()].sort((a, b) => b.revenue - a.revenue || b.count - a.count);
+  return [
+    { title: "Dogodki", totals: sorted(booked) },
+    { title: "Oprema", totals: sorted(gear) },
+  ] satisfies ServiceGroup[];
+}
+
+function ServicesPanel({ groups }: { groups: ServiceGroup[] }) {
+  const all = groups.flatMap((g) => g.totals);
+  const revenue = all.reduce((sum, s) => sum + s.revenue, 0);
+
+  return (
+    <Panel title="Prihodki po storitvah" note={`${plural(all.reduce((sum, s) => sum + s.count, 0), "posel", "posla", "posli", "poslov")} · ${formatEur(revenue)}`}>
+      <div className="flex flex-col gap-6">
+        {groups.map((group, g) => {
+          const sold = group.totals.filter((s) => s.count > 0);
+          const unsold = group.totals.filter((s) => s.count === 0);
+          const subtotal = sold.reduce((sum, s) => sum + s.revenue, 0);
+          return (
+            <div key={group.title} className={cn("flex flex-col gap-3.5", g > 0 && "border-t border-adm-rule pt-5")}>
+              <div className="flex flex-wrap items-baseline justify-between gap-3">
+                <span className="text-base font-semibold">{group.title}</span>
+                <span className="text-[13px] text-adm-muted tabular">
+                  {formatEur(subtotal)} · {formatNumber(pct(subtotal, revenue), 0)} % prihodkov
+                </span>
+              </div>
+              {sold.length > 0 && (
+                <HBars
+                  labelWidth="minmax(120px,220px)"
+                  valueWidth="minmax(84px,auto)"
+                  max={Math.max(...all.map((s) => s.revenue), 0)}
+                  rows={sold.map((s, i) => ({
+                    label: s.name,
+                    value: s.revenue,
+                    color: PALETTE[(g * 2 + i) % 5],
+                    display: formatEur(s.revenue),
+                    extra: (
+                      <span className="w-[92px] text-right text-[13px] text-adm-muted tabular">
+                        {s.count}× · {formatNumber(pct(s.revenue, revenue), 0)} %
+                      </span>
+                    ),
+                  }))}
+                />
+              )}
+              {unsold.length > 0 && (
+                <p className="m-0 text-[13px] leading-relaxed text-adm-muted [text-wrap:pretty]">
+                  Letos še brez prodaje: {unsold.map((s) => s.name).join(", ")}
+                </p>
+              )}
+            </div>
+          );
+        })}
+      </div>
+    </Panel>
+  );
+}
+
+function pct(part: number, whole: number) {
+  return whole ? (part / whole) * 100 : 0;
 }
 
 function Row({ children }: { children: React.ReactNode }) {
@@ -378,9 +482,9 @@ function HowToRead() {
           </ul>
           <strong>Skupni fond</strong>
           <ul className="m-0 list-disc pl-5">
-            <li>Denar trenutno v fondu = začetno stanje + vsa nakazila (Dogodki + Najem miz) − stroški iz fonda − že izvedena povračila.</li>
+            <li>Denar trenutno v fondu = začetno stanje + vsa nakazila (Dogodki + Oprema) − stroški iz fonda − že izvedena povračila.</li>
             <li>Začetno stanje fonda lahko popravite neposredno v vrstici »Začetno stanje fonda«.</li>
-            <li>Prevozi miz se NE vštevajo v glavni Jan/Mitja pregled izvedb; njihov ločen pregled je na listu Najem miz.</li>
+            <li>Prevozi miz se NE vštevajo v glavni Jan/Mitja pregled izvedb; njihov ločen pregled je na listu Oprema.</li>
           </ul>
         </div>
       </CollapsibleContent>

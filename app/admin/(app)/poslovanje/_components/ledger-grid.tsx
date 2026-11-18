@@ -1,7 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, ChevronDown, LoaderCircle, Plus, Trash2 } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Check, ChevronDown, LoaderCircle, Plus, Trash2 } from "lucide-react";
 import { useState, useTransition, type Dispatch, type ReactNode, type SetStateAction } from "react";
 import { toast } from "sonner";
 import { DropdownMenu, DropdownMenuContent, DropdownMenuRadioGroup, DropdownMenuRadioItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
@@ -16,17 +16,24 @@ type Value = string | number | boolean | null;
 export type GridRow = { id: number } & Record<string, Value>;
 
 type Option = string | { value: string; label: string };
-export type Tone = "ok" | "no" | "n";
+export type Tone = "ok" | "no" | "n" | "alert";
+
+type SortValue = string | number | null | undefined;
+type SortDir = "asc" | "desc";
 
 export type GridColumn<R extends GridRow> = {
   key: string;
   label: string;
   width?: number;
   hint?: string;
+  // Makes the header clickable (asc → desc → off). Date columns sort by default; `true` sorts by
+  // the raw row value, a function supplies the value for computed/select columns.
+  sort?: true | ((row: R) => SortValue);
 } & (
   | { type: "text" | "number" | "money" | "date" }
   | { type: "select"; options: Option[] }
-  | { type: "bool" }
+  // alertOff: NE is a warning (e.g. Plačano? = NE), shown in red instead of greyed out.
+  | { type: "bool"; alertOff?: boolean }
   | { type: "computed"; value: (row: R) => ReactNode; numeric?: boolean; tone?: (row: R) => Tone | null; strong?: boolean }
 );
 
@@ -46,6 +53,7 @@ const toneClass: Record<Tone, string> = {
   ok: "bg-adm-ok text-adm-ok-fg",
   no: "bg-adm-no text-adm-no-fg",
   n: "bg-adm-sand text-adm-ink",
+  alert: "bg-red-600 text-white",
 };
 
 const cellInput =
@@ -68,7 +76,14 @@ export function LedgerGrid<R extends GridRow>({ table, rows, setRows, columns, a
   const [error, setError] = useState<string | null>(null);
   const [pending, startTransition] = useTransition();
   const [saving, setSaving] = useState(0);
-  const shown = visible ? rows.filter(visible) : rows;
+  const [sort, setSort] = useState<{ key: string; dir: SortDir } | null>(null);
+  const filtered = visible ? rows.filter(visible) : rows;
+  const sortColumn = sort ? columns.find((c) => c.key === sort.key) : undefined;
+  const sortBy = sortColumn ? sortValueOf(sortColumn) : null;
+  const shown = sort && sortBy ? sortRows(filtered, sortBy, sort.dir) : filtered;
+
+  const toggleSort = (key: string) =>
+    setSort((current) => (current?.key !== key ? { key, dir: "asc" } : current.dir === "asc" ? { key, dir: "desc" } : null));
 
   // Numbers and dates are only applied once the server has parsed them, so computed columns
   // never see raw input like "12,5".
@@ -126,20 +141,46 @@ export function LedgerGrid<R extends GridRow>({ table, rows, setRows, columns, a
         <Table containerClassName="max-h-[70vh] overscroll-x-contain" className="w-max min-w-full border-collapse tabular">
           <TableHeader className="sticky top-0 z-20 bg-adm-sand [&_tr]:border-b-adm-ink">
             <TableRow className="hover:bg-transparent">
-              {columns.map((column, index) => (
-                <TableHead
-                  key={column.key}
-                  title={column.hint ?? column.label}
-                  style={{ width: column.width, minWidth: column.width }}
-                  className={cn(
-                    "h-11 whitespace-nowrap px-2.5 text-[11px] font-semibold uppercase tracking-[.06em] text-adm-sub sm:px-3.5",
-                    index === 0 && "z-10 bg-adm-sand md:sticky md:left-0",
-                    isNumeric(column) && "text-right",
-                  )}
-                >
-                  {column.label}
-                </TableHead>
-              ))}
+              {columns.map((column, index) => {
+                const sortable = sortValueOf(column) !== null;
+                const dir = sort?.key === column.key ? sort.dir : null;
+                return (
+                  <TableHead
+                    key={column.key}
+                    title={column.hint ?? column.label}
+                    aria-sort={dir === "asc" ? "ascending" : dir === "desc" ? "descending" : undefined}
+                    style={{ width: column.width, minWidth: column.width }}
+                    className={cn(
+                      "h-11 whitespace-nowrap px-2.5 text-[11px] font-semibold uppercase tracking-[.06em] text-adm-sub sm:px-3.5",
+                      index === 0 && "z-10 bg-adm-sand md:sticky md:left-0",
+                      isNumeric(column) && "text-right",
+                    )}
+                  >
+                    {sortable ? (
+                      <button
+                        type="button"
+                        onClick={() => toggleSort(column.key)}
+                        title={dir === "asc" ? "Razvrščeno naraščajoče – klik za padajoče" : dir === "desc" ? "Razvrščeno padajoče – klik za izklop" : "Razvrsti naraščajoče"}
+                        className={cn(
+                          "-mx-1 inline-flex items-center gap-1 rounded px-1 py-0.5 uppercase tracking-[inherit] transition-colors hover:text-adm-ink",
+                          dir && "text-adm-ink",
+                        )}
+                      >
+                        {column.label}
+                        {dir === "asc" ? (
+                          <ArrowUp className="size-3.5" />
+                        ) : dir === "desc" ? (
+                          <ArrowDown className="size-3.5" />
+                        ) : (
+                          <ArrowUpDown className="size-3.5 opacity-40" />
+                        )}
+                      </button>
+                    ) : (
+                      column.label
+                    )}
+                  </TableHead>
+                );
+              })}
               <TableHead className="w-10" />
             </TableRow>
           </TableHeader>
@@ -201,6 +242,30 @@ export function LedgerGrid<R extends GridRow>({ table, rows, setRows, columns, a
   );
 }
 
+function sortValueOf<R extends GridRow>(column: GridColumn<R>): ((row: R) => SortValue) | null {
+  if (typeof column.sort === "function") return column.sort;
+  if (column.sort || column.type === "date") return (row) => row[column.key] as SortValue;
+  return null;
+}
+
+// Empty values always go last; codes like "D-9" / "D-10" compare numerically.
+function sortRows<R extends GridRow>(rows: R[], value: (row: R) => SortValue, dir: SortDir) {
+  const sign = dir === "asc" ? 1 : -1;
+  return rows
+    .map((row, index) => ({ row, index, v: value(row) }))
+    .sort((a, b) => {
+      const ae = a.v === null || a.v === undefined || a.v === "";
+      const be = b.v === null || b.v === undefined || b.v === "";
+      if (ae || be) return ae === be ? a.index - b.index : ae ? 1 : -1;
+      const diff =
+        typeof a.v === "number" && typeof b.v === "number"
+          ? a.v - b.v
+          : String(a.v).localeCompare(String(b.v), "sl", { numeric: true, sensitivity: "base" });
+      return diff * sign || a.index - b.index;
+    })
+    .map((entry) => entry.row);
+}
+
 const isNumeric = <R extends GridRow>(column: GridColumn<R>) =>
   column.type === "money" || column.type === "number" || (column.type === "computed" && Boolean(column.numeric));
 
@@ -237,7 +302,12 @@ function Cell<R extends GridRow>({ column, row, onSave }: { column: GridColumn<R
           whileTap={{ scale: 0.9 }}
           onClick={() => onSave(!on)}
           aria-pressed={on}
-          className={cn("min-w-[42px] rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", on ? toneClass.ok : "bg-transparent text-adm-faint ring-1 ring-inset ring-adm-line hover:ring-adm-soft")}
+          className={cn("min-w-[42px] rounded-full px-2.5 py-0.5 text-xs font-semibold transition-colors", on
+              ? toneClass.ok
+              : column.alertOff
+                ? toneClass.alert
+                : "bg-transparent text-adm-faint ring-1 ring-inset ring-adm-line hover:ring-adm-soft",
+          )}
         >
           {on ? "DA" : "NE"}
         </motion.button>

@@ -28,9 +28,14 @@ export type StudentShift = {
   // Null until the amount is entered in Poslovanje → Študenti.
   amount: number | null;
   paid: boolean;
+  // What the student logged after the event: hours worked and km driven.
+  workedHours: number | null;
+  km: number | null;
 };
 
-type EventRow = {
+export type Report = { workedHours: number | null; km: number | null };
+
+type EventRow = Report & {
   id: number;
   date: string;
   client: string | null;
@@ -50,7 +55,7 @@ type EventRow = {
   others: string[];
 };
 
-type RentalRow = {
+type RentalRow = Report & {
   id: number;
   date: string;
   client: string | null;
@@ -92,9 +97,11 @@ function crewOf(execution: string | null, students: string[], name: string) {
 }
 
 // A student can have more than one Študenti row for the same event (e.g. a bonus): add them up.
-function addPay(shift: StudentShift, amount: number | null, paid: boolean) {
+function addPay(shift: StudentShift, amount: number | null, paid: boolean, report: Report) {
   if (amount !== null) shift.amount = (shift.amount ?? 0) + amount;
   shift.paid = shift.paid && paid;
+  if (report.workedHours !== null) shift.workedHours = (shift.workedHours ?? 0) + report.workedHours;
+  if (report.km !== null) shift.km = (shift.km ?? 0) + report.km;
 }
 
 function fromEvent(row: EventRow, name: string): StudentShift {
@@ -118,6 +125,8 @@ function fromEvent(row: EventRow, name: string): StudentShift {
     crew: crewOf(row.execution, row.others, name),
     amount: row.amount,
     paid: row.paid,
+    workedHours: row.workedHours,
+    km: row.km,
   };
 }
 
@@ -151,6 +160,8 @@ function fromRental(row: RentalRow, name: string): StudentShift {
     crew: [...new Set([...drivers, ...row.others])],
     amount: row.amount,
     paid: row.paid ?? true,
+    workedHours: row.workedHours,
+    km: row.km,
   };
 }
 
@@ -176,6 +187,8 @@ function fromInquiry(row: InquiryRow, date: string, name: string): StudentShift 
     crew: crewOf(row.crew, row.crewStudents, name),
     amount: null,
     paid: false,
+    workedHours: null,
+    km: null,
   };
 }
 
@@ -187,6 +200,7 @@ export async function getStudentSchedule(student: string): Promise<StudentShift[
         e.start_time AS "startTime", e.location,
         e.album_used AS "albumUsed", e.album, e.notes, e.execution, e.inquiry_id AS "inquiryId",
         i.form_data AS form, d.data AS details, s.amount::float8 AS amount, s.paid,
+        s.worked_hours::float8 AS "workedHours", s.km::float8 AS km,
         ARRAY(SELECT o.student FROM ledger_students o WHERE o.event_id = e.id AND o.student IS NOT NULL ORDER BY o.id) AS others
       FROM ledger_students s
       JOIN ledger_events e ON e.id = s.event_id
@@ -198,6 +212,7 @@ export async function getStudentSchedule(student: string): Promise<StudentShift[
       SELECT t.id, to_char(t.date, 'YYYY-MM-DD') AS date, t.client, t.location, t.table_count::float8 AS "tableCount",
         t.delivered_by AS "deliveredBy", t.picked_by AS "pickedBy", t.notes, t.inquiry_id AS "inquiryId",
         i.form_data AS form, s.amount::float8 AS amount, s.paid,
+        s.worked_hours::float8 AS "workedHours", s.km::float8 AS km,
         ARRAY(SELECT o.student FROM ledger_students o
           WHERE o.rental_id = t.id AND o.student IS NOT NULL AND lower(trim(o.student)) <> ${name} ORDER BY o.id) AS others
       FROM ledger_table_rentals t
@@ -222,13 +237,13 @@ export async function getStudentSchedule(student: string): Promise<StudentShift[
   const covered = new Set<number>();
   for (const row of events) {
     const existing = shifts.get(`e${row.id}`);
-    if (existing) addPay(existing, row.amount, row.paid);
+    if (existing) addPay(existing, row.amount, row.paid, row);
     else shifts.set(`e${row.id}`, fromEvent(row, name));
     if (row.inquiryId !== null) covered.add(row.inquiryId);
   }
   for (const row of rentals) {
     const existing = shifts.get(`t${row.id}`);
-    if (existing) addPay(existing, row.amount, row.paid ?? true);
+    if (existing) addPay(existing, row.amount, row.paid ?? true, row);
     else shifts.set(`t${row.id}`, fromRental(row, name));
     if (row.inquiryId !== null) covered.add(row.inquiryId);
   }
@@ -238,4 +253,49 @@ export async function getStudentSchedule(student: string): Promise<StudentShift[
   }
 
   return [...shifts.values()].sort((a, b) => a.date.localeCompare(b.date) || (a.startTime ?? "").localeCompare(b.startTime ?? ""));
+}
+
+// Only shifts with a Dogodki / Najem miz row can hold hours and km, and only from the day of the event on.
+export function canReport(shift: Pick<StudentShift, "key" | "date">, today: string) {
+  return /^[et]\d+$/.test(shift.key) && shift.date <= today;
+}
+
+// A student logs what they did on a shift: hours worked and km driven. It goes on their Študenti row,
+// so Poslovanje → Študenti shows it next to the amount. A table driver without a row gets one; with
+// several rows (e.g. a bonus) the first one holds the numbers.
+export async function reportStudentWork(student: string, key: string, report: Report, today: string, by: string) {
+  const name = student.trim().toLowerCase();
+  const match = /^([et])(\d+)$/.exec(key);
+  if (!match) throw new Error("Ta dogodek še ni vpisan v Poslovanje – ure in km javi Mitji ali Janu");
+  const id = Number(match[2]);
+  const isEvent = match[1] === "e";
+
+  const targets = (isEvent
+    ? await sql()`SELECT year, to_char(date, 'YYYY-MM-DD') AS date, NULL::text AS drivers FROM ledger_events WHERE id = ${id}`
+    : await sql()`
+        SELECT year, to_char(date, 'YYYY-MM-DD') AS date, coalesce(delivered_by, '') || '+' || coalesce(picked_by, '') AS drivers
+        FROM ledger_table_rentals WHERE id = ${id}
+      `) as { year: number; date: string | null; drivers: string | null }[];
+  const target = targets[0];
+  if (!target) throw new Error("Dogodek ne obstaja več");
+  if (!target.date || target.date > today) throw new Error("Ure in km lahko vpišeš na dan dogodka ali po njem");
+
+  const mine = (isEvent
+    ? await sql()`SELECT id FROM ledger_students WHERE event_id = ${id} AND lower(trim(student)) = ${name} ORDER BY id`
+    : await sql()`SELECT id FROM ledger_students WHERE rental_id = ${id} AND lower(trim(student)) = ${name} ORDER BY id`) as { id: number }[];
+  let rowId = mine[0]?.id;
+  if (rowId === undefined) {
+    if (isEvent || !splitPeople(target.drivers).some((p) => same(p, name))) throw new Error("Na tem dogodku nisi v ekipi");
+    const inserted = (await sql()`
+      INSERT INTO ledger_students (year, rental_id, student, updated_by) VALUES (${target.year}, ${id}, ${student}, ${by}) RETURNING id
+    `) as { id: number }[];
+    rowId = inserted[0].id;
+  }
+
+  await sql()`
+    UPDATE ledger_students SET worked_hours = ${report.workedHours}, km = ${report.km}, updated_by = ${by}, updated_at = now()
+    WHERE id = ${rowId}
+  `;
+  const rest = mine.slice(1).map((row) => row.id);
+  if (rest.length) await sql()`UPDATE ledger_students SET worked_hours = NULL, km = NULL WHERE id = ANY(${rest})`;
 }

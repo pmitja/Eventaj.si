@@ -21,8 +21,9 @@ type Props = {
 };
 
 const people = [...PEOPLE];
+const socialPoints: number = RULES.socialPost;
 
-// Posts per person and month; the month's social points are split by these counts.
+// Posts per person and month; every post earns RULES.socialPost points.
 export function SocialPostsLog({ rows, setRows, highlight, adding, setAdding, create, today }: Props) {
   const columns: GridColumn<SocialGridRow>[] = [
     { key: "date", label: "Datum (mesec)", type: "date", width: 150 },
@@ -43,7 +44,7 @@ export function SocialPostsLog({ rows, setRows, highlight, adding, setAdding, cr
       <div className="flex flex-wrap items-baseline justify-between gap-3">
         <Eyebrow>Objave na socialnih omrežjih</Eyebrow>
         <span className="text-[13px] text-adm-muted">
-          {RULES.socialPerMonth} točk za vsak mesec z objavami, razdeljeno po objavah · mesec brez objav = 0 točk
+          {formatPlain(socialPoints)} {socialPoints === 1 ? "točka" : socialPoints === 2 ? "točki" : "točke"} na objavo
         </span>
       </div>
       <LedgerGrid table="social" rows={rows} setRows={setRows} columns={columns} addLabel="Vpiši objave" onAdd={() => setAdding(true)} highlight={highlight} />

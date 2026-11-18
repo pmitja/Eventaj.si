@@ -14,7 +14,7 @@ const POINTS: [string, string, string][] = [
   ["Priprava s stranko", n(RULES.clientPrep), "Maja, za vsak izveden dogodek: okvir, ozadje, ura, kontaktna oseba, povzetek."],
   ["Povpraševanje → ponudba", n(RULES.inquiry), `Julija. Ko postane dogodek, še +${n(RULES.confirmed)}. Poslane ponudbe brez dogodka se štejejo iz Povpraševanj.`],
   ["Študenti, organizacija, pregled, opombe", n(RULES.organisation), "Julija, na vsako poslano ponudbo (izvedeni dogodki in ponudbe brez dogodka)."],
-  ["Socialna omrežja", `${n(RULES.socialPerMonth)} na mesec`, "Na mesec z vpisanimi objavami, razdeljeno po objavah tistega meseca. Mesec brez objav ne prinese točk nikomur."],
+  ["Objava na socialnih omrežjih", n(RULES.socialPost), "Na vsako objavo, vpisano pod Objave na socialnih omrežjih."],
   ["Klici", `${n(RULES.callsPerMonth)} na mesec`, "Mitja."],
   ["Dostava ali prevzem miz", n(RULES.tableTrip), "Na pot, iz Najema miz."],
   ["Naročilo potrošnega materiala", n(RULES.material), "Na vnos v Stroških (Potrošni material). Jan, razen če je osebno plačal kdo drug."],

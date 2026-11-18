@@ -79,8 +79,8 @@ export async function syncInquiryToLedger(inquiryId: number) {
   }
 
   const students = (await sql()`
-    SELECT id, student, amount, paid FROM ledger_students WHERE event_id = ${eventId}
-  `) as { id: number; student: string | null; amount: string | null; paid: boolean }[];
+    SELECT id, student, amount, paid, worked_hours IS NOT NULL OR km IS NOT NULL AS reported FROM ledger_students WHERE event_id = ${eventId}
+  `) as { id: number; student: string | null; amount: string | null; paid: boolean; reported: boolean }[];
   const wanted = new Set(row.crew_students);
   for (const student of wanted) {
     if (!students.some((s) => s.student === student)) {
@@ -88,7 +88,7 @@ export async function syncInquiryToLedger(inquiryId: number) {
     }
   }
   for (const s of students) {
-    if (s.student && !wanted.has(s.student) && s.amount === null && !s.paid) await sql()`DELETE FROM ledger_students WHERE id = ${s.id}`;
+    if (s.student && !wanted.has(s.student) && s.amount === null && !s.paid && !s.reported) await sql()`DELETE FROM ledger_students WHERE id = ${s.id}`;
   }
   await sql()`UPDATE ledger_students SET year = ${year} WHERE event_id = ${eventId} AND year <> ${year}`;
 }
@@ -166,11 +166,12 @@ export async function dropInquiryFromLedger(inquiryId: number) {
   `;
 }
 
-// Once money is entered (or a student is paid) the row is real bookkeeping and stays.
+// Once money is entered (or a student is paid or has logged hours/km) the row is real bookkeeping and stays.
 async function removeUntouched(event: Linked) {
   if (event.transfer !== null || event.cash !== null) return;
   const paid = (await sql()`
-    SELECT 1 FROM ledger_students WHERE event_id = ${event.id} AND (amount IS NOT NULL OR paid)
+    SELECT 1 FROM ledger_students WHERE event_id = ${event.id}
+      AND (amount IS NOT NULL OR paid OR worked_hours IS NOT NULL OR km IS NOT NULL)
   `) as unknown[];
   if (paid.length) return;
   await sql()`DELETE FROM ledger_students WHERE event_id = ${event.id}`;
@@ -189,17 +190,18 @@ export async function setRowStudents(kind: "event" | "rental", id: number, stude
 
   const wanted = [...new Set(students.map((s) => s.trim()).filter(Boolean))];
   const current = (kind === "event"
-    ? await sql()`SELECT id, student, amount, paid FROM ledger_students WHERE event_id = ${id}`
-    : await sql()`SELECT id, student, amount, paid FROM ledger_students WHERE rental_id = ${id}`) as {
+    ? await sql()`SELECT id, student, amount, paid, worked_hours IS NOT NULL OR km IS NOT NULL AS reported FROM ledger_students WHERE event_id = ${id}`
+    : await sql()`SELECT id, student, amount, paid, worked_hours IS NOT NULL OR km IS NOT NULL AS reported FROM ledger_students WHERE rental_id = ${id}`) as {
     id: number;
     student: string | null;
     amount: string | null;
     paid: boolean;
+    reported: boolean;
   }[];
 
-  const locked = current.filter((s) => s.student && !wanted.includes(s.student) && (s.amount !== null || s.paid));
+  const locked = current.filter((s) => s.student && !wanted.includes(s.student) && (s.amount !== null || s.paid || s.reported));
   if (locked.length) {
-    throw new Error(`${locked.map((s) => s.student).join(", ")} ima že vpisan znesek ali plačilo – odstrani v zavihku Študenti`);
+    throw new Error(`${locked.map((s) => s.student).join(", ")} ima že vpisan znesek, plačilo ali ure/km – odstrani v zavihku Študenti`);
   }
   for (const s of current) {
     if (s.student && !wanted.includes(s.student)) await sql()`DELETE FROM ledger_students WHERE id = ${s.id}`;

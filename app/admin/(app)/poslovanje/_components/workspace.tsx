@@ -7,6 +7,7 @@ import { toast } from "sonner";
 import { Stagger } from "@/app/admin/_components/motion";
 import { PageHeader } from "@/app/admin/_components/page-header";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import { formatEur } from "@/lib/ledger/compute";
 import type { LedgerTableName } from "@/lib/ledger/schema";
 import { addRow } from "../actions";
 import type { GridRow } from "./ledger-grid";
@@ -71,6 +72,31 @@ export function WorkspaceHeader({ year, title, addLabel, onAdd }: { year: number
 
 export function Strip({ children }: { children: ReactNode }) {
   return <Stagger className="grid grid-cols-2 gap-3 sm:gap-4 xl:grid-cols-4">{children}</Stagger>;
+}
+
+// Red bar for money clients still owe (rows with Plačano? = NE). Renders nothing when all is paid.
+// `what` names the rows, already declined: "3 dogodki", "1 dogodek + 2 najema".
+export function UnpaidAlert({ amount, what, onShow, active }: { amount: number; what: string | null; onShow?: () => void; active?: boolean }) {
+  if (!what) return null;
+  return (
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 rounded-2xl border border-red-600 bg-red-50 px-4 py-3.5 text-red-800 sm:px-5">
+      <span className="flex items-center gap-2 text-[10px] font-semibold uppercase tracking-[.08em] sm:text-xs">
+        <span className="size-2 rounded-full bg-red-600" aria-hidden />
+        Neplačano
+      </span>
+      <span className="font-display text-[22px] leading-none text-red-700 tabular sm:text-[28px]">{formatEur(amount)}</span>
+      <span className="text-[13px]">Čaka na plačilo: {what}. Ne šteje v prihodke in fond.</span>
+      {onShow && (
+        <button
+          type="button"
+          onClick={onShow}
+          className="ml-auto rounded-full bg-red-600 px-3.5 py-1.5 text-[13px] font-medium text-white transition-colors hover:bg-red-700"
+        >
+          {active ? "Prikaži vse" : "Prikaži neplačane"}
+        </button>
+      )}
+    </div>
+  );
 }
 
 export function ChartRow({ children }: { children: ReactNode }) {

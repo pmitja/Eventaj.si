@@ -38,7 +38,7 @@ export const RULES = {
   tableTrip: 1, // dostava ali prevzem miz
   material: 0.25, // naročilo potrošnega materiala
   callsPerMonth: 8, // klici (Mitja)
-  socialPerMonth: 6, // socialna omrežja: po vpisanih objavah meseca; mesec brez objav 0
+  socialPost: 2, // socialna omrežja: na vpisano objavo
   workCapPerMonth: 20, // največ ur ročnega vnosa na osebo na mesec
   litresPer100: 7, // poraba za kilometrino
 } as const;
@@ -131,21 +131,11 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
   const months = elapsedMonths(ledger.year, today);
   add("Mitja", "Klici", RULES.callsPerMonth * months);
 
-  // Social: a month with logged posts gives its full points, split by those posts. A month without
-  // posts (no entry or 0) gives no points to anyone.
-  const posts = Array.from({ length: 12 }, () => new Map<Person, number>());
+  // Social: every logged post earns its own points.
   for (const row of ledger.social) {
-    if (!isPerson(row.person) || row.posts === null || !row.date) continue;
-    const month = posts[Number(row.date.slice(5, 7)) - 1];
-    month.set(asPerson(row.person), (month.get(asPerson(row.person)) ?? 0) + row.posts);
+    if (!isPerson(row.person) || !row.posts || !row.date || row.date > today) continue;
+    add(asPerson(row.person), "Socialna omrežja", RULES.socialPost * row.posts);
   }
-  let socialMonthsByPosts = 0;
-  posts.forEach((month, i) => {
-    const total = [...month.values()].reduce((s, n) => s + n, 0);
-    if (!total || i >= months) return; // brez objav ali mesec se še ni začel
-    socialMonthsByPosts++;
-    for (const [person, n] of month) add(person, "Socialna omrežja", (RULES.socialPerMonth * n) / total);
-  });
 
   // Logged hours count up to the monthly cap per person.
   const logged = new Map<string, number>();
@@ -216,7 +206,6 @@ export function computeContributions(ledger: LedgerYear, today: string, unconfir
     totalPoints,
     months,
     overCap,
-    socialMonthsByPosts,
     unconfirmedOffers,
     eventsDone: done.length,
     weekendEvents: done.filter((e) => isWeekend(e.date!)).length,

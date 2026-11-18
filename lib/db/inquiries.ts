@@ -3,6 +3,7 @@ import { albumColorLabels, albumSizeLabels } from "@/content/eventaj/album-prici
 import { albumLabel, type EventDetails } from "@/lib/event-details/schema";
 import { toEventDetailsRequest, type EventDetailsRequest } from "./event-details";
 import { sql } from "./index";
+import { serviceForInquiry } from "@/lib/offers/services";
 import { toDateKey } from "@/lib/slovenian-date";
 
 export const inquiryStatuses = ["new", "confirmed", "declined"] as const;
@@ -199,7 +200,8 @@ export async function listConfirmedEvents(): Promise<CalendarEvent[]> {
 
   return rows.flatMap((row) => {
     const date = toDateKey(row.form_data.date);
-    if (!date) return [];
+    // Koledar shows booths and table rentals only, not QR galerija, photography or other equipment.
+    if (!date || !serviceForInquiry(row.form_data)) return [];
     const details = row.details;
     return [{
       id: row.id,

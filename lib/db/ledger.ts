@@ -1,8 +1,12 @@
-import { computeOverview } from "@/lib/ledger/compute";
+import { computeOverview, parseClockHours } from "@/lib/ledger/compute";
 import { defaultLists, LIST_KEYS, type LedgerLists, type ListKey } from "@/lib/ledger/lists";
 import { LEDGER_TABLES, type FieldDef, type FieldType, type LedgerTableName, type LedgerYear } from "@/lib/ledger/schema";
+import { standingTable } from "@/content/eventaj/equipment";
 import { sql } from "./index";
 import { dropStudentCost, studentPayState, syncStudentCost } from "./student-costs";
+
+// Name of the standing-table item on the Oprema sheet; Koledar shows only those rentals.
+const TABLES_ITEM = standingTable.name;
 
 export type LedgerValue = string | number | boolean | null;
 
@@ -69,6 +73,9 @@ export function parseValue(type: FieldType, raw: LedgerValue): LedgerValue {
   const text = String(raw).trim();
   if (text === "") return null;
   if (type === "number") {
+    // Hours written as h:mm: "6:40" → 6,67.
+    const clock = parseClockHours(text);
+    if (clock !== null) return clock;
     // Accept Slovenian input: "1.234,50" or "1234,5" or "1234.5".
     const normalized = text.includes(",") ? text.replace(/\./g, "").replace(",", ".") : text;
     const value = Number(normalized.replace(/[€\s]/g, ""));
@@ -172,7 +179,7 @@ export async function insertLedgerRow(
   }
   if (name === "events" || name === "tables") {
     const rows = (await sql().query(`SELECT code FROM ${table} WHERE year = $1`, [year])) as { code: string | null }[];
-    values.code ??= nextCode(name === "events" ? "EVT" : "MIZE", rows.map((row) => row.code));
+    values.code ??= nextCode(name === "events" ? "EVT" : "OPR",rows.map((row) => row.code));
   }
   if (name === "stock") {
     const rows = (await sql()`SELECT COALESCE(MAX(position), 0) + 1 AS next FROM ledger_stock WHERE year = ${year}`) as {
@@ -269,7 +276,9 @@ export async function listDoneEvents(): Promise<DoneEvent[]> {
     FROM ledger_events e
     LEFT JOIN ledger_students s ON s.event_id = e.id
     LEFT JOIN inquiries i ON i.id = e.inquiry_id
+    -- Koledar shows booths only; a row without Storitev stays (not decided yet).
     WHERE e.date IS NOT NULL
+      AND (NULLIF(trim(e.service), '') IS NULL OR lower(trim(e.service)) IN ('photo booth', '360° booth', 'bundle'))
     GROUP BY e.id, i.id
     ORDER BY e.date, e.code
   `) as DoneEvent[];
@@ -301,7 +310,8 @@ export async function listTableRentalEvents(): Promise<TableRentalEvent[]> {
     FROM ledger_table_rentals t
     LEFT JOIN ledger_students s ON s.rental_id = t.id
     LEFT JOIN inquiries i ON i.id = t.inquiry_id
-    WHERE t.date IS NOT NULL
+    -- Koledar shows only standing tables from Oprema; QR galerija and other items stay off it.
+    WHERE t.date IS NOT NULL AND (t.item IS NULL OR lower(trim(t.item)) = lower(${TABLES_ITEM}))
     GROUP BY t.id, i.id
     ORDER BY t.date, t.code
   `) as TableRentalEvent[];

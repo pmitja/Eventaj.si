@@ -6,6 +6,6 @@ export const LEDGER_TABS: { slug: string; label: string; count?: LedgerTableName
   { slug: "stroski", label: "Stroški", count: "costs" },
   { slug: "studenti", label: "Študenti", count: "students" },
   { slug: "zaloga", label: "Zaloga", count: "stock" },
-  { slug: "najem-miz", label: "Najem miz", count: "tables" },
+  { slug: "najem-miz", label: "Oprema", count: "tables" },
   { slug: "prispevki", label: "Prispevki" },
 ];

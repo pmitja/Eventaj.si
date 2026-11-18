@@ -2,7 +2,8 @@
 // these are the defaults until a list is saved to the database.
 
 export const LIST_DEFS = {
-  services: { label: "Storitev", items: ["Photo Booth", "360° Booth", "Bundle", "QR Galerija", "Mize", "Drugo"] },
+  // Event services only. Tables, QR galerija and the rest of /oprema-za-dogodke are Oprema, not events.
+  services: { label: "Storitev", items: ["Photo Booth", "360° Booth", "Bundle", "Fotografiranje", "Drugo"] },
   executions: { label: "Izvedba dogodka", items: ["Jan", "Mitja", "Jan + Mitja", "Študenti"] },
   initialHelp: { label: "Začetna pomoč", items: ["Brez", "Jan", "Mitja", "Jan + Mitja"] },
   costCategories: {

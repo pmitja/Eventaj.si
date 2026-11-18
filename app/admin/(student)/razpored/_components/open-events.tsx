@@ -18,7 +18,8 @@ function freeText(free: number) {
 }
 
 // Events still looking for students. Signing up puts the student on the crew straight away.
-export function OpenEvents({ events, today, canClaim }: { events: OpenEvent[]; today: string; canClaim: boolean }) {
+// preview: an admin looking at a student's page; signing up then puts that student on the crew.
+export function OpenEvents({ events, today, student, preview }: { events: OpenEvent[]; today: string; student: string; preview: boolean }) {
   const router = useRouter();
   const [selected, setSelected] = useState<OpenEvent | null>(null);
   const [pending, setPending] = useState(false);
@@ -26,11 +27,11 @@ export function OpenEvents({ events, today, canClaim }: { events: OpenEvent[]; t
   const claim = async () => {
     if (!selected) return;
     setPending(true);
-    const error = await claimEvent(selected.key);
+    const error = await claimEvent(selected.key, student);
     setPending(false);
     setSelected(null);
     if (error) toast.error(error);
-    else toast.success("Prijavljen si! Dogodek je zdaj v tvojem razporedu.");
+    else toast.success(preview ? `${student} je prijavljen/a na dogodek.` : "Prijavljen si! Dogodek je zdaj v tvojem razporedu.");
     router.refresh();
   };
 
@@ -40,6 +41,11 @@ export function OpenEvents({ events, today, canClaim }: { events: OpenEvent[]; t
         <Eyebrow>Iščemo študente</Eyebrow>
         <span className="text-[13px] text-adm-muted">Prvi, ki se prijavi, gre.</span>
       </div>
+      {events.length === 0 && (
+        <p className="m-0 rounded-2xl border border-dashed border-adm-soft px-5 py-8 text-center text-sm text-adm-muted">
+          Trenutno ni odprtih dogodkov. Ko bomo iskali študente, se pojavijo tukaj.
+        </p>
+      )}
       {events.map((event, index) => {
         const { day, month, weekday } = dayParts(event.date);
         const facts = [timeText(event), event.location].filter(Boolean);
@@ -66,16 +72,14 @@ export function OpenEvents({ events, today, canClaim }: { events: OpenEvent[]; t
                 </span>
               </div>
             </div>
-            {canClaim && (
-              <motion.button
-                type="button"
-                onClick={() => setSelected(event)}
-                whileTap={{ scale: 0.96 }}
-                className="flex items-center justify-center gap-2 self-stretch rounded-full bg-adm-ink px-5 py-2.5 text-sm text-adm-bg transition-opacity hover:opacity-85 disabled:opacity-60 sm:self-center"
-              >
-                Prijavim se
-              </motion.button>
-            )}
+            <motion.button
+              type="button"
+              onClick={() => setSelected(event)}
+              whileTap={{ scale: 0.96 }}
+              className="flex items-center justify-center gap-2 self-stretch rounded-full bg-adm-ink px-5 py-2.5 text-sm text-adm-bg transition-opacity hover:opacity-85 disabled:opacity-60 sm:self-center"
+            >
+              Prijavim se
+            </motion.button>
           </Reveal>
         );
       })}

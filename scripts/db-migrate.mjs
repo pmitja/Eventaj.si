@@ -210,6 +210,14 @@ await sql`ALTER TABLE admin_users ADD COLUMN IF NOT EXISTS student TEXT`;
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS start_time TEXT`;
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS location TEXT`;
 await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS students_needed NUMERIC(4, 0)`;
+// Študenti: ure, ki jih je študent dejansko delal, in prevoženi km – vpiše jih študent sam v Mojem razporedu.
+await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS worked_hours NUMERIC(6, 2)`;
+await sql`ALTER TABLE ledger_students ADD COLUMN IF NOT EXISTS km NUMERIC(10, 2)`;
+// Dogodki / Najem miz: ali je naročnik že plačal. Neplačani zneski se ne štejejo v prihodke in fond.
+await sql`ALTER TABLE ledger_events ADD COLUMN IF NOT EXISTS paid BOOLEAN NOT NULL DEFAULT true`;
+await sql`ALTER TABLE ledger_table_rentals ADD COLUMN IF NOT EXISTS paid BOOLEAN NOT NULL DEFAULT true`;
+// Najem miz je postal Oprema: vsak najem ima artikel (stoječe mize, tabla dobrodošlice, igre …).
+await sql`ALTER TABLE ledger_table_rentals ADD COLUMN IF NOT EXISTS item TEXT DEFAULT 'Stoječa barska miza'`;
 
 // Koledar: odsotnosti (dopust ipd.) – kdo od nas ta dan ne more na dogodek. Oba datuma sta vključena.
 await sql`

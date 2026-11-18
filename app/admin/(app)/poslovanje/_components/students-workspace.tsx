@@ -4,7 +4,7 @@ import { Donut, HBars, PALETTE } from "@/app/admin/_components/charts";
 import { FormDialog, type FieldSpec } from "@/app/admin/_components/form-dialog";
 import { KpiCard } from "@/app/admin/_components/kpi-card";
 import { Panel } from "@/app/admin/_components/panel";
-import { formatEur, formatPlain, payerPair, studentPairRefund } from "@/lib/ledger/compute";
+import { formatEur, formatHours, formatPlain, payerPair, studentPairRefund } from "@/lib/ledger/compute";
 import type { LedgerLists } from "@/lib/ledger/lists";
 import type { EventRow, StudentRow, TableRentalRow } from "@/lib/ledger/schema";
 import { formatDate } from "./format";
@@ -21,8 +21,10 @@ export function StudentsWorkspace({
   events,
   rentals,
   lists,
+  today,
 }: {
   year: number;
+  today: string;
   rows: StudentRow[];
   events: EventRow[];
   rentals: TableRentalRow[];
@@ -37,30 +39,45 @@ export function StudentsWorkspace({
   const byLink = new Map(targets.map((target) => [target.link, target]));
   // ='Študenti'!B/C/E  =IFERROR(VLOOKUP(A,Dogodki!$A$2:$L$100,n,FALSE),"")
   const event = (row: Pick<StudentRow, "link">) => (row.link === null ? undefined : byLink.get(row.link));
-  const hours = (row: Row) => event(row)?.hours ?? 0;
+  // Hours the student logged win over the event's planned hours.
+  const hours = (row: Row) => row.workedHours ?? event(row)?.hours ?? 0;
+  const loggedOn = (row: Row) => row.student !== null && row.link !== null && (event(row)?.date ?? "9999") <= today;
+  const missingReports = rows.filter((r) => loggedOn(r) && r.workedHours === null && r.km === null).length;
+  const totalKm = rows.reduce((s, r) => s + (r.km ?? 0), 0);
   const eventOptions = targets.map((t) => ({ value: t.link, label: t.code }));
 
   const paidCount = rows.filter((r) => r.paid).length;
   const hoursBy = new Map<string, number>();
-  for (const r of rows) hoursBy.set(r.student || "Ni vpisan", (hoursBy.get(r.student || "Ni vpisan") ?? 0) + hours(r));
+  const kmBy = new Map<string, number>();
+  for (const r of rows) {
+    const who = r.student || "Ni vpisan";
+    hoursBy.set(who, (hoursBy.get(who) ?? 0) + hours(r));
+    kmBy.set(who, (kmBy.get(who) ?? 0) + (r.km ?? 0));
+  }
   const students = [...hoursBy.entries()].sort((a, b) => b[1] - a[1]);
+  const studentBar = ([label, value]: [string, number]) => {
+    const km = kmBy.get(label) ?? 0;
+    return { label, value, color: PALETTE[2], display: km ? `${formatHours(value)} h · ${formatPlain(km)} km` : `${formatHours(value)} h` };
+  };
 
   const columns: GridColumn<Row>[] = [
-    { key: "link", label: "ID", type: "select", options: eventOptions, width: 116 },
-    { key: "date", label: "Datum", type: "computed", width: 116, value: (row) => formatDate(event(row)?.date ?? null) },
+    { key: "link", label: "ID", type: "select", options: eventOptions, width: 116, sort: (row) => event(row)?.code },
+    { key: "date", label: "Datum", type: "computed", width: 116, value: (row) => formatDate(event(row)?.date ?? null), sort: (row) => event(row)?.date },
     { key: "client", label: "Naročnik", type: "computed", width: 230, value: (row) => event(row)?.client ?? "" },
     { key: "student", label: "Študent", type: "select", options: lists.students, width: 140 },
     {
       key: "hours",
-      label: "Ure",
+      label: "Ure dogodka",
       type: "computed",
       numeric: true,
-      width: 64,
+      width: 104,
       value: (row) => {
         const h = event(row)?.hours;
         return h === null || h === undefined ? "" : formatPlain(h);
       },
     },
+    { key: "workedHours", label: "Ure (študent)", type: "number", width: 116, hint: "Vpiše študent v Mojem razporedu po dogodku" },
+    { key: "km", label: "Km (študent)", type: "number", width: 112, hint: "Vpiše študent v Mojem razporedu po dogodku" },
     { key: "amount", label: "Znesek €", type: "money", width: 110 },
     { key: "payer", label: "Plačal", type: "select", options: lists.payers, width: 140 },
     { key: "pair", label: "Par plačnika", type: "computed", width: 140, value: (row) => payerPair(row.payer) },
@@ -73,11 +90,14 @@ export function StudentsWorkspace({
     {
       key: "link",
       label: "Dogodek ali najem miz",
-      kind: "select",
+      kind: "combo",
       required: true,
       wide: true,
-      placeholder: "Izberi dogodek ali najem miz",
-      options: [...targets].reverse().map((t) => ({ value: t.link, label: `${t.code} · ${t.client ?? "brez naročnika"}` })),
+      placeholder: "Izberi ali vpiši dogodek ali najem miz",
+      options: targets.map((t) => ({
+        value: t.link,
+        label: [t.code, t.date && formatDate(t.date), t.client ?? "brez naročnika"].filter(Boolean).join(" · "),
+      })),
     },
     { key: "student", label: "Študent", kind: "select", options: lists.students, required: true },
     { key: "amount", label: "Znesek €", kind: "money", placeholder: "0,00" },
@@ -92,9 +112,14 @@ export function StudentsWorkspace({
 
       <Strip>
         <KpiCard size="md" label="Ure študentov" value={rows.reduce((s, r) => s + hours(r), 0)} />
+        <KpiCard
+          size="md"
+          label="Km študentov"
+          value={totalKm}
+          sub={missingReports ? `${missingReports} × ure/km še niso vpisani` : "vse vpisano"}
+        />
         <KpiCard size="md" label="Izplačano" value={rows.filter((r) => r.paid).reduce((s, r) => s + (r.amount ?? 0), 0)} format="eur" />
         <KpiCard size="md" label="Povračilo paru" value={rows.reduce((s, r) => s + (studentPairRefund(r) ?? 0), 0)} format="eur" />
-        <KpiCard size="md" label="Neplačani vnosi" value={rows.length - paidCount} format="int" />
       </Strip>
 
       <p className="m-0 rounded-lg border border-adm-line px-4 py-3 text-sm text-adm-muted">
@@ -105,7 +130,7 @@ export function StudentsWorkspace({
 
       <ChartRow>
         <Panel title="Ure po študentih" className="flex-[3_1_520px]">
-          <HBars rows={students.map(([label, value]) => ({ label, value, color: PALETTE[2], display: `${formatPlain(value)} h` }))} />
+          <HBars rows={students.map(studentBar)} />
         </Panel>
         <Panel title="Plačano?" className="flex-[2_1_360px]">
           <Donut

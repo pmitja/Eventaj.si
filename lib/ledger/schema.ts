@@ -19,6 +19,7 @@ export type EventRow = {
   hours: number | null; // E  Ure
   transfer: number | null; // F  Nakazilo €
   cash: number | null; // G  Gotovina €
+  paid: boolean; //    Plačano? Neplačan znesek se ne šteje v prihodke in fond.
   service: string | null; // J  Storitev
   albumUsed: boolean; // K  Album uporabljen?
   album: string | null; // L  Kateri album?
@@ -49,6 +50,8 @@ export type StudentRow = {
   payer: string | null; // G  Plačal
   paid: boolean; // I  Plačano?
   note: string | null; // L  Opomba
+  workedHours: number | null; //    Ure, ki jih vpiše študent
+  km: number | null; //    Prevoženi km, ki jih vpiše študent
 };
 
 export type TableRentalRow = {
@@ -57,9 +60,11 @@ export type TableRentalRow = {
   date: string | null; // B  Datum
   client: string | null; // C  Naročnik
   location: string | null; // D  Lokacija
-  tableCount: number | null; // E  Št. miz
+  item: string | null; //    Artikel (Oprema); prazno = stoječa barska miza
+  tableCount: number | null; // E  Št. miz / količina
   transfer: number | null; // F  Nakazilo €
   cash: number | null; // G  Gotovina €
+  paid: boolean; //    Plačano? Neplačan znesek se ne šteje v prihodke in fond.
   deliveredBy: string | null; // J  Dostavil / peljal
   kmDelivery: number | null; // K  Km dostava
   pickedBy: string | null; // L  Prevzel / šel po
@@ -112,6 +117,7 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       hours: { col: "hours", type: "number" },
       transfer: { col: "transfer", type: "number" },
       cash: { col: "cash", type: "number" },
+      paid: { col: "paid", type: "bool" },
       service: { col: "service", type: "text" },
       albumUsed: { col: "album_used", type: "bool" },
       album: { col: "album", type: "text" },
@@ -146,6 +152,8 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       payer: { col: "payer", type: "text" },
       paid: { col: "paid", type: "bool" },
       note: { col: "note", type: "text" },
+      workedHours: { col: "worked_hours", type: "number" },
+      km: { col: "km", type: "number" },
     },
   },
   tables: {
@@ -156,9 +164,11 @@ export const LEDGER_TABLES: Record<LedgerTableName, { table: string; order: stri
       date: { col: "date", type: "date" },
       client: { col: "client", type: "text" },
       location: { col: "location", type: "text" },
+      item: { col: "item", type: "text" },
       tableCount: { col: "table_count", type: "number" },
       transfer: { col: "transfer", type: "number" },
       cash: { col: "cash", type: "number" },
+      paid: { col: "paid", type: "bool" },
       deliveredBy: { col: "delivered_by", type: "text" },
       kmDelivery: { col: "km_delivery", type: "number" },
       pickedBy: { col: "picked_by", type: "text" },

@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, useAnimationControls } from "framer-motion";
-import { LoaderCircle, X } from "lucide-react";
-import { useState, type ReactNode } from "react";
+import { ChevronDown, LoaderCircle, X } from "lucide-react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -17,11 +17,14 @@ export type FieldSpec = {
   key: string;
   label: string;
   // "multi" = toggle chips; the value holds the picked options separated by new lines.
-  kind: "text" | "number" | "money" | "date" | "password" | "email" | "select" | "seg" | "area" | "multi";
+  // "combo" = a select you can type into to filter long option lists.
+  kind: "text" | "number" | "money" | "date" | "password" | "email" | "select" | "combo" | "seg" | "area" | "multi";
   wide?: boolean;
   required?: boolean;
   placeholder?: string;
   options?: FieldOption[];
+  // combo only: text typed that matches no option is kept as the value ("Uporabi »…«").
+  free?: boolean;
   initial?: string;
   // Shown (and checked) only while this returns true, e.g. fields that depend on a "seg" choice.
   when?: (values: FormValues) => boolean;
@@ -54,7 +57,12 @@ export function FormDialog(props: Props) {
   // Remount the body each time the dialog opens so it starts from fresh defaults.
   return (
     <Dialog open={props.open} onOpenChange={props.onOpenChange}>
-      <DialogContent className="admin-root flex max-h-[calc(100dvh-24px)] w-[calc(100vw-24px)] max-w-[640px] flex-col gap-0 overflow-hidden rounded-[20px] border border-adm-ink bg-adm-bg p-0 shadow-[0_24px_60px_rgba(28,24,20,.25)] sm:rounded-[20px] [&>button:last-child]:hidden">
+      <DialogContent
+        // Escape in an open combo list closes the list, not the whole dialog.
+        onEscapeKeyDown={(e) => {
+          if (e.target instanceof HTMLElement && e.target.getAttribute("aria-expanded") === "true") e.preventDefault();
+        }}
+        className="admin-root flex max-h-[calc(100dvh-24px)] w-[calc(100vw-24px)] max-w-[640px] flex-col gap-0 overflow-hidden rounded-[20px] border border-adm-ink bg-adm-bg p-0 shadow-[0_24px_60px_rgba(28,24,20,.25)] sm:rounded-[20px] [&>button:last-child]:hidden">
         {props.open && <FormBody {...props} />}
       </DialogContent>
     </Dialog>
@@ -113,8 +121,9 @@ function FormBody({ eyebrow, title, fields, summary, validate, onSubmit, submitL
           variants={{ hidden: {}, show: { transition: { staggerChildren: 0.03, delayChildren: 0.08 } } }}
         >
           {visible.map((field) => {
-            // A label around chip buttons would forward clicks on its text to the first chip.
-            const Wrap = field.kind === "multi" ? motion.div : motion.label;
+            // A label around chip buttons would forward clicks on its text to the first chip,
+            // and around a combo it would forward option clicks to the input and reopen the list.
+            const Wrap = field.kind === "multi" || field.kind === "combo" ? motion.div : motion.label;
             return (
               <Wrap
                 key={field.key}
@@ -219,6 +228,10 @@ function Field({ field, value, invalid, onChange }: { field: FieldSpec; value: s
     );
   }
 
+  if (field.kind === "combo") {
+    return <Combo field={field} value={value} border={border} onChange={onChange} />;
+  }
+
   if (field.kind === "seg") {
     const options = field.options ?? [];
     const narrow = rowSpans(options.length, options.length <= 3 ? options.length : options.length === 4 ? 2 : 3);
@@ -264,6 +277,126 @@ function Field({ field, value, invalid, onChange }: { field: FieldSpec; value: s
       onChange={(e) => onChange(e.target.value)}
       className={cn(control, border)}
     />
+  );
+}
+
+// Case- and diacritic-insensitive, so "sola" finds "Šola".
+const fold = (s: string) => s.normalize("NFD").replace(/\p{M}/gu, "").toLowerCase();
+
+// The list opens in the form's flow rather than in a portal: a portaled popover inside the
+// dialog can't be wheel-scrolled because the dialog locks scrolling outside itself.
+function Combo({ field, value, border, onChange }: { field: FieldSpec; value: string; border: false | string; onChange: (value: string) => void }) {
+  const options = field.options ?? [];
+  const [query, setQuery] = useState<string | null>(null);
+  const [active, setActive] = useState(0);
+  const listRef = useRef<HTMLUListElement>(null);
+  const open = query !== null;
+  const selected = options.find((o) => optionValue(o) === value);
+  const words = fold(query ?? "").split(/\s+/).filter(Boolean);
+  const filtered = options.filter((o) => {
+    const label = fold(optionLabel(o));
+    return words.every((w) => label.includes(w));
+  });
+  // Free combos also offer the typed text itself, after the matching options (so Enter on "qr" still
+  // picks "QR galerija"), unless it already is one of the options.
+  const typed = (query ?? "").trim();
+  const custom = field.free && typed && !options.some((o) => fold(optionLabel(o)) === fold(typed)) ? typed : null;
+  const matches: FieldOption[] = custom ? [...filtered, custom] : filtered;
+
+  // Opening scrolls the current pick into view so the list starts where you are.
+  useEffect(() => {
+    if (!open) return;
+    listRef.current?.querySelector<HTMLElement>(`[data-index="${active}"]`)?.scrollIntoView({ block: "nearest" });
+  }, [open, active]);
+
+  const start = () => {
+    if (open) return;
+    setQuery("");
+    setActive(Math.max(0, options.findIndex((o) => optionValue(o) === value)));
+  };
+  const pick = (o: FieldOption) => {
+    onChange(optionValue(o));
+    setQuery(null);
+  };
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      <div className="relative">
+        <Input
+          role="combobox"
+          aria-label={field.label}
+          aria-expanded={open}
+          aria-autocomplete="list"
+          value={open ? query : selected ? optionLabel(selected) : field.free ? value : ""}
+          placeholder={open && (selected || value) ? (selected ? optionLabel(selected) : value) : field.placeholder ?? "Izberi"}
+          onFocus={start}
+          onClick={start}
+          onBlur={() => {
+            // A free combo keeps typed text that matches no option even without picking it; text that
+            // matches some option waits for a pick, so a half-typed name is never saved by accident.
+            if (custom && filtered.length === 0) onChange(custom);
+            else if (field.free && typed && filtered[0] && fold(optionLabel(filtered[0])) === fold(typed)) onChange(optionValue(filtered[0]));
+            setQuery(null);
+          }}
+          onChange={(e) => {
+            setQuery(e.target.value);
+            setActive(0);
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+              e.preventDefault();
+              if (!open) return start();
+              const step = e.key === "ArrowDown" ? 1 : -1;
+              setActive((i) => Math.min(Math.max(i + step, 0), matches.length - 1));
+            } else if (e.key === "Enter" && open) {
+              e.preventDefault();
+              if (matches[active]) pick(matches[active]);
+            } else if (e.key === "Escape" && open) {
+              // The dialog skips its own Escape while a combo is expanded, see FormDialog.
+              setQuery(null);
+            }
+          }}
+          className={cn(control, "pr-9", border)}
+        />
+        <ChevronDown className={cn("pointer-events-none absolute right-3.5 top-1/2 size-4 -translate-y-1/2 opacity-50 transition-transform", open && "rotate-180")} />
+      </div>
+      {open && (
+        <ul
+          ref={listRef}
+          role="listbox"
+          className="max-h-64 overflow-y-auto overscroll-contain rounded-xl border border-adm-ink bg-adm-card p-1 shadow-[0_12px_30px_rgba(28,24,20,.18)]"
+        >
+          {matches.length === 0 && <li className="px-2.5 py-2 text-sm text-adm-muted">Ni zadetkov</li>}
+          {matches.map((o, i) => (
+            <li
+              key={optionValue(o)}
+              role="option"
+              data-index={i}
+              aria-selected={optionValue(o) === value}
+              // mousedown keeps focus in the input, so blur doesn't close the list before the pick.
+              onMouseDown={(e) => {
+                e.preventDefault();
+                pick(o);
+              }}
+              onMouseMove={() => setActive(i)}
+              className={cn(
+                "cursor-pointer rounded-lg px-2.5 py-1.5 text-sm",
+                i === active && "bg-adm-sand",
+                optionValue(o) === value && "font-semibold",
+              )}
+            >
+              {o === custom && i === matches.length - 1 ? (
+                <>
+                  Uporabi »<strong>{custom}</strong>«
+                </>
+              ) : (
+                optionLabel(o)
+              )}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
   );
 }
 
