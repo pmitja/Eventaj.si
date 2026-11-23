@@ -24,6 +24,17 @@ export const offerOptionsSchema = z.object({
   customItems: z
     .array(z.object({ description: z.string().trim().min(1).max(200), amount: z.number().min(-100000).max(100000) }))
     .max(20),
+  // Manual edits of computed lines, keyed by `${variantIndex}:${itemKey}`.
+  itemOverrides: z
+    .record(
+      z.string().max(40),
+      z.object({
+        description: z.string().max(200).optional(),
+        amount: z.number().min(-100000).max(100000).nullable().optional(),
+        removed: z.boolean().optional(),
+      }),
+    )
+    .default({}),
   locationUnknown: z.boolean(),
   distanceKm: z.number().min(0).max(2000).nullable(),
   pricePerKm: z.number().min(0).max(10),

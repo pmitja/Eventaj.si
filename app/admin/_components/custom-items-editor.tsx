@@ -2,7 +2,7 @@
 
 import type { CustomItem } from "@/lib/offers/pricing";
 
-const inputClass =
+export const itemInputClass =
   "min-w-0 rounded-lg border border-adm-ink/20 bg-adm-card px-2.5 py-1.5 text-sm outline-none focus:border-adm-accent";
 
 type Props = { items: CustomItem[]; presets: CustomItem[]; onChange: (items: CustomItem[]) => void };
@@ -21,7 +21,7 @@ export function CustomItemsEditor({ items, presets, onChange }: Props) {
             onChange={(event) => set(index, { description: event.target.value })}
             placeholder="Opis postavke"
             aria-label="Opis postavke"
-            className={`${inputClass} flex-1`}
+            className={`${itemInputClass} flex-1`}
           />
           <input
             type="number"
@@ -30,7 +30,7 @@ export function CustomItemsEditor({ items, presets, onChange }: Props) {
             value={Number.isFinite(item.amount) ? item.amount : ""}
             onChange={(event) => set(index, { amount: event.target.value === "" ? 0 : Number(event.target.value) })}
             aria-label="Znesek v evrih"
-            className={`${inputClass} w-24 text-right tabular-nums`}
+            className={`${itemInputClass} w-24 text-right tabular-nums`}
           />
           <span className="text-sm">€</span>
           <button

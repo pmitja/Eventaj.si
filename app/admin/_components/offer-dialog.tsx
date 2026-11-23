@@ -11,6 +11,7 @@ import type { OfferOptions } from "@/lib/offers/schema";
 import { isBoothService, serviceForInquiry, services, tableRental, tableSelectionFromInquiry } from "@/lib/offers/services";
 import { CustomItemsEditor } from "./custom-items-editor";
 import { OfferFormFields } from "./offer-form-fields";
+import { OfferItemsEditor } from "./offer-items-editor";
 import { OfferResult, type GeneratedOffer } from "./offer-result";
 
 function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
@@ -36,6 +37,7 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
     tableclothColor: tables.color,
     pickup: service === "tables" && (tables.count < tableRental.pickupBelow || data.fulfillment === "Osebni prevzem"),
     customItems: [],
+    itemOverrides: {},
     locationUnknown: !data.location?.trim(),
     distanceKm: null,
     pricePerKm: defaultPricePerKm,
@@ -56,8 +58,7 @@ export function OfferDialog({ inquiry, onClose }: Props) {
   const [prefillNotes, setPrefillNotes] = useState<string[]>([]);
 
   const variants = useMemo(() => buildOfferVariants(options), [options]);
-  // Custom items are edited below the first variant, so they are not listed there twice.
-  const customDescriptions = new Set(options.customItems.map((item) => item.description.trim()));
+  const baseVariants = useMemo(() => buildOfferVariants({ ...options, itemOverrides: {} }), [options]);
   const needsDistance = !options.pickup && !options.locationUnknown && options.distanceKm === null;
 
   const update = <K extends keyof OfferOptions>(key: K, value: OfferOptions[K]) =>
@@ -149,14 +150,15 @@ export function OfferDialog({ inquiry, onClose }: Props) {
                 {variant.label && (
                   <p className="pb-1 text-xs font-medium uppercase tracking-wider text-adm-muted">{variant.label}</p>
                 )}
-                {variant.items
-                  .filter((item) => variantIndex > 0 || !customDescriptions.has(item.description))
-                  .map((item, index) => (
-                    <div key={index} className="flex justify-between gap-4 py-1">
-                      <span>{item.description}</span>
-                      <span className="shrink-0 tabular-nums">{item.amount === null ? item.note : formatEur(item.amount)}</span>
-                    </div>
-                  ))}
+                <OfferItemsEditor
+                  variantIndex={variantIndex}
+                  // Custom items are edited below the first variant and shown as is in the second.
+                  items={variant.items.filter((item) => !item.key?.startsWith("custom:") || variantIndex > 0)
+                    .map((item) => (item.key?.startsWith("custom:") ? { ...item, key: undefined } : item))}
+                  baseItems={baseVariants[variantIndex]?.items ?? []}
+                  overrides={options.itemOverrides}
+                  onChange={(value) => update("itemOverrides", value)}
+                />
                 {variantIndex === 0 && (
                   <CustomItemsEditor
                     items={options.customItems}
