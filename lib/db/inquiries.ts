@@ -33,6 +33,8 @@ export type OfferSummary = {
   createdAt: string;
   total: number;
   sentAt: string | null;
+  /** The service the offer was made for; null on offers made before 360° support. */
+  service: string | null;
 };
 
 // studentsNeeded lives on the inquiry's Dogodki row; null = the default of two.
@@ -83,7 +85,7 @@ export async function listInquiries(): Promise<InquiryWithOffers[]> {
   const rows = (await sql()`
     SELECT i.*, COALESCE(
       json_agg(
-        json_build_object('id', o.id, 'number', o.number, 'createdAt', o.created_at, 'total', o.total, 'sentAt', o.sent_at)
+        json_build_object('id', o.id, 'number', o.number, 'createdAt', o.created_at, 'total', o.total, 'sentAt', o.sent_at, 'service', o.options->>'service')
         ORDER BY o.created_at DESC
       ) FILTER (WHERE o.id IS NOT NULL),
       '[]'

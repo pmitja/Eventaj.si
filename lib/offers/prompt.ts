@@ -212,6 +212,8 @@ Ti pripraviš besedilne dele po shemi.
 
 type PromptInput = {
   inquiryText: string;
+  /** Set when the offer is for another booth than the one picked in the inquiry form. */
+  serviceChange?: string;
   date: string;
   validityDays: number;
   validUntil: string;
@@ -233,7 +235,7 @@ export function buildOfferUserPrompt(input: PromptInput) {
 """
 ${input.inquiryText}
 """
-
+${input.serviceChange ? `\n# STORITEV PONUDBE\n${input.serviceChange}\n` : ""}
 # PODATKI PONUDBE
 Datum ponudbe: ${input.date}
 Veljavnost: ${input.validityDays} dni (do ${input.validUntil})

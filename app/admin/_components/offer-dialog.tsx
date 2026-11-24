@@ -8,18 +8,39 @@ import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/compone
 import type { InquiryWithOffers } from "@/lib/db/inquiries";
 import { buildOfferVariants, defaultPricePerKm, formatEur, type PackageHours } from "@/lib/offers/pricing";
 import type { OfferOptions } from "@/lib/offers/schema";
-import { isBoothService, serviceForInquiry, services, tableRental, tableSelectionFromInquiry } from "@/lib/offers/services";
+import {
+  isBoothService,
+  serviceForInquiry,
+  services,
+  tableRental,
+  tableSelectionFromInquiry,
+  type BoothService,
+  type OfferService,
+} from "@/lib/offers/services";
 import { CustomItemsEditor } from "./custom-items-editor";
 import { OfferFormFields } from "./offer-form-fields";
 import { OfferItemsEditor } from "./offer-items-editor";
 import { OfferResult, type GeneratedOffer } from "./offer-result";
+
+const boothChoices: { value: BoothService; label: string }[] = [
+  { value: "photo", label: services.photo.label },
+  { value: "360", label: services["360"].label },
+  { value: "combo", label: "Photo + 360° (combo)" },
+];
+
+/** The album the inquiry asked for, or none when the service has no album. */
+function albumFor(inquiry: InquiryWithOffers, service: OfferService): Pick<OfferOptions, "albumSize" | "albumColor"> {
+  const data = inquiry.formData;
+  if (!isBoothService(service) || !services[service].hasAlbum) return { albumSize: "", albumColor: "" };
+  const hours = Number(data.hours) || 2;
+  return { albumSize: data.albumSize ?? (hours >= 3 ? "small" : ""), albumColor: data.albumColor ?? "" };
+}
 
 function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
   const data = inquiry.formData;
   const hours = Number(data.hours) || 2;
   const packageHours = String(Math.min(Math.max(hours, 2), 4)) as PackageHours;
   const service = serviceForInquiry(data) ?? "photo";
-  const hasAlbum = isBoothService(service) && services[service].hasAlbum;
   const tables = tableSelectionFromInquiry(data.equipmentSummary);
   return {
     service,
@@ -29,8 +50,7 @@ function initialOptions(inquiry: InquiryWithOffers): OfferOptions {
     days: 1,
     compareHours: "",
     discountPercent: 0,
-    albumSize: hasAlbum ? data.albumSize ?? (hours >= 3 ? "small" : "") : "",
-    albumColor: hasAlbum ? data.albumColor ?? "" : "",
+    ...albumFor(inquiry, service),
     qrGallery: Boolean(data.qrGallery),
     qrGalleryPromo: false,
     tableCount: Math.min(tables.count, tableRental.maxTables),
@@ -63,6 +83,26 @@ export function OfferDialog({ inquiry, onClose }: Props) {
 
   const update = <K extends keyof OfferOptions>(key: K, value: OfferOptions[K]) =>
     setOptions((current) => ({ ...current, [key]: value }));
+
+  // A booth inquiry can be offered another booth, e.g. when the client asks for the 360° Booth after a Photo Booth offer.
+  const inquiryService = serviceForInquiry(inquiry.formData);
+  const boothInquiry = inquiryService !== null && isBoothService(inquiryService) ? inquiryService : null;
+  const changeService = (service: BoothService) => {
+    if (service === options.service) return;
+    setPrefillNotes([]);
+    setOptions((current) => ({
+      ...current,
+      service,
+      ...albumFor(inquiry, service),
+      // Edited lines belong to the old service's items.
+      itemOverrides: {},
+      // Drop presets that only fit the other booth; keep the admin's own lines.
+      customItems: current.customItems.filter((item) => {
+        const isPreset = boothChoices.some((choice) => services[choice.value].presets.some((p) => p.description === item.description));
+        return !isPreset || services[service].presets.some((p) => p.description === item.description);
+      }),
+    }));
+  };
 
   const runPrefill = async () => {
     setPrefillLoading(true);
@@ -139,6 +179,32 @@ export function OfferDialog({ inquiry, onClose }: Props) {
           <OfferResult offer={result} onAnother={() => setResult(null)} />
         ) : (
           <form onSubmit={submit} className="mt-5 space-y-5">
+            {boothInquiry && (
+              <div>
+                <span className="mb-1 block text-xs font-medium uppercase tracking-wider text-adm-muted">Storitev ponudbe</span>
+                <div className="flex flex-wrap gap-1.5">
+                  {boothChoices.map((choice) => (
+                    <button
+                      key={choice.value}
+                      type="button"
+                      onClick={() => changeService(choice.value)}
+                      className={`rounded-full border px-3 py-1.5 text-sm ${
+                        options.service === choice.value ? "border-adm-ink bg-adm-ink text-adm-bg" : "border-adm-ink/20 bg-adm-card"
+                      }`}
+                    >
+                      {choice.label}
+                      {choice.value === boothInquiry && <span className="opacity-60"> · izbrala stranka</span>}
+                    </button>
+                  ))}
+                </div>
+                {options.service !== boothInquiry && isBoothService(options.service) && (
+                  <p className="mt-1.5 text-xs text-adm-muted">
+                    Stranka je v obrazcu izbrala {services[boothInquiry].label}, ponudba bo za {services[options.service].label}.
+                  </p>
+                )}
+              </div>
+            )}
+
             <OfferFormFields
               options={options}
               update={update}

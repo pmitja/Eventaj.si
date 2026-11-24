@@ -207,6 +207,15 @@ export function serviceForInquiry(data: { type: string; equipmentSummary?: strin
   return null;
 }
 
+/**
+ * The service an offer is made for. A booth inquiry may be offered any booth (the client can ask for the
+ * 360° Booth or the combo after an offer for the Photo Booth); other inquiries keep their own service.
+ */
+export function offerServiceFor(inquiryService: OfferService | null, requested: OfferService): OfferService | null {
+  if (!inquiryService) return null;
+  return isBoothService(inquiryService) && isBoothService(requested) ? requested : inquiryService;
+}
+
 /** Reads "Stoječa barska miza: 6, Črn prt" from the inquiry's equipment summary. */
 export function tableSelectionFromInquiry(equipmentSummary = "") {
   const line = equipmentSummary.split("\n").find((entry) => entry.startsWith(`${standingTable.name}:`)) ?? "";

@@ -5,7 +5,7 @@ import { getOffer, insertOffer, nextOfferNumber } from "@/lib/db/offers";
 import { formatNumericSlovenianDate, getSlovenianDateString } from "@/lib/slovenian-date";
 import { buildOfferVariants, daysLabel, type PackageHours } from "./pricing";
 import { buildOfferSystemPrompt, buildOfferUserPrompt } from "./prompt";
-import { serviceForInquiry, services, tableRental, type BoothService, type OfferService, type ServicePackage } from "./services";
+import { offerServiceFor, serviceForInquiry, services, tableRental, type BoothService, type OfferService, type ServicePackage } from "./services";
 import { claudeClient, MODEL, OfferGenerationError } from "./claude";
 import { offerContentSchema, type OfferOptions } from "./schema";
 
@@ -38,6 +38,14 @@ export function serviceLabel(service: OfferService) {
   return service === "tables" ? tableRental.label : services[service].label;
 }
 
+/** Tells Claude the offer is for another booth than the one picked in the inquiry form, or "" when it is the same. */
+export function switchedServiceNote(inquiryService: OfferService, service: OfferService) {
+  if (inquiryService === service) return "";
+  return `Stranka je v obrazcu izbrala ${serviceLabel(inquiryService)}, ponudnik pa pripravlja ponudbo za ${serviceLabel(service)} `
+    + `(npr. ker je stranka po prejeti ponudbi prosila še zanjo). Ponudbo pripravi za ${serviceLabel(service)}; podatke iz `
+    + `povpraševanja, ki veljajo samo za prvotno izbrano storitev (npr. album pri 360° Boothu), ne vključi, če niso med POSTAVKAMI.`;
+}
+
 function describePackage(pkg: ServicePackage) {
   return pkg.parts ? `${pkg.name}: ${pkg.parts.map((part) => part.name).join(" + ")}` : pkg.name;
 }
@@ -61,8 +69,9 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
   const client = claudeClient();
   const inquiry = await getInquiry(inquiryId);
   if (!inquiry) throw new OfferGenerationError("Povpraševanje ne obstaja");
-  const service = serviceForInquiry(inquiry.formData);
-  if (!service) {
+  const inquiryService = serviceForInquiry(inquiry.formData);
+  const service = offerServiceFor(inquiryService, options.service);
+  if (!inquiryService || !service) {
     throw new OfferGenerationError("Ponudbo je mogoče generirati samo za Photo Booth, 360° Booth, kombinacijo obeh ali stoječe mize");
   }
   const hasAlbum = service !== "tables" && services[service].hasAlbum;
@@ -85,7 +94,8 @@ export async function generateOffer(inquiryId: number, options: OfferOptions) {
       {
         role: "user",
         content: buildOfferUserPrompt({
-          inquiryText: describeInquiry(inquiry.formData, inquiry.createdAt, serviceLabel(service)),
+          inquiryText: describeInquiry(inquiry.formData, inquiry.createdAt, serviceLabel(inquiryService)),
+          serviceChange: switchedServiceNote(inquiryService, service),
           date: formatNumericSlovenianDate(date),
           validityDays: options.validityDays,
           validUntil: formatNumericSlovenianDate(validUntil),

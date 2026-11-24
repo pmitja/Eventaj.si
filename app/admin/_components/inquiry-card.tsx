@@ -8,7 +8,7 @@ import { markOfferSent, removeInquiry } from "../(app)/actions";
 import { albumColorLabels, albumSizeLabels } from "@/content/eventaj/album-pricing";
 import type { InquiryWithOffers, OfferSummary } from "@/lib/db/inquiries";
 import { formatEur } from "@/lib/offers/pricing";
-import { serviceForInquiry } from "@/lib/offers/services";
+import { serviceForInquiry, services, type BoothService } from "@/lib/offers/services";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 import { EventDetailsPanel } from "./event-details-panel";
 import { formatReceived } from "./format-received";
@@ -24,7 +24,8 @@ const typeLabels: Record<string, string> = {
   equipment: "Oprema za dogodke",
 };
 
-function OfferRow({ offer }: { offer: OfferSummary }) {
+/** Names the booth when an offer is for another one than the client picked in the form. */
+function OfferRow({ offer, otherService }: { offer: OfferSummary; otherService: string | null }) {
   const [pending, startTransition] = useTransition();
 
   function toggleSent() {
@@ -46,7 +47,8 @@ function OfferRow({ offer }: { offer: OfferSummary }) {
         className="flex items-center gap-1.5 rounded-full border border-adm-ink px-3 py-1 tabular transition-colors hover:bg-adm-ink hover:!text-adm-bg"
       >
         <FileText className="size-3.5" />
-        {offer.number} · {formatEur(offer.total)}
+        {offer.number}
+        {otherService && ` · ${otherService}`} · {formatEur(offer.total)}
       </a>
       {offer.sentAt ? (
         <button
@@ -180,7 +182,13 @@ export function InquiryCard({ inquiry, onGenerate, crewLists }: Props) {
           <span className="py-1 text-adm-muted">Ponudbe:</span>
           <ul className="m-0 flex list-none flex-col gap-2 p-0">
             {inquiry.offers.map((offer) => (
-              <OfferRow key={offer.id} offer={offer} />
+              <OfferRow
+                key={offer.id}
+                offer={offer}
+                otherService={offer.service && offer.service !== serviceForInquiry(data) && offer.service in services
+                  ? services[offer.service as BoothService].label
+                  : null}
+              />
             ))}
           </ul>
         </div>

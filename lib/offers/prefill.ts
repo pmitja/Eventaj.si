@@ -2,9 +2,9 @@ import { betaZodOutputFormat } from "@anthropic-ai/sdk/helpers/beta/zod";
 import { z } from "zod";
 import { getInquiry } from "@/lib/db/inquiries";
 import { claudeClient, MODEL, OfferGenerationError } from "./claude";
-import { describeInquiry, serviceLabel } from "./generate";
+import { describeInquiry, serviceLabel, switchedServiceNote } from "./generate";
 import { formatEur } from "./pricing";
-import { isBoothService, serviceForInquiry, servicesForDate, type BoothService } from "./services";
+import { isBoothService, offerServiceFor, serviceForInquiry, servicesForDate, type BoothService } from "./services";
 import type { OfferOptions } from "./schema";
 
 // Only the pricing fields Claude can read from the inquiry; distance and custom items stay with the admin.
@@ -57,10 +57,12 @@ export async function prefillOffer(inquiryId: number, options: OfferOptions) {
   const client = claudeClient();
   const inquiry = await getInquiry(inquiryId);
   if (!inquiry) throw new OfferGenerationError("Povpraševanje ne obstaja");
-  const service = serviceForInquiry(inquiry.formData);
-  if (!service || !isBoothService(service)) {
+  const inquiryService = serviceForInquiry(inquiry.formData);
+  const service = offerServiceFor(inquiryService, options.service);
+  if (!inquiryService || !service || !isBoothService(service)) {
     throw new OfferGenerationError("Samodejno izpolnjevanje je na voljo samo za Photo Booth, 360° Booth in kombinacijo");
   }
+  const serviceChange = switchedServiceNote(inquiryService, service);
 
   const current = {
     hours: options.hours,
@@ -81,9 +83,9 @@ export async function prefillOffer(inquiryId: number, options: OfferOptions) {
       role: "user",
       content: `# POVPRAŠEVANJE STRANKE
 """
-${describeInquiry(inquiry.formData, inquiry.createdAt, serviceLabel(service))}
+${describeInquiry(inquiry.formData, inquiry.createdAt, serviceLabel(inquiryService))}
 """
-
+${serviceChange ? `\n# STORITEV PONUDBE\n${serviceChange}\n` : ""}
 # NAVODILA PONUDNIKA
 ${options.instructions.trim() || "(ni navodil)"}
 
