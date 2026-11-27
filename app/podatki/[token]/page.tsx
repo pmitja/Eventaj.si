@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { EventDetailsForm } from "@/components/event-details/event-details-form";
 import Logo from "@/components/logo";
-import { getEventDetailsByToken, prefillEventDetails } from "@/lib/db/event-details";
+import { emptyEventDetails, getEventDetailsByToken } from "@/lib/db/event-details";
 import { formatSlovenianDate } from "@/lib/slovenian-date";
 
 export const dynamic = "force-dynamic";
@@ -21,8 +21,8 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ t
   const form = request.inquiry.formData;
   const eventDate = form.date ? formatSlovenianDate(form.date) : "";
   const combo = form.type === "both";
-  // Answers saved before a field existed lack it; spreading them over the prefill fills it with an empty value.
-  const prefill = prefillEventDetails(request.inquiry);
+  // Answers saved before a field existed lack it; spreading them over the empty draft fills it with an empty value.
+  const empty = emptyEventDetails();
 
   return (
     <main className="mx-auto w-full max-w-[760px] px-4 pb-20 pt-8 md:pt-12">
@@ -39,14 +39,13 @@ export default async function EventDetailsPage({ params }: { params: Promise<{ t
           Podatki za vaš <em className="font-serif-italic italic">dogodek</em>
         </h1>
         <p className="mt-5 max-w-xl leading-relaxed text-[var(--eventaj-ink-2)]">
-          Kmalu se vidimo! Ker se vaš dogodek hitro približuje, vas prosimo za naslednje podatke. Kar že vemo iz
-          povpraševanja, smo izpolnili namesto vas.
+          Kmalu se vidimo! Ker se vaš dogodek hitro približuje, vas prosimo za naslednje podatke.
         </p>
       </header>
 
       <EventDetailsForm
         token={token}
-        initialData={request.data ? { ...prefill, ...request.data } : prefill}
+        initialData={request.data ? { ...empty, ...request.data } : empty}
         alreadySubmitted={Boolean(request.submittedAt)}
         combo={combo}
       />

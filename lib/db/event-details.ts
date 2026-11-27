@@ -1,6 +1,5 @@
 import { randomBytes } from "crypto";
 import type { EventDetails, EventDetailsDraft } from "@/lib/event-details/schema";
-import { eventTypes } from "@/lib/event-details/schema";
 import { getInquiry, type Inquiry } from "./inquiries";
 import { sql } from "./index";
 
@@ -64,23 +63,20 @@ export async function saveEventDetails(token: string, data: EventDetails) {
   return rows[0].inquiry_id;
 }
 
-// What we already know from the inquiry, so the customer only checks and fills the gaps.
-export function prefillEventDetails(inquiry: Inquiry): EventDetailsDraft {
-  const form = inquiry.formData;
-  const knownType = eventTypes.find((type) => type === form.eventType);
-  const otherType = !knownType && form.eventType && form.eventType !== "Drugi dogodek" ? form.eventType : "";
-  const hours = ["2", "3", "4"].includes(String(form.hours)) ? (String(form.hours) as EventDetails["hours"]) : "";
+// The customer fills every field themselves: values copied from the inquiry were often stale or wrong
+// (the inquirer is not always the contact on the day) and went through unchecked.
+export function emptyEventDetails(): EventDetailsDraft {
   return {
-    location: form.location ?? "",
-    eventType: knownType ?? (otherType ? "Drugo" : ""),
-    eventTypeOther: otherType,
+    location: "",
+    eventType: "",
+    eventTypeOther: "",
     startTime: "",
-    hours,
-    contactName: form.name ?? "",
-    contactPhone: form.phone ?? "",
-    album: form.albumSize ? "yes" : "",
-    albumSize: form.albumSize ?? "",
-    albumColor: form.albumColor ?? "",
+    hours: "",
+    contactName: "",
+    contactPhone: "",
+    album: "",
+    albumSize: "",
+    albumColor: "",
     frameIdea: "",
     background: "",
     frame360Idea: "",
